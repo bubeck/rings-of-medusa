@@ -1,0 +1,23 @@
+       !Bienvenido a los Anillos do Medusa (R.O.M.)!
+           Hace mucho tiempo hubo un rey que perdio su gran reino y
+ un fantasma maligno llamado 'Medusa' entro en escena para intentar
+ apoderarse totalmente del reino. Asi se inicia la gran batalla...
+               Gracias a Atari por su fenomenal Atari ST,
+ Markus Fritze por su rapido 'Turboass',
+ Dave Staugas por su fantastico NEOchrome, y a 'U2' y 'Simple Minds'
+ por su magnifica musica durante la programacion y depuracion.
+                 Ahora algunas Estadisticas:
+    he tardado un ano en realizar este juego.
+ El tamano del codigo fuente es de unos 500 Kbytes.
+ Necesite 2 ordenadores y dos discos duros para escribirlo.
+              Si deseas hacer algun comentario sobre el juego, escribe a:
+Starbyte Software GmbH, Nordring 71, 4630 Bochum 1, Alemania del Este.
+                 Espero que te guste el juego, ya que a nosotros en
+ Starbyte si nos ha gustado...
+                    Diviertete!
+                                  Y de nuevo
+~
+
+Spanische Version des Startscrollers: 
+                1.8.1990    T.Bubeck
+

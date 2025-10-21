@@ -1,0 +1,18 @@
+
+;         Prototype-Deklarationen fÅr: Im Zeichen der Medusa
+; Ω 1990 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, Tel.: 07151-66437
+
+RASTER.C
+ATARI.C
+CITY.C
+CITY2.C
+DUNGEON.C
+DUNG2.C
+FIGHT.C
+INIT.C
+IO.C
+LAND.C
+MAIN.C
+LEISTEN.C
+
+

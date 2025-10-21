@@ -1,0 +1,170 @@
+;SÑmtliche Files fÅr Rings of Medusa II
+;Ω 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, Tel: 07151/66437
+;
+;Jetzt kommt der Pfad, von wo die Files gelesen werden:
+D:\MEDUSA\MEDUSA_2.COL\GRAFIX.PKD\
+;
+;jetzt kommt der Pfad, wo die Dateien hingeschrieben werden:
+D:\MEDUSA.DAT\MEDUSA_2.COL\
+;
+;jetzt kommt der Name der Archive:
+ROM_GRFX
+;
+;Jetzt kommt der Pfad des Filename.c:
+E:\MEDUSA\MEDUSA_2.COL\C\FILENAME.C
+;
+;Jetzt kommt die Grîûe des ersten Archives, also das, das auf die Boot-
+;Diskette kommt:
+200000
+;Jetzt die Grîûe eines normalen Archivs:
+402432
+;Jetzt kommt die Nummer des Files, das als erstes in die Ramdisk kommen
+;soll, also alle vorherigen werden Åbersprungen und nicht in die
+;Ramdisk eingelesen
+19
+;Jetzt folgen die Files, die in die Bibliotheken aufgenommen werden
+;bei 1 beginnt die ZÑhlung. Fehlt eine Extension wird *.PKD genommen.
+;Steht hinter dem Filenamen ein 'P' so wird das File auf Wunsch mit
+;dem ICE!-Packer gepackt. Steht hinter dem Filenamen ein 'C', so wird der
+;Crown-Packer verwendet.
+ROM_II.OBJ      P
+INTRO_A.OBJ     P
+INTRO_B.OBJ     P
+INTRO_C.OBJ     P
+INTRO_D.OBJ     P
+INTRO_E.OBJ     P
+INTRO_F.OBJ     P
+BUBECK2.OBJ     P
+METALL.OBJ      P
+INIT_FRC.TXT    P
+INIT_D.TXT      P
+INIT_GB.TXT     P
+LADEMUSI.IMG    P
+LADE_AMI.IMG    P
+TITEL.OBJ       P
+LEISTEN.OBJ     P
+GAME.TXT        P
+GAME_GB.TXT     P
+FORMULAR.OBJ    P
+SEA.OBJ         P
+TMAPS.DAT       P
+CITYBILD.OBJ    P
+STADT.OBJ       P
+STORE.OBJ       P
+WINDOW.OBJ      P
+PORT.OBJ        P
+SHIPS.OBJ       P
+PARK.OBJ        P
+ARMORY.OBJ      P
+STABLE.OBJ      P
+BARRACKS.OBJ    P
+BANK.OBJ        P
+PALACE.OBJ      P
+PUB.OBJ         P
+ROULETTE.OBJ    P
+JEWELLER.OBJ    P
+CITIES.POR
+CITIES.PUB
+CITIES.WAR
+EBENE.OBJ       P
+MINE_OK.OBJ     P
+MINE_PUT.OBJ    P
+GMAPS.DAT
+MAPA.OBJ        P
+MAPB.OBJ        P
+MAPC.OBJ        P
+MAPD.OBJ        P
+MAPE.OBJ        P
+MAPF.OBJ        P
+MAPG.OBJ        P
+MAPH.OBJ        P
+MAPI.OBJ        P
+MAPJ.OBJ        P
+MAPK.OBJ        P
+MAPL.OBJ        P
+MAPM.OBJ        P
+MAPN.OBJ        P
+MAPO.OBJ        P
+MAPP.OBJ        P
+SPRITES.IMG     P
+SEAWAR.OBJ      P
+BUNKER.OBJ      P
+AUSGANG.OBJ     P
+REAGENZ.OBJ     P
+ITEM.OBJ        P
+ITEM_REA.OBJ    P
+MENSCH.OBJ      P
+TERM1.OBJ       P
+TERM2.OBJ       P
+FIRE.OBJ        P
+SHOTS.OBJ       P
+KLONG.SEQ
+GOT_YOU.SEQ
+LACHEN.SEQ
+KRIEG.SEQ
+OBJEKT.DAT      P
+BUNKER0.DAT     P
+BUNKER1.DAT     P
+BUNKER2.DAT     P
+BUNKER3.DAT     P
+BUNKER4.DAT     P
+BUNKER5.DAT     P
+BUNKER6.DAT     P
+BUNKER7.DAT     P
+BUNKER8.DAT     P
+BUNKER9.DAT     P
+BUNKER10.DAT    P
+BUNKER11.DAT    P
+BUNKER12.DAT    P
+BUNKER13.DAT    P
+BUNKER14.DAT    P
+BUNKER15.DAT    P
+BUNKER16.DAT    P
+BUNKER17.DAT    P
+BUNKER18.DAT    P
+BUNKER19.DAT    P
+BUNKER20.DAT    P
+BUNKER21.DAT    P
+BUNKER22.DAT    P
+BUNKER23.DAT    P
+BUNKER24.DAT    P
+BUNKER25.DAT    P
+BUNKER26.DAT    P
+BUNKER27.DAT    P
+BUNKER28.DAT    P
+BUNKER29.DAT    P
+BUNKER30.DAT    P
+BUNKER31.DAT    P
+BUNKER32.DAT    P
+BUNKER33.DAT    P
+BUNKER34.DAT    P
+BUNKER35.DAT    P
+BUNKER36.DAT    P
+BUNKER37.DAT    P
+BUNKER38.DAT    P
+BUNKER39.DAT    P
+BUNKER40.DAT    P
+BUNKER41.DAT    P
+BUNKER42.DAT    P
+BUNKER43.DAT    P
+PASS_D.TXT      P
+PASS_GB.TXT     P
+SCHILD.TXT      P
+SCHILD_G.TXT    P
+PRISONER.OBJ    P
+TILL.OBJ        P
+BUBECK.OBJ      P
+BUBECK.OFF
+ZIMMER.OFF     
+BUNKER.DAT      P
+MEDUSA.OBJ      P
+TOTENKOPF.OBJ   P
+MED_TOT.OBJ     P
+OVER_D.TXT      P
+OVER_FRC.TXT    P
+OVER_GB.TXT     P
+ALERT.OBJ       P
+;
+;Ende Flag:
+#
+

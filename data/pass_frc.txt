@@ -1,0 +1,88 @@
+18                  ;Achtung! Englische Passw”rter!
+QUELLE EST LE #2. MOT DE LA PAGE #0, LIGNE #1?@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+5
+8
+11
+PRINCE
+5
+14
+7
+PRINCE
+5
+15
+10
+CIRION
+5
+23
+5
+LADY
+6
+10
+9
+MAIDEN
+6
+15
+2
+BERTIL
+6
+18
+3
+LADY
+7
+9
+4
+PRESENT
+7
+18
+11
+KING
+8
+4
+10
+CROWNED
+8
+20
+7
+POWER
+9
+4
+3
+STOOD
+9
+6
+6
+MORENOR
+9
+14
+3
+ABOUT
+10
+6
+5
+WEEKS
+10
+13
+3
+DROP
+10
+14
+5
+SEA
+10
+20
+1
+SEEMED
+~
+Achtung! Diese Datei hat die h”chste Sicherheitspriorit„t!
+Keinesfalls Unbefugten zug„nglich machen!
+
+In der ersten Zeile steht die Anzahl der Passw”rter,
+in der zweiten Zeile der Fragestring.
+Dann kommt immer Seite, Zeile, Wortnummer und Passwort.
+
+(C) Till Bubeck
+    Ziegeleistr. 28
+    W-7056 Weinstadt
+    Tel: 07151-66437
+
+

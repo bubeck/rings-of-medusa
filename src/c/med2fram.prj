@@ -1,0 +1,27 @@
+; Projektdatei fÅr Rings of Medusa II (Farbe), Ramdisk-Version
+; (C) 1990 by Till Bubeck
+;             Ziegeleistr. 28
+;             7056 Weinstadt
+;             Tel.: 07151-66437
+;
+
+MEDUSA.PRG											;Ausgabedatei
+.L [-S=8192 -F]									;Linkeroptionen
+.C [-W-ucp -W-stv -W-cln -W-sig -W-sus -C -E30 -F20 -G -P -M]			;Compileroptionen
+=									
+MCODE.O
+INIT
+LEISTEN
+RASTER
+DUNGEON
+MAIN
+FIGHT
+ATARI
+CITY
+CITY2
+LAND
+IO
+TCFLTLIB.LIB										;Flieûkommaroutinen
+TCSTDLIB.LIB
+TCTOSLIB.LIB
+

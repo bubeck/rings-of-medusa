@@ -1,0 +1,33 @@
+'
+' Verschlüsselt den Laufschrifttext
+'
+pfad$="D:\MEDUSA\MEDUSA_2.COL\SCROLLER\*.TXT"
+FILESELECT pfad$,"",name$
+OPEN "i",#1,name$
+nm_pos#=RINSTR(name$,"\")
+nm$=MID$(name$,nm_pos#+1)
+pfad2$="D:\MEDUSA\MEDUSA_2.COL\GRAFIX.PKD\*.*"
+FILESELECT pfad2$,nm$,name2$
+OPEN "O",#2,name2$
+'
+DO
+  LINE INPUT #1,zeile$
+  EXIT IF INSTR(zeile$,"~")<>0
+  FOR i#=1 TO LEN(zeile$)
+    a$=MID$(zeile$,i#,1)
+    wert#=ASC(a$)
+    wert2#=0
+    FOR j#=0 TO 7
+      wert2#=wert2#*2
+      IF ODD(wert#) THEN
+        wert2#=wert2#+1
+      ENDIF
+      wert#=INT(wert#/2)
+    NEXT j#
+    PRINT a$;
+    PRINT #2,CHR$(wert2#);
+  NEXT i#
+LOOP
+'
+CLOSE
+RUN

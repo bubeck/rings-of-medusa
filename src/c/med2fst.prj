@@ -1,0 +1,68 @@
+
+; Projektdatei fÅr Rings of Medusa II
+; Atari ST
+; (C) 1990 by 	Till Bubeck
+;		    	Ziegeleistr. 28
+;			7056 Weinstadt
+;			Tel.: 07151-66437
+;
+
+# Allgemeiner Aufbau:
+#
+# - Definitionszeilen fÅr Regeln, Optionen und Voreinstellungen
+# - Name des Zielprogramms, das erzeugt werden soll
+# - '=' Trennzeichen zur Modulliste
+# - Liste, der fÅr die Erzeugung des Programms benîtigten Module
+# - Alle Kommentare beginnen mit '#' oder ';'
+
+# Bei Definition der Regeln kînnen folgende spezielle Namen verwendet werden
+#
+# - $FILE		aktuell zu Åbersetzende Datei
+# - $FLAGS	aktuelle Standardoptionen fÅr den Vorgang
+# - $LINKLIST	alle Module, die fÅrs Linken benîtigt werden
+# - $TARGET	Namen des Zielprogramms
+
+# Die Aufrufpfade mÅssen gegebenenfalls angepaût werden, damit
+# Compiler, Linker,... immer gefunden werden.
+
+# Aufruf des Compilers
+.CC E:\TC\UTILITY\TCC.TTP $FLAGS $FILE
+.C -IO:\INCLUDE -DATARI -W-ucp -W-stv -W-cln -W-sig -W-sus -C -E30 -F20 -G -P -M
+
+# Aufruf des Linkers
+.LD E:\TC\UTILITY\TLINK.TTP $FLAGS
+.L -F -S=8192 -C=O:\MEDUSA.LNK
+
+# Aufruf des Assemblers
+.AS MAS.TTP $FLAGS $FILE
+# .A	-U					; Standard Optionen Assembler
+
+# Datei, in die eine Fehlerausgabe des Compilers umgeleitet
+# werden soll (bei Verwendung einer RAM Disk besser da plazieren).
+.E O:\ERRORS.OUT
+
+# Name des Ziel Programms:
+O:\MEDUSA.PRG
+
+= ;------------------- Trenner zur Modulliste -----------------------------
+
+O:\LIB\TCSTART.O					; Startup
+O:\MCODE.O					;Maschinenspracheteil
+O:\INIT.C
+O:\LEISTEN.C
+O:\RASTER.C
+O:\DUNGEON.C
+O:\MAIN.C
+O:\FIGHT.C
+O:\ATARI.C
+O:\CITY.C
+O:\CITY2.C
+O:\LAND.C
+O:\IO.C
+
+# Benîtigte Bibliotheken:
+
+O:\LIB\TCFLTLIB.LIB				;Flieûkommaroutinen
+O:\LIB\TCSTDLIB.LIB				;Standard C Bibliothek 
+O:\LIB\TCTOSLIB.LIB				;TOS Bibliothek
+

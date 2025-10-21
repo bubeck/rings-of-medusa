@@ -1,0 +1,431 @@
+
+
+Till Bubeck
+Ziegeleistr. 28
+W-7056 Weinstadt
+Tel: 07151-66437
+
+
+
+
+Hallo Starbytes!
+
+Anbei das Handbuch zu Medusa II. Als Grundlage dient das Handbuch zu Medusa 1,
+alle nderungen habe ich aufgefhrt:
+
+Sollte hinter irgendeinem Absatz (RoM1) stehen, so ist dieser Absatz 
+aus dem Handbuch zu Rings of Medusa 1 zu bernehmen.
+
+Immer wenn bei der Anleitung von Medusa 1 von "Armeen" die Rede ist 
+(aber nur, wenn feindliche Armeen gemeint sind, nicht die des 
+Spielers), so ist bei Medusa 2 "Banden" einzusetzen.
+
+
+
+Achtung!     Bei dieser "Anleitung" handelt es sich nur um eine 
+knappe und stichwortartige Zusammenfassung. Ihr mt die endgltige 
+Anleitung auf jeden Fall neu formulieren, da ich nur die Fakten in 
+den Computer "geklopft" habe (Ohne Rcksicht auf Stil, Fehler,...).
+Ebenfalls sollte der Sinn des Geschriebenen nochmal berprft werden.
+
+
+
+
+Ladeanweisung:
+
+Legen Sie Diskette A ins Laufwerk ein und schalten Sie 
+Ihren Computer an. Unmittelbar nach dem Anschalten des Rechners kann 
+durch Druck auf die Taste '5' bzw. '6' auf 50 bzw. 60 Hz geschaltet 
+werden. Folgen Sie den weiteren Anweisungen auf dem Bildschirm.
+
+
+1. Spielidee/Spielziel
+
+a) Vorgeschichte
+    Nachdem es dem Kronprinzen Cirion im ersten Teil der "Rings of 
+    Medusa"-Sage gelang die Medusa zu besiegen, entwickelt sich das 
+    Land Morenor zu einem blhenden Paradies.
+    Einen Tag vor der Hochzeitsnacht geht der Prinz verd„chtigen 
+    Ger„uschen im Garten nach und bekommt dabei einen Schlag auf den 
+    Hinterkopf. Der Prinz erwacht gefangen in einer Zelle. Medusa 
+    erkl„rt ihm, das Sie jetzt in die Zukunft reisen werde, und dort 
+    Morenor in ihre Gewalt bringen werde. Der einzige, der sie daran 
+    h„tte hindern k”nnen, war der Kronprinz Cirion, doch der wird in 
+    der Zukunft, in die sich Medusa begeben wird, bereits tot sein. 
+    So kann Medusa ohne die Rache des Prinzen zu frchten Morenor an 
+    sich reien.
+    Mit diesen Worten verschwindet Medusa durch ein Zeitloch in die 
+    Zukunft. Glcklicherweise gelingt es dem Prinzen seine Bewacher 
+    zu berw„ltigen, und er folgt Medusa in das sich schliessende 
+    Zeitloch.
+    
+b) Spielziel:
+    Medusa bezieht ihre Macht aus dem dunklen Kristall "Dohor", der 
+    in ihrem Geheimbunker hinter 13 verschlossenen Tren von ihr 
+    selbst bewacht wird.
+    Die Aufgabe des Spielers besteht nun darin, diese 13 Schlssel zu 
+    finden um in den Geheimbunker der Medusa eindringen zu k”nnen, 
+    und dann die Medusa zu vertreiben um den Kristall zerst”ren zu 
+    k”nnen.
+    Diese 13 Schlssel sind in 13 verschiedenen Bunkern versteckt, 
+    die den gegenerischen Armeen als Unterschlupf dienen. Um diese 
+    Bunker zu finden mu der Spieler ber entsprechende Geldmittel 
+    verfgen, denn nur dann kann er seine Armee bezahlen und damit 
+    die Suche nach den Schlsseln durchfhren.
+    Daraus ergeben sich weitere Probleme, die der Spieler aber erst 
+    im Laufe des Spieles erkennt, bzw. selbst herbeifhrt....
+    
+    
+2. Ausgangspunkt:
+    Der Spieler erwacht im dunklen Verlies seines Schlosses und mu 
+    erst einmal den Weg an die Oberfl„che des Reiches finden. Dort 
+    angekommen, sollte er zuerst Geld verdienen und sich dann auf die 
+    Suche nach den 13 Schlsseln machen.
+    Zum Geldverdienen gibt es mehrer M”glichkeiten:
+        - Handel treiben
+        - Karawanen berfallen
+        - Rohstoffvorkommen suchen, finden und ausbeuten.
+        - im Casino Roulette spielen
+        - an der B”rse spekulieren
+        - Sch„tze heben
+        - evtl. Banken berfallen
+        
+        
+3. Beschreibung der Benutzeroberfl„che des Programms:
+
+    Auf jedem Bildschirm befinden .... (RoM1)
+    
+    Die Menleiste besteht aus vielen....(RoM1)
+    
+    Zuerst einmal die Beschreibung der einzelnen Funktionen:
+    (von links nach rechts, zeilenweise, wie man ein Buch liest)
+    SPEICHERN: (RoM1)
+    NOTIZBLOCK: Hier kann der Spieler beliebige Notizen machen, z.B. 
+        die Koordinaten von Inseln vermerken, um bei sp„terem 
+        Weiterspielen diese wiederzufinden.
+    KAUFEN: (RoM1)
+    MAXIMAL: (RoM1)
+    PEILGERT: Zum Einsetzen des Quarzes in das Peilger„t
+    OK: (RoM1)
+    RšCKZUG: (RoM1)
+    ANGRIFF: (RoM1)
+    ERH™HEN: (RoM1)
+    SUCHEN: Aufkl„rer aussenden um Rohstoffe, Sch„tze oder 
+        Bunkereing„nge zu finden.
+    LADEN: (RoM1)
+    TšR: (RoM1)
+    VERKAUFEN: (RoM1)
+    STADTINFORMATION: Gibt Informationen ber die Stadt aus, in der 
+        sich der Spieler gerade befindet. Weiterhin k”nnen dann 
+        Informationen ber den Status des Spielers abgefragt werden.
+    PEILUNG: Fhrt eine Peilung zum Suchen von Bunkereing„ngen durch.
+    NOT_OKAY: (RoM1)
+    VERHANDLUNGEN: (RoM1)
+    SENKEN: (RoM1)
+    MINE: Damit kann eine Mine er”ffnet bzw. ein Schatz gehoben 
+        werden.
+    
+    
+    Weiterhin gibt es in der Mitte der Buttonleiste ein 
+    Informationsfeld, in welchem Sachen abgelesen bzw. eingestellt 
+    werden k”nnen. Dazu befindet sich in der oberen, linken Ecke ein 
+    kleiner, grner Button, bei dessen Anklicken sich das Feld 
+    weiterdreht.
+    Hier gibt es verschiedene Anzeigen
+        - Copyright
+        - Ausgabebildschirm zum Ablesen der Soldatenzahl und des 
+        Gehalts. Beim Klicken auf den kleinen Knopf in der unteren 
+        Mitte des Bildschirms werden jeweils aktuelle Informationen 
+        im kleinen Fenster daneben ausgegeben.
+        - Optionen: Hier kann die Musik bzw. die Soundeffekte 
+        an/ausgeschaltet werden. Weiterhin kann die 
+        Synchronisationsfrequenz der Monitors ge„nder werden 
+        (50/60Hz) und das Spiel erneut gestartet werden (Quit all). 
+        Mit Hilfe des kleinen Schiebers in der Mitte der Optionen 
+        kann der Level des Spiels eingestellt werden. Dabei bedeutet 
+        0 sehr einfach und 1 sehr schwer.
+        - Bunkersteuerung: Hier kann in einem Bunker die Figur 
+        gesteuert werden bzw. hier wird der Kompa die Blickrichtung 
+        ausgeben.
+        - Copyrights.
+        
+        (Siehe auch Kurzdarstellung in Anhang A)
+        
+        
+Bedienung des Fenstersystems:
+
+Vor allem in der Stadt wird mit Fenstern gearbeitet. Die Fenster 
+besitzen in der rechten, oberen Ecke ein Schliefeld. Beim Klicken in 
+dieses Feld wird das Fenster geschlossen. Manche Fenster besitzen auf 
+der rechten Seite einen Scrollbalken. Nach dem Anklicken dieses 
+Scrollbalkens kann der Inhalt des Fensters verschoben werden. Dies 
+ist dann n”tig, wenn mehr Informationen vorhanden sind, als 
+dargestellt werden k”nnen. z.B. im Warenhaus.
+
+
+
+
+4. Programmteile:
+
+    Das Programm gliedert sich grob in 4 Teile: Landschaft, Stadt, 
+    Kampf und Bunker.
+    
+4.1. Landschaft.
+
+    ...... (RoM1) ....
+    
+    Weiterhin gibt es fr seine Armee 2 gef„hrliche Stellen:
+    1. Zum einen den Sumpf, in dem seine Armee erkrankt, wenn der 
+    Spieler nicht ausreichend Sanit„ter mit sich fhrt. Dabei kann 
+    jeder Sanit„ter 60 Soldaten versorgen. Soldaten ohne Versorgung 
+    sterben nach und nach.
+    2. Genauso verh„lt es sich in der trockenen Wste, jedoch kann 
+    hier jeder Sanit„ter nur 30 Soldaten versorgen.
+    
+    .... (RoM1) ...
+    
+     .... Auf der Suche nach Rohstoffen, Bunkereing„ngen und 
+     Sch„tzen verkleinert sich der Suchradius, weil sich die Suche 
+     nach diesen Gtern erheblich schwieriger gestaltet als die Suche 
+     nach Armeen. ....
+     
+     (RoM1)...
+     
+     Hat der Spieler Glck, einen Schatz oder Rohstoff gefunden zu 
+     haben, mu er eine Mine er”ffnen, um den Rohstoff zu f”rdern 
+     bzw. den Schatz zu heben. Hierzu mu man auf MINE in den Buttons 
+     klicken. Das Er”ffnen einer Mine kostet 30000 um die Eintragung 
+     ins Grundbuchamt vorzunehmen.
+     Hat der Spieler Rohstoffe gefunden, so mu er weiterhin einen 
+     F”rderturm, und einen ™lturm besitzen, in dem der Rohstoff 
+     gelagert wird. Auch ein Pumpensystem w„re vorteilhaft. Diese 
+     ganzen Maschinen kann der Spieler in jedem Warenhaus der St„dte 
+     kaufen.
+     
+     Hat er die von den Aufkl„rern ... (RoM1)
+     
+     ... (Lagerhaus durch ™ltank ersetzen)
+     
+     ... Findet der Spieler einen Schatz und m”chte diesen heben, so 
+     braucht er wie bei der Mine 30000 fr die Eintragung ins 
+     Grundbuchamt. Jedoch ben”tigt er weder F”rdersystem noch 
+     ™ltanks.
+     
+     (Ab hier den Rest des Kapitels 4.1 l”schen:)     
+     "In einem Schatz kann sich ein Ring..."
+    
+    
+4.2. Stadt:
+
+    .... (RoM1) ....
+    
+    HAFEN:  komplett aus (RoM1) bernehmen.
+    WARENHAUS: komplett aus (RoM1) bernehmen.
+    
+    BANK:
+            ... (RoM1) ....
+       
+       Den Satz: "Dabei z„hlt Bargeld nicht als Deckung!" streichen!
+       
+       ....
+       
+       Eine weitere Funktion innerhalb der Bank stellt der 
+       Aktienmarkt dar. Der Spieler kann auf dem Aktienmarkt 
+       verschiedene Aktien kaufen und verkaufen. Maximal sind von 
+       jeder Aktie 2000 Stck erh„ltlich.
+       Die Preise der Aktien ver„ndern sich je nach Konjunkturlage, 
+       Bev”lkerungszahl und Abnahme.
+       Das Kaufen von Aktien kann aus 2 Grnden erfolgen: Zum Einen 
+       zur reinen Spekulation, zum anderen aus wirtschaftlichen 
+       šberlegungen. Je mehr Aktien der Spieler von einer bestimmten 
+       Sorte h„lt, um so mehr investiert er in der entsprechenden 
+       Branche. Die Branche reagiert auf diese Investition mit 
+       erh”hter Produktion. d.h. um die Produktion eines Produktes 
+       anzukurbeln sollte man m”glichst viele Aktien dieses Typs 
+       kaufen. Doch Achtung! Die Produktion wird selbstver„ndlich nur 
+       in den St„dten angekurbelt, die dieses Produkt herstellen.
+       
+PARK: Komplett aus (RoM1) bernehmen. Aber:
+
+            Kavallerie durch Panzer, Drachenreiter durch Helikopter, 
+            Zauberer durch Sanit„ter und Bogenschtzen durch 
+            Bodentruppe ersetzen.
+            
+      Auch s„mtliche Tabellen bernehmen, nur die entsprechenden 
+      Truppenteile ab„ndern (s.o.).
+      
+      In der letzten Tabelle ber die verschiedenen Untergrnde mu 
+      "verz. Wald" durch "Trockene Wste" ersetzt werden.
+      
+      Ebenfalls mu am Ende des Parks alles ber Training entfernt 
+      werden, da es kein training mehr gibt.
+    
+TRAINING: komplett entfernen
+
+WAFFEN: bernehmen, aber (Rstung<->Gewehr, Waffen<->Granaten, 
+                            Extras<->Bazooka) austauschen.
+
+PALAST: komplett entfernen
+
+KASERNE: komplett bernehmen, aber Namen der Einheiten austauschen 
+            (siehe PARK).
+
+STALL: (heit jetzt GARAGE).
+
+        In der Garage kann der Spieler "Gleiter" und "Kerosin" zum 
+        Betrieb der Gleiter kaufen. Mit einem Gleiter ist es m”glich 
+        bis zu 80 Waren zu transportieren.
+        
+
+KNEIPE (heit jetzt CASINO):
+
+    Im Casino kann der Spieler Roulette spielen. Dazu mu er zuerst 
+    seinen Einsatz machen. Mit der Maus zieht er die Chips aus dem 
+    Chipfenster auf das Filz des Roulettetisches.
+    Nachdem Klicken auf das Schliessfeld des Chipfensters beginnt 
+    sich der Rouletteschssel zu drehen.
+    
+    Es gibt folgende Felder zum Setzen:
+    
+    0..36: Gewinn=Einsatz*36
+    rouge und noir: Gewinn=Einsatz*2;
+    pair (gerade) und impair (ungerade): Gewinn=Einsatz*2;
+    Manque und Passe: Gewinn=Einsatz*2;
+    
+    sowie die 3 Zeilen: Gewinn=Einsatz*12;
+    
+    
+    Wenn der Spieler das Spiel beenden will, so darf er einfach keinen    
+     Einsatz mehr t„tigen, sondern mu sofort auf das Schliessfeld 
+     des Chipfensters klicken.
+     
+TEMPEL: komplett entfernen
+
+U-BAHN: In einigen St„dten werden Personen in den alten 
+U-Bahnsch„chen gefangen gehalten, die dem 
+Spieler wohl gesonnen sind und ihn im Bunker begleiten k”nnen. Diese 
+Personen kann man befreien und in seine Party aufnehmen.
+
+
+4.3. Burg
+
+komplett entfernen
+
+
+
+
+5.0 Kampf
+
+(RoM1)
+
+5.1. Armee<->Armee
+
+(RoM1)
+
+5.2. Armee<->Stadt, Stadt<->Armee
+
+(Rom1) bernehmen, aber Burg rauswerfen, da es keine Burg mehr gibt.
+
+
+5.3. Kampf Schiff<->Schiff
+
+    Stoen zwei Schiffe auf der Landkarte zusammen, so kommt es zum 
+    Schiffskampf. Hierbei ist entscheidend, wieviel Geschtze dem 
+    Spieler zur Verfgung stehen. Hier haben die Kampfschiffe 
+    natrlich einen Vorteil gegenber den Handelsschiffen.
+    
+    Der Spieler steht auf dem Bug seines Schiffes, und dieht die 
+    gegnerische Flotte vor sich. Die Steuerung ist direkt mit dem 
+    Geschtzturm verbunden, d.h. schiebt der Spieler die Maus nach 
+    rechts, dann dreht sich auch der Geschtzturm nach rechts. Wird 
+    die Maus nach oben und unten geschoben, so hebt und senkt sich 
+    das Rohr des Geschtzes. Der Spieler mu nun versuchen die 
+    gegenerischen Schiffe zu versenken, bevor er selbst versenkt 
+    wird.
+    
+    (Eine genauere Beschreibung wird folgen, sobald ich genauer wei, 
+    wie Christian Weber die Routine programmiert hat. Ggf. mit Weber 
+    in Verbindung setzen.)
+    
+    
+6.   Bunker
+
+    Der gesamte Kontinent ist von einem unterirdischen Bunkersystem 
+    durchzogen, die noch aus dem groen Krieg stammen und mittlerweile 
+    Inn verlassen wurden und jetzt den gegnerischen Banden als 
+    Unterschlupf dienen.
+    Es gilt nun die 13 Schlssel zu finden, welche den Zugang zu 
+    Medusa's Generalbunker erm”glichen.
+    Jeder dieser Schlssel ist in einem Bunker versteckt.
+    
+    Doch bevor der Spieler einen Bunker betritt, mu er erst einmal 
+    den Eingang zum Bunker finden. Hierbei hilft ihm sein Peilger„t. 
+    In jeder Stadt kann der Spieler einen Frequenzquarz kaufen und 
+    damit sein Peilger„t betreiben. Klickt der Spieler auf PEILEN in 
+    der Buttonleiste, so setzt er an seiner Position ein Peilger„t 
+    ab, welches jetzt zwei Umdrehungen lang peilt. Wenn der Peilstahl 
+    ber den nahe des Bunkereingangs gelegenen Funkturm der Banden 
+    streift, dann blitzt er kurz auf. Mit Hilfe eines zweiten 
+    Peilger„ts ist mit einer Kreuzpeilung dann m”glich, die genaue 
+    Position zu bestimmen.
+    Doch wie bereits gesagt, nach der Peilung ist nur die Position 
+    des nahe gelegenen Funkturms bekannt. Um dann den Eingang zu 
+    finden, mu mit den Aufkl„rern die Umgebung des Bunkers abgesucht 
+    werden. Wenn diese den Bunkereingang finden, kann der Bunker 
+    betreten werden.
+    
+    Im Bunker ist es am zweckm„ssigsten das Optionenboard in der 
+    unteren Menleiste auf die Pfeile zu drehen, also auf das Board, 
+    welches den Kompa enth„lt.
+    
+    Der Bildschirm besteht im wesentlichen aus 4 Teilen: den 
+    Reagenzgl„sern zur St„rkeanzeige, der Bunkerdarstellung, dem 
+    Automappingdisplay und dem Optionsboard.
+    
+    Der Bereich der Reagenzgl„ser teilt sich in 4 Bereiche auf, wobei 
+    in jedem 3 Reagenzgl„ser sind. Jeder dieser Bereiche stellt eine 
+    Person dar. Das linke Reagenzglas steht fr den Hunger, das 
+    mittlere fr den Durst, und das rechte fr St„rke. Die 
+    entsprechenden Werte k”nnen durch Essen aufgebessert werden.
+    
+    Die Steuerung geschieht entweder durch Klicken auf die 
+    entsprechenden Pfeile oder durch Druck auf die Cursortasten bzw. 
+    Insert zum Linksdrehen und Clr/Home zum Rechtsdrehen. Beim Amiga 
+    kann die Steuerung auch mitden Tasten 1,2,3,4,5,6 auf dem 
+    Zehnerblock geschehen.
+    
+    In den Bunkern gibt es verschiedene Objekte, die alle eine 
+    bestimmt Funktion und Aufgabe haben. Z.B. liegen in den Bunkern 
+    Schlssel zu irgendwelchen Tren aber auch an einer Stelle ein 
+    Schlssel fr den Generalbunker der Medusa. Diese Objekte k”nnen 
+    mit der Maus aufgenommen werden. Bewegt man diese Objekte auf die 
+    Reagenzgl„ser (bzw. die Felder links davon), so kann man der 
+    entsprechenden Person diesen Gegenstand in die Hand geben.
+    
+    Klickt man mit dem rechten Mausknopf auf ein Reagenzglas, so wird 
+    zum Beladebildschirm umgeschaltet. Dieser besteht aus den 
+    Reagenzgl„sern und einer stilisierten Menschen. Eines der 4 
+    Figurenfelder ist umgeschaltet. Es stellt jetzt die Tasche des 
+    entsprechenden Menschen dar. Man hat hier Platz fr 8 Objekte.
+    Klickt man mit der rechten Maustaste auf eines der 4 
+    Figurenfelder, so wird die entsprechende Figur angew„hlt und die 
+    Tasche angeschaltet.
+    
+    Die stilisierte Figur kann mit Kleidungsstcken angezogen werden, 
+    die den Kampfwert der Figur verbessern.
+    
+    Oberhalb des Menschen sind ein Auge, das Aussage ber Objekte macht, und 
+    ein Mund. Bewegt man Objekte auf den Mund, und sind diese Essbar, 
+    so wird der entsprechende St„rkebalken angehoben.
+    
+    Im Bunker mu gegen die verschiedenen Gegner gek„mpft werden, um 
+    den Weg zu dem begehrten Schlssel zu erm”glichen.
+    
+    Im Bunker gibt es noch verschiedene Besonderheiten: So gibt es 
+    z.B. Felder, die zwar wie W„nde aussehen, aber betretbar sind. 
+    Meistens steckt hinter solchen "W„nden" ein Schatz oder 
+    irgendeine sonstige Besonderheit.
+    
+    
+                ENDE
+                

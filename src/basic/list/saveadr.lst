@@ -1,0 +1,26 @@
+'
+' Dieses Programm wandelt SAVEADR.C in SAVE.C
+'
+OPEN "i",#1,"O:\SAVEADR.C"
+OPEN "o",#2,"O:\SAVE.C"
+pos#=0
+'
+WHILE NOT (EOF(#1))
+  LINE INPUT #1,zeile$
+  EXIT IF zeile$=""
+  '
+  IF LEFT$(zeile$,1)="&" THEN
+    adr$=zeile$
+    gr$="(long)sizeof("+MID$(zeile$,2)+")"
+  ELSE
+    adr$=zeile$
+    gr$="(long)sizeof("+zeile$+")"
+  ENDIF
+  '
+  zeile2$="  *poi++=(long)"+adr$+";"
+  zeile2$=zeile2$+LEFT$("                                       ",40-LEN(zeile2$))
+  zeile2$=zeile2$+"*poi++="+gr$+";"
+  PRINT zeile2$
+  PRINT #2,zeile2$
+WEND
+CLOSE

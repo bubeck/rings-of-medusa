@@ -1,0 +1,101 @@
+'
+' Programm zum Konvertieren von "OBJEKT.TXT" -> "OBJEKT.DAT"
+' für Rings of Medusa II
+'
+' (C) 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, Tel.: 07151-66437
+'
+max#=300
+'
+DIM obj_typ$(max#)
+DIM obj_grafik#(max#)
+DIM obj_spezial#(max#)
+DIM obj_prozent#(max#)
+'
+FOR i#=1 TO max#
+  obj_typ$(i#)="NONE"
+NEXT i#
+'
+FILESELECT "D:\MEDUSA\MEDUSA_2.COL\BUNKER\MAPS\*.TXT","OBJEKT.TXT",quelle$
+FILESELECT "D:\MEDUSA\MEDUSA_2.COL\GRAFIX.PKD\*.DAT","OBJEKT.DAT",ziel$
+'
+IF quelle$="" THEN
+  END
+ENDIF
+'
+OPEN "i",#1,quelle$
+'
+DO
+  REPEAT
+    INPUT #1,objekt$
+    IF LEFT$(objekt$,3)="EOF" THEN
+      GOTO speichern
+    ENDIF
+  UNTIL LEFT$(objekt$,1)<>";"
+  INPUT #1,typ$,grafik#,spezial#,prozent$
+  prozent#=VAL(prozent$)
+  PRINT "Objekt: ";objekt$;"=";typ$,"Grafik: ";grafik#,"Spezial: ";spezial#,"Prozent: ";prozent#
+  o#=VAL(objekt$)
+  obj_typ$(o#)=typ$
+  obj_grafik#(o#)=grafik#
+  obj_spezial#(o#)=spezial#
+  obj_prozent#(o#)=prozent#
+LOOP
+'
+speichern:
+'
+REPEAT
+  OPEN "o",#2,ziel$
+  i#=1
+  WHILE obj_typ$(i#)<>"NONE"
+    SELECT obj_typ$(i#)
+    CASE "KEY"
+      PRINT #2,CHR$(1);
+    CASE "FOOD"
+      PRINT #2,CHR$(2);
+    CASE "WAFF"
+      PRINT #2,CHR$(3);
+    CASE "HELM"
+      PRINT #2,CHR$(4);
+    CASE "HEMD"
+      PRINT #2,CHR$(5);
+    CASE "HOSE"
+      PRINT #2,CHR$(6);
+    CASE "SCHU"
+      PRINT #2,CHR$(7);
+    CASE "SCHA"
+      PRINT #2,CHR$(8);
+    CASE "WATE"
+      PRINT #2,CHR$(9);
+    CASE "HILF"
+      PRINT #2,CHR$(10);
+    CASE "MIRR"
+      PRINT #2,CHR$(11);
+    CASE "PERG"
+      PRINT #2,CHR$(12);
+    CASE "MUNI"
+      PRINT #2,CHR$(13);
+    CASE "SONS"
+      PRINT #2,CHR$(14);
+    DEFAULT
+      PRINT "Unbekannte Typangabe: ";obj_typ$(i#)
+    ENDSELECT
+    PRINT #2,CHR$(obj_grafik#(i#));
+    PRINT #2,CHR$(obj_spezial#(i#)/256);CHR$(obj_spezial#(i#) MOD 256);
+    PRINT #2,CHR$(obj_prozent#(i#)/256);CHR$(obj_prozent#(i#) MOD 256);
+    INC i#
+  WEND
+  PRINT #2,CHR$(255);     !EOF
+  CLOSE
+  '
+  fehler#=FALSE
+  FOR j#=i# TO max#
+    IF obj_typ$(j#)<>"NONE" THEN
+      PRINT "Lücke in den Objekten: Objekt #";j#
+      PRINT "Nehme Objekt als Schlüssel für Tür 0 an"
+      fehler#=TRUE
+    ENDIF
+    obj_typ$(j#)="KEY"
+    obj_grafik#(i#)=0
+    obj_spezial#(i#)=0
+  NEXT j#
+UNTIL NOT (fehler#)

@@ -1,0 +1,260 @@
+'
+' Dieses Programm kopiert mehrere Dateien in mehrere Files
+'
+OPTION BASE 0
+'
+RESERVE 500000
+'
+DIM check&(10)
+DIM laenge%(200)
+DIM filename$(200)
+DIM first_idx#(200)
+DIM define$(500)
+DIM offsets%(500)
+'
+CLS
+PRINT "                              Archiv programm"
+PRINT "    © 1990 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, Tel.: 07151-66437"
+PRINT
+FILESELECT "E:\MEDUSA\MEDUSA_2.COL\BASIC\*.*","COPYLIST",cl$
+'
+ALERT 2,"Ungepackte Dateien|gleich packen?",2,"Ja|Nein",gleich_packen%
+'
+get_param                         !Parameter aus Steuerdatei holen
+packen                            !Holt sich die Längen+Filenamen der Dateien
+get_param
+aufteilung                        !Verteilt die Files auf die Archive
+calc_offsets
+'
+DIM archiv&(end_groesse#/2+1000)
+'
+def#=4
+nr#=0                            !nächstes File hat Nummer 0
+'
+FOR i#=ar_nr# TO 1 STEP -1
+  archivname$=zielpfad$+archiv$+"."+CHR$(&H30+ar_nr#-i#)
+  PRINT "     -> Schreibe folgende Files in: ";archivname$
+  OPEN "o",#archiv#,archivname$
+  pos#=0
+  IF first_idx#(i#)>=0 THEN
+    FOR j#=first_idx#(i#) TO first_idx#(i#-1)-1
+      fname$=quellpfad$+filename$(j#)
+      MID$(filename$(j#),INSTR(filename$(j#),"."),1)="_"
+      define$(j#)="#define "+filename$(j#)+" "+STR$(j#)
+      copy_file(fname$,j#)
+      pos#=pos#+laenge%(j#)
+      IF ODD(pos#) THEN
+        INC pos#
+      ENDIF
+    NEXT j#
+  ENDIF
+  PRINT TAB(50);"----------------------"
+  PRINT TAB(55);pos#
+  PRINT
+  PRINT "     -> Schreibe Archiv auf Harddisk"
+  PRINT
+  BPUT #archiv#,VARPTR(archiv&(0)),pos#
+  CLOSE #archiv#
+NEXT i#
+'
+define$(file_zahl#)="#define FILE_ZAHL "+STR$(file_zahl#)
+'
+' Defines schreiben:
+PRINT "      -> Schreibe #defines"
+OPEN "o",#def#,fn$
+FOR i#=0 TO file_zahl#
+  PRINT #def#,define$(i#)
+NEXT i#
+CLOSE #def#
+'
+a%=BIOS(10)
+IF (a% AND 16384)=16384 THEN
+  PRINT "      -> Schreibe #defines in Ramdisk"
+  OPEN "o",#def#,"O:\FILENAME.C"
+  FOR i#=0 TO file_zahl#
+    PRINT #def#,define$(i#)
+  NEXT i#
+ENDIF
+'
+CLOSE
+END
+'
+' Liest eine Zeile aus der Copylist und überspringt Kommentare
+PROCEDURE get_zeile
+  REPEAT
+    LINE INPUT #1,zeile$
+  UNTIL (LEFT$(zeile$,1)<>";")
+RETURN
+'
+' Schreibt in Datei #nr den Longwert wert
+PROCEDURE print_long(nr#,wert#)
+  b1%=wert#/16777216
+  b2%=wert#/65536
+  b3%=wert#/256
+  b4%=wert# MOD 256
+  b1%=b1% MOD 256
+  b2%=b2% MOD 256
+  b3%=b3% MOD 256
+  PRINT #nr#,CHR$(b1%);CHR$(b2%);CHR$(b3%);CHR$(b4%);
+RETURN
+'
+PROCEDURE copy_file(name$,nr#)
+  '
+  LOCAL i#
+  '
+  PRINT "Copying: ";filename$(j#);
+  FOR i#=LEN(filename$(j#)) TO 30
+    PRINT " ";
+  NEXT i#
+  IF nr#<>0 THEN
+    OPEN "i",#10,fname$
+    BGET #10,VARPTR(archiv&(pos#/2)),laenge%(nr#)
+    CLOSE #10
+  ELSE
+    archiv&(pos#/2)=ab_diesem&
+    BMOVE VARPTR(offsets%(0)),VARPTR(archiv&((pos#+2)/2)),(file_zahl#+1)*4
+    BMOVE VARPTR(laenge%(0)),VARPTR(archiv&((pos#+2+(file_zahl#+1)*4)/2)),file_zahl#*4
+  ENDIF
+  IF (ice# AND archiv&(pos#/2)=&H4943 AND archiv&(pos#/2+1)=&H4521) OR (crown# AND archiv&(pos#/2)=&H4372 AND archiv&(pos#/2+1)=&H7721) THEN
+    PRINT "  gepackt   ";
+  ELSE
+    PRINT "ungepackt   ";
+  ENDIF
+  PRINT "Länge: ";laenge%(nr#)
+RETURN
+'
+PROCEDURE packen
+  ' Diese Funktion packt alle Files, sofern diese noch nicht gepackt sind
+  '
+  LOCAL p#
+  '
+  file_zahl#=1                             !1. File hat Nummer 1
+  '
+  DO
+    get_zeile
+    p#=INSTR(zeile$," ")
+    ungepackt#=TRUE
+    IF p#=0 THEN
+      p#=LEN(zeile$)
+    ELSE
+      IF INSTR(zeile$,"P",p#)<>0
+        ungepackt#=FALSE
+        ice#=TRUE
+        crown#=FALSE
+      ENDIF
+      IF INSTR(zeile$,"C",p#)<>0
+        ungepackt#=FALSE
+        crown#=TRUE
+        ice#=FALSE
+      ENDIF
+      DEC p#
+    ENDIF
+    LET name$=LEFT$(zeile$,p#)                              !Zeile aus Copylist holen
+    IF (INSTR(name$,".")=0) THEN
+      LET name$=name$+".PKD"
+    ENDIF
+    EXIT IF INSTR(name$,"#")<>0
+    filename$(file_zahl#)=name$                             !Namen merken
+    fname$=quellpfad$+name$
+    PRINT "Checking: ";filename$(file_zahl#)
+    OPEN "i",#10,fname$                             !Datei öffnen
+    laenge%(file_zahl#)=LOF(#10)
+    IF (NOT ungepackt#) AND gleich_packen%=1 THEN
+      BGET #10,VARPTR(check&(0)),4
+      CLOSE #10
+      IF ice# THEN
+        IF check&(0)<>&H4943 OR check&(1)<>&H4521 THEN
+          VOID EXEC(0,"C:\packer\pack_ice.231\ice_231b.prg","?1y"+fname$+CHR$(13)+"n","")
+          ' vOID EXEC(0,"e:\marvin.prg","?1y"+fname$+CHR$(13)+"n","")
+          OPEN "i",#10,fname$
+          laenge%(file_zahl#)=LOF(#10)
+          CLOSE #10
+          PRINT
+        ENDIF
+      ENDIF
+      IF crown# THEN
+        IF check&(0)<>&H4372 OR check&(1)<>&H7721 THEN
+          VOID EXEC(0,"C:\packer\crown\crown.prg","?1n"+fname$+CHR$(13)+"n","")
+          OPEN "i",#10,fname$
+          laenge%(file_zahl#)=LOF(#10)
+          CLOSE #10
+          PRINT
+        ENDIF
+      ENDIF
+    ELSE
+      CLOSE #10
+    ENDIF
+    INC file_zahl#
+  LOOP
+  CLOSE
+RETURN
+'
+PROCEDURE get_param
+  ' Holt sich alle parameter aus der Steuerdatei
+  '
+  OPEN "i",#1,cl$
+  get_zeile
+  quellpfad$=zeile$       !Pfad, aus dem Dateien geholt werden
+  get_zeile
+  zielpfad$=zeile$        !Pfad, in den Archive geschrieben werden
+  get_zeile
+  archiv$=zeile$          !Name der Archive
+  get_zeile
+  fn$=zeile$              !File, in das die #define kommen
+  get_zeile
+  start_groesse#=VAL(zeile$)      !Größe des 1. Archivs
+  get_zeile
+  end_groesse#=VAL(zeile$)        !Größe der nachfolgenden Archive
+  get_zeile
+  ab_diesem&=VAL(zeile$)
+RETURN
+'
+PROCEDURE aufteilung
+  ' Hauptroutine: Verteilt die Files auf die Archive
+  laenge%(0)=(file_zahl#+1)*4+file_zahl#*4+2        !Länge des Offset/LängenFiles
+  filename$(0)="OFFSET.DAT"
+  ar_nr#=1
+  ar_groesse#=0
+  akt#=file_zahl#-1                       !Letztes File
+  first_idx#(0)=file_zahl#
+  REPEAT
+    IF ar_groesse#+laenge%(akt#)>end_groesse# THEN
+      first_idx#(ar_nr#)=akt#+1              !1. File im Archiv
+      INC ar_nr#
+      ar_groesse#=0
+    ENDIF
+    ar_groesse#=ar_groesse#+laenge%(akt#)
+    IF ODD(ar_groesse#) THEN
+      INC ar_groesse#
+    ENDIF
+    DEC akt#
+  UNTIL akt#<0
+  first_idx#(ar_nr#)=0                      !1. Archiv startet bei 0
+  '
+  IF ar_groesse#>start_groesse# THEN
+    first_idx#(ar_nr#)=1                    !Archiv startet bei Eins
+    INC ar_nr#
+    first_idx#(ar_nr#)=0                         !Leeres Archiv bis auf OFFSETS
+  ENDIF
+  '
+RETURN
+'
+PROCEDURE calc_offsets
+  ' Berechnet die Offsets auf die verschiedenen Files
+  FOR i#=ar_nr# TO 1 STEP -1
+    pos#=0
+    IF first_idx#(i#)>=0 THEN
+      FOR j#=first_idx#(i#) TO first_idx#(i#-1)-1
+        offsets%(j#)=pos#+(ar_nr#-i#)*(2^24)
+        pos#=pos#+laenge%(j#)
+        IF ODD(pos#) THEN
+          INC pos#
+        ENDIF
+      NEXT j#
+    ENDIF
+  NEXT i#
+  offsets%(file_zahl#)=offsets%(file_zahl#-1)+laenge%(file_zahl#-1)
+  IF ODD(offsets%(file_zahl#)) THEN
+    INC offsets%(file_zahl#)
+  ENDIF
+RETURN

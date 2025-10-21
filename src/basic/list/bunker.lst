@@ -1,0 +1,98 @@
+'
+' Editor zum Erstellen von Bunkern für "Rings of Medusa II"
+' © 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, Tel: 07151-66437
+'
+DIM bunker#(80,50)
+'
+tuer#=1
+wand#=2
+'
+FOR x#=0 TO 79
+  FOR y#=0 TO 49
+    bunker#(x#,y#)=0                       !Array löschen
+  NEXT y#
+NEXT x#
+'
+bildoben#=TRUE
+posx#=0                                  !Position des Cursors
+posy#=0
+'
+draw_bunker
+'
+REPEAT
+  PRINT AT(posx#+1,posy#+1);"*";
+  REPEAT
+    key$=INKEY$
+  UNTIL key$<>""
+  '
+  draw_item(posx#,posy#)                          !Cursor weg
+  '
+  IF key$=CHR$(0)+CHR$(72) AND posy#>0 THEN
+    DEC posy#
+  ENDIF
+  IF key$=CHR$(0)+CHR$(80) AND posy#<47 THEN
+    INC posy#
+  ENDIF
+  IF key$=CHR$(0)+CHR$(75) AND posx#>0 THEN
+    DEC posx#
+  ENDIF
+  IF key$=CHR$(0)+CHR$(77) AND posx#<78 THEN
+    INC posx#
+  ENDIF
+  IF UPPER$(keys$)="L" THEN
+    lade_bunker
+  ENDIF
+  IF UPPER$(key$)="S" THEN
+    speicher_bunker
+  ENDIF
+  IF key$=" " THEN
+    bunker#(posx#,posy#)=wand#
+  ENDIF
+  IF UPPER$(key$)="T" THEN
+    bunker#(posx#,posy#)=tuer#
+  ENDIF
+  IF keys$=CHR$(27) THEN
+    ask("Wirklich beenden? J/N ")
+    IF UPPER$(antwort$)<>"J" THEN
+      key$="A"
+    ENDIF
+  ENDIF
+UNTIL key$=CHR$(27)
+'
+END
+'
+PROCEDURE ask(frage$)
+  PRINT AT(0,24);frage$;
+  INPUT antwort$
+RETURN
+'
+PROCEDURE draw_bunker
+  LOCAL x#,y#
+  '
+  CLS
+  '
+  IF bildoben# THEN
+    starty#=0
+  ELSE
+    starty#=24
+  ENDIF
+  FOR x#=0 TO 79
+    FOR y#=starty# TO starty#+24
+      draw_item(x#,y#-starty#,x#,y#)
+    NEXT y#
+  NEXT x#
+  '
+RETURN
+'
+PROCEDURE draw_item(x#,y#,xb#,yb#)
+  PRINT AT(x#+1,y#+1);
+  IF bunker#(xb#,yb#)=tuer# THEN
+    PRINT "T";
+  ELSE
+    IF bunker#(xb#,yb#)=wand# THEN
+      PRINT "X";
+    ELSE
+      PRINT " ";
+    ENDIF
+  ENDIF
+RETURN

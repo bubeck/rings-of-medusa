@@ -1,0 +1,20 @@
+;Linker Befehlsdatei fÅr Rings of Medusa II
+;(C) 1990 by 	Till Bubeck
+;			Ziegeleistr. 28
+;			7056 Weinstadt
+;			Tel.: 07151-66437
+O:\INIT.O
+O:\LEISTEN.O
+O:\RASTER.O
+O:\MAIN.O
+O:\ATARI.O
+O:\LAND.O
+O:\IO.O
+O:\DUNGEON.O						
+O:\FIGHT.O						
+O:\CITY.O							
+O:\CITY2.O						
+O:\LIB\TCFLTLIB.LIB
+O:\LIB\TCSTDLIB.LIB
+O:\LIB\TCTOSLIB.LIB
+
