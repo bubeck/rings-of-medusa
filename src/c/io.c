@@ -1,5 +1,5 @@
   
-/* Dieser Part stellt alle wichtigen EIN/AUSGABE-Routinen zur VerfÅgung,
+/* Dieser Part stellt alle wichtigen EIN/AUSGABE-Routinen zur Verf√ºgung,
    wie z.B. die Spritedarstellung, die Schriftausgabe etc...
 
    Copyright 1989 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt
@@ -78,7 +78,7 @@ void writexy_trans(farbe,x,y,string)
 int farbe,x,y;
 char string[];
 {
-  /* Gibt String aus, aber Transparent, d.h. ohne Zerstîren des Backgrounds */
+  /* Gibt String aus, aber Transparent, d.h. ohne Zerst√∂ren des Backgrounds */
   int i;
   int x_anfang;
 
@@ -97,7 +97,7 @@ void writexy_fast(x1,y1,string)
 int x1,y1;
 char string[];
 {
-  /* Gibt String aus, sehr schnell, Schriftfarbe weiû auf schwarz */
+  /* Gibt String aus, sehr schnell, Schriftfarbe wei√ü auf schwarz */
   register int i;
 
   for(i=0;string[i]!=0;i++,x1+=4) char_fast(x1,y1,string[i]);
@@ -123,7 +123,7 @@ FLAG yes_no(string)
 char string[];
 {
   /* Macht eine Ja/Nein Abfrage */
-  /* Gibt TRUE zurÅck wenn Ja angeklickt */
+  /* Gibt TRUE zur√ºck wenn Ja angeklickt */
   long old_buttons;
 
 	show_window(string);
@@ -153,9 +153,9 @@ int x,y;
 char string[];      
 {
   /* Zeigt das Fenster an der Position an */
-  int len[5];               /* StringlÑngen */
+  int len[5];               /* Stringl√§ngen */
   int anzahl;
-  int delta_y;               /* Delta Y fÅr die Strings */
+  int delta_y;               /* Delta Y f√ºr die Strings */
   int i,j;
 	int ob_nr;
 	char string_neu[150];
@@ -168,7 +168,7 @@ char string[];
 	
 	while (is_key()) wait_key();			/* Tastaturbuffer leeren */
 	
-  windx=x; windy=y;         /* Koordinaten des Fensters fÅr Hide_window sichern */
+  windx=x; windy=y;         /* Koordinaten des Fensters f√ºr Hide_window sichern */
 
 	laenge=strlen(string);
 
@@ -184,7 +184,7 @@ char string[];
 	/* Die richtige Breite raussuchen: */	
 	for(breite=20;breite<35;breite++) {
 		strcpy(string_format,string_neu);
-		if (word_wrap(breite,zeilen,string_format)) break; 						/* Paût es bei dieser Breite? */
+		if (word_wrap(breite,zeilen,string_format)) break; 						/* Pa√üt es bei dieser Breite? */
 		}
 
   for(i=0;i<5;i++) {
@@ -194,7 +194,7 @@ char string[];
   
   for(anzahl=0;anzahl<5;anzahl++) if (len[anzahl]==0) break;
 
-  if (anzahl>0) delta_y=40/anzahl;        /* Delta_Y fÅr die Zeilen bestimmen */
+  if (anzahl>0) delta_y=40/anzahl;        /* Delta_Y f√ºr die Zeilen bestimmen */
 
   wind_aktiv=TRUE;          /* Fenster ist aktiv */
   Hm();
@@ -203,7 +203,7 @@ char string[];
   else ob_nr=1;
 
 	/* Da bei der Amigaversion dieser raster_transp mit einer Zielbreite von !=320 nicht funktioniert,
-		 muûte ich mir so behelfen: */
+		 mu√üte ich mir so behelfen: */
 		 
 #ifdef AMIGA
 	memset(window_back,0,sizeof(window_back));
@@ -234,9 +234,9 @@ char *zeilen[5],string[];
 {
 	/* Bei String handelt es sich um einen langen String, in dem keine doppelten Spaces
 		 mehr vorkommen, und der auf die 5 Zeilen verteilt wird.
-		 Achtung! Der String wird verÑndert, es werden /0 eingefÅgt. Die Startadressen
-		 der 5 Zeilen werden in zeilen[5] zurÅckgegeben. Sollte eine der Zeilen Åberlang sein,
-		 also lÑnger als die angegebene Breite, wird FALSE zurÅckgegeben, andernfalls TRUE. */
+		 Achtung! Der String wird ver√§ndert, es werden /0 eingef√ºgt. Die Startadressen
+		 der 5 Zeilen werden in zeilen[5] zur√ºckgegeben. Sollte eine der Zeilen √ºberlang sein,
+		 also l√§nger als die angegebene Breite, wird FALSE zur√ºckgegeben, andernfalls TRUE. */
 		 
 	int laenge;
 	int startpos,endpos;
@@ -252,7 +252,7 @@ char *zeilen[5],string[];
 			zeilen[zeile]=&string[startpos];					/* Hier startet die Zeile */
 			for(i=endpos=startpos,j=0;i<=laenge;j++,i++) 
 				if (string[i]==' ' || string[i]==0) {
-			  	if (j<=breite) endpos=i;											/* Paût Wort noch in Zeile? */
+			  	if (j<=breite) endpos=i;											/* Pa√üt Wort noch in Zeile? */
 			  	else if (startpos==endpos) endpos=i;					/* Nein, Wort zu lang? -> nehmen */
 			  	}
 			if (startpos==endpos) endpos=i;									/* Kein Space mehr in letzter Zeile */
@@ -261,7 +261,7 @@ char *zeilen[5],string[];
 			}
 		}
 
-	/* öberprÅfen, ob es öberlÑngen gab: */	
+	/* √úberpr√ºfen, ob es √úberl√§ngen gab: */	
 	for(zeile=0;zeile<5;zeile++) 
 		if (strlen(zeilen[zeile])>breite) return(FALSE);
 	return(TRUE);
@@ -270,11 +270,11 @@ char *zeilen[5],string[];
 char *cdecl build(char *format,...)						/* no prototype */
 {
   /* Achtung! Diese Funktion hat eine variable Anzahl von Parametern... 
-  	 sie arbeitet Ñhnlich wie sprintf, es wird nÑmlich in den Formatstring die Parameter
-  	 eingesetzt, und zwar kann im Formatstring die Reihenfolge geÑndert werden.
-  	 Dies hat den Grund, damit öbersetzungen den Satzbau eines Satzes verÑndert kînnen, in
+  	 sie arbeitet √§hnlich wie sprintf, es wird n√§mlich in den Formatstring die Parameter
+  	 eingesetzt, und zwar kann im Formatstring die Reihenfolge ge√§ndert werden.
+  	 Dies hat den Grund, damit √úbersetzungen den Satzbau eines Satzes ver√§ndert k√∂nnen, in
   	 dem ein Objekt vorkommt.
-  	 Der Kommentar 'no prototype' sagt meinem automatischen Prototypengenerator, daû er fÅr
+  	 Der Kommentar 'no prototype' sagt meinem automatischen Prototypengenerator, da√ü er f√ºr
   	 diese Funktion keinen Prototyp gegenerieren soll. Er steht in GLOBAL.C */
 
 	va_list argpointer;									/* Pointer auf die variablen Argumente */
@@ -290,18 +290,18 @@ char *cdecl build(char *format,...)						/* no prototype */
   for(i=0;i<=len;i++) {
   	build_str[j++]=format[i];
   	if (format[i]=='#') {							/* Formatkommando? */
-			i++;														/* Parameter Åberspringen */
+			i++;														/* Parameter √ºberspringen */
   		if (format[i]!='#') {						/* Noch ein '#'? */
 				j--;
   			nr=format[i]-'0';							/* Nummer des Parameters bestimmen */
   			if (nr<0 || nr>9) nr=0;
   			if (nr>param_max) {						/* Soviel Parameter habe ich noch nicht geholt */
-  				va_start(argpointer,format);				/* Argumentpointer rÅcksetzen */
+  				va_start(argpointer,format);				/* Argumentpointer r√ºcksetzen */
   				for(k=0;k<=nr;k++) {
   					string[k]=va_arg(argpointer,char *);		/* String abholen */
   					}
   				param_max=nr;								/* Soviel habe ich jetzt geholt */
-  				va_end(argpointer);						/* und rÅcksetzen */
+  				va_end(argpointer);						/* und r√ºcksetzen */
 					}
   			len2=strlen(string[nr]);
   			for(z=0;z<len2;z++) build_str[j++]=*(string[nr]+z);
@@ -332,18 +332,18 @@ void money_alert()
 void dungeon_alert(string)
 char string[];
 {
-	/* Da in den Dungeons manchmal die Palette schwarz ist, muû die Alertbox in der
+	/* Da in den Dungeons manchmal die Palette schwarz ist, mu√ü die Alertbox in der
 	   vollen Helligkeit dargestelklt werden. */
 
 	if (helligkeit>1) 	
-		alert(string);				/* Alertbox in den ReagenzglÑsern */
+		alert(string);				/* Alertbox in den Reagenzgl√§sern */
 }
 
 void alert(string)
 char string[];
 {
   /* Zeigt Alertbox in der Mitte des Bildschirms an, wartet auf Klick und
-     lîscht die Alertbox wieder weg */
+     l√∂scht die Alertbox wieder weg */
 
 	alertxy(106,90,string);
 }
@@ -362,7 +362,7 @@ void grow_box(x0,y0,breite,hoehe)
 int x0,y0;
 int breite,hoehe;
 {
-	/* Zeichnet eine sich îffnende Box */
+	/* Zeichnet eine sich √∂ffnende Box */
 	int old_line;
 	int x1,y1,x2,y2;
 	float x,y;
@@ -412,22 +412,22 @@ int box_x,box_y,box_breite,box_hoehe;
 
 void draw_shapes()
 {
-  /* GrundsÑtzliches zur hier verwendeten 2-Bildschirmtechnik:
-     Zu sehen ist grundsÑtzlich der Screen1, aufgebaut wird auf Screen2!
+  /* Grunds√§tzliches zur hier verwendeten 2-Bildschirmtechnik:
+     Zu sehen ist grunds√§tzlich der Screen1, aufgebaut wird auf Screen2!
      Der Mauszeiger ist demzufolge auf Screen1 zu sehen. */
 
   draw_mobs();                      /* Zeichnet die Mobs auf Screen2 */
   swap_screens();                   /* Screens vertauschen, Mauscursor .. */
-  delete_mobs();                    /* Alte Mobs auf altem Screen lîschen */
+  delete_mobs();                    /* Alte Mobs auf altem Screen l√∂schen */
 }
 
 void draw_mobs()
 {
-  /* zeichnet sÑmtliche Sprites auf Screen2 */
+  /* zeichnet s√§mtliche Sprites auf Screen2 */
   register int i;
   long *save;
 
-  /* copy_zeilen(scr1+(leiste_y-13)*160L,scr2+(leiste_y-13)*160L,5); */    /* Leiste Åbertragen */
+  /* copy_zeilen(scr1+(leiste_y-13)*160L,scr2+(leiste_y-13)*160L,5); */    /* Leiste √ºbertragen */
   cpy_raster(scr1,scr2,0,leiste_y-13,319,leiste_y-9,0,leiste_y-13);
 
   if (scr2==scrn_1) save=(long *)save1;
@@ -441,14 +441,14 @@ void draw_mobs()
 
 void delete_mobs()
 {
-  /* Lîscht alle alten Mobs auf altem Screen */
+  /* L√∂scht alle alten Mobs auf altem Screen */
   long *save;
   register int i;
 
-  if (scr2==scrn_1) save=(long *)save1;       /* Savebuf fÅr Screen 1 */
+  if (scr2==scrn_1) save=(long *)save1;       /* Savebuf f√ºr Screen 1 */
   else save=(long *)save2;
 
-  for(i=SPR_MAX-1;i>=0;i--) {          /* von hinten lîschen (wegen öberschneidungen) */
+  for(i=SPR_MAX-1;i>=0;i--) {          /* von hinten l√∂schen (wegen √úberschneidungen) */
     if (save[i*2]!=0) undraw_shape(save,i);
     }
 }
@@ -458,7 +458,7 @@ int anzahl;
 {
   /* Wartet einmalig die angegebene Anzahl an VBL's */
   
-  wait_sync(0);											/* Timer rÅcksetzen */
+  wait_sync(0);											/* Timer r√ºcksetzen */
   wait_sync(anzahl);								/* und solange warten */
 }
 
@@ -468,7 +468,7 @@ int anzahl;
 	/* Wartet bis 'anzahl' VBLs seit letztem wait_sync() vergangen sind. */
 
   while (sync_ct+anzahl>vbl_ct) ;
-	sync_ct=vbl_ct;									/* VBL-Counter rÅcksetzen */
+	sync_ct=vbl_ct;									/* VBL-Counter r√ºcksetzen */
 }
 
 void wait_sync_klick(anzahl)
@@ -614,7 +614,7 @@ char grund[];
 void init_oben()
 {
   /* Initialisiert die obere Leiste */
-  a1[0]=b1[0]=c1[0]=0;      /* nÑchsten Print ausfÅhren */
+  a1[0]=b1[0]=c1[0]=0;      /* n√§chsten Print ausf√ºhren */
 }
 
 void show_pos()
@@ -630,7 +630,7 @@ int pos;                /* Position in der Weltkarte */
 int x,y;                /* Position in Pixel */
 {
   /* Berechnet die Position dieses Punktes, und stellt einen string zusammen */
-  /* Gibt die Adresse des Strings zurÅck */
+  /* Gibt die Adresse des Strings zur√ºck */
   register int grad,minuten;
   register long abstand;
   register int pixeln_s;
@@ -690,7 +690,7 @@ void klick()
 FLAG maus_in(x1,y1,x2,y2)
 int x1,y1,x2,y2;
 {
-  /* PrÅft ob Mauszeiger in angegebenen Bereich geklickt hat */
+  /* Pr√ºft ob Mauszeiger in angegebenen Bereich geklickt hat */
 
   return (mk==1 && mx>=x1 && mx<=x2 && my>=y1 && my<=y2);
 }
@@ -714,7 +714,7 @@ void button_leiste()
   int i;
   long nr;
 
-  button = NOTHING;         /* Nichts wurde angewÑhlt */
+  button = NOTHING;         /* Nichts wurde angew√§hlt */
 
   do {
     hol_maus();
@@ -749,7 +749,7 @@ void button_leiste()
 
 void pause_game()
 {
-  /* Spieler hat in der unteren Leiste den Mauszeiger lÑnger nicht bewegt */
+  /* Spieler hat in der unteren Leiste den Mauszeiger l√§nger nicht bewegt */
   int mx2,my2;
 
   fade_out();                               /* Bildschirm ausblenden */
@@ -760,7 +760,7 @@ void pause_game()
   while(mousex==mx2 && mousey==my2 && !is_key()) ;        /* Warten bis Mausbewegt oder Taste */
 
   fade_in();                                   /* Bildschirm wieder an */
-  mk=0;                         /* Kein Knopf gedrÅckt */
+  mk=0;                         /* Kein Knopf gedr√ºckt */
 }
 
 void schuldner()
@@ -807,7 +807,7 @@ long grenze;
   /* Zwischen 0..(grenze-1) */
   long zahl;
 
-  zahl=((long)rand()<<15)+rand();					/* entsprechend groûe Zufallszahl */
+  zahl=((long)rand()<<15)+rand();					/* entsprechend gro√üe Zufallszahl */
   return(zahl%grenze);
 }
 
@@ -830,7 +830,7 @@ char eingabe[];
 
   Hm();
 
-  while (get_key()!=-1) ;          /* Tastaturpuffer lîschen */
+  while (get_key()!=-1) ;          /* Tastaturpuffer l√∂schen */
 
   zeichen[1]='@';           /* Cursor */
   zeichen[2]=0;
@@ -851,11 +851,11 @@ char eingabe[];
       if (pos<len && zeichen[0]!=13) {
         if (islower((int)taste)) toupper(taste);
 				switch ((int)taste) {
-					case 'Å': taste='ö'; break;
-					case 'î': taste='ô'; break;
-					case 'Ñ': taste='é'; break;
+					case '√º': taste='√ú'; break;
+					case '√∂': taste='√ñ'; break;
+					case '√§': taste='√Ñ'; break;
 					}
-        if (isalnum((int)taste) || (char)taste==' ' || (char)taste=='ö' || (char)taste=='ô' || (char)taste=='é') {
+        if (isalnum((int)taste) || (char)taste==' ' || (char)taste=='√ú' || (char)taste=='√ñ' || (char)taste=='√Ñ') {
           zeichen[0]=(char)taste;
           writexy(0,x+pos*4,y,zeichen);
           eingabe[pos++]=zeichen[0];
@@ -883,7 +883,7 @@ int x1,y1,x2,y2;
 void drec(x1,y1,x2,y2)
 int x1,y1,x2,y2;
 {
-  /* Lîscht einen Rahmen auf dem Formularuntergrund und
+  /* L√∂scht einen Rahmen auf dem Formularuntergrund und
      wartet bis Mausknopf losgelassen wird */
 
   Hm();
@@ -895,7 +895,7 @@ int x1,y1,x2,y2;
 void Krec(x1,y1,x2,y2)
 int x1,y1,x2,y2;
 {
-  /* Zeichnet einen Rahmen, wartet bis Maus losgelassen wird, und lîscht
+  /* Zeichnet einen Rahmen, wartet bis Maus losgelassen wird, und l√∂scht
      den Rahmen wieder */
 
   rec(x1,y1,x2,y2);
@@ -928,7 +928,7 @@ char *str(len,zahl)
 int len;
 long zahl;
 {
-  /* wandelt zahl in string und fÅllt auf die LÑnge von len Zeichen mit
+  /* wandelt zahl in string und f√ºllt auf die L√§nge von len Zeichen mit
      Spaces auf. */
   register int pos;
   register long long_wert;
@@ -971,7 +971,7 @@ void dlstr(datum,string)
 long datum;
 char string[];
 {
-  /* wandelt Datum in ausfÅhrlichen Klartext z.B. January, 1st 1432 */
+  /* wandelt Datum in ausf√ºhrlichen Klartext z.B. January, 1st 1432 */
   int month,year,day;
   int i;
   
@@ -1064,7 +1064,7 @@ void *adr;
 long offset;
 long laenge;
 {
-  /* LÑdte File, entweder von der Diskette/Festplatte oder aus der
+  /* L√§dte File, entweder von der Diskette/Festplatte oder aus der
   	 Ramdisk. */
 
   if (laenge>file_len[file_nr]-offset)
@@ -1082,8 +1082,8 @@ long load_bibliothek(file_nr,buffer)
 int file_nr;															/* Nummer des Files aus der Bibliothek */
 void *buffer;
 {
-  /* LÑdt eine Datei aus der Bibliothek und entpackt sie mit dem ICE!-Packer, falls sie
-     gepackt ist. Gibt die LÑnge der ungepackten Datei zurÅck */
+  /* L√§dt eine Datei aus der Bibliothek und entpackt sie mit dem ICE!-Packer, falls sie
+     gepackt ist. Gibt die L√§nge der ungepackten Datei zur√ºck */
 	long offset;
 	char *ziel;
 	long laenge;
@@ -1134,7 +1134,7 @@ void Hm()
 
   if (maus_zaehler==0) {
     ms_on=FALSE;               /* VBL-Maus anhalten */
-    undraw_mouse(scr1);               /* Maus weglîschen */
+    undraw_mouse(scr1);               /* Maus wegl√∂schen */
     }
 
   maus_zaehler++;               /* Sooft abgeschaltet */
@@ -1157,7 +1157,7 @@ void sprite_init()
   long *save;
 
   for(i=0;i<SPR_MAX*2;i++) {
-    save1[i]=0L;                   /* Alle Spritehintergrundpointer ungÅltig */
+    save1[i]=0L;                   /* Alle Spritehintergrundpointer ung√ºltig */
     save2[i]=0L;
     }
 
@@ -1197,7 +1197,7 @@ int y;											/* Startzeile y */
 char *strapp(str1,str2)
 char str1[],str2[];
 {
-  /* HÑngt String2 am String1 an */
+  /* H√§ngt String2 am String1 an */
 
   strcpy(&str1[strlen(str1)],str2);
   return(str1);
@@ -1206,7 +1206,7 @@ char str1[],str2[];
 void clear_screen(adr)
 void *adr;
 {
-  /* lîscht einen Bildschirm, der beim ST 32000 Bytes groû ist */
+  /* l√∂scht einen Bildschirm, der beim ST 32000 Bytes gro√ü ist */
 	
 	memset(adr,0,32000L);
 }
@@ -1220,14 +1220,14 @@ void *quelle,*ziel;
   		cpy_raster(quelle,ziel,0,0,319,199,0,0);			*/
   
 	Hm();
-	memcpy(ziel,quelle,32000L);										/* Ein Bildschirm ist 32000 Bytes groû */
+	memcpy(ziel,quelle,32000L);										/* Ein Bildschirm ist 32000 Bytes gro√ü */
 	Sm();
 }
 
 void vbl_routine()
 {
   if (ms_on) {
-    undraw_mouse(scr1);                   /* Maus auf Screen1 lîschen */
+    undraw_mouse(scr1);                   /* Maus auf Screen1 l√∂schen */
     draw_mouse(scr1,mousex,mousey);    		/* Auf Screen1 zeichnen */
     }
   if (unlim_money_cheat) money=1000000L;         /* Immer 1000000 */
@@ -1256,7 +1256,7 @@ void swap_screens()
 
   if (speed!=0) wait_sync(speed);                      /* Wartet auf 2. VBL */
 
-  if (ms_on) undraw_mouse(scr2);             /* Alte Maus auf Screen1 lîschen */
+  if (ms_on) undraw_mouse(scr2);             /* Alte Maus auf Screen1 l√∂schen */
 
 	logbase=scr1;
 }
@@ -1278,7 +1278,7 @@ void switch_screens()
 void init_maus()
 {
   /* Initialsiert die Mausroutinen, d.h. die eigene Mausroutine wird ins
-     System eingehÑngt */
+     System eingeh√§ngt */
 
   ms_on=FALSE;                    /* VBL Maus aus */
   set_mouse(0);                    /* Kreuz ist angesagt */
@@ -1288,8 +1288,8 @@ void init_maus()
   mousek=0;
 
   save_1[0]=0;
-  save_2[0]=0;                      /* Buffer sind ungÅltig */
-  scrn_1=scr1;                      /* fÅr Vergleich merken */
+  save_2[0]=0;                      /* Buffer sind ung√ºltig */
+  scrn_1=scr1;                      /* f√ºr Vergleich merken */
 
   eintrag=init_vbl(vbl_routine);            /* in VBL-Queue eintragen */
 
@@ -1299,4 +1299,3 @@ void init_maus()
 }
 
 
-

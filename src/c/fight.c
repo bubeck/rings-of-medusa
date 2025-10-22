@@ -9,7 +9,7 @@
 
 FLAG show_gegner;               /* Soll beim Kampf die Werte des Gegners angezeigt werden? */
 
-int medusa_army[EINHEITEN] = {             /* Grîûe von Medusa's Army */
+int medusa_army[EINHEITEN] = {             /* Gr√∂√üe von Medusa's Army */
   10000L,                    /* Inf */
   7000L,                    /* Cav */
   1500L,                    /* Art */
@@ -27,14 +27,14 @@ void Seeschlacht(int nummer);
 
 void test_fight()
 {
-  /* öberprÅft, ob Spieler mit einem Gegner zusammengetroffen ist */
+  /* √úberpr√ºft, ob Spieler mit einem Gegner zusammengetroffen ist */
   int i;
 
   for(i=0;i<GEGNER;i++)
     if (steuer[i].heimat!=-1)
       if (steuer[i].weltpos==pos_welt && abs(sx[0]-steuer[i].x)<3 &&
           abs(sy[0]-steuer[i].y)<3)
-        if (heute-last_fight>2) {          /* mindestens 2 Tage zwischen 2 KÑmpfen */
+        if (heute-last_fight>2) {          /* mindestens 2 Tage zwischen 2 K√§mpfen */
           if (steuer[i].auf_wasser && auf_schiff)       /* Beide im Wasser? */
             Seeschlacht(i+1);
           if (!steuer[i].auf_wasser && !auf_schiff)     /* Beide an Land? */
@@ -68,7 +68,7 @@ long tote;
     for(i=0;i<EIGENSCHAFTEN;i++) training[0][company][i]=50.0;
     }
 
-  for(i=0;i<3;i++)                 /* Alle AusrÅstungen weitergeben */
+  for(i=0;i<3;i++)                 /* Alle Ausr√ºstungen weitergeben */
     if (ausruestung[i][company]>armeeteil[0][company])
       ausruestung[i][company]=armeeteil[0][company];
 }
@@ -77,7 +77,7 @@ void angriff_spieler_stadt(num,armeenr)
 int num;                                /* Nummer der Stadt */
 int armeenr;                            /* Nummer der Armee */
 {
-  /* Gegner greift eine Stadt an, die dem Spieler gehîrt */
+  /* Gegner greift eine Stadt an, die dem Spieler geh√∂rt */
   int i,j;
 	void *oldlogbase;
 	float train[EINHEITEN][EIGENSCHAFTEN];
@@ -103,7 +103,7 @@ int armeenr;                            /* Nummer der Armee */
 
 	oldlogbase=logbase;
 	logbase=hlpbuf;
-	line(0,0,63,319,63);											/* Oberste Formularzeile lîschen */
+	line(0,0,63,319,63);											/* Oberste Formularzeile l√∂schen */
 	logbase=oldlogbase;
 	
 	/* Werte in Floats kopieren */
@@ -119,7 +119,7 @@ int armeenr;                            /* Nummer der Armee */
   motiv[0]=100;                     /* Stadt zu 100% motiviert */
 
   for(i=0;i<16;i+=2) {
-    deckung[i]=320-deckung_city[i+16];  /* Deckungswerte der Stadt Åbergeben */
+    deckung[i]=320-deckung_city[i+16];  /* Deckungswerte der Stadt √ºbergeben */
     deckung[i+1]=deckung_city[i+17];
     deckung[16+i]=deckung_kampf[i+16];  /* Gegnerwerte */
     deckung[17+i]=deckung_kampf[i+17];
@@ -130,7 +130,7 @@ int armeenr;                            /* Nummer der Armee */
       train[i][j]=stadt_training[num][i][j]/100.0;
       }
 
-  calc_it(1,EBENE,training[armeenr],motivation[armeenr]);   /* StÑrken der Armeen berechnen */
+  calc_it(1,EBENE,training[armeenr],motivation[armeenr]);   /* St√§rken der Armeen berechnen */
   calc_it(0,EBENE,train,100.0);                 /* Stadt ist voll motiviert */
 
   init_kampf_sprites();                     /* Liest die Kampfsprites */
@@ -147,7 +147,7 @@ int armeenr;                            /* Nummer der Armee */
   stadt_nr=num;                             /* Nummer der Stadt, die angegriffen wird */
   kampf(gegnername[armeenr-1]);
 
-  /* Soldaten in Original Array Åbertragen */
+  /* Soldaten in Original Array √ºbertragen */
   armeegesamt[armeenr]=0;
   for(i=0;i<EINHEITEN;i++) {
     armeeteil[armeenr][i]=(long)kampf_teil[1][i];
@@ -155,12 +155,12 @@ int armeenr;                            /* Nummer der Armee */
     stadt_armee[num][i]=kampf_teil[0][i];
     }
 
-  motivation[armeenr]=motiv[1];           /* Motivation wieder zurÅckÅbergeben  */
+  motivation[armeenr]=motiv[1];           /* Motivation wieder zur√ºck√ºbergeben  */
 
   restore_sprites();
 
   if (kampf_gesamt[0]<1.0) {                /* Stadt hat verloren */
-    belong[num]=armeenr-1;                  /* Stadt gehîrt jetzt Gegner */
+    belong[num]=armeenr-1;                  /* Stadt geh√∂rt jetzt Gegner */
     }
 
   option_city_ende();
@@ -196,7 +196,7 @@ int num;
 
 	oldlogbase=logbase;
 	logbase=hlpbuf;
-	line(0,0,63,319,63);											/* Oberste Formularzeile lîschen */
+	line(0,0,63,319,63);											/* Oberste Formularzeile l√∂schen */
 	logbase=oldlogbase;
 
     /* Werte in Floats kopieren */
@@ -211,18 +211,18 @@ int num;
   motiv[0]=motivation[0];
   motiv[1]=100;                     /* zu 100% motiviert */
 
-  for(i=0;i<16*2;i++) deckung[i]=deckung_city[i];  /* Deckungswerte Åbergeben */
+  for(i=0;i<16*2;i++) deckung[i]=deckung_city[i];  /* Deckungswerte √ºbergeben */
 
   for(i=0;i<EINHEITEN;i++)
     for(j=0;j<EIGENSCHAFTEN;j++)
       train[i][j]=stadt_training[num][i][j]/100.0;
 
-  calc_it(0,EBENE,training[0],motivation[0]);   /* StÑrken der Armeen berechnen */
+  calc_it(0,EBENE,training[0],motivation[0]);   /* St√§rken der Armeen berechnen */
   calc_it(1,EBENE,train,100.0);                 /* Voll motiviert */
 
   if (staerke_cheat)
     for(i=0;i<EINHEITEN;i++)
-      kampfkraft[0][i]*=1.5;                    /* stÑrker */
+      kampfkraft[0][i]*=1.5;                    /* st√§rker */
 
   /* Jetzt noch die Armory reinrechnen: */
   for(i=0;i<EINHEITEN;i++) {
@@ -231,7 +231,7 @@ int num;
       if (armeeteil[0][i]!=0)
         proz=(float)ausruestung[j][i]/armeeteil[0][i];
       else proz=0.0;
-      proz_summe+=proz*0.333333333;                /* Jede AusrÅstung bringt 33% */
+      proz_summe+=proz*0.333333333;                /* Jede Ausr√ºstung bringt 33% */
       }
     kampfkraft[0][i]*=proz_summe;
 
@@ -240,7 +240,7 @@ int num;
       if (stadt_armee[num][i]!=0)
         proz=(float)stadt_aus[num][j][i]/stadt_armee[num][i];
       else proz=0.0;
-      proz_summe+=proz*0.333333333;                /* Jede AusrÅstung bringt 33% */
+      proz_summe+=proz*0.333333333;                /* Jede Ausr√ºstung bringt 33% */
       }
     kampfkraft[1][i]*=proz_summe;
     }
@@ -255,7 +255,7 @@ int num;
   show_ground();                            /* Obere Leiste beschriften */
   sprite_init();                            /* Sprites vorbereiten */
 
-  demo_angriff=FALSE;                       /* Spieler kann Einfluû nehmen */
+  demo_angriff=FALSE;                       /* Spieler kann Einflu√ü nehmen */
   kampf(c_name[num]);
 
   /* Einheiten angleichen */
@@ -264,12 +264,12 @@ int num;
     minus_einheit(i,tote);
     }
 
-  /* Gegnerische Armee in Originalarray Åbertragen: */
+  /* Gegnerische Armee in Originalarray √ºbertragen: */
   for(i=0;i<EINHEITEN;i++) {
     stadt_armee[num][i]=kampf_teil[1][i];
     }
 
-  motivation[0]=motiv[0];           /* Motivation wieder zurÅckÅbergeben  */
+  motivation[0]=motiv[0];           /* Motivation wieder zur√ºck√ºbergeben  */
 
   restore_sprites();
 
@@ -283,7 +283,7 @@ int num;
   option_city_ende();
 
   if (kampf_gesamt[1]<1.0) {               /* Stadt hat verloren */
-    belong[num]=-1;                         /* Stadt gehîrt jetzt Spieler */
+    belong[num]=-1;                         /* Stadt geh√∂rt jetzt Spieler */
     citynum=num;
     }
   else {                                    /* Stadt hat gewonnen */
@@ -302,7 +302,7 @@ int nr;
   /* Spieler ist mit Armee nr zusammengetroffen */
   int i,j;
   long gewinn;
-  long armeestaerke;                    /* StÑrke der gegneri. Armee */
+  long armeestaerke;                    /* St√§rke der gegneri. Armee */
   long tote;
   float proz,proz_summe;
 	void *oldlogbase;
@@ -314,7 +314,7 @@ int nr;
   Hm();
   show_window(romstr540);
 
-  last_fight=heute;                 /* Heute wurde zuletzt gekÑmpft */
+  last_fight=heute;                 /* Heute wurde zuletzt gek√§mpft */
 
   loc=CITY;
   leiste_y=64;
@@ -330,7 +330,7 @@ int nr;
 
 	oldlogbase=logbase;
 	logbase=hlpbuf;
-	line(0,0,63,319,63);											/* Oberste Formularzeile lîschen */
+	line(0,0,63,319,63);											/* Oberste Formularzeile l√∂schen */
 	logbase=oldlogbase;
 
     /* Werte in Floats kopieren */
@@ -345,24 +345,24 @@ int nr;
   motiv[0]=motivation[0];
   motiv[1]=motivation[nr];
 
-  for(i=0;i<16*2;i++) deckung[i]=deckung_kampf[i];  /* Deckungswerte Åbergeben */
+  for(i=0;i<16*2;i++) deckung[i]=deckung_kampf[i];  /* Deckungswerte √ºbergeben */
 
-  calc_staerke(0);                  /* StÑrken der Armeen berechnen */
+  calc_staerke(0);                  /* St√§rken der Armeen berechnen */
   calc_staerke(nr);
 
   if (staerke_cheat)
     for(i=0;i<EINHEITEN;i++)
-      kampfkraft[0][i]*=1.5;                    /* stÑrker */
+      kampfkraft[0][i]*=1.5;                    /* st√§rker */
 
   /* Jetzt noch die Armory reinrechnen: */
   for(i=0;i<EINHEITEN;i++) {
-    kampfkraft[1][i]*=1.66666666;                 /* gegner ist zu 66% ausgerÅstet */
+    kampfkraft[1][i]*=1.66666666;                 /* gegner ist zu 66% ausger√ºstet */
     proz_summe=1.0;
     for(j=0;j<3;j++) {
       if (armeeteil[0][i]!=0)
         proz=(float)ausruestung[j][i]/armeeteil[0][i];
       else proz=0.0;
-      proz_summe+=proz*0.333333333;                /* Jede AusrÅstung bringt 33% */
+      proz_summe+=proz*0.333333333;                /* Jede Ausr√ºstung bringt 33% */
       }
     kampfkraft[0][i]*=proz_summe;
     }
@@ -385,14 +385,14 @@ int nr;
     minus_einheit(i,tote);
     }
 
-  /* Gegnerische Armee in Originalarray Åbertragen: */
+  /* Gegnerische Armee in Originalarray √ºbertragen: */
   armeegesamt[nr]=0;
   for(i=0;i<EINHEITEN;i++) {
     armeeteil[nr][i]=(long)kampf_teil[1][i];
     armeegesamt[nr]+=armeeteil[nr][i];
     }
 
-  motivation[0]=motiv[0];           /* Motivation wieder zurÅckÅbergeben  */
+  motivation[0]=motiv[0];           /* Motivation wieder zur√ºck√ºbergeben  */
   motivation[nr]=motiv[1];
 
   if (!geeinigt) {                      /* Gewinnverteilung nur bei Kampf */
@@ -408,10 +408,10 @@ int nr;
       for(i=0;i<WAREN;i++) ycargo_menge[i]=0;
       for(i=0;i<ROHSTOFFE;i++) ymetal[i]=0;
       }
-    steuer[nr-1].angriff_zahl++;          /* Einmal mehr geprÅgelt */
+    steuer[nr-1].angriff_zahl++;          /* Einmal mehr gepr√ºgelt */
     }
 
-  restore_sprites();                    /* Spritewerte zurÅckkopieren */
+  restore_sprites();                    /* Spritewerte zur√ºckkopieren */
 
   option_city_ende();
   land_an();
@@ -419,7 +419,7 @@ int nr;
 
 void init_kampf_sprites()
 {
-  /* Initialisiert die Variablen fÅr die Kampfsprites */
+  /* Initialisiert die Variablen f√ºr die Kampfsprites */
   int i;
 
   save_sprites();                       /* Alte Spritepositionen retten */
@@ -451,9 +451,9 @@ void save_sprites()
 
 void init_k_sprites(armee,index)
 int armee;                          /* Nummer der Armee */
-int index;                          /* Index, ab dem sn[] etc. gefÅllt wird */
+int index;                          /* Index, ab dem sn[] etc. gef√ºllt wird */
 {
-  /* Bereitet sx,sy,sn,anir fÅr die Animation vor */
+  /* Bereitet sx,sy,sn,anir f√ºr die Animation vor */
   int i;
   int offset;                   /* Offset im array */
 
@@ -481,7 +481,7 @@ int index;                          /* Index, ab dem sn[] etc. gefÅllt wird */
 
 void restore_sprites()
 {
-  /* Kopiert die Originalwerte wieder in die Spritearrays sx,sy,sn zurÅck */
+  /* Kopiert die Originalwerte wieder in die Spritearrays sx,sy,sn zur√ºck */
   int i;
 
   for(i=0;i<SPR_MAX;i++) {
@@ -507,9 +507,9 @@ int start,ende;             /* Beginn der Animation, und Ende */
         internal(romstr543);
       j-=2;
 
-      sn[i]+=anir[i];                       /* NÑchste Animationsstufe */
+      sn[i]+=anir[i];                       /* N√§chste Animationsstufe */
 
-      if (sn[i]>animation[j+1]) {   /* oberer Wert Åberschritten */
+      if (sn[i]>animation[j+1]) {   /* oberer Wert √ºberschritten */
         sn[i]-=2;
         anir[i]=-1;                 /* und nach unten weiter */
         }
@@ -532,20 +532,20 @@ char gegnern[];                   /* Name des Gegners */
   FLAG kampf_ende;
   char namen[100];
 
-  long durchgang;                   /* ZÑhlt die Anzahl der Bilderneuerungen */
+  long durchgang;                   /* Z√§hlt die Anzahl der Bilderneuerungen */
 
   kampf_ende=geeinigt=FALSE;
 
   if (demo_angriff) stattgefunden=TRUE;         /* Es gab einen Kampf */
   else stattgefunden=FALSE;              /* Bisher noch kein Kampf */
 
-  company=0;                        /* Infantry angewÑhlt */
+  company=0;                        /* Infantry angew√§hlt */
   counter=0;
   durchgang=0;
   effektivitaet=1.0;                /* Normal stark */
   new_effekt=TRUE;
 
-  if (demo_angriff)                 /* Spieler kann keinen Einfluû nehmen */
+  if (demo_angriff)                 /* Spieler kann keinen Einflu√ü nehmen */
     redraw_buttons(PLUS|MINUS|PAUSE);
   else {
     if (sx[EINHEITEN*2+1]<0 || strcmp(romstr544,gegnern)==0)   /* Gegner hat kein Zelt->Angriff auf Stadt */
@@ -553,8 +553,8 @@ char gegnern[];                   /* Name des Gegners */
     else redraw_buttons(PAUSE|ATTACK|FLEE|TERMS|PLUS|MINUS);
     }
 
-  for(i=0;i<EINHEITEN;i++) im_kampf[0][i]=im_kampf[1][i]=FALSE; /* keiner kÑmpft */
-  ari_kaempft[0]=ari_kaempft[1]=FALSE;              /* Ari's schieûen noch nicht */
+  for(i=0;i<EINHEITEN;i++) im_kampf[0][i]=im_kampf[1][i]=FALSE; /* keiner k√§mpft */
+  ari_kaempft[0]=ari_kaempft[1]=FALSE;              /* Ari's schie√üen noch nicht */
   for(i=0;i<SPR_MAX;i++) auftrag[i]=HALTEN;
   front_s=0;
   front_c=320;
@@ -722,7 +722,7 @@ char gegnern[];                   /* Name des Gegners */
 
 void mach_schreie()
 {
-  /* Computer lÑût Åber den Digisound ein paar Schreie los. */
+  /* Computer l√§√üt √ºber den Digisound ein paar Schreie los. */
   int rnd;
 
   if (!digi_works && effects) {
@@ -826,7 +826,7 @@ FLAG bloeff()
   long zufalls_wert;
 
   zufalls_wert=kampf_gesamt[1]/6L;      /* Je nachdem wieviel Leute er hat */
-  if (zufall(100)>zufalls_wert) {       /* Okay er ist der StÑrkere */
+  if (zufall(100)>zufalls_wert) {       /* Okay er ist der St√§rkere */
     alert(romstr561);
     return(TRUE);                           /* Computer geht drauf ein */
     }
@@ -841,7 +841,7 @@ void move_einheiten()
   /* Die Einheiten ziehen und neue Fronten berechnen, sowie festellen, wer
      im Kampf steht */
   register int i;
-  FLAG change;              /* ob am Bildschirm was geÑndert wurde */
+  FLAG change;              /* ob am Bildschirm was ge√§ndert wurde */
 	void *oldlogbase;
 	
   for(i=0;i<SPR_MAX;i++) {
@@ -851,14 +851,14 @@ void move_einheiten()
           if (i<EINHEITEN) {        /* Einheit des Spielers? */
             if (sx[i]<front_c) {
               sx[i]+=geschw[i];       /* Einheit zieht */
-              if (sn[i]>=21)            /* vorher RÅckzugsprite? */
+              if (sn[i]>=21)            /* vorher R√ºckzugsprite? */
                 sn[i]-=14;
               }
             }
           else {                        /* Computereinheit */
             if (sx[i]>front_s) {
               sx[i]-=geschw[i-EINHEITEN-1];
-              if (sn[i]<21)             /* Vorher RÅckzugsprite? */
+              if (sn[i]<21)             /* Vorher R√ºckzugsprite? */
                 sn[i]+=14;              /* Jetzt wieder Angriff */
               }
             }
@@ -868,15 +868,15 @@ void move_einheiten()
             if (sx[i]>deckung[i*2]) {        /* Noch nicht Zelt erreicht */
               sx[i]-=geschw[i];
               if (sn[i]<21)                /* vorher Angriffsprite? */
-                sn[i]+=14;                  /* jetzt RÅckzug */
+                sn[i]+=14;                  /* jetzt R√ºckzug */
               }
             else auftrag[i]=HALTEN;
             }
-          else {                             /* Computer geht zurÅck */
+          else {                             /* Computer geht zur√ºck */
             if (sx[i]<deckung[i*2]) {
               sx[i]+=geschw[i-EINHEITEN-1];
               if (sn[i]>=21)                /* Vorher Angriff? */
-                sn[i]-=14;                  /* jetzt RÅckzug */
+                sn[i]-=14;                  /* jetzt R√ºckzug */
               }
             else auftrag[i]=HALTEN;
             }
@@ -907,7 +907,7 @@ void move_einheiten()
     if (sx[i]>=0) {                 /* Lebt Einheit noch ? */
       if (sx[i]>=front_c) {         /* Steht Einheit im Feindesland? */
         if (!im_kampf[0][i]) {    /* Wenn noch nicht im Kampf, dann..*/
-          im_kampf[0][i]=TRUE;    /* Einheit kÑmpft jetzt */
+          im_kampf[0][i]=TRUE;    /* Einheit k√§mpft jetzt */
           writexy(1,23,88+i*6,armeename[i]);
           change=TRUE;
           }
@@ -923,7 +923,7 @@ void move_einheiten()
     if (sx[i+EINHEITEN+1]>=0) {         /* Computereinheit */
       if (sx[i+EINHEITEN+1]<=front_s) {         /* Steht Einheit im Feindesland? */
         if (!im_kampf[1][i]) {    /* Wenn noch nicht im Kampf, dann..*/
-          im_kampf[1][i]=TRUE;    /* Einheit kÑmpft jetzt */
+          im_kampf[1][i]=TRUE;    /* Einheit k√§mpft jetzt */
           writexy(1,208,88+i*6,armeename[i]);
           change=TRUE;
           }
@@ -944,16 +944,16 @@ void move_einheiten()
     if (sx[2]>=0)
       switch (auftrag[2]) {
         case ANGRIFF:
-          if (!ari_kaempft[0]) {        /* Schieût Ari schon? */
-            writexy(1,23,88+2*6,armeename[2]);       /* Ari schieût jetzt */
+          if (!ari_kaempft[0]) {        /* Schie√üt Ari schon? */
+            writexy(1,23,88+2*6,armeename[2]);       /* Ari schie√üt jetzt */
             ari_kaempft[0]=TRUE;
             change=TRUE;
             }
           break;
         case RUECKZUG:
         case HALTEN:
-          if (ari_kaempft[0]) {         /* Nur wenn Ari noch schieût */
-            writexy(2,23,88+2*6,armeename[2]);       /* Ari schieût nicht mehr */
+          if (ari_kaempft[0]) {         /* Nur wenn Ari noch schie√üt */
+            writexy(2,23,88+2*6,armeename[2]);       /* Ari schie√üt nicht mehr */
             ari_kaempft[0]=FALSE;
             change=TRUE;
             }
@@ -965,16 +965,16 @@ void move_einheiten()
     if (sx[10]>=0)
       switch (auftrag[10]) {
         case ANGRIFF:
-          if (!ari_kaempft[1]) {        /* Schieût Ari schon? */
-            writexy(1,208,88+2*6,armeename[2]);       /* Ari schieût jetzt */
+          if (!ari_kaempft[1]) {        /* Schie√üt Ari schon? */
+            writexy(1,208,88+2*6,armeename[2]);       /* Ari schie√üt jetzt */
             ari_kaempft[1]=TRUE;
             change=TRUE;
             }
           break;
         case RUECKZUG:
         case HALTEN:
-          if (ari_kaempft[1]) {         /* Nur wenn Ari noch schieût */
-            writexy(2,208,88+2*6,armeename[2]);       /* Ari schieût nicht mehr */
+          if (ari_kaempft[1]) {         /* Nur wenn Ari noch schie√üt */
+            writexy(2,208,88+2*6,armeename[2]);       /* Ari schie√üt nicht mehr */
             ari_kaempft[1]=FALSE;
             change=TRUE;
             }
@@ -1004,7 +1004,7 @@ void move_schild()
     sy[(EINHEITEN+1)*2]=sy[schild_einheit]-16;             /* Schild links */
     sy[(EINHEITEN+1)*2+1]=sy[schild_einheit]-16;           /* Schild rechts */
     sy[(EINHEITEN+1)*2+2]=sy[schild_einheit]-8;               /* Pfeil runter */
-    if (sy[(EINHEITEN+1)*2]<0) {                  /* Paût nicht auf Bildschirm */
+    if (sy[(EINHEITEN+1)*2]<0) {                  /* Pa√üt nicht auf Bildschirm */
       sy[(EINHEITEN+1)*2]=sy[schild_einheit]+16;             /* Schild links */
       sy[(EINHEITEN+1)*2+1]=sy[schild_einheit]+16;           /* Schild rechts */
       sy[(EINHEITEN+1)*2+2]=sy[schild_einheit]+8;               /* Pfeil runter */
@@ -1021,14 +1021,14 @@ void move_schild()
 void check_end(gegnern)
 char gegnern[];                     /* Name des Gegners */
 {
-  /* öberprÅft, ob der Krieg von einer Partei verloren wurde */
+  /* √úberpr√ºft, ob der Krieg von einer Partei verloren wurde */
 
   if (kampf_gesamt[0]==0.0) {
     alert(romstr563);
     gewinner=1;
     button=EXIT_BTN;
     }
-  if (kampf_gesamt[1]==0.0) {           /* Gegner hat keine MÑnner mehr */
+  if (kampf_gesamt[1]==0.0) {           /* Gegner hat keine M√§nner mehr */
     if (sx[EINHEITEN*2+1]<0)            /* Gegner hat kein Zelt, also Cityattack */
       alert(build(romstr564,gegnern));
     else alert(romstr565);
@@ -1066,13 +1066,13 @@ void computer_move()
         case ANGRIFF:
           if (front_c<langsamx-10)          /* Nur dann ggf. umdrehen, wenn gestreckte Front ist */
             if (front_s>=sx[offset]-8) {    /* schnellere Einheit zu dicht dran? */
-              auftrag[offset]=RUECKZUG;     /* auf die anderen warten, zurÅck */
+              auftrag[offset]=RUECKZUG;     /* auf die anderen warten, zur√ºck */
               }
           break;
         case RUECKZUG:
         case HALTEN:
-          if (sx[offset]>=langsamx) {      /* auf Hîhe der Langsamsten? */
-            auftrag[offset]=ANGRIFF;     /* wieder vorstÅrmen */
+          if (sx[offset]>=langsamx) {      /* auf H√∂he der Langsamsten? */
+            auftrag[offset]=ANGRIFF;     /* wieder vorst√ºrmen */
             }
           break;
         }
@@ -1085,8 +1085,8 @@ void war()
   int i;
   long beteiligt[2];                    /* Soldaten, auf dem Schlachtfeld */
   float verlust[2];                     /* Verluste der Parteien */
-  float kraftsumme[2];                  /* Summe aller KampfkrÑfte */
-  float mult[2];                        /* Multiplikator fÅr 1 */
+  float kraftsumme[2];                  /* Summe aller Kampfkr√§fte */
+  float mult[2];                        /* Multiplikator f√ºr 1 */
   float dead;                            /* Tote Soldaten */
   long summes,summec;
 
@@ -1107,7 +1107,7 @@ void war()
   if (beteiligt[0]==0 || beteiligt[1]==0) return;   /* Keiner beteiligt->Raus */
 
   /* Beide Parteien haben Armeen auf dem Schlachtfeld -> Verluste auf
-     beiden Seiten, abhÑngig von Anzahl der Soldaten, Kampfkraft */
+     beiden Seiten, abh√§ngig von Anzahl der Soldaten, Kampfkraft */
 
   /* Verluste auf beiden Seiten berechnen: */
   verlust[0]=verlust[1]=0.0;
@@ -1116,7 +1116,7 @@ void war()
   for(i=0;i<EINHEITEN;i++) {
     if (im_kampf[0][i]) {               /* Einheit des Spielers aktiv? */
       verlust[1]+=kampf_teil[0][i]*kampfkraft[0][i]*(0.001*effektivitaet);
-                        /* Ja -> Verluste des Gegners erhîhen sich */
+                        /* Ja -> Verluste des Gegners erh√∂hen sich */
       kraftsumme[0]+=1.0/kampfkraft[0][i];
       }
     if (im_kampf[1][i]) {               /* gegner. Einheit aktiv? */
@@ -1159,7 +1159,7 @@ void shoot_ari()
   int anzahl[2];                /* Wieviel Einheiten stehen im Kampf? */
   int i;
 
-  /* Keine Artillerie schieût, raus */
+  /* Keine Artillerie schie√üt, raus */
   if (auftrag[2]!=ANGRIFF && auftrag[10]!=ANGRIFF) return;
 
   beteiligt[0]=beteiligt[1]=0;
@@ -1180,7 +1180,7 @@ void shoot_ari()
   verluste[1]=kampf_teil[0][2]*effektivitaet/200.0;  /* 200 Aris machen einen Tot */
   verluste[0]=kampf_teil[1][2]*effektivitaet/200.0;
 
-  /* Ari's kÑmpfen nur, wenn sie nicht direkt in Kampf verwickelt sind */
+  /* Ari's k√§mpfen nur, wenn sie nicht direkt in Kampf verwickelt sind */
   for(i=0;i<EINHEITEN;i++)
     if (i!=5) {                                 /* Wizards werden nicht getroffen */
       if (!im_kampf[1][2] && auftrag[10]==ANGRIFF)     /* Wenn gegn. nicht im Kampf,.. */
@@ -1221,7 +1221,7 @@ int company;
 void flee(company)
 int company;
 {
-  /* Spieler zieht company zurÅck */
+  /* Spieler zieht company zur√ºck */
 
   if (effects) play_digi(pack_buf+32000L,FALSE,17,19);
   auftrag[company]=RUECKZUG;
@@ -1261,7 +1261,7 @@ void calc_it(int nr,int untergrund,float training[][EIGENSCHAFTEN],float motivat
 		case HALBWUESTE:
 		case WUESTE:
     case BRUECKE:
-        index=0; break;         /* Index fÅr kraft_boden bestimmen */
+        index=0; break;         /* Index f√ºr kraft_boden bestimmen */
     case WALD:
     case LICHTER_WALD:
         index=1; break;
@@ -1356,4 +1356,3 @@ int nr;
   writexy_anzeige();                          /* Neue Werte eintragen */
 }
 
-

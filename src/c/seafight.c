@@ -1,5 +1,5 @@
  
-/* Seeschlacht-Routine - Copyright 1991 by Christian Weber, ZÅrich
+/* Seeschlacht-Routine - Copyright 1991 by Christian Weber, Z√ºrich
 	 erheblich erweitert und fehlerbereinigt von Till Bubeck, Weinstadt	*/
 	 
 #include "includes.c"           /* Definiert alle Variablen als Extern,... */
@@ -30,8 +30,8 @@ static int schiffschuesse;			/* Anzahl der Schuesse, die unterwegs sind */
 static FLUGZEUG	flugzeug[MAX_FLUGZEUGE];	/* Gegner-Flugzeuge */
 static int		numflugzeuge;				/* Anzahl Gegner-Flugzeuge */
 
-static SCHUSS	schuss[MAX_SCHUESSE];	/* SchÅsse */
-static int		numschuesse;			/* Anzahl SchÅsse in der Luft */
+static SCHUSS	schuss[MAX_SCHUESSE];	/* Sch√ºsse */
+static int		numschuesse;			/* Anzahl Sch√ºsse in der Luft */
 
 /****************************************************************************
 **	Liefert eine Zufallszahl zwischen min (inkl.) und max (exkl.),
@@ -57,7 +57,7 @@ static int winkel(int w)
 
 static FLAG winkel_differenz(int w1,int w2,int dif)
 {
-	/* öberprÅft, ob sich w1 und w2 um max. dif unterscheiden */
+	/* √úberpr√ºft, ob sich w1 und w2 um max. dif unterscheiden */
 	int differenz;
 	
 	differenz=ABS(w1-w2);
@@ -111,7 +111,7 @@ static void draw_obj2(int num,int mode,void *scr,int x,int y)
 	if (x2>235) xo2-=x2-235;
 	if (y2>132) yo2-=y2-132;
 	
-	if (xo1<=xo2 && yo1<=yo2) {			/* öberhaupt noch was sichtbar */
+	if (xo1<=xo2 && yo1<=yo2) {			/* √úberhaupt noch was sichtbar */
 		draw_obj_part(num,objects,xo1,yo1,xo2,yo2,mode,scr,x1,y1);
 		}
 				
@@ -121,17 +121,17 @@ static void draw_obj2(int num,int mode,void *scr,int x,int y)
 /****************************************************************************
 **	Zeichnet und verkleinert ein Objekt, dabei wird der Nullpunkt des Objekts
 **	nicht oben links, sondern unten in der Mitte angenommen.
-**  Dabei ist show_hoehe, die Hîhe des unverkleinerten Objekts, die gezeichnet werden soll,
+**  Dabei ist show_hoehe, die H√∂he des unverkleinerten Objekts, die gezeichnet werden soll,
 */
 
 static void draw_shrink_obj2(int zoom,int num,int mode,void *scr,int x,int y,int show_hoehe)
 {
-	int s_hoehe,s_breite;					/* Grîûe des verkleinerten Objekts */
-	int hoehe,breite;							/* Grîûe des Original-Objekts */
+	int s_hoehe,s_breite;					/* Gr√∂√üe des verkleinerten Objekts */
+	int hoehe,breite;							/* Gr√∂√üe des Original-Objekts */
 	int x1,y1,x2,y2;							/* Koordinaten auf Screen */
 	int xo1,yo1,xo2,yo2;					/* sichtbarer Bereich innerhalb des Objekts */
-	int clip_weg;									/* Wieviel Pixel stehen Åber */
-	double proz;									/* dasselbe AnteilsmÑûig an Gesamtgrîûe [0..1] */	
+	int clip_weg;									/* Wieviel Pixel stehen √ºber */
+	double proz;									/* dasselbe Anteilsm√§√üig an Gesamtgr√∂√üe [0..1] */	
 	
 	s_hoehe  = shrink_obj_hoehe(zoom,num,objects);
 	s_breite = shrink_obj_breite(zoom,num,objects);
@@ -152,12 +152,12 @@ static void draw_shrink_obj2(int zoom,int num,int mode,void *scr,int x,int y,int
 	
 	xo1=0;
 	yo1=0;
-	xo2=breite-1;										/* Volle Grîûe des Objekts */
+	xo2=breite-1;										/* Volle Gr√∂√üe des Objekts */
 	yo2=hoehe-1;
 	
 	if (x1<84) {
-		clip_weg=84-x1;								/* Soviele Pixel stehen links Åber */
-		proz=(double)clip_weg/s_breite;		/* [0..1] Soviel stehen anteilsmÑssig links Åber */
+		clip_weg=84-x1;								/* Soviele Pixel stehen links √ºber */
+		proz=(double)clip_weg/s_breite;		/* [0..1] Soviel stehen anteilsm√§ssig links √ºber */
 		xo1+=breite*proz;							/* Gleichen Anteil von Originalobjekt weg */
 		x1=84;
 		}
@@ -190,7 +190,7 @@ static void show_munition(int num)
 	char buf[20];
 	int i;
 
-	if (num!=old_muni) {							/* Munition hat sich geÑndert */
+	if (num!=old_muni) {							/* Munition hat sich ge√§ndert */
 
 		old_muni=num;		
 		strcpy(buf,str(8,num));
@@ -255,7 +255,7 @@ static void show_schiffe(void)
 }
 
 /****************************************************************************
-**	Zeigt die beiden Kanonen an, in der richtigen Schusshîhe
+**	Zeigt die beiden Kanonen an, in der richtigen Schussh√∂he
 */
 
 static void show_kanonen(void)
@@ -303,7 +303,7 @@ static void show_radar(void)
 }
 
 /****************************************************************************
-**	WÑhlt zufÑllige Positionen fÅr die gegnerischen Schiffe aus.
+**	W√§hlt zuf√§llige Positionen f√ºr die gegnerischen Schiffe aus.
 */
 
 static void set_schiffe(void)
@@ -331,7 +331,7 @@ static void schuss_bahn(SCHUSS *s)
 	s->T		= vbl_ct-s->T0;					/* Schussdauer aktualisieren */
 	s->Pos.R	= s->V0X*s->T;					/* Abstand aktualisieren */
 
-	/* Hîhe aktualisieren */
+	/* H√∂he aktualisieren */
 	s->Pos.Z	= (s->Tan*s->Pos.R-s->Const*(s->Pos.R*s->Pos.R))/10;
 }
 
@@ -345,7 +345,7 @@ static void gegner_schiff_schuss(void)
 
 	/* Welches Schiff soll schiessen?: */
 
-	if (schiffschuesse<numschiffe) 						/* Sind noch Schiffe ohne Schuû? */
+	if (schiffschuesse<numschiffe) 						/* Sind noch Schiffe ohne Schu√ü? */
 		if(schiffschuesse<(1+gegnerstaerke/7))
 		{
 			if(range_rand(0,30) < gegnerstaerke)				/* 0,10000 */
@@ -355,14 +355,14 @@ static void gegner_schiff_schuss(void)
 	
 				do
 				{
-					s_schiff=range_rand(0,numschiffe);					/* Welches Schiff schieût? */
+					s_schiff=range_rand(0,numschiffe);					/* Welches Schiff schie√üt? */
 				} while(schiff[s_schiff].Schuss.State != S_IDLE);
 	
 				s=&schiff[s_schiff].Schuss;
 	
 				s->Pos.R	= 0;						/* Abstand */
 				s->Pos.W	= schiff[s_schiff].Pos.W;	/* Schuss-Richtung */
-				s->Pos.Z	= 0;						/* Schuss-Hîhe */
+				s->Pos.Z	= 0;						/* Schuss-H√∂he */
 				s->T0		= vbl_ct;					/* Abschusszeit */
 				s->T		= 0;						/* Flugdauer */
 				s->Winkel	= 450;					/* Abschusswinkel 45 Grad */
@@ -381,7 +381,7 @@ static void gegner_schiff_schuss(void)
 			}
 		}
 	
-	/* SchÅsse weiterbewegen bzw. animieren: */
+	/* Sch√ºsse weiterbewegen bzw. animieren: */
 	for(i=0; i<numschiffe; ++i)
 	{
 		SCHUSS *s=&schiff[i].Schuss;
@@ -481,7 +481,7 @@ static void gegner_flugzeuge(void)
 
 			f->Pos.R	= 500;
 			f->Pos.W	= winkel(schussrichtung+range_rand(-45,45));
-			f->Pos.Z	= 10;							/* 10 Meter Åber Meer */
+			f->Pos.Z	= 10;							/* 10 Meter √ºber Meer */
 
 			if((f->Pos.W-schussrichtung) > 10) {
 				f->AnBase = O_FLUGZEUGLINKS;
@@ -549,7 +549,7 @@ static void do_schuss(void)
 
 		s->Pos.R	= 0;						/* Abstand */
 		s->Pos.W	= schussrichtung;			/* Schuss-Richtung */
-		s->Pos.Z	= 0;						/* Schuss-Hîhe */
+		s->Pos.Z	= 0;						/* Schuss-H√∂he */
 		s->T0		= vbl_ct-20;				/* Abschusszeit */
 		s->T		= 0;						/* Flugdauer */
 		s->Winkel	= rohrwinkel;				/* Abschusswinkel */
@@ -631,7 +631,7 @@ static void do_schuss(void)
 				}
 				else if(s->Pos.R > MAX_DIST)	/* Kugel zuweit geschossen */
 				{
-					s->State = S_IDLE;					/* Dann Schuû deaktivieren */
+					s->State = S_IDLE;					/* Dann Schu√ü deaktivieren */
 					break;
 				}
 
@@ -721,7 +721,7 @@ void show_score(void)
 }
 	
 /****************************************************************************
-**	Die Seeschlacht-Routine. Stand-alone, benÅtzt nur die Routinen
+**	Die Seeschlacht-Routine. Stand-alone, ben√ºtzt nur die Routinen
 **	draw_obj() und rnd() aus mcode.s, sowie alle aus raster.c
 **  nummer ist die Nummer der Armee.
 */
@@ -733,7 +733,7 @@ void Seeschlacht(int nummer)
 	float proz;
 	int hoehe;
 
-	/* Die folgenden Werte mÅûen gemÑû Spielstand initialisiert werden */
+	/* Die folgenden Werte m√º√üen gem√§√ü Spielstand initialisiert werden */
 
 	munition=spielerschiff=0;
 	for(i=0;i<SCHIFFMAX;i++) 
@@ -825,7 +825,7 @@ void Seeschlacht(int nummer)
 			if (i<17) line(15,0,HORIZONT+Y0,319,HORIZONT+Y0);		/* Und Horizont zeichnen */
 			draw_obj_part(O_HINTERGRUND,objects,0,HORIZONT-8+1,319,hoehe-i-1,MOVE,scr2,0,HORIZONT-8+Y0+i+1);
 			if (HORIZONT+Y0+i<167) 
-				line(9,84,HORIZONT+Y0+i,235,HORIZONT+Y0+i);				/* Horizont aus Objekt lîschen */
+				line(9,84,HORIZONT+Y0+i,235,HORIZONT+Y0+i);				/* Horizont aus Objekt l√∂schen */
 			wait_sync(3);
 			switch_screens();
 			}
@@ -850,4 +850,3 @@ void Seeschlacht(int nummer)
 		
 	land_an();
 }
-

@@ -1,13 +1,13 @@
 
-;Dies ist das Werbeprogramm fÅr 'Punish your Machine'
-;Ω1991 by Till Bubeck, Weinstadt
+;Dies ist das Werbeprogramm f√ºr 'Punish your Machine'
+;(C)1991 by Till Bubeck, Weinstadt
 
 ;Hallo Steffen!
-;Der Screen enthÑlt keine Trap-Aufrufe (auûer den beiden Supervisor-Calls).
-;Er greift auf keine Variablen auûerhalb von Text, Data, BSS, I/O zu.
-;Ich denke, daû er also problemlos laufen mÅûte.
-;Dieses Programm enthÑlt einige Variablen und Routinen, welche gar nicht
-;benÅtzt werden. Da sie aber nicht viel Platz brauchen, laû sie einfach drin.
+;Der Screen enth√§lt keine Trap-Aufrufe (au√üer den beiden Supervisor-Calls).
+;Er greift auf keine Variablen au√üerhalb von Text, Data, BSS, I/O zu.
+;Ich denke, da√ü er also problemlos laufen m√º√üte.
+;Dieses Programm enth√§lt einige Variablen und Routinen, welche gar nicht
+;ben√ºtzt werden. Da sie aber nicht viel Platz brauchen, la√ü sie einfach drin.
 ;
 ;Ich habe noch Probleme:
 ;       unterer Border: ist die Routine okay?
@@ -30,8 +30,8 @@
 
                 movea.l D0,A0
                 move.w  #(32000+60*160)/4-1,D7
-lîschen:        clr.l   (A0)+           ;Bildschirm lîschen
-                dbra    D7,lîschen
+l√∂schen:        clr.l   (A0)+           ;Bildschirm l√∂schen
+                dbra    D7,l√∂schen
 
                 clr.w   -(SP)           ;Nicht kopieren
                 pea     buff
@@ -116,7 +116,7 @@ okay:           move.w  music_nr(PC),D0
                 addq.l  #6,SP
                 moveq   #0,D0
 
-no_music:       cmpi.b  #57,D0          ;Space gedrÅckt?
+no_music:       cmpi.b  #57,D0          ;Space gedr√ºckt?
                 beq.s   prg_ende
 
 no_taste:       dbra    D7,wait_sync
@@ -149,7 +149,7 @@ raster_loop:    move.w  (A0)+,-(SP)     ;Rasterzeile
                 bsr     mcode23         ;Set-Raster
                 addq.l  #6,SP
 
-                lea     32(A0),A0       ;nÑchster Raster
+                lea     32(A0),A0       ;n√§chster Raster
                 tst.w   (A0)            ;Letzter Raster?
                 bne.s   raster_loop
 
@@ -220,16 +220,16 @@ zeil_loop:      move.w  D0,D1
                 bra.s   zeil_it
 gerade:         andi.b  #$F0,D3         ;in die obersten 4 Bit
 zeil_it:        moveq   #0,D7           ;Bei Plane 0 starten
-plane_loop:     and.b   D5,(A0)         ;Hintergrund lîschen
+plane_loop:     and.b   D5,(A0)         ;Hintergrund l√∂schen
                 or.b    D3,(A0)         ;Zeichen einodern
                 addq.l  #2,A0           ;eine Plane weiter
-                and.b   D5,(A0)         ;Hintergrund lîschen
+                and.b   D5,(A0)         ;Hintergrund l√∂schen
                 or.b    D3,(A0)         ;Zeichen einodern
                 addq.l  #2,A0           ;eine Plane weiter
-                and.b   D5,(A0)         ;Hintergrund lîschen
+                and.b   D5,(A0)         ;Hintergrund l√∂schen
                 or.b    D3,(A0)         ;Zeichen einodern
                 addq.l  #2,A0           ;eine Plane weiter
-                and.b   D5,(A0)         ;Hintergrund lîschen
+                and.b   D5,(A0)         ;Hintergrund l√∂schen
                 or.b    D3,(A0)         ;Zeichen einodern
 
                 lea     154(A0),A0      ;Zeile tiefer
@@ -275,11 +275,11 @@ plane2:         and.b   D5,(A0)
 po12:           addq.l  #1,A0           ;8 Pixel weiter
                 bra.s   po4
 
-wandel:         cmpi.w  #$009A,D0       ;'ö'
+wandel:         cmpi.w  #$009A,D0       ;'√ú'
                 beq.s   ueh
-                cmpi.w  #$008E,D0       ;'é'
+                cmpi.w  #$008E,D0       ;'√Ñ'
                 beq.s   aeh
-                cmpi.w  #$0099,D0       ;'ô'
+                cmpi.w  #$0099,D0       ;'√ñ'
                 beq.s   oeh
                 subi.w  #' ',D0
                 rts
@@ -340,10 +340,10 @@ plane_loop3:    btst    D7,67(SP)       ;Plane im Hintergrund gesetzt?
                 btst    D7,65(SP)       ;Schriftfarbe an?
                 bne.s   fertig3         ;auch an, nichts machen
                 not.b   D3              ;invertieren
-                and.b   D3,(A0)         ;Schrift wieder lîschen
-                not.b   D3              ;zurÅck invertieren
+                and.b   D3,(A0)         ;Schrift wieder l√∂schen
+                not.b   D3              ;zur√ºck invertieren
                 bra.s   fertig3
-loesch_back3:   and.b   D5,(A0)         ;Hintergrund lîschen
+loesch_back3:   and.b   D5,(A0)         ;Hintergrund l√∂schen
                 btst    D7,65(SP)       ;Schriftplane an?
                 beq.s   fertig3         ;auch nicht, fertig
                 or.b    D3,(A0)         ;Zeichen einodern
@@ -382,10 +382,10 @@ plane4:         btst    D7,67(SP)       ;Plane im Hintergrund gesetzt?
                 btst    D7,65(SP)       ;Schriftfarbe an?
                 bne.s   fertig4         ;auch an, nichts machen
                 not.b   D3              ;invertieren
-                and.b   D3,(A0)         ;Schrift wieder lîschen
-                not.b   D3              ;zurÅck invertieren
+                and.b   D3,(A0)         ;Schrift wieder l√∂schen
+                not.b   D3              ;zur√ºck invertieren
                 bra.s   fertig4
-loesch_back4:   and.b   D5,(A0)         ;Hintergrund lîschen
+loesch_back4:   and.b   D5,(A0)         ;Hintergrund l√∂schen
                 btst    D7,65(SP)       ;Schriftplane an?
                 beq.s   fertig4         ;auch nicht, fertig
                 or.b    D3,(A0)         ;Zeichen einodern
@@ -458,7 +458,7 @@ plane_loop33:   btst    D7,9(A6)        ;Schriftfarbe an?
                 beq.s   ausis1          ;auch nicht, fertig
                 or.b    D3,(A0)         ;Zeichen einodern
                 bra.s   fertig33
-ausis1:         and.b   D1,(A0)         ;und weglîschen
+ausis1:         and.b   D1,(A0)         ;und wegl√∂schen
 fertig33:       addq.l  #2,A0           ;eine Plane weiter
                 addq.w  #1,D7
                 cmpi.w  #4,D7
@@ -493,7 +493,7 @@ plane43:        btst    D7,9(A6)        ;Schriftplane an?
                 beq.s   ausis2          ;auch nicht, fertig
                 or.b    D3,(A0)         ;Zeichen einodern
                 bra.s   fertig43
-ausis2:         and.b   D1,(A0)         ;und weglîschen
+ausis2:         and.b   D1,(A0)         ;und wegl√∂schen
 fertig43:       addq.l  #2,A0           ;eine Plane weiter
                 addq.w  #1,D7
                 cmpi.w  #4,D7
@@ -609,7 +609,7 @@ mcode34:        movem.l D0-A6,-(SP)
 
                 bsr     mcode24         ;clear_raster
                 bsr     mcode55         ;und neu ausrechnen
-                bsr     rst22rst1       ;und zurÅck kopieren
+                bsr     rst22rst1       ;und zur√ºck kopieren
                 move.l  #rasters1,rasters ;und 1. System wieder anzeigen
 
                 move.l  $00000120,old_timer_b
@@ -648,16 +648,16 @@ mcode35:        movem.l D0-A6,-(SP)
                 movem.l (SP)+,D0-A6
                 rts
 
-;öbermittelt einen String an den IKBD (reentrant)
-; A0.L: Stringadresse
-;  D1.W: LÑnge-1
+;√úbermittelt einen String an den IKBD (reentrant)
+;-> A0.L: Stringadresse
+;  D1.W: L√§nge-1
 send_ikbd_str:  move.b  (A0)+,D0
                 bsr.s   send_ikbd
                 dbra    D1,send_ikbd_str
                 rts
 
-;öbermittelt ein Byte an die Tastatur (reentrant)
-; D0.B: Wert, der gesendet werden soll
+;√úbermittelt ein Byte an die Tastatur (reentrant)
+;-> D0.B: Wert, der gesendet werden soll
 send_ikbd:      btst    #1,$FFFFFC00    ;.w  ;ACIA bereit?
                 beq.s   send_ikbd       ;Nein, warten
                 move.b  D0,$FFFFFC02    ;.w  ;und abschicken
@@ -665,7 +665,7 @@ send_ikbd:      btst    #1,$FFFFFC00    ;.w  ;ACIA bereit?
 
 
 ;Holt ein Zeichen aus dem Tastaturbuffer
-;Ist kein Zeichen vorhanden, bringt die Routine -1 zurÅck
+;Ist kein Zeichen vorhanden, bringt die Routine -1 zur√ºck
 mcode57:        movem.l D1-A6,-(SP)
 
                 move.l  #-1,zeichen
@@ -696,7 +696,7 @@ zeichen:        DC.L 0
 head:           DC.W 0
 tail:           DC.W 0
 ;Bit 0=Shift, 1=Alt, 2=CTRL:
-shift:          DC.B 0          ;Nichts gedrÅckt
+shift:          DC.B 0          ;Nichts gedr√ºckt
                 EVEN
 scancode:       DC.L $00000200  ;Zeiger auf Scancode-Tabelle (Vom Loader)
 key_buffer:     DS.B 84
@@ -704,7 +704,7 @@ key_buffer:     DS.B 84
 
 ;Dies ist die VBL-Routine aus NEOchrome
 vbl:            addq.l  #1,vbl_ct       ;Ein VBL mehr
-                addq.l  #1,$000004BA    ;200Hz erhîhen
+                addq.l  #1,$000004BA    ;200Hz erh√∂hen
                 move    #$2700,SR       ;Erstmal Raster initialisieren
                 movem.l D0-A6,-(SP)
 
@@ -732,16 +732,16 @@ old_vbl:        DC.L 0
 
 
 
-;Dies ist die neue HBL-Routine, die nicht mit Blitter arbeitet, dafÅr aber
+;Dies ist die neue HBL-Routine, die nicht mit Blitter arbeitet, daf√ºr aber
 ;absolut flackerfrei arbeitet
 sync_hbl:       movem.l D0-A1,register
 
-                movea.l raster_pos(PC),A0 ;Position des nÑchsten Rasters
+                movea.l raster_pos(PC),A0 ;Position des n√§chsten Rasters
 naechster_raster:clr.b  $FFFFFA1B.w     ;Timer B Stop!
-                move.w  (A0)+,D0        ;Position des nÑchsten Rasters
+                move.w  (A0)+,D0        ;Position des n√§chsten Rasters
                 cmpi.w  #1,D0           ;Abstand eins?
                 beq.s   kurzer_raster   ;ja, dann im IRQ bleiben
-                move.b  D0,$FFFFFA21.w  ;NÑchsten Raster setzen
+                move.b  D0,$FFFFFA21.w  ;N√§chsten Raster setzen
                 move.b  #8,$FFFFFA1B.w  ;und wieder starten
 
                 movem.l (A0)+,D1-D7/A1  ;Farben holen
@@ -760,7 +760,7 @@ cpsync_loop:    cmp.b   $FFFFFA21.w,D0  ;synchonisieren
                 movem.l D1-D7/A1,$FFFF8240.w ;Farben setzen
 
 end_irq:        movem.l register(PC),D0-A1
-                bclr    #0,$FFFFFA0F.w  ;In-Service-Bit lîschen
+                bclr    #0,$FFFFFA0F.w  ;In-Service-Bit l√∂schen
                 rte
 
 raster_pos:     DC.L 0          ;Position des Rastersystems
@@ -801,7 +801,7 @@ mcode23:        link    A6,#0
 
 ;Ist derselbe Raster schon vorhanden?
                 move.w  #anz_raster-2,D7
-nicht_der:      lea     34(A0),A0       ;NÑchsten Eintrag nehmen
+nicht_der:      lea     34(A0),A0       ;N√§chsten Eintrag nehmen
                 cmp.w   (A0),D6         ;Ist dieser Raster an dieser Position?
                 beq.s   vbl_setzen      ;ja, also Palette setzen
                 dbra    D7,nicht_der
@@ -815,13 +815,13 @@ besetzt:        lea     34(A0),A0       ;Einen Eintrag weitergehen
 vbl_setzen:     move.w  12(A6),(A0)+    ;Freier Eintrag->Position eintragen
                 movea.l 8(A6),A1        ;Farbpalette
                 cmpa.l  #0,A1           ;Keine Rasterpalette angegeben? (5)
-                beq.s   del_raster      ;ja->Raster lîschen (5)
-                moveq   #15,D7          ;16 Worte Åbertragen
+                beq.s   del_raster      ;ja->Raster l√∂schen (5)
+                moveq   #15,D7          ;16 Worte √ºbertragen
 copy11:         move.w  (A1)+,(A0)+
                 dbra    D7,copy11
                 bra.s   end_set_raster  ;(5)
 
-del_raster:     clr.w   -(A0)           ;Raster lîschen (5)
+del_raster:     clr.w   -(A0)           ;Raster l√∂schen (5)
 
 end_set_raster: movem.l (SP)+,D0-A6
                 unlk    A6
@@ -840,7 +840,7 @@ mcode72:        link    A6,#0
 
 ;Ist derselbe Raster schon vorhanden?
                 move.w  #anz_raster-2,D7
-nicht_der2:     lea     34(A0),A0       ;NÑchsten Eintrag nehmen
+nicht_der2:     lea     34(A0),A0       ;N√§chsten Eintrag nehmen
                 cmp.w   (A0),D6         ;Ist dieser Raster an dieser Position?
                 beq.s   vbl_setzen2     ;ja, also Palette setzen
                 dbra    D7,nicht_der2
@@ -885,14 +885,14 @@ such_nxt_raster:move.w  #1000,D6        ;Max-Wert
                 move.w  #anz_raster-1,D5 ;Anzahl der zu untersuchenden Raster
                 lea     hbl_system,A0   ;Tabelle der Rasters
 such_min:       move.w  (A0),D0         ;Y-Position dieses Rasters
-                beq.s   nxt_raster      ;unbenutzt->nÑchsten
+                beq.s   nxt_raster      ;unbenutzt->n√§chsten
                 cmp.w   D6,D0           ;Dieser Raster weiter oben?
-                bge.s   nxt_raster      ;Nein->nÑchsten
+                bge.s   nxt_raster      ;Nein->n√§chsten
                 cmp.w   D7,D0           ;weiter unten als letzter Raster?
-                ble.s   nxt_raster      ;Nein->nÑchsten
+                ble.s   nxt_raster      ;Nein->n√§chsten
                 lea     2(A0),A1        ;Position der Palette merken
                 move.w  D0,D6           ;als neuen Kleinsten nehmen
-nxt_raster:     lea     34(A0),A0       ;nÑchsten Raster nehmen
+nxt_raster:     lea     34(A0),A0       ;n√§chsten Raster nehmen
                 dbra    D5,such_min
 
                 cmpi.w  #1000,D6        ;Alle Raster gesetzt?
@@ -906,9 +906,9 @@ nxt_raster:     lea     34(A0),A0       ;nÑchsten Raster nehmen
                 addq.w  #1,D1           ;Sonst eins tiefer
                 move.w  #-1,first_pal   ;Jetzt nichtmehr die 1. Raster
 
-weiter237:      addq.w  #2,A2           ;und diesen Offset Åberspringen
+weiter237:      addq.w  #2,A2           ;und diesen Offset √ºberspringen
                 moveq   #15,D1
-copy2367:       move.w  (A1)+,(A2)+     ;Farbpalette Åbertragen
+copy2367:       move.w  (A1)+,(A2)+     ;Farbpalette √ºbertragen
                 dbra    D1,copy2367
 
                 move.w  D6,D7           ;Position des aktiven Rasters->letzter
@@ -931,7 +931,7 @@ rst22rst1:      movem.l D0-A6,-(SP)
                 lea     rasters2,A0     ;Rasters2->Rasters1
                 lea     rasters1,A1
 copy_them:      move.w  #anz_raster-1,D6 ;max .Anzahl der Raster
-copy_raster:    moveq   #16,D7          ;17 Worte Åbertragen
+copy_raster:    moveq   #16,D7          ;17 Worte √ºbertragen
 copy_pal:       move.w  (A0)+,(A1)+
                 dbra    D7,copy_pal
                 dbra    D6,copy_raster
@@ -945,7 +945,7 @@ mcode56:        movem.l D0-A6,-(SP)
                 bsr     mcode55         ;und neu ausrechnen
                 move.l  #rasters2,rasters ;und neue anzeigen
                 bsr.s   vsync
-                bsr.s   rst22rst1       ;und zurÅck kopieren
+                bsr.s   rst22rst1       ;und zur√ºck kopieren
                 move.l  #rasters1,rasters ;und 1. System wieder anzeigen
                 bsr.s   vsync
 
@@ -1023,7 +1023,7 @@ sub_col:        move.w  (A0)+,D0        ;Farbe holen
                 beq.s   raus56          ;schon auf Null, nichts mehr machen
 
                 sub.w   D7,D0           ;Farbwert eins runter
-                move.w  D0,-2(A0)       ;Farbe zurÅckschreiben
+                move.w  D0,-2(A0)       ;Farbe zur√ºckschreiben
 raus56:         rts
 
 
@@ -1043,7 +1043,7 @@ cler2:          clr.w   (A0)+           ;Farbpaletten auf schwarz
                 lea     rasters2,A0
                 lea     rasters1,A1
                 move.w  #anz_raster-1,D7
-copy88:         move.w  (A0),(A1)       ;Offset Åbertragen
+copy88:         move.w  (A0),(A1)       ;Offset √ºbertragen
                 lea     34(A0),A0
                 lea     34(A1),A1
                 dbra    D7,copy88
@@ -1066,11 +1066,11 @@ schleife3:      moveq   #1,D7           ;Zuerst "B"-Wert behandeln
                 movem.l (SP)+,D0-A6
                 rts
 
-addiere:        lea     rasters1+2,A0   ;Wird verÑndert
+addiere:        lea     rasters1+2,A0   ;Wird ver√§ndert
                 lea     rasters2+2,A1   ;Endwert
 pal_loop2:      bsr.s   add_pal
                 addq.l  #2,A0
-                addq.l  #2,A1           ;Offsets Åberspringen
+                addq.l  #2,A1           ;Offsets √ºberspringen
                 tst.w   -36(A0)         ;Kommt noch ein Raster
                 bne.s   pal_loop2
                 rts
@@ -1122,7 +1122,7 @@ mcode32:        link    A6,#0
                 movea.l 22(A6),A0       ;Scrollbuffer
                 move.w  #6719,D7
 clerr:          clr.l   (A0)+
-                clr.l   (A0)+           ;Buffer lîschen
+                clr.l   (A0)+           ;Buffer l√∂schen
                 dbra    D7,clerr
 
                 movem.l (SP)+,D0-A6
@@ -1130,7 +1130,7 @@ clerr:          clr.l   (A0)+
                 rts
 
 initscroller:   move.l  scrollbegin,scrollpos
-                subq.l  #1,scrollpos    ;ein zeichen zurÅck
+                subq.l  #1,scrollpos    ;ein zeichen zur√ºck
                 move.w  #-200,delta_x
                 rts
 
@@ -1141,10 +1141,10 @@ mcode33:        movem.l D0-A6,-(SP)
 scroll:         cmpi.w  #-2,delta_x     ;Noch Spalten da?
                 bgt     char_weiter     ;Ja, Buchstabe fertig machen
 
-                addq.l  #1,scrollpos    ;nÑchstes Zeichen
+                addq.l  #1,scrollpos    ;n√§chstes Zeichen
                 movea.l scrollpos,A0
                 moveq   #0,D0
-                move.b  (A0),D0         ;NÑchstes Zeichen holen
+                move.b  (A0),D0         ;N√§chstes Zeichen holen
                 bne.s   verarbeite      ;Nicht das letzte, weiter
 
                 bsr.s   initscroller    ;Wieder von vorne
@@ -1159,7 +1159,7 @@ nxt_element:    tst.b   (A0)            ;Tabelle zuende?
 
                 suba.l  #sonder+1,A0
                 move.w  A0,D0
-                addi.w  #26*2,D0        ;Hinter den Groû und Kleinbuchstaben
+                addi.w  #26*2,D0        ;Hinter den Gro√ü und Kleinbuchstaben
                 bra.s   sonderzeichen
 
 kein_sonder:    cmpi.w  #'Z',D0
@@ -1172,7 +1172,7 @@ nehmen:         subi.w  #'A',D0         ;in internen Code wandeln
 
 sonderzeichen:  movea.l font_start,A0   ;Basis der Bibliothek
                 cmp.w   (A0)+,D0        ;Objekt noch in Bibliothek?
-                bgt.s   scroll          ;Nein->nÑchster Buchstabe
+                bgt.s   scroll          ;Nein->n√§chster Buchstabe
 
                 mulu    #20,D0          ;Adresse des Ob_Headers berechnen
 
@@ -1180,7 +1180,7 @@ sonderzeichen:  movea.l font_start,A0   ;Basis der Bibliothek
                 move.l  A0,char_basis
 
                 movea.l font_start,A1   ;Basis der Objekte
-                addq.l  #2,A1           ;Anzahl Åberspringen
+                addq.l  #2,A1           ;Anzahl √ºberspringen
                 adda.l  (A0),A1         ;=Basis des Objekts
                 move.l  A1,adrspalte    ;Datenstart
                 move.w  4(A0),D0        ;Breite
@@ -1212,7 +1212,7 @@ vorschieben:    movem.l (A0)+,D0-D6/A2-A6
 
 kein_space:     movea.l char_basis,A3
                 movea.w 10(A3),A2       ;Breite in Bytes
-                move.w  6(A3),D3        ;Hîhe in Scanlines
+                move.w  6(A3),D3        ;H√∂he in Scanlines
                 move.w  4(A3),D0        ;Breite des Objekts
                 sub.w   delta_x,D0
                 move.w  D0,D7
@@ -1246,11 +1246,11 @@ scanline:       move.w  (A3)+,D0        ;Scroller holen
                 move.w  (A1)+,D4        ;Bildschirm holen
                 lsl.l   #2,D4
                 or.w    D0,D4           ;einodern
-                move.w  D4,(A0)+        ;und zurÅck auf Screen
+                move.w  D4,(A0)+        ;und zur√ºck auf Screen
                 dbra    D6,scanline
 
-                subq.l  #8,A3           ;zurÅck zum Start des BB
-                adda.l  A2,A3           ;und auf nÑchste Zeile
+                subq.l  #8,A3           ;zur√ºck zum Start des BB
+                adda.l  A2,A3           ;und auf n√§chste Zeile
 
                 subq.w  #1,D3           ;Eine Scanline weniger
                 bgt.s   noch_was_da
@@ -1278,7 +1278,7 @@ vorschieben2:   movem.l (A0)+,D0-D6/A2-A6
                 lea     96(A1),A1
                 dbra    D7,vorschieben2
 
-                addq.w  #1,scroll_akt   ;nÑchster Scrollbuffer
+                addq.w  #1,scroll_akt   ;n√§chster Scrollbuffer
                 cmpi.w  #8,scroll_akt
                 blt.s   okokok
                 clr.w   scroll_akt
@@ -1300,7 +1300,7 @@ no_copy:        movem.l (SP)+,D0-A6
 
 zeros:          DC.L 0,0
 
-sonder:         DC.B ".,:' ÅÑî?û" ;(3)
+sonder:         DC.B ".,:' √º√§√∂?√ü" ;(3)
                 DC.B '"$',0     ;(3)
 
                 EVEN
@@ -1346,9 +1346,9 @@ mcode47:        link    A6,#0
                 beq.s   ohne_raster
 
                 movea.l 10(A6),A1       ;Basis der Objekte
-                addq.l  #2,A1           ;Anzahl Åberspringen
+                addq.l  #2,A1           ;Anzahl √ºberspringen
                 adda.l  (A0),A1         ;=Basis des Objekts
-                move.w  6(A0),D1        ;Hîhe des Objekts
+                move.w  6(A0),D1        ;H√∂he des Objekts
                 mulu    10(A0),D1       ;*Breite=Anzahl Bytes
                 adda.l  D1,A1           ;=Start der Raster
                 bra.s   set_dbra
@@ -1359,7 +1359,7 @@ set_loop:       move.w  (A1)+,D1        ;Offset des Rasters holen
                 move.l  A1,-(SP)
                 bsr     mcode23         ;set_raster
                 addq.l  #8,SP
-                lea     32(A1),A1       ;Palette Åberspringen
+                lea     32(A1),A1       ;Palette √ºberspringen
 set_dbra:       dbra    D0,set_loop
 
 ohne_raster:
@@ -1369,9 +1369,9 @@ ohne_raster:
                 move.l  20(A6),-(SP)    ;x,y
                 move.l  16(A6),-(SP)    ;scr_basis
                 move.w  14(A6),-(SP)    ;modus
-                move.w  6(A0),D0        ;Hîhe des Objekts
+                move.w  6(A0),D0        ;H√∂he des Objekts
                 subq.w  #1,D0
-                move.w  D0,-(SP)        ;(Hîhe-1)->y2
+                move.w  D0,-(SP)        ;(H√∂he-1)->y2
                 move.w  4(A0),D0        ;Breite des Objekts
                 subq.w  #1,D0
                 move.w  D0,-(SP)        ;(Breite-1)->x2
@@ -1410,7 +1410,7 @@ mcode48:        link    A6,#0
                 adda.l  D0,A5
 
                 movea.l 10(A6),A0       ;Basis der Objekte
-                addq.l  #2,A0           ;Anzahl Åberspringen
+                addq.l  #2,A0           ;Anzahl √ºberspringen
                 adda.l  (A5),A0         ;Adresse der Objekt-Daten
 
                 move.w  #320,-(SP)      ;Breite des Bildschirms in Pixel
@@ -1437,18 +1437,18 @@ zu_gross2:      movem.l (SP)+,D0-A5
                 rts
 
 ;Diese Routine kopiert einen rechteckigen Bildschirmbereich von einem Platz
-;zu einem anderen. Dabei werden öberlappungen NICHT berÅcksichtigt.
-;Der neue Bereich ersetzt den alten vollstÑndig (replace).
+;zu einem anderen. Dabei werden √úberlappungen NICHT ber√ºcksichtigt.
+;Der neue Bereich ersetzt den alten vollst√§ndig (replace).
 ;Die Routine clippt den Zielbereich. Als Bildschirmbreite wird die
-;Åbergebene genommen, als Bildschirmhîhe wird 200 angenommen.
-;Diese Routine braucht ungefÑhr 52% der Rechenzeit von Line_A #7 ohne Blitter,
-;d.h. sie ist ungefÑhr doppelt so schnell.
+;√ºbergebene genommen, als Bildschirmh√∂he wird 200 angenommen.
+;Diese Routine braucht ungef√§hr 52% der Rechenzeit von Line_A #7 ohne Blitter,
+;d.h. sie ist ungef√§hr doppelt so schnell.
 ;Line_A #7 mit Blitter ist ca. 12 mal schneller als diese Routine (also ca. 24
 ;mal schneller als Line_A #7 ohne Blitter!).
 ;Ist keine Verschiebung notwendig, ist diese Routine ca. 5 mal schneller als
 ;Line_A #7 ohne Blitter.
-;Diese Routine benîtigt ca. 65% der Rechenzeit von raster_transp.
-; 30(a6): Breite einer Scanline in Pixel (Destination)
+;Diese Routine ben√∂tigt ca. 65% der Rechenzeit von raster_transp.
+;-> 30(a6): Breite einer Scanline in Pixel (Destination)
 ;  26(a6): Adresse des Bildschirms (Destination)
 ;  24(a6): y3 (Destination)
 ;  22(a6): x3 (Destination)
@@ -1469,13 +1469,13 @@ mcode49:        link    A6,#-12
                 move.w  22(A6),D4       ;Dest X_Min
                 bpl.s   koord_ok1
                 sub.w   D4,D0           ;neg->zu Source X_Min addieren
-                move.w  D0,8(A6)        ;zurÅck in Parameter
+                move.w  D0,8(A6)        ;zur√ºck in Parameter
                 moveq   #0,D4           ;Clippen
                 move.w  D4,22(A6)
 koord_ok1:      move.w  24(A6),D5       ;Dest Y_Min
                 bpl.s   koord_ok2
                 sub.w   D5,D1           ;neg->zu Source Y_Min addieren
-                move.w  D1,10(A6)       ;zurÅck in Parameter
+                move.w  D1,10(A6)       ;zur√ºck in Parameter
                 moveq   #0,D5
                 move.w  D5,24(A6)
 koord_ok2:      move.w  D2,D7           ;Source X_Max
@@ -1488,8 +1488,8 @@ koord_ok2:      move.w  D2,D7           ;Source X_Max
                 bpl.s   koord_ok3
                 add.w   D7,D6           ;von Dest X_Max abziehen
                 add.w   D7,D2           ;und von Source X_Max
-                move.w  D2,12(A6)       ;zurÅck in Parameter
-koord_ok3:      sub.w   D1,D3           ;Hîhe-1
+                move.w  D2,12(A6)       ;zur√ºck in Parameter
+koord_ok3:      sub.w   D1,D3           ;H√∂he-1
                 add.w   D3,D5           ;=Dest Y_Max
                 move.w  #199,D3         ;Unterer Rand
                 sub.w   D5,D3
@@ -1564,28 +1564,28 @@ weiter1:        move.w  12(A6),D0       ;Source X_Max
                 movea.l rechts_klein(PC,D5.w),A4 ;Spezialroutine
                 bra.s   start_copy
 
-;Tabelle fÅr Objekte, die genau 2 BBs breit sind, und nach rechts geschoben
-;werden, da es fÅr die nachfolgenden Routine (L0037) nicht mîglich war an
+;Tabelle f√ºr Objekte, die genau 2 BBs breit sind, und nach rechts geschoben
+;werden, da es f√ºr die nachfolgenden Routine (L0037) nicht m√∂glich war an
 ;bestimmte Informationen heranzukommen.
 rechts_klein:   DC.L L0023b
                 DC.L L0025b
                 DC.L L0024b
                 DC.L L0026b
 
-;Routinen fÅr nur einen BB breite Objekte:
+;Routinen f√ºr nur einen BB breite Objekte:
 L0007:          DC.L L0021
                 DC.L L0022
                 DC.L L0022
                 DC.L L0021
 
-;Routinen fÅr mindestens 2 BB breite Objekte
-L0008:          DC.L L0026      ;4  = 0
+;Routinen f√ºr mindestens 2 BB breite Objekte
+L0008:          DC.L L0026      ;4 . = 0
 L0009:          DC.L L0030
-                DC.L L0023      ;5  = 1 -
+                DC.L L0023      ;5 . = 1 -
                 DC.L L0033
-                DC.L L0024      ;6  = 2
+                DC.L L0024      ;6 . = 2
                 DC.L L002F
-                DC.L L0025      ;7  = 3 -
+                DC.L L0025      ;7 . = 3 -
                 DC.L L0034
                 DC.L L0025      ;12  = 4
                 DC.L L0030
@@ -1598,7 +1598,7 @@ L0009:          DC.L L0030
 
 klein:          move.l  D6,D0           ;Maske
                 swap    D0
-                and.w   D0,D6           ;linker und rechter Rand verknÅpfen
+                and.w   D0,D6           ;linker und rechter Rand verkn√ºpfen
                 lea     nxt_scanline(PC),A3
                 btst    #5,D5           ;NFSR?
                 bne.s   start_copy      ;Ja->Normal arbeiten
@@ -1606,8 +1606,8 @@ klein:          move.l  D6,D0           ;Maske
                 andi.w  #%0000000000001100,D5
                 movea.l L0007(PC,D5.w),A4 ;Sonst andere Routine nehmen
 start_copy:     move.w  14(A6),D5       ;y2
-                sub.w   10(A6),D5       ;-y1=Hîhe in Pixeln-1
-                addq.w  #1,D5           ;=Hîhe in Pixeln
+                sub.w   10(A6),D5       ;-y1=H√∂he in Pixeln-1
+                addq.w  #1,D5           ;=H√∂he in Pixeln
                 swap    D5
                 move.w  -6(A6),D5       ;Breite des Zielblocks in BBs-2
                 addq.l  #8,A0           ;Ans Ende des BB gehen
@@ -1647,9 +1647,9 @@ L0015:          DC.W %1000000000000000
                 DC.W %1111111111111111
 
 ;Routine berechnet die Startadresse des Quellrasters relativ zu:
-; D0: X
+;-> D0: X
 ;  D1: Y
-; A0: Quellrasteradresse
+;<- A0: Quellrasteradresse
 calc_quelle:    movea.l 16(A6),A0       ;Anfangsadresse Quellraster
                 move.w  20(A6),D3       ;Breite Quelle in Pixel
                 lsr.w   #1,D3           ;Breite in Bytes
@@ -1661,9 +1661,9 @@ calc_quelle:    movea.l 16(A6),A0       ;Anfangsadresse Quellraster
                 rts
 
 ;Routine berechnet die Startadresse des Zielrasters relativ zu:
-; D0: X
+;-> D0: X
 ;  D1: Y
-; A1: Zielrasteradresse
+;<- A1: Zielrasteradresse
 calc_ziel:      movea.l 26(A6),A1       ;Anfangsadresse Zielraster
                 move.w  30(A6),D3       ;Breite Ziel in Pixel
                 lsr.w   #1,D3           ;Breite in Bytes berechnen
@@ -1675,7 +1675,7 @@ calc_ziel:      movea.l 26(A6),A1       ;Anfangsadresse Zielraster
                 rts
 
 ;Spezialroutine falls Skew=0:
-no_shift:       lea     no_shift1(PC),A4 ;Bei nÑchster Scanline diese Routine
+no_shift:       lea     no_shift1(PC),A4 ;Bei n√§chster Scanline diese Routine
                 move.l  D6,D0           ;Maske retten
                 swap    D6
                 move.w  D6,D7           ;obere Maske->D7
@@ -1701,7 +1701,7 @@ no_shift1:      move.l  -(A0),D0        ;Plane 2 und 3 holen (12)
 
 bb_mitte2:      move.l  -(A0),-(A1)     ;Plane 2 und 3 holen (12)
                 move.l  -(A0),-(A1)     ;Plane 0 und 1 holen (12)
-bb_dbra2:       dbra    D5,bb_mitte2    ;zÑhlt bis auf 0 runter
+bb_dbra2:       dbra    D5,bb_mitte2    ;z√§hlt bis auf 0 runter
 
                 move.l  -(A0),D0        ;Plane 2 und 3 holen (12)
                 move.l  -(A0),D1        ;Plane 0 und 1 holen (12)
@@ -1791,7 +1791,7 @@ L0023:          move.w  -(A0),D7        ;Plane aus Objekt holen
                 swap    D3
                 swap    D2
                 swap    D1
-L0024:          move.w  -(A0),D7        ;nÑchste Plane aus Objekt
+L0024:          move.w  -(A0),D7        ;n√§chste Plane aus Objekt
                 move.w  -(A0),D3
                 move.w  -(A0),D2
                 move.w  -(A0),D1
@@ -1806,7 +1806,7 @@ L0024:          move.w  -(A0),D7        ;nÑchste Plane aus Objekt
                 eor.w   D7,D0
                 and.w   D6,D0
                 eor.w   D7,D0
-                move.w  D0,(A1)         ;und zurÅck auf Screen
+                move.w  D0,(A1)         ;und zur√ºck auf Screen
 
                 move.l  D3,D0           ;ins Schieberegister
                 ror.l   D4,D0           ;runterschieben
@@ -1814,7 +1814,7 @@ L0024:          move.w  -(A0),D7        ;nÑchste Plane aus Objekt
                 eor.w   D3,D0
                 and.w   D6,D0
                 eor.w   D3,D0
-                move.w  D0,(A1)         ;und zurÅck auf Screen
+                move.w  D0,(A1)         ;und zur√ºck auf Screen
 
                 move.l  D2,D0           ;ins Schieberegister
                 ror.l   D4,D0           ;runterschieben
@@ -1822,7 +1822,7 @@ L0024:          move.w  -(A0),D7        ;nÑchste Plane aus Objekt
                 eor.w   D2,D0
                 and.w   D6,D0
                 eor.w   D2,D0
-                move.w  D0,(A1)         ;und zurÅck auf Screen
+                move.w  D0,(A1)         ;und zur√ºck auf Screen
 
                 move.l  D1,D0           ;ins Schieberegister
                 ror.l   D4,D0           ;runterschieben
@@ -1830,7 +1830,7 @@ L0024:          move.w  -(A0),D7        ;nÑchste Plane aus Objekt
                 eor.w   D1,D0
                 and.w   D6,D0
                 eor.w   D1,D0
-                move.w  D0,(A1)         ;und zurÅck auf Screen
+                move.w  D0,(A1)         ;und zur√ºck auf Screen
 
                 jmp     (A3)
 
@@ -2048,7 +2048,7 @@ L0030:          dbra    D5,L002C
                 rol.l   D4,D1
                 bra.s   L0038
 
-L0033:          cmpi.w  #1,D5           ;Nur bis 0 runterzÑhlen
+L0033:          cmpi.w  #1,D5           ;Nur bis 0 runterz√§hlen
                 beq.s   spezial         ;bei eins Spezialroutine
                 dbra    D5,L002B
                 bra.s   L0037
@@ -2098,33 +2098,33 @@ L0038:          swap    D6
                 eor.w   D0,D7
                 and.w   D6,D7
                 eor.w   D0,D7
-                move.w  D7,(A1)         ;und zurÅck auf Screen
+                move.w  D7,(A1)         ;und zur√ºck auf Screen
 
                 move.w  -(A1),D0        ;Screen holen
                 eor.w   D0,D3
                 and.w   D6,D3
                 eor.w   D0,D3
-                move.w  D3,(A1)         ;und zurÅck auf Screen
+                move.w  D3,(A1)         ;und zur√ºck auf Screen
 
                 move.w  -(A1),D0        ;Screen holen
                 eor.w   D0,D2
                 and.w   D6,D2
                 eor.w   D0,D2
-                move.w  D2,(A1)         ;und zurÅck auf Screen
+                move.w  D2,(A1)         ;und zur√ºck auf Screen
 
                 move.w  -(A1),D0        ;Screen holen
                 eor.w   D0,D1
                 and.w   D6,D1
                 eor.w   D0,D1
-                move.w  D1,(A1)         ;und zurÅck auf Screen
+                move.w  D1,(A1)         ;und zur√ºck auf Screen
 
 L0039:          swap    D6
 nxt_scan2:      move.w  -6(A6),D5       ;Breite in BBs holen
 nxt_scanline:   swap    D5
                 subq.w  #1,D5           ;Eine Scanline weniger
                 beq.s   nichts_da7
-                swap    D5              ;Wieder den BB-ZÑhler
-                adda.w  -8(A6),A0       ;zur nÑchsten Scanline
+                swap    D5              ;Wieder den BB-Z√§hler
+                adda.w  -8(A6),A0       ;zur n√§chsten Scanline
                 adda.w  -10(A6),A1      ;-'-
                 addq.l  #8,A0
                 addq.l  #8,A1
@@ -2134,16 +2134,16 @@ nichts_da7:     movem.l (SP)+,D0-A5
                 rts                     ;und schultz
 
 ;Diese Routine kopiert einen rechteckigen Bildschirmbereich von einem Platz
-;zu einem anderen. Dabei werden öberlappungen NICHT berÅcksichtigt.
-;Der neue Bereich wird in den alten eingeknÅpft, d.h. dort wo der neue
+;zu einem anderen. Dabei werden √úberlappungen NICHT ber√ºcksichtigt.
+;Der neue Bereich wird in den alten eingekn√ºpft, d.h. dort wo der neue
 ;Bereich Hintergrundfarbe hat, scheint der alte Bereich durch. (transparent)
-;Diese Routine clippt den Zielbereich. Als Breite werden die Åbergebene, als
-;Hîhe 200 angenommen.
-;Diese Routine ist ungefÑhr 6.8 mal schneller als Line_A #7 ohne Blitter
-;Line_A #7 mit Blitter braucht ungefÑhr 85% der Rechenzeit dieser Routine.
+;Diese Routine clippt den Zielbereich. Als Breite werden die √ºbergebene, als
+;H√∂he 200 angenommen.
+;Diese Routine ist ungef√§hr 6.8 mal schneller als Line_A #7 ohne Blitter
+;Line_A #7 mit Blitter braucht ungef√§hr 85% der Rechenzeit dieser Routine.
 ;Ist keine Verschiebung notwendig, ist diese Routine ca. 13 mal schneller als
 ;Line_A #7 ohne Blitter!
-; 30(a6): Breite einer Scanline in Pixel (Destination)
+;-> 30(a6): Breite einer Scanline in Pixel (Destination)
 ;  26(a6): Adresse des Bildschirms (Destination)
 ;  24(a6): y3 (Destination)
 ;  22(a6): x3 (Destination)
@@ -2164,13 +2164,13 @@ mcode50:        link    A6,#-12
                 move.w  22(A6),D4       ;Dest X_Min
                 bpl.s   koord_ok11
                 sub.w   D4,D0           ;neg->zu Source X_Min addieren
-                move.w  D0,8(A6)        ;zurÅck in Parameter
+                move.w  D0,8(A6)        ;zur√ºck in Parameter
                 moveq   #0,D4           ;Clippen
                 move.w  D4,22(A6)
 koord_ok11:     move.w  24(A6),D5       ;Dest Y_Min
                 bpl.s   koord_ok22
                 sub.w   D5,D1           ;neg->zu Source Y_Min addieren
-                move.w  D1,10(A6)       ;zurÅck in Parameter
+                move.w  D1,10(A6)       ;zur√ºck in Parameter
                 moveq   #0,D5
                 move.w  D5,24(A6)
 koord_ok22:     move.w  D2,D7           ;Source X_Max
@@ -2183,8 +2183,8 @@ koord_ok22:     move.w  D2,D7           ;Source X_Max
                 bpl.s   koord_ok33
                 add.w   D7,D6           ;von Dest X_Max abziehen
                 add.w   D7,D2           ;und von Source X_Max
-                move.w  D2,12(A6)       ;zurÅck in Parameter
-koord_ok33:     sub.w   D1,D3           ;Hîhe-1
+                move.w  D2,12(A6)       ;zur√ºck in Parameter
+koord_ok33:     sub.w   D1,D3           ;H√∂he-1
                 add.w   D3,D5           ;=Dest Y_Max
                 move.w  #199,D3         ;Unterer Rand
                 sub.w   D5,D3
@@ -2259,28 +2259,28 @@ weiter2:        move.w  12(A6),D0       ;Source X_Max
                 movea.l rechts_kleint(PC,D5.w),A4 ;Spezialroutine
                 bra.s   start_trans
 
-;Tabelle fÅr Objekte, die genau 2 BBs breit sind, und nach rechts geschoben
-;werden, da es fÅr die nachfolgenden Routine (L0037) nicht mîglich war an
+;Tabelle f√ºr Objekte, die genau 2 BBs breit sind, und nach rechts geschoben
+;werden, da es f√ºr die nachfolgenden Routine (L0037) nicht m√∂glich war an
 ;bestimmte Informationen heranzukommen.
 rechts_kleint:  DC.L L0023bt
                 DC.L L0025bt
                 DC.L L0024bt
                 DC.L L0026bt
 
-;Routinen fÅr nur einen BB breite Objekte:
+;Routinen f√ºr nur einen BB breite Objekte:
 L0007t:         DC.L L0021t
                 DC.L L0022t
                 DC.L L0022t
                 DC.L L0021t
 
-;Routinen fÅr mindestens 2 BB breite Objekte
-L0008t:         DC.L L0026t     ;4  = 0
+;Routinen f√ºr mindestens 2 BB breite Objekte
+L0008t:         DC.L L0026t     ;4 . = 0
 L0009t:         DC.L L0030t
-                DC.L L0023t     ;5  = 1 -
+                DC.L L0023t     ;5 . = 1 -
                 DC.L L0033t
-                DC.L L0024t     ;6  = 2
+                DC.L L0024t     ;6 . = 2
                 DC.L L002Ft
-                DC.L L0025t     ;7  = 3 -
+                DC.L L0025t     ;7 . = 3 -
                 DC.L L0034t
                 DC.L L0025t     ;12  = 4
                 DC.L L0030t
@@ -2293,7 +2293,7 @@ L0009t:         DC.L L0030t
 
 klein2:         move.l  D6,D0           ;Maske
                 swap    D0
-                and.w   D0,D6           ;linker und rechter Rand verknÅpfen
+                and.w   D0,D6           ;linker und rechter Rand verkn√ºpfen
                 lea     nxt_scanline(PC),A3
                 btst    #5,D5           ;NFSR?
                 bne.s   start_trans     ;Ja->Normal arbeiten
@@ -2301,8 +2301,8 @@ klein2:         move.l  D6,D0           ;Maske
                 andi.w  #%0000000000001100,D5
                 movea.l L0007t(PC,D5.w),A4 ;Sonst andere Routine nehmen
 start_trans:    move.w  14(A6),D5       ;y2
-                sub.w   10(A6),D5       ;-y1=Hîhe in Pixeln-1
-                addq.w  #1,D5           ;=Hîhe in Pixeln
+                sub.w   10(A6),D5       ;-y1=H√∂he in Pixeln-1
+                addq.w  #1,D5           ;=H√∂he in Pixeln
                 swap    D5
                 move.w  -6(A6),D5       ;Breite des Zielblocks in BBs-2
                 addq.l  #8,A0           ;Ans Ende des BB gehen
@@ -2312,7 +2312,7 @@ start_trans:    move.w  14(A6),D5       ;y2
                 jmp     (A4)            ;und Plane bearbeiten
 
 ;Spezialroutine falls Skew=0:
-no_shift2:      lea     no_shift3(PC),A4 ;Bei nÑchster Scanline diese Routine
+no_shift2:      lea     no_shift3(PC),A4 ;Bei n√§chster Scanline diese Routine
                 move.l  D6,D0           ;Maske retten
                 swap    D6
                 move.w  D6,D7           ;obere Maske->D7
@@ -2322,7 +2322,7 @@ no_shift2:      lea     no_shift3(PC),A4 ;Bei nÑchster Scanline diese Routine
 
 no_shift3:      move.l  -(A0),D0        ;Plane 2 und 3 holen (12)
                 move.l  -(A0),D1        ;Plane 0 und 1 holen (12)
-                move.l  D0,D4           ;fÅr Maske      ( 4)
+                move.l  D0,D4           ;f√ºr Maske      ( 4)
                 or.l    D1,D4           ;               ( 8)
                 swap    D0              ;               ( 4)
                 swap    D1
@@ -2347,7 +2347,7 @@ no_shift3:      move.l  -(A0),D0        ;Plane 2 und 3 holen (12)
 
 bb_mitte:       move.l  -(A0),D0        ;Plane 2 und 3 holen (12)
                 move.l  -(A0),D1        ;Plane 0 und 1 holen (12)
-                move.l  D0,D4           ;fÅr Maske      ( 4)
+                move.l  D0,D4           ;f√ºr Maske      ( 4)
                 or.l    D1,D4           ;               ( 8)
                 swap    D0              ;               ( 4)
                 swap    D1
@@ -2365,11 +2365,11 @@ bb_mitte:       move.l  -(A0),D0        ;Plane 2 und 3 holen (12)
                 or.l    D3,D1           ;               ( 8)
 klopfen2:       move.l  D0,-(A1)
                 move.l  D1,-(A1)
-bb_dbra:        dbra    D5,bb_mitte     ;zÑhlt bis auf 0 runter
+bb_dbra:        dbra    D5,bb_mitte     ;z√§hlt bis auf 0 runter
 
 bb_rechts:      move.l  -(A0),D0        ;Plane 2 und 3 holen (12)
                 move.l  -(A0),D1        ;Plane 0 und 1 holen (12)
-                move.l  D0,D4           ;fÅr Maske      ( 4)
+                move.l  D0,D4           ;f√ºr Maske      ( 4)
                 or.l    D1,D4           ;               ( 8)
                 swap    D0              ;               ( 4)
                 swap    D1
@@ -2487,7 +2487,7 @@ L0023t:         move.w  -(A0),D7        ;Plane aus Objekt holen
                 swap    D3
                 swap    D2
                 swap    D1
-L0024t:         move.w  -(A0),D7        ;nÑchste Plane aus Objekt
+L0024t:         move.w  -(A0),D7        ;n√§chste Plane aus Objekt
                 move.w  -(A0),D3
                 move.w  -(A0),D2
                 move.w  -(A0),D1
@@ -2510,7 +2510,7 @@ L0024t:         move.w  -(A0),D7        ;nÑchste Plane aus Objekt
                 and.w   D6,D0           ;ausblenden
                 and.w   D1,D0           ;Maskieren
                 eor.w   D7,D0
-                move.w  D0,(A1)         ;und zurÅck auf Screen
+                move.w  D0,(A1)         ;und zur√ºck auf Screen
 
                 move.l  D3,D0           ;ins Schieberegister
                 ror.l   D4,D0           ;runterschieben
@@ -2519,7 +2519,7 @@ L0024t:         move.w  -(A0),D7        ;nÑchste Plane aus Objekt
                 and.w   D6,D0
                 and.w   D1,D0           ;Maskieren
                 eor.w   D3,D0
-                move.w  D0,(A1)         ;und zurÅck auf Screen
+                move.w  D0,(A1)         ;und zur√ºck auf Screen
 
                 move.l  D2,D0           ;ins Schieberegister
                 ror.l   D4,D0           ;runterschieben
@@ -2528,7 +2528,7 @@ L0024t:         move.w  -(A0),D7        ;nÑchste Plane aus Objekt
                 and.w   D6,D0
                 and.w   D1,D0
                 eor.w   D2,D0
-                move.w  D0,(A1)         ;und zurÅck auf Screen
+                move.w  D0,(A1)         ;und zur√ºck auf Screen
 
                 move.l  A5,D0           ;ins Schieberegister
                 ror.l   D4,D0           ;runterschieben
@@ -2537,7 +2537,7 @@ L0024t:         move.w  -(A0),D7        ;nÑchste Plane aus Objekt
                 and.w   D6,D0
                 and.w   D1,D0
                 eor.w   D2,D0
-                move.w  D0,(A1)         ;und zurÅck auf Screen
+                move.w  D0,(A1)         ;und zur√ºck auf Screen
 
                 move.l  A5,D1           ;und richtiges d1 rausholen
 
@@ -2777,7 +2777,7 @@ L002Ct:         move.w  -(A0),D7
                 rol.l   D4,D1           ;Maske auch schieben
                 not.w   D1
                 and.w   D1,-(A1)        ;Maskieren
-                or.w    D0,(A1)         ;und einknÅpfen
+                or.w    D0,(A1)         ;und einkn√ºpfen
 
                 move.l  D3,D0           ;ins Schieberegister
                 swap    D3
@@ -2824,7 +2824,7 @@ L0030t:         dbra    D5,L002Ct
                 rol.l   D4,D1
                 bra     L0038t
 
-L0033t:         cmpi.w  #1,D5           ;Nur bis 0 runterzÑhlen
+L0033t:         cmpi.w  #1,D5           ;Nur bis 0 runterz√§hlen
                 beq.s   spezialt        ;bei eins Spezialroutine
                 dbra    D5,L002Bt
                 bra.s   L0037t
@@ -2908,21 +2908,21 @@ L0038t:         swap    D6
                 and.w   D6,D7
                 and.w   D1,D7
                 eor.w   D0,D7
-                move.w  D7,(A1)         ;und zurÅck auf Screen
+                move.w  D7,(A1)         ;und zur√ºck auf Screen
 
                 move.w  -(A1),D0        ;Screen holen
                 eor.w   D0,D3
                 and.w   D6,D3
                 and.w   D1,D3
                 eor.w   D0,D3
-                move.w  D3,(A1)         ;und zurÅck auf Screen
+                move.w  D3,(A1)         ;und zur√ºck auf Screen
 
                 move.w  -(A1),D0        ;Screen holen
                 eor.w   D0,D2
                 and.w   D6,D2
                 and.w   D1,D2
                 eor.w   D0,D2
-                move.w  D2,(A1)         ;und zurÅck auf Screen
+                move.w  D2,(A1)         ;und zur√ºck auf Screen
 
                 move.w  A5,D2           ;und altes d1 holen
 
@@ -2931,14 +2931,14 @@ L0038t:         swap    D6
                 and.w   D6,D2
                 and.w   D1,D2           ;Maske
                 eor.w   D0,D2
-                move.w  D2,(A1)         ;und zurÅck auf Screen
-                bra     L0039           ;und nÑchste Scanline
+                move.w  D2,(A1)         ;und zur√ºck auf Screen
+                bra     L0039           ;und n√§chste Scanline
 
 
 ;***************************************************************************
 ; Unpacking source for Pack-Ice Version 2.31
-; 12(A6).L: Zeiger auf den Zieldatenbereich
-;  8(A6).L: Zeiger auf die gepackten Daten
+;-> 12(A6).L: Zeiger auf den Zieldatenbereich
+;->  8(A6).L: Zeiger auf die gepackten Daten
 mcode52:        movem.l A0-A1,-(SP)
 
                 movea.l 12(SP),A0       ;Adresse der gepackten Daten
@@ -3248,7 +3248,7 @@ naechste_plane: dbra    D3,plane_loop7
 
 
 ;Diese Funktion initialisiert die Musik, als Parameter wird ihr die
-;VBL-Routine der Musik Åbergeben. Diese wird mit 50 Hz angesprungen.
+;VBL-Routine der Musik √ºbergeben. Diese wird mit 50 Hz angesprungen.
 ;void init_music((void *)(musik)(),int song_nr); (14)
 mcode63:        link    A6,#0
                 movem.l D0-A6,-(SP)
@@ -3269,17 +3269,17 @@ mcode63:        link    A6,#0
                 andi.b  #%11110000,$FFFFFA1D ;Timer D Stop1
                 move.b  #246,$FFFFFA25  ;Counterwert eintragen
                 bset    #4,$FFFFFA15    ;Timer D nicht maskieren
-                move.b  #%11101111,$FFFFFA0D ;Pending Bit lîschen
+                move.b  #%11101111,$FFFFFA0D ;Pending Bit l√∂schen
                 ori.b   #%00000111,$FFFFFA1D ;Vorteiler teilt durch 200
                 bset    #4,$FFFFFA09    ;Timer D erlauben
 
-                bclr    #4,$FFFFFA11    ;In-Service lîschen
+                bclr    #4,$FFFFFA11    ;In-Service l√∂schen
 
 re_init:        move.w  12(A6),D0
                 movea.l music_routine(PC),A0
                 jsr     (A0)            ;Und Song einstellen (14)
 
-                move    #$2300,SR       ;IRQ's ermîglichen
+                move    #$2300,SR       ;IRQ's erm√∂glichen
 
                 movem.l (SP)+,D0-A6
                 unlk    A6
@@ -3293,7 +3293,7 @@ music_irq:      move    #$2500,SR       ;HBL zulassen
                 jsr     8(A0)           ;In VBL-Routine springen
 
                 movem.l (SP)+,D0-A6
-keine_musik:    bclr    #4,$FFFFFA11    ;In-Service Bit lîschen
+keine_musik:    bclr    #4,$FFFFFA11    ;In-Service Bit l√∂schen
                 rte
 
 old_music:      DC.L 0
@@ -3305,7 +3305,7 @@ music_off:      move.l  old_music,$00000110.w
                 andi.b  #%11110000,$FFFFFA1D ;Timer D Stop1
 
                 move.l  #$08080000,$FFFF8800.w
-                move.l  #$09090000,$FFFF8800.w ;LautstÑrken aus
+                move.l  #$09090000,$FFFF8800.w ;Lautst√§rken aus
                 move.l  #$0A0A0000,$FFFF8800.w
                 rts
 
@@ -3426,7 +3426,7 @@ track_display:  DC.B 0          ;FALSE
 first_music:    DC.B 0          ;TRUE
 
                 EVEN
-keypress:       DC.L 0          ;Momentan gedrÅckte Taste
+keypress:       DC.L 0          ;Momentan gedr√ºckte Taste
 tastatur_read:  DC.L tastatur_buffer ;Lesepointer im Tastaturbuffer
 tastatur_buffer:DS.B 50
 old_118:        DS.L 1
@@ -3434,21 +3434,21 @@ old_timer_b:    DS.L 1
 overrun:        DC.B 1          ;Bisher kein Overrun
                 EVEN
 rasters:        DC.L rasters1
-first_pal:      DC.W 0          ;FÅr Calc-Offsets
+first_pal:      DC.W 0          ;F√ºr Calc-Offsets
 line_modus:     DC.W 0          ;Typ der Linie 0=Replace, 1=EOR, 2=Transparent
 
 ende_auswert:   DS.L 1          ;Tastaturroutine
 
-digi_works:     DS.W 1          ;Flag, ob Digisound lÑuft
+digi_works:     DS.W 1          ;Flag, ob Digisound l√§uft
 anzahl:         DS.W 1
 
 logbase:        DS.L 1          ;log. Bildschirmadresse
 
-fuellmuster:    DS.L 1          ;Adresse des FÅllmusters
+fuellmuster:    DS.L 1          ;Adresse des F√ºllmusters
 
 copyscroller:   DS.W 1
 scrollbase:     DS.L 1
-scrollbegin:    DS.L 1          ; FÅr Laufschrift
+scrollbegin:    DS.L 1          ; F√ºr Laufschrift
 yscroller:      DS.W 1
 delta_x:        DS.W 1
 scrollpos:      DS.L 1
@@ -3457,7 +3457,7 @@ scroll_buff:    DS.L 1
 font_start:     DS.L 1
 char_basis:     DS.L 1
 
-counter:        DS.W 1          ;FÅr Scrollroutine
+counter:        DS.W 1          ;F√ºr Scrollroutine
 adrspalte:      DS.L 1          ;Pointer auf reinzuscrollendes Bild
 oldbase:        DS.L 1
 neuerscreen:    DS.L 1
@@ -3477,7 +3477,7 @@ mdeltay:        DS.W 1          ;(10)
 space:          DS.L 3
 
 endsource:      DS.L 1
-pic_length:     DS.L 1          ; BildlÑnge in Bytes
+pic_length:     DS.L 1          ; Bildl√§nge in Bytes
 
 tos_da:         DC.W 0          ;Flag, ob TOS aktiv oder nicht
 disk_drin:      DC.W -10        ;Im Moment ist keine Diskette im Laufwerk
@@ -3501,21 +3501,21 @@ retry:          DS.W 1          ;Retrycounter bei Schreibfehler
 disk_status:    DS.W 1          ;FDC-Status nach wait_fertig
 sek_per_track:  DS.W 1          ;Wieviel Sektoren pro Track hat diese Disk?
 first_sek:      DS.W 1          ;Der erste Sektor des Archivs (logisch)
-datei_laenge:   DS.L 1          ;Die LÑnge des Archivs in Bytes
+datei_laenge:   DS.L 1          ;Die L√§nge des Archivs in Bytes
 dend:           DS.L 1          ;DMA-Endadresse
 dflag:          DS.B 1          ;DMA-Transfer?
 flop_aktiv:     DS.B 1          ;Flag, ob Floppy aktiv ist
                 EVEN
 
-errno:          DS.W 1          ;Globale Fehlermeldung fÅr TCFLT.LIB
+errno:          DS.W 1          ;Globale Fehlermeldung f√ºr TCFLT.LIB
 mem_strt:       DS.L 1          ;Startadresse des Benutzerspeichers
-mem_len:        DS.L 1          ;Grîûe des Benutzerspeichers
+mem_len:        DS.L 1          ;Gr√∂√üe des Benutzerspeichers
 
 _BasPag:        DS.L 1
 _PgmSize:       DS.L 1
 overlay:        DS.W 1          ;Wird mit Overlay-Technik gearbeitet?
 
-vbl_queue:      DS.L 10         ;Platz fÅr 10 VBL-EintrÑge
+vbl_queue:      DS.L 10         ;Platz f√ºr 10 VBL-Eintr√§ge
 
 hbl_system:     DS.W anz_raster*(1+16) ;Y-Position+Paletten
 rasters1:       DS.W anz_raster*(1+16) ;dargestellte Rasterpalette

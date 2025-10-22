@@ -1,21 +1,21 @@
 
 ;************************************************************************
 ;* Header-Library, Programmrumpf                                        *
-;* Ω1989 by ‰-soft, written by Markus Fritze           18.06.1988 01:30 *
+;* ‚ïú1989 by Œ£-soft, written by Markus Fritze           18.06.1988 01:30 *
 ;************************************************************************
                 movea.l 4(SP),A6             ;Basepageadresse holen
-                movea.w #$0100+$0400,A5      ;Grîûe der Basepage + Stackgrîûe (1k)
-                adda.l  12(A6),A5            ;+ Grîûe des TEXT-Segments
-                adda.l  20(A6),A5            ;+ Grîûe des DATA-Segments
-                adda.l  28(A6),A5            ;+ Grîûe des BSS-Segments
-                move.l  A5,D1                ;= GesamtlÑnge des Programms
-                and.w   #$FFFE,D1            ;LÑnge nun gerade
+                movea.w #$0100+$0400,A5      ;Gr√∂√üe der Basepage + Stackgr√∂√üe (1k)
+                adda.l  12(A6),A5            ;+ Gr√∂√üe des TEXT-Segments
+                adda.l  20(A6),A5            ;+ Gr√∂√üe des DATA-Segments
+                adda.l  28(A6),A5            ;+ Gr√∂√üe des BSS-Segments
+                move.l  A5,D1                ;= Gesamtl√§nge des Programms
+                and.w   #$FFFE,D1            ;L√§nge nun gerade
                 add.l   A6,D1                ;+ Programmstart (Basepageadresse)
                 movea.l D1,SP                ;Stack endet dort
-                move.l  A5,-(SP)             ;ProgrammlÑnge
+                move.l  A5,-(SP)             ;Programml√§nge
                 move.l  A6,-(SP)             ;Adresse der Basepage
                 move.l  #$004A0000,-(SP)     ;Funktionsnummer + Dummyword (0)
-                trap    #1                   ;Mshrink(0,Basepageadr,PrglÑnge)
+                trap    #1                   ;Mshrink(0,Basepageadr,Prgl√§nge)
                 lea     12(SP),SP            ;Nur noch den Stack korrigieren
 
                 lea     titel(PC),A0
@@ -109,7 +109,7 @@ grafix_loop:    move.b  laufwerk+1(PC),rom_grfx_x
 
 kein_format2:   bsr     wipe_disk
 
-                move.b  laufwerk+1(PC),bootsektor+9 ;Bootsektor nicht ausfÅhrbar
+                move.b  laufwerk+1(PC),bootsektor+9 ;Bootsektor nicht ausf√ºhrbar
 
                 move.w  #1,-(SP)             ;Count
                 clr.w   -(SP)                ;Seite
@@ -147,7 +147,7 @@ abbruch:        lea     fatal_error(PC),A0
 ;List ein File
 ;-> A5.L: Adresse des Filenamens
 ;   A6.L: Ladeadresse
-;<- D0.L: FilelÑnge
+;<- D0.L: Filel√§nge
 read_file:      lea     reading(PC),A0
                 bsr     printstring
 
@@ -180,7 +180,7 @@ read_file:      lea     reading(PC),A0
                 lea     crlf(PC),A0
                 bsr.s   printstring
 
-                move.l  D7,D0                ;LÑnge zurÅckgeben
+                move.l  D7,D0                ;L√§nge zur√ºckgeben
                 rts
 
 file_error:     lea     fileerror(PC),A0
@@ -191,8 +191,8 @@ file_error:     lea     fileerror(PC),A0
 ;Schreibt ein File
 ;-> A5.L: Adresse des Filenamens
 ;   A6.L: Ladeadresse
-;   D0.L: FilelÑnge
-write_file:     move.l  D0,D7                ;FilelÑnge merken
+;   D0.L: Filel√§nge
+write_file:     move.l  D0,D7                ;Filel√§nge merken
 
                 lea     writing(PC),A0
                 bsr.s   printstring
@@ -211,7 +211,7 @@ write_file:     move.l  D0,D7                ;FilelÑnge merken
                 move.w  D0,-(SP)
 
                 move.l  A6,-(SP)             ;Adresse
-                move.l  D7,-(SP)             ;FilelÑnge
+                move.l  D7,-(SP)             ;Filel√§nge
                 move.w  D0,-(SP)             ;Fhandle
                 move.w  #$0040,-(SP)
                 trap    #1
@@ -228,7 +228,7 @@ write_file:     move.l  D0,D7                ;FilelÑnge merken
                 lea     crlf(PC),A0
                 bsr.s   printstring
 
-                move.l  D7,D0                ;LÑnge zurÅckgeben
+                move.l  D7,D0                ;L√§nge zur√ºckgeben
                 rts
 
 file_error_fatal:lea    fatal_error(PC),A0
@@ -257,7 +257,7 @@ crawcin:        move.w  #1,-(SP)
                 rts
 
 
-;Lîscht gesamte Disk
+;L√∂scht gesamte Disk
 wipe_disk:      lea     format_memory(PC),A0
                 move.w  #15000/4,D7
 clear:          clr.l   (A0)+
@@ -341,9 +341,9 @@ rom_grfx1a:     DC.B 'A:\ROM_GRFX.'
 rom_grfx_ax:    DC.B '0',0
 
 titel:          DC.B 27,"E"
-                DC.B 'Installierprogramm fÅr Rings of Medusa II - Atari ST',13,10
-                DC.B 'Ω 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt',13,10,10
-                DC.B "Zum Formatieren der Disketten bitte '+' drÅcken: ",0
+                DC.B 'Installierprogramm f√ºr Rings of Medusa II - Atari ST',13,10
+                DC.B '‚ïú 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt',13,10,10
+                DC.B "Zum Formatieren der Disketten bitte '+' dr√ºcken: ",0
 
 insert_disk:    DC.B 13,10,10,"Bitte Disk "
 drive:          DC.B 'X einlegen (Return).',13,10,0
@@ -364,7 +364,7 @@ bootsektor:     bra.s   bootprogramm
 bootprogramm:   DS.B 512
 
                 BSS
-file_len:       DS.L 1          ;LÑnge des aktuellen Archivs
+file_len:       DS.L 1          ;L√§nge des aktuellen Archivs
 laufwerk:       DS.W 1
 format:         DS.W 1
 spiral_tab:     DS.W 20         ;Zum Spiralisieren der Disketten

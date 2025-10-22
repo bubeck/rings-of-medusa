@@ -1,12 +1,12 @@
 
-#define TIMEOUT 25000                 /* Timeout f걊 Kopierschutz */
+#define TIMEOUT 25000                 /* Timeout f체r Kopierschutz */
 
-#define LADEN 0            /* verschiedene Zust꼗de f걊 ort in buy_sell() */
+#define LADEN 0            /* verschiedene Zust채nde f체r ort in buy_sell() */
 #define JUWELLIER 1
 #define AKTIEN 2
 
 #define MUSIK_AN 1
-#define MUSIK_AUS 2                /* 2 Zust꼗de f걊 Hippelspielmusik */
+#define MUSIK_AUS 2                /* 2 Zust채nde f체r Hippelspielmusik */
 
 enum hippel_effekte { LASER=0, FLAK, AUFZUG_AN, AUFZUG_AUS, TUER_AN, TUER_AUS, ECHOLOT,
 											ROULETTE_AN, ROULETTE_AUS, PEILSTRAHL, FX_AUS, FX_11, FX_12 };
@@ -14,7 +14,7 @@ enum hippel_effekte { LASER=0, FLAK, AUFZUG_AN, AUFZUG_AUS, TUER_AN, TUER_AUS, E
 #define VERSION 10
 
 #define MAUS_WEG 1
-#define MAUS_DA 0       /* f걊 bstate */
+#define MAUS_DA 0       /* f체r bstate */
 
 #define TRUE -1
 #define FALSE 0
@@ -51,10 +51,10 @@ enum hippel_effekte { LASER=0, FLAK, AUFZUG_AN, AUFZUG_AUS, TUER_AN, TUER_AUS, E
 #define BUNKERZAHL 44					 /* 44 Bunker im Spiel */
 #define GEGNER 15                   /* Anzahl der gegerischen Armeen */
 #define ARMEEN (GEGNER+1)           /* Gesamtzahl der Armeen (also mit Spieler) */
-#define CITIES 28                   /* 28 St꼋te im Spiel */
+#define CITIES 28                   /* 28 St채dte im Spiel */
 #define WAREN 20                    /* 20 Waren zum Handeln */
 #define WAREN_SEITEN (WAREN/10)     /* 10 pro Seite */
-#define RASSEN 10                   /* 10 Rassen zur Verf갾ung */
+#define RASSEN 10                   /* 10 Rassen zur Verf체gung */
 #define SCHILDE 6
 #define RUESTUNGEN 8
 #define WAFFEN 12
@@ -62,37 +62,37 @@ enum hippel_effekte { LASER=0, FLAK, AUFZUG_AN, AUFZUG_AUS, TUER_AN, TUER_AUS, E
 #define ROHSTOFFE 8
 #define SCHIFFSTYPEN 6
 #define SCHIFFMAX 30      /* Spieler kann maximal 30 Schiffe besitzen */
-#define MAX_PRICE 995           /* maximal 995 f걊 ein Crewmitglied */
+#define MAX_PRICE 995           /* maximal 995 f체r ein Crewmitglied */
 #define BERUFE 10
 #define STALLWAREN 2         /* Warenzahl im Zahl */
 #define SPR_MAX 25           /* maximal X Sprites GLEICHZEITIG darstellen */
 #define SPR_ZAHL 68          /* ANzahl der verschiedenen Spritebilder */
 #define EINHEITEN 7          /* Anzahl der verschiedenen Armee ~ */
 #define MINE_MAX 20         /* Max. 20 Minen gleichzeitig */
-#define CHG_MAX 400          /* Max. 400 Untergrunds꼗derungen */
+#define CHG_MAX 400          /* Max. 400 Untergrunds채nderungen */
 #define KAP_KARREN 80       /* Karren nimmt 80 Waren auf */
 
 #define FILES 45            /* 18 Bilderfiles */
-#define TIEFE 5             /* f걊 Armeesteuer, max. 5 Verschachtelungen */
+#define TIEFE 5             /* f체r Armeesteuer, max. 5 Verschachtelungen */
 
 #define MAUS_AN 10          /* TRAP #10 zeichnet Maus auf Bildschirm */
-#define MAUS_AUS 11         /* Trap #11 l봲cht sie wieder weg */
+#define MAUS_AUS 11         /* Trap #11 l철scht sie wieder weg */
 
-#define AN_BORD 1           /* f걊 "standort", f걊 die Armee */
+#define AN_BORD 1           /* f체r "standort", f체r die Armee */
 #define AN_LAND 2           /* -"- */
 #define NIRGENDS 3          /* Armee nicht vorhanden */
 
 #define ANGRIFF 1
-#define RUECKZUG 2          /* Befehle f걊 die Einheiten beim Kampf */
+#define RUECKZUG 2          /* Befehle f체r die Einheiten beim Kampf */
 #define HALTEN 0            /* verwendet in auftrag[] */
 
 #define PARTY 4							/* Anzahl der Leute in einer Party */
 
 enum himmelsrichtung { NORD=0,OST,SUED,WEST };
 
-#define WANDMAX 40					/* max. Anzahl an Wandeintr꼏er in BUNKERWAND[] */
-#define TUERMAX 140					/* Gesamtzahl der T걊en in allen Bunkern */
-#define ITEMMAX (TUERMAX+570)	/* Gesamtzahl an Objekten in allen Bunkern (Schl걌sel+Items) */
+#define WANDMAX 40					/* max. Anzahl an Wandeintr채ger in BUNKERWAND[] */
+#define TUERMAX 140					/* Gesamtzahl der T체ren in allen Bunkern */
+#define ITEMMAX (TUERMAX+570)	/* Gesamtzahl an Objekten in allen Bunkern (Schl체ssel+Items) */
 #define ENEMYMAX 247				/* Gesamtzahl der Gegner */
 #define ITEMTYPEN 33				/* Wieviel verschiendene Items gibt es? */
 
@@ -100,12 +100,12 @@ enum himmelsrichtung { NORD=0,OST,SUED,WEST };
 #define WALL 65535				
 #define HIDDEN_WALL 65533			/* Wand, die begehbar ist */
 #define LEER 0 
-#define DOOR_ZU_START 32768		/* geschlossene T걊en haben Feldnummer von hier ... */
+#define DOOR_ZU_START 32768		/* geschlossene T체ren haben Feldnummer von hier ... */
 #define DOOR_ZU_END 35999			/* ... bis hier. */
-#define DOOR_AUF_START 36000		/* offene T걊en von hier ... */
+#define DOOR_AUF_START 36000		/* offene T체ren von hier ... */
 #define DOOR_AUF_END 38000		/* ....bis hier. */
 #define ITEM_START 1					/* In der Datei steht, welches Objekt an welcher Stelle */
-#define NOKEY_START 10000			/* Ab hier kommen keine Schl걌sel mehr */
+#define NOKEY_START 10000			/* Ab hier kommen keine Schl체ssel mehr */
 #define NOKEY_END 15000
 #define ITEM_END 15000				/* ist. (Nur ein Objekt pro Feld) */
 #define PRISONER_START (49152)	

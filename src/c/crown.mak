@@ -1,6 +1,6 @@
 ;
-; Batchfile fr Rings of Medusa II
-; ½ 1990 by Till Bubeck
+; Batchfile fÃ¼r Rings of Medusa II
+; â•œ 1990 by Till Bubeck
 ;
 megamax\ccom.ttp main.c -i \..,megamax\headers\ >errors.out
 megamax\ccom.ttp init.c -i \..,megamax\headers\ >errors.out

@@ -11,11 +11,11 @@
                 move.b  #55,$00BFE701        ;TBHI
 
                 move.b  $00BFEF01,D0         ;CrB
-                and.b   #%10010101,D0        ;Inmode=00 -> ZÑhlt Taktzyklen
+                and.b   #%10010101,D0        ;Inmode=00 -> Z√§hlt Taktzyklen
                 or.b    #%00000001,D0        ;Start setzen
                 move.b  D0,$00BFEF01         ;Und Timer starten
 
-                move.b  #%10000010,$00BFED01 ;ICR, Timer B kann IRQ auslîsen
+                move.b  #%10000010,$00BFED01 ;ICR, Timer B kann IRQ ausl√∂sen
 
                 move    #$2000,SR
 
@@ -24,7 +24,7 @@
                 jsr     music
 
                 moveq   #0,D0                ;volume setzen          (000 = laut)
-                jsr     music+8              ;volle lautstÑrke       (100 = leise)
+                jsr     music+8              ;volle lautst√§rke       (100 = leise)
 
                 jsr     music+12             ;sfx initialisieren
 
@@ -58,7 +58,7 @@ level3:         jsr     music+4
 level2:         move.l  D0,-(SP)
                 jsr     music+4
                 move.b  $00BFED01,D0
-                move.w  #%0000000000001000,$00DFF09C ;Request lîschen
+                move.w  #%0000000000001000,$00DFF09C ;Request l√∂schen
                 move.l  (SP)+,D0
                 rte
 

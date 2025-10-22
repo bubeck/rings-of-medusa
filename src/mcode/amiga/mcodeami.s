@@ -1,21 +1,21 @@
 
-;Maschinensprachemodul fÅr Rings of Medusa II fÅr Commodore Amiga
+;Maschinensprachemodul f√ºr Rings of Medusa II f√ºr Commodore Amiga
 ;entwickelt unter TurboAss auf einem Atari ST
 ;(C) 1991 by Till Bubeck, Ziegeleistr. 28, D-7056 Weinstadt
 ;Tel: 07151-66437 (Wochenende und Semesterferien)
-;bzw: 07071-49612 (innerhalb der Woche wÑhrend des Semesters)
+;bzw: 07071-49612 (innerhalb der Woche w√§hrend des Semesters)
 
-;SÑmtliche énderungen sind in den Kommentaren durchnummeriert (1)-(x)
-;folgenden énderungen wurden durchgefÅhrt:
+;S√§mtliche √Ñnderungen sind in den Kommentaren durchnummeriert (1)-(x)
+;folgenden √Ñnderungen wurden durchgef√ºhrt:
 ;(1) Scroller liefert, sofern er ein unbekanntes Zeichen im Scrolltext
 ;    findet dieses in steuerzeichen ans Hauptprogramm (zur Synchronisation
 ;    mit Bildern). (14.5.1991)
 ;(2) Bei der Alertmeldung zum Einlegen von Diskette 'x' kam es vor,
-;    daû noch kein Raster auf dem Bildschirm stand, und alle VBL-Farben
+;    da√ü noch kein Raster auf dem Bildschirm stand, und alle VBL-Farben
 ;    schwarz waren->man sah die Alertbox nicht.
 ;    Jetzt wird in diesem Fall die VBL-Palette mit einer entsprechenden
 ;    Palette geladen. (15.5.1991)
-;(3) Scroller um 2 Zeichen (AnfÅhrunszeichen an/aus) erweitert
+;(3) Scroller um 2 Zeichen (Anf√ºhrunszeichen an/aus) erweitert
 ;(4) Neue Funktion bei draw_objekt (nur Palette setzen) (28.5.1991)
 ;(5) Neue Funktion del_raster() bei set_raster() (28.5.1991)
 ;(6) Neue Funktion fade_raster() (31.5.1991)
@@ -23,7 +23,7 @@
 ;(8) mcode31() ersatzlos entfernt (25.6.1991)
 ;(9) an/abschaltbares Trackdisplay, nur zum Debuggen (6.7.1991)
 ;(10) rel. Mauskoordinaten in mdeltax/y (9.7.1991)
-;(11) vbl_ct wird mit Anfangswert Åber Null initialisiert (9.7.1991)
+;(11) vbl_ct wird mit Anfangswert √ºber Null initialisiert (9.7.1991)
 ;(12) mcode64(), mcode65() speichern jetzt 9 Tracks (9.7.1991)
 ;(13) mcode74(), mcode75() sind hinzugekommen (28.7.1991)
 
@@ -71,7 +71,7 @@
           .XDEF mcode52       ;ICE! unpack
           .XDEF mcode53       ;line
           .XDEF mcode54       ;Fill
-          .XDEF mcode55       ;Calc_Offsets (fÅr Raster)
+          .XDEF mcode55       ;Calc_Offsets (f√ºr Raster)
           .XDEF mcode56       ;Neue_Raster
           .XDEF mcode57       ;Get_Key
           .XDEF mcode58       ;Line_mode
@@ -99,21 +99,21 @@
           .XDEF amiga_raw     ;Byte: Tastaturrawcode Amiga
           .XDEF protect       ;Track 41 Kopierschutz
           .XDEF game_music    ;Beginn der Musik
-          .XDEF chcrypt       ;Hier kann Medusa ÅberprÅfen ob gecrypt
+          .XDEF chcrypt       ;Hier kann Medusa √ºberpr√ºfen ob gecrypt
 
           .XDEF vbl_ct
-          .XDEF keypress      ;Zur Zeit gedrÅckte Taste (Scancode+ASCII)
+          .XDEF keypress      ;Zur Zeit gedr√ºckte Taste (Scancode+ASCII)
           .XDEF shift         ;Status der Shift-Tasten
           .XDEF fnt_buf       ;Zeiger auf Zeichensatz
           .XDEF digi_works    ;Flag, ob Digisound gerade gespielt wird
           .XDEF zeit_che      ;Flag, ob Zeit-Cheat angeschaltet
           .XDEF logbase       ;log. Bildschirmbasis
           .XDEF hbl_system    ;Das Rastersystem
-          .XDEF mem_len       ;LÑnge des User Speichers
+          .XDEF mem_len       ;L√§nge des User Speichers
           .XDEF mem_strt      ;Startadresse des Usermemory
           .XDEF fast_mem      ;Startadresse des Fast-Mem
-          .XDEF fast_len      ;LÑnge des Fast-Mem
-          .XDEF errno         ;Globale Fehlermeldung (fÅr Bibliothek)
+          .XDEF fast_len      ;L√§nge des Fast-Mem
+          .XDEF errno         ;Globale Fehlermeldung (f√ºr Bibliothek)
           .XDEF tos_da        ;Flag, ob TOS aktiv ist
           .XDEF musik_an      ;Flag, ob Musik spielen soll
           .XDEF mdeltax       ;(10)
@@ -123,7 +123,7 @@
 ;Variablenimporte:
           .XREF scr1          ;Basisadresse des 1. Screens
           .XREF scr2          ;Basisadresse des 2. Screens
-          .XREF save_1        ;Hier wird Maushintergrund fÅr 1. Screen
+          .XREF save_1        ;Hier wird Maushintergrund f√ºr 1. Screen
           .XREF save_2        ;-'-
           .XREF scrn_1        ;Vergleichsvariable zur Auswahl save_1/2
           .XREF mousex        ;Maus_x Koordinate
@@ -134,13 +134,13 @@
           .XREF pack_buf      ;Hier wird entpackt (Hilfspeicher)
           .XREF trf_buf       ;Hier sind die Traffic-Bufs gespeichert
           .XREF _fpumode      ;Ist Floating Coproz vorhanden?
-          .XREF _StkSize      ;Grîûe des Stacks
+          .XREF _StkSize      ;Gr√∂√üe des Stacks
           .XREF insert_disk
           .XREF insert_game
 
 ;Funktionsimporte:
           .XREF alert         ;Stellt Alertbox dar
-          .XREF _fpuinit      ;Init-Routine fÅr Coprozessor
+          .XREF _fpuinit      ;Init-Routine f√ºr Coprozessor
           .XREF main          ;Hauptroutine C
 
 
@@ -149,12 +149,12 @@
 ;Offsets der Costumregister:
 
 aud0lc    equ $000000a0       ;Adresse des Digisounds
-aud0len   equ $000000a4       ;LÑnge in Worten
+aud0len   equ $000000a4       ;L√§nge in Worten
 aud0per   equ $000000a6       ;Sample-Frequemz
-aud0vol   equ $000000a8       ;LautstÑrke
+aud0vol   equ $000000a8       ;Lautst√§rke
 
 ciaapra   equ $00bfe001       ;Portregister A
-potgor    equ $16   ;FÅr rechts Maustaste
+potgor    equ $16   ;F√ºr rechts Maustaste
 
 spr0pth   equ $00000120
 
@@ -376,31 +376,31 @@ Start0:   bra.s     amigastart
 chcrypt:  
 amigatool:          .DC.w -1  ;Wird vom Amigatool auf 0 gesetzt
 
-amigastart:         move.w    #$2000,sr ;Alle IRQs ermîglichen
+amigastart:         move.w    #$2000,sr ;Alle IRQs erm√∂glichen
           move.w    #%0000000111101111,$dff096    ;Alle DMA aus, bis auf Disk-DMA
 
           lea.l     Start0,a3
           lea.l     -256(a3),a3         ;Adresse der Basepage
 
           movea.l   $18(a3),a0          ;Start des BSS
-          move.l    $1c(a3),d7          ;Grîûe des BSS
+          move.l    $1c(a3),d7          ;Gr√∂√üe des BSS
           lsr.l     #4,d7     ;/8
           subq.l    #1,d7
           moveq     #0,d0
 clear_bss:          move.l    d0,(a0)+
           move.l    d0,(a0)+
-          move.l    d0,(a0)+  ;BSS lîschen
+          move.l    d0,(a0)+  ;BSS l√∂schen
           move.l    d0,(a0)+
           dbra      d7,clear_bss
 
           move.l    a3,_BasPag          ;Pointer merken
-          movea.l   $c(a3),a0 ;Grîûe Text
-          adda.l    $14(a3),a0          ;+Grîûe DATA
-          adda.l    $1c(a3),a0          ;+Grîûe BSS (including Stack)
-          adda.w    #256,a0   ;+Grîûe Basepage
+          movea.l   $c(a3),a0 ;Gr√∂√üe Text
+          adda.l    $14(a3),a0          ;+Gr√∂√üe DATA
+          adda.l    $1c(a3),a0          ;+Gr√∂√üe BSS (including Stack)
+          adda.w    #256,a0   ;+Gr√∂√üe Basepage
 
           move.l    a3,d0     ;Basepagestart
-          add.l     a0,d0     ;+ProgrammlÑnge
+          add.l     a0,d0     ;+Programml√§nge
           andi.b    #$fc,d0   ;gerade machen
           movea.l   d0,sp     ;Stack setzen
           move.l    d0,mem_strt         ;Hier beginnt der freie Speicher
@@ -461,7 +461,7 @@ reset_routine:      addq.w    #1,d0
           move.w    d0,$dff180
           bra.s     reset_routine
 
-;öberprÅft, ob an angegebener Stelle 512 Kbyte Speicher ist
+;√úberpr√ºft, ob an angegebener Stelle 512 Kbyte Speicher ist
 ;-> A0.L: Speicheradresse
 test_mem: moveq     #0,d0
           move.l    #$55555555,d5
@@ -542,16 +542,16 @@ zeil_loop:          move.w    d0,d1
           bra       zeil_it
 gerade:   andi.b    #$f0,d3   ;in die obersten 4 Bit
 zeil_it:  moveq     #0,d7     ;Bei Plane 0 starten
-plane_loop:         and.b     d5,(a0)   ;Hintergrund lîschen
+plane_loop:         and.b     d5,(a0)   ;Hintergrund l√∂schen
           or.b      d3,(a0)   ;Zeichen einodern
           lea       40(a0),a0 ;eine Plane weiter
-          and.b     d5,(a0)   ;Hintergrund lîschen
+          and.b     d5,(a0)   ;Hintergrund l√∂schen
           or.b      d3,(a0)   ;Zeichen einodern
           lea       40(a0),a0 ;eine Plane weiter
-          and.b     d5,(a0)   ;Hintergrund lîschen
+          and.b     d5,(a0)   ;Hintergrund l√∂schen
           or.b      d3,(a0)   ;Zeichen einodern
           lea       40(a0),a0 ;Eine Plane weiter
-          and.b     d5,(a0)   ;Hintergrund lîschen
+          and.b     d5,(a0)   ;Hintergrund l√∂schen
           or.b      d3,(a0)   ;Zeichen einodern
 
           lea       40(a0),a0 ;Eine Zeile tiefer
@@ -596,11 +596,11 @@ plane2:   and.b     d5,(a0)
 po12:     addq.l    #1,a0     ;8 Pixel weiter
           bra       po4
 
-wandel:   cmpi.w    #$009a,d0 ;'ö'
+wandel:   cmpi.w    #$009a,d0 ;'√ú'
           beq       ueh
-          cmpi.w    #$008e,d0 ;'é'
+          cmpi.w    #$008e,d0 ;'√Ñ'
           beq       aeh
-          cmpi.w    #$0099,d0 ;'ô'
+          cmpi.w    #$0099,d0 ;'√ñ'
           beq       oeh
           subi.w    #' ',d0
           rts       
@@ -661,10 +661,10 @@ plane_loop3:        btst      d7,67(sp) ;Plane im Hintergrund gesetzt?
           btst      d7,65(sp) ;Schriftfarbe an?
           bne       fertig3   ;auch an, nichts machen
           not.b     d3        ;invertieren
-          and.b     d3,(a0)   ;Schrift wieder lîschen
-          not.b     d3        ;zurÅck invertieren
+          and.b     d3,(a0)   ;Schrift wieder l√∂schen
+          not.b     d3        ;zur√ºck invertieren
           bra       fertig3
-loesch_back3:       and.b     d5,(a0)   ;Hintergrund lîschen
+loesch_back3:       and.b     d5,(a0)   ;Hintergrund l√∂schen
           btst      d7,65(sp) ;Schriftplane an?
           beq       fertig3   ;auch nicht, fertig
           or.b      d3,(a0)   ;Zeichen einodern
@@ -702,10 +702,10 @@ plane4:   btst      d7,67(sp) ;Plane im Hintergrund gesetzt?
           btst      d7,65(sp) ;Schriftfarbe an?
           bne       fertig4   ;auch an, nichts machen
           not.b     d3        ;invertieren
-          and.b     d3,(a0)   ;Schrift wieder lîschen
-          not.b     d3        ;zurÅck invertieren
+          and.b     d3,(a0)   ;Schrift wieder l√∂schen
+          not.b     d3        ;zur√ºck invertieren
           bra       fertig4
-loesch_back4:       and.b     d5,(a0)   ;Hintergrund lîschen
+loesch_back4:       and.b     d5,(a0)   ;Hintergrund l√∂schen
           btst      d7,65(sp) ;Schriftplane an?
           beq       fertig4   ;auch nicht, fertig
           or.b      d3,(a0)   ;Zeichen einodern
@@ -730,8 +730,8 @@ ende2:    movem.l   (sp)+,d0-d7/a0-a6
 
 mcode3:   movem.l   d0-d7/a0-a6,-(sp)
 
-;Als nÑchstes werden die Exception-Vektoren gesetzt,
-;damit ich weiû, was passiert ist....
+;Als n√§chstes werden die Exception-Vektoren gesetzt,
+;damit ich wei√ü, was passiert ist....
 
           tst.w     amigatool
           beq.s     no_set
@@ -757,10 +757,10 @@ division: move.w    #3,error_nr
           bra       show_error
 
 ;Die folgende Funktion wird aufgerufen wenn ein priviligierter Befehl im
-;Usermode ausgefÅhrt wurde. Da beim 68000'er der Befehl 'Move SR,<EA>' kein
-;priviligierter Befehl ist, fÅhrt er auf diesem Prozessor zu keiner
-;Privilegverletzung. Auf Atari TT, der ja einen 68030 enthÑlt, fÅhrt dies
-;aber zu einer Privilegverletzung. Diese Routine fÅhrt den 'Move SR,<EA>' dann
+;Usermode ausgef√ºhrt wurde. Da beim 68000'er der Befehl 'Move SR,<EA>' kein
+;priviligierter Befehl ist, f√ºhrt er auf diesem Prozessor zu keiner
+;Privilegverletzung. Auf Atari TT, der ja einen 68030 enth√§lt, f√ºhrt dies
+;aber zu einer Privilegverletzung. Diese Routine f√ºhrt den 'Move SR,<EA>' dann
 ;im Supervisormodus aus, wo es auch auf dem 68030 keine Privilegverletzung gibt.
 ;Dann wird das Programm fortgesetzt.
 privileg: movem.l   d0/a0/a1,register_rett        ;Register retten
@@ -801,7 +801,7 @@ noset3:   lsl.w     #6,d0     ;Modus an Zielstelle schieben
           addq.l    #4,sp     ;PC wieder runter
 do_error: move.w    status_reg(pc),d0
           nop       
-          nop                 ;Move Sr,<Ea> wurde Åbersetzt in:
+          nop                 ;Move Sr,<Ea> wurde √ºbersetzt in:
           nop                 ;Move.w status_reg,<EA>
           nop       
           move.l    pc_counter,-(sp)
@@ -810,11 +810,11 @@ do_error: move.w    status_reg(pc),d0
 
 pc_counter:         .DC.l 0
 status_reg:         .DC.w $0300
-register_rett:      .DS.l 3   ;Platz fÅr 3 Register
+register_rett:      .DS.l 3   ;Platz f√ºr 3 Register
 
 privileg_error:     move.w    #4,error_nr
 
-show_error:         move.w    #$2700,sr ;Keine Stîrung bitte
+show_error:         move.w    #$2700,sr ;Keine St√∂rung bitte
 
           movem.l   d0-d7/a0-a7,$204    ;Register retten
           move.l    #'RoM2',$200
@@ -825,7 +825,7 @@ show_error:         move.w    #$2700,sr ;Keine Stîrung bitte
           move.l    d0,logbase
           movea.l   d0,a0
 
-          move.w    #479,d7   ;die obersten 2 Zeilen lîschen
+          move.w    #479,d7   ;die obersten 2 Zeilen l√∂schen
 clr_loop: clr.l     (a0)+
           dbra      d7,clr_loop
 
@@ -940,7 +940,7 @@ plane_loop33:       btst      d7,9(a6)  ;Schriftfarbe an?
           beq       ausis1    ;auch nicht, fertig
           or.b      d3,(a0)   ;Zeichen einodern
           bra.s     fertig33
-ausis1:   and.b     d1,(a0)   ;und weglîschen
+ausis1:   and.b     d1,(a0)   ;und wegl√∂schen
 fertig33: lea       40(a0),a0 ;eine Plane weiter
           addq.w    #1,d7
           cmpi.w    #4,d7
@@ -974,7 +974,7 @@ plane43:  btst      d7,9(a6)  ;Schriftplane an?
           beq       ausis2    ;auch nicht, fertig
           or.b      d3,(a0)   ;Zeichen einodern
           bra.s     fertig43
-ausis2:   and.b     d1,(a0)   ;und weglîschen
+ausis2:   and.b     d1,(a0)   ;und wegl√∂schen
 fertig43: lea       40(a0),a0 ;eine Plane weiter
           addq.w    #1,d7
           cmpi.w    #4,d7
@@ -1059,7 +1059,7 @@ all2:     move.l    a2,bltapth(a5)      ;Quelle A
           move.w    #151*64+20,d0       ;und schieben
           jsr       start_blit
 
-          lea       40(a1),a1 ;NÑchste Plane
+          lea       40(a1),a1 ;N√§chste Plane
           lea       40(a2),a2
           dbra      d5,all2
 
@@ -1134,14 +1134,14 @@ all_planes1:        move.l    a2,bltapth(a5)      ;Quelle A
 
           move.w    #151*64+20,d0       ;und schieben
           jsr       start_blit
-          lea       40(a1),a1 ;nÑchste Plane
+          lea       40(a1),a1 ;n√§chste Plane
           lea       40(a2),a2
           dbra      d5,all_planes1
 
           movea.l   scr2,a1
           lea       17*160(a1),a1       ;linker Rand der Zielbildes
 
-          move.w    #150,d5   ;151 Zeilen einfÅgen
+          move.w    #150,d5   ;151 Zeilen einf√ºgen
 alle_1:   move.b    (a0),(a1) ;Am linken Rand reinkommen
           move.b    40(a0),40(a1)
           move.b    80(a0),80(a1)       ;Alle 4 Planes
@@ -1150,7 +1150,7 @@ alle_1:   move.b    (a0),(a1) ;Am linken Rand reinkommen
           lea       160(a1),a1
           dbra      d5,alle_1
 
-          lea       -151*160-1(a0),a0   ;ZurÅck zum Start+1
+          lea       -151*160-1(a0),a0   ;Zur√ºck zum Start+1
 
           jsr       switchscreens
           dbra      d6,schieb_rechts
@@ -1166,7 +1166,7 @@ mcode10:  link      a6,#0
           movem.l   d0-d7/a0-a5,-(sp)
 
           movea.l   8(a6),a0  ;Adresse des Quellbildes
-          lea       17*160(a0),a0       ;Obere Leiste Åberspringen
+          lea       17*160(a0),a0       ;Obere Leiste √ºberspringen
 
           jsr       wait_blitter        ;Warten bis Blitter fertig ist
 
@@ -1210,7 +1210,7 @@ mcode11:  link      a6,#0
           movem.l   d0-d7/a0-a5,-(sp)
 
           movea.l   8(a6),a0  ;Adresse des Quellbildes
-          lea       168*160(a0),a0      ;Bild Åberspringen
+          lea       168*160(a0),a0      ;Bild √ºberspringen
 
           jsr       wait_blitter        ;Warten bis Blitter fertig ist
 
@@ -1337,7 +1337,7 @@ mcode16:  rts
 mcode17:  rts       
 
 
-;Routine trÑgt andere Routine in VBL-Queue ein
+;Routine tr√§gt andere Routine in VBL-Queue ein
 ;Prototyp: void *mcode18(void *adr)
 mcode18:  link      a6,#0
           movem.l   d1-d7/a0-a5,-(sp)
@@ -1346,7 +1346,7 @@ mcode18:  link      a6,#0
 weiter34: tst.l     (a0)+     ;Eintrag frei?
           bne.s     weiter34
           move.l    8(a6),-(a0)
-          move.l    a0,d0     ;Adresse zurÅckgeben
+          move.l    a0,d0     ;Adresse zur√ºckgeben
 
           movem.l   (sp)+,d1-d7/a0-a5
           unlk      a6
@@ -1355,7 +1355,7 @@ weiter34: tst.l     (a0)+     ;Eintrag frei?
 ;draw_shift(base,save,sprite_mem,sprite_nr,shape,x,y)
 ;long base;              /* Bildschirmbasis */
 ;long save;              /* Basis des Hintergrundpointerbereichs */
-;long sprite_mem;        /* basis fÅr die Spritedaten */
+;long sprite_mem;        /* basis f√ºr die Spritedaten */
 ;int sprite_nr;          /* Nummer des Sprites */
 ;int shape;              /* Form des Sprites */
 ;int x,y;                /* Position */
@@ -1378,7 +1378,7 @@ mcode19:  link      a6,#0
 ;D2: Y-Koordinate
 ;A0: Basisadresse des Screens
 ;A2: Adresse des Savebuffers
-;verÑnderte Register: keine
+;ver√§nderte Register: keine
           mulu.w    #160,d2   ;160 Bytes pro Scanline
           move.w    d1,d3     ;X-retten
           lsr.w     #4,d3     ;/16
@@ -1387,7 +1387,7 @@ mcode19:  link      a6,#0
           add.w     d3,d2     ;Adresse des Beginns von 4 Planes
           adda.w    d2,a0     ;Offset auf Bildschirmbasis
           movea.l   hlpbuf,a1
-          adda.w    d2,a1     ;Offset fÅr Hintergrund (Quelle)
+          adda.w    d2,a1     ;Offset f√ºr Hintergrund (Quelle)
           move.l    a1,(a2)+
           move.l    a0,(a2)   ;Offset in Buffer
 
@@ -1398,7 +1398,7 @@ mcode19:  link      a6,#0
           lsl.w     #6,d0     ;*64
           adda.w    d0,a1     ;Basisadresse der Spritedaten
 
-          moveq     #7,d7     ;Anzahl der Scanlines (Hîhe des Sprites)
+          moveq     #7,d7     ;Anzahl der Scanlines (H√∂he des Sprites)
 
 spr_draw: moveq     #0,d0
           moveq     #0,d1
@@ -1455,7 +1455,7 @@ spr_draw: moveq     #0,d0
 ;undraw_sprite(save,sprite_nr)
 ;long save;
 ;int sprite_nr;
-;  /* Lîscht ein Sprite vom Bildschirm */
+;  /* L√∂scht ein Sprite vom Bildschirm */
 ;  /* Die Basis wird aus dem Saveblock gewonnen */
 ;  /* Die Hintergrundinformation aus bild_buf */
 mcode20:  link      a6,#0
@@ -1464,19 +1464,19 @@ mcode20:  link      a6,#0
           move.w    12(a6),d0 ;Sprite_nr
           movea.l   8(a6),a0  ; Savebasis
 
-; Lîscht Sprite vom Bildschirm, Hintergrund wird von bild_buf geholt
+; L√∂scht Sprite vom Bildschirm, Hintergrund wird von bild_buf geholt
 ; Parameter:
 ; D0: Spritenummer
 ; A0: Basisadresse des Savebereichs
-; verÑnderte Register: ?
+; ver√§nderte Register: ?
 clr_mob:  lsl.w     #3,d0     ;x8
           adda.w    d0,a0     ;dazuaddieren zu Savebasis
 
           movea.l   (a0),a2   ;Offset holen
-          cmpa.l    #0,a2     ;Buffer ungÅltig?
+          cmpa.l    #0,a2     ;Buffer ung√ºltig?
           beq.s     raus      ; ja, raus
 
-          clr.l     (a0)+     ;Buffer ist jetzt ungÅltig
+          clr.l     (a0)+     ;Buffer ist jetzt ung√ºltig
           movea.l   (a0)+,a1  ;Zieladresse
 
           moveq     #7,d7     ;8 Scanlines restaurieren
@@ -1505,7 +1505,7 @@ mcode23:  link      a6,#0
 
 ;Ist derselbe Raster schon vorhanden?
           move.w    #anz_raster-2,d7
-nicht_der:          lea       34(a0),a0 ;NÑchsten Eintrag nehmen
+nicht_der:          lea       34(a0),a0 ;N√§chsten Eintrag nehmen
           cmp.w     (a0),d6   ;Ist dieser Raster an dieser Position?
           beq.s     vbl_setzen          ;ja, also Palette setzen
           dbra      d7,nicht_der
@@ -1519,13 +1519,13 @@ besetzt:  lea       34(a0),a0 ;Einen Eintrag weitergehen
 vbl_setzen:         move.w    12(a6),(a0)+        ;Freier Eintrag->Position eintragen
           movea.l   8(a6),a1  ;Farbpalette
           cmpa.l    #0,a1     ;Keine Rasterpalette angegeben? (5)
-          beq.s     del_raster          ;ja->Raster lîschen (5)
-          moveq.l   #15,d7    ;16 Worte Åbertragen
+          beq.s     del_raster          ;ja->Raster l√∂schen (5)
+          moveq.l   #15,d7    ;16 Worte √ºbertragen
 copy11:   move.w    (a1)+,(a0)+
           dbra      d7,copy11
           bra.s     end_set_raster      ;(5)
 
-del_raster:         clr.w     -(a0)     ;Raster lîschen (5)
+del_raster:         clr.w     -(a0)     ;Raster l√∂schen (5)
 
 end_set_raster:     movem.l   (sp)+,d0-d7/a0-a6
           unlk      a6
@@ -1544,7 +1544,7 @@ mcode72:  link      a6,#0
 
 ;Ist der Raster vorhanden?
           move.w    #anz_raster-2,d7
-nicht_der2:         lea.l     34(a0),a0 ;NÑchsten Eintrag nehmen
+nicht_der2:         lea.l     34(a0),a0 ;N√§chsten Eintrag nehmen
           cmp.w     (a0),d6   ;Ist dieser Raster an dieser Position?
           beq.s     vbl_setzen2         ;ja, also Palette setzen
           dbra      d7,nicht_der2
@@ -1585,7 +1585,7 @@ sub_col_atari:      move.w    (a0)+,d0  ;Farbe holen
           beq       raus566   ;schon auf Null, nichts mehr machen
 
           sub.w     d7,d0     ;Farbwert eins runter
-          move.w    d0,-2(a0) ;Farbe zurÅckschreiben
+          move.w    d0,-2(a0) ;Farbe zur√ºckschreiben
 raus566:  rts       
 
 ;Diese Funktion schaltet die Raster aus
@@ -1643,14 +1643,14 @@ col_loop: bsr       sub_col   ;Farbe runterziehen
           dbra      d3,col_loop         ;alle 16 Farben
           rts       
 
-sub_col:  addq.l    #2,a0     ;Farbregister Åberspringen
+sub_col:  addq.l    #2,a0     ;Farbregister √ºberspringen
           move.w    (a0)+,d0  ;Farbe holen
           move.w    d0,d1     ;kopieren
           and.w     d5,d1     ;ausmaskieren
           beq       raus56    ;schon auf Null, nichts mehr machen
 
           sub.w     d7,d0     ;Farbwert eins runter
-          move.w    d0,-2(a0) ;Farbe zurÅckschreiben
+          move.w    d0,-2(a0) ;Farbe zur√ºckschreiben
 raus56:   rts       
 
 
@@ -1663,7 +1663,7 @@ mcode26:  movem.l   d0-d7/a0-a6,-(sp)
 
           lea       bitfeld,a2          ;Hier Copperliste aufbauen
           lea       rasters2,a0
-trans_copper:       move.w    (a0)+,(a2)+         ;Copperliste Åbertragen
+trans_copper:       move.w    (a0)+,(a2)+         ;Copperliste √ºbertragen
           cmpa.l    raster_start,a0     ;aber nur bis Raster
           blt.s     trans_copper
           lea       zeros,a0
@@ -1686,7 +1686,7 @@ farbe_schwarz:      addq.l    #2,a0     ;Farbregister skipen
           clr.w     (a0)+     ;Farbe auf schwarz
           dbra      d7,farbe_schwarz
           bra.s     trans1
-skip:     addq.l    #4,a0     ;Befehl Åberspringen
+skip:     addq.l    #4,a0     ;Befehl √ºberspringen
           bra.s     trans1
 
 copperend:          
@@ -1710,13 +1710,13 @@ schleife3:          moveq     #1,d7     ;Zuerst "B"-Wert behandeln
           movem.l   (sp)+,d0-d7/a0-a6
           rts       
 
-addiere:  lea       rasters1,a0         ;Wird verÑndert
+addiere:  lea       rasters1,a0         ;Wird ver√§ndert
           lea       rasters2,a1         ;Endwert
 such_raster:        cmpi.l    #$fffffffe,(a0)     ;Ende erreicht?
           beq.s     no_more_add
           cmpi.w    #$0180,(a0)         ;Raster gefunden?
           beq.s     auffaden
-          addq.l    #4,a0     ;zum nÑchsten Befehl
+          addq.l    #4,a0     ;zum n√§chsten Befehl
           addq.l    #4,a1
           bra.s     such_raster
 
@@ -1725,7 +1725,7 @@ auffaden: bsr       add_pal
 no_more_add:        rts       
 
 add_pal:  moveq     #15,d3    ;16 Farben pro Palette
-col_loop2:          addq.l    #2,a0     ;Farbregister Åberspringen
+col_loop2:          addq.l    #2,a0     ;Farbregister √ºberspringen
           addq.l    #2,a1     ;-"-
           move.w    (a0)+,d0  ;Farbe holen
           move.w    (a1)+,d2  ;Endwert holen
@@ -1743,7 +1743,7 @@ raus24:
           rts       
 
 ;          "C O M P R E S S O R"
-; ( fÅr Nightrider Software )
+; ( f√ºr Nightrider Software )
 ; komprimiert farbige Bilder sehr platzsparend.
 ; Algorithmus besser als Degas Elite!
 
@@ -1763,11 +1763,11 @@ schleife2:
           dbra      d0,schleife2
 
           movem.l   d3-d7,quicksave
-          move.w    8(a6),d0  ; LÑnge des Bilds in Zeilen ( 1-200 )
+          move.w    8(a6),d0  ; L√§nge des Bilds in Zeilen ( 1-200 )
           movea.l   10(a6),a0 ; Quelladdresse
           movea.l   14(a6),a1 ; Zieladdr., in die kompr. File geschrieben wird
 
-          move.w    d0,(a1)+  ; ZeilenlÑnge: 1. Wort nach dem Vorspann
+          move.w    d0,(a1)+  ; Zeilenl√§nge: 1. Wort nach dem Vorspann
           movea.l   a0,a2
           mulu.w    #160,d0   ; Zeilenzahl * 160 = Anzahl der Bytes
           move.w    d0,pic_length
@@ -1777,7 +1777,7 @@ schleife2:
 
           clr.w     d0        ; Testwert
           clr.w     d1        ; Pos
-          moveq     #1,d2     ; Counter fÅr Bytewiederholungen
+          moveq     #1,d2     ; Counter f√ºr Bytewiederholungen
           clr.w     d3        ; HPos
           clr.w     d4
           clr.w     d5        ; Offset
@@ -1796,7 +1796,7 @@ loop28:
           bcc       exit28
           cmp.b     (a2),d0   ; = Testwert?
           bne       exit28
-          addq.w    #1,d2     ; Counter erhîhen
+          addq.w    #1,d2     ; Counter erh√∂hen
           cmpi.w    #255,d2   ; >=255?
           bcs       loop28
 
@@ -1829,15 +1829,15 @@ cont:
           clr.w     d1        ; Pos = 0!
           bsr       restloop
           movea.l   14(a6),a0 ; Start des Zielpuffers
-          suba.l    a0,a1     ; Pufferende-Pufferanfang = FilelÑnge
-          move.l    a1,d0     ; RÅckgabewert fÅr Hauptprogramm
+          suba.l    a0,a1     ; Pufferende-Pufferanfang = Filel√§nge
+          move.l    a1,d0     ; R√ºckgabewert f√ºr Hauptprogramm
           movem.l   quicksave,d3-d7
 
           movem.l   (sp)+,d1-d7/a0-a6
           unlk      a6
           rts       
 
-; d0 enthÑlt FilelÑnge
+; d0 enth√§lt Filel√§nge
 
 restloop: 
           bsr       belegung
@@ -1847,7 +1847,7 @@ cont2:
           addq.w    #1,d1
           cmp.w     pic_length,d1
           bcs       restloop
-          rts                 ; Es fehlt die PufferlÑnge!!!
+          rts                 ; Es fehlt die Pufferl√§nge!!!
 
 belegung: 
           lea       bitfeld,a2
@@ -1874,7 +1874,7 @@ loop29:
 
 mcode28:  movem.l   d0-d7/a0-a6,-(sp)
 
-          lea       bitfeld,a0          ; Flags lîschen
+          lea       bitfeld,a0          ; Flags l√∂schen
           move.w    #249,d0
 loop30:   
           clr.l     (a0)+
@@ -1888,7 +1888,7 @@ loop30:
 
           movem.l   d3-d7,quicksave
           lea       bitfeld,a2
-          move.w    (a0)+,d0  ; BildlÑnge in Zeilen
+          move.w    (a0)+,d0  ; Bildl√§nge in Zeilen
           mulu.w    #160,d0   ; *160
           move.w    d0,pic_length
 
@@ -1900,7 +1900,7 @@ loop30:
           clr.w     d6
 
 decomp:   
-          move.b    (a0)+,d4  ; Offset zu nÑchsten Block
+          move.b    (a0)+,d4  ; Offset zu n√§chsten Block
           beq       nulltest
 cycle:    
           add.w     d4,d1     ; Pos
@@ -1916,7 +1916,7 @@ cycle:
 
 loop31:   
           move.b    d0,0(a1,d5.w)
-          addi.w    #160,d5   ; nÑchste Bytewiederholung
+          addi.w    #160,d5   ; n√§chste Bytewiederholung
           dbra      d2,loop31
 
           move.w    d6,d2
@@ -1974,14 +1974,14 @@ copy_maus:          move.w    (a0)+,d0
           rts       
 
 
-;TrÑgt in die Spriteliste der Maus ihre Koordinaten ein...
+;Tr√§gt in die Spriteliste der Maus ihre Koordinaten ein...
 set_mousexy:        movem.l   d0-d7/a0-a6,-(sp)
 
           move.w    mousex,d0
           move.w    mousey,d1
           sub.w     hot_spotx,d0
           sub.w     hot_spoty,d1
-          moveq     #16,d2    ;Hîhe der Maus
+          moveq     #16,d2    ;H√∂he der Maus
           lea       maus_sprite,a0
 
           bsr       setz_koordinaten
@@ -1992,7 +1992,7 @@ set_mousexy:        movem.l   d0-d7/a0-a6,-(sp)
 ;Setzt die Koordinaten eines Sprites in dessen Sprite-Liste
 ;-> D0.W: X
 ;   D1.W: Y
-;   D2.W: Hîhe des Sprites
+;   D2.W: H√∂he des Sprites
 ;   A0.L: Adresse der Spriteliste
 setz_koordinaten:   
           addi.w    #128,d0   ;Bildschirmstart
@@ -2002,7 +2002,7 @@ setz_koordinaten:
           andi.w    #1,d3     ;H0-Bit
           lsr.w     #1,d0     ;H1-H8 auf Position
           move.w    d0,d4
-          andi.w    #$00ff,d4 ;E0-E7 lîschen
+          andi.w    #$00ff,d4 ;E0-E7 l√∂schen
           move.w    d1,d0
           add.w     d2,d0
           asl.w     #8,d1
@@ -2086,7 +2086,7 @@ schultz_jetzt:      andi.w    #31,d3
           unlk      a6
           rts       
 
-traf_err: moveq     #0,d3     ;Auûerhalb der Karte=LEER
+traf_err: moveq     #0,d3     ;Au√üerhalb der Karte=LEER
           bra.s     schultz_jetzt
 
 
@@ -2115,7 +2115,7 @@ mcode32:  link      a6,#0
           movea.l   22(a6),a0 ;Scrollbuffer
           move.w    #6719,d7
 clerr:    clr.l     (a0)+
-          clr.l     (a0)+     ;Buffer lîschen
+          clr.l     (a0)+     ;Buffer l√∂schen
           dbra      d7,clerr
 
           movem.l   (sp)+,d0-d7/a0-a6
@@ -2123,7 +2123,7 @@ clerr:    clr.l     (a0)+
           rts       
 
 initscroller:       move.l    scrollbegin,scrollpos
-          subq.l    #1,scrollpos        ;ein zeichen zurÅck
+          subq.l    #1,scrollpos        ;ein zeichen zur√ºck
           move.w    #-200,delta_x
           rts       
 
@@ -2134,10 +2134,10 @@ mcode33:  movem.l   d0-d7/a0-a6,-(sp)
 scroll:   cmpi.w    #-2,delta_x         ;Noch Spalten da?
           bgt       char_weiter         ;Ja, Buchstabe fertig machen
 
-          addq.l    #1,scrollpos        ;nÑchstes Zeichen
+          addq.l    #1,scrollpos        ;n√§chstes Zeichen
           movea.l   scrollpos,a0
           moveq     #0,d0
-          move.b    (a0),d0   ;NÑchstes Zeichen holen
+          move.b    (a0),d0   ;N√§chstes Zeichen holen
           bne.s     verarbeite          ;Nicht das letzte, weiter
 
           bsr       initscroller        ;Wieder von vorne
@@ -2152,7 +2152,7 @@ nxt_element:        tst.b     (a0)      ;Tabelle zuende?
 
           suba.l    #sonder+1,a0
           move.w    a0,d0
-          addi.w    #26*2,d0  ;Hinter den Groû und Kleinbuchstaben
+          addi.w    #26*2,d0  ;Hinter den Gro√ü und Kleinbuchstaben
           bra.s     sonderzeichen
 
 kein_sonder:        cmpi.w    #'Z',d0
@@ -2165,7 +2165,7 @@ nehmen:   subi.w    #'A',d0   ;in internen Code wandeln
 
 sonderzeichen:      movea.l   font_start,a0       ;Basis der Bibliothek
           cmp.w     (a0)+,d0  ;Objekt noch in Bibliothek?
-          bgt.s     scroll    ;Nein->nÑchster Buchstabe
+          bgt.s     scroll    ;Nein->n√§chster Buchstabe
 
           move.w    d0,buchstabe        ;Aktuelle Ob_Nr des Buchstabens
 
@@ -2174,7 +2174,7 @@ sonderzeichen:      movea.l   font_start,a0       ;Basis der Bibliothek
           move.l    a0,char_basis
 
           movea.l   font_start,a1       ;Basis der Objekte
-          addq.l    #2,a1     ;Anzahl Åberspringen
+          addq.l    #2,a1     ;Anzahl √ºberspringen
           adda.l    (a0),a1   ;=Basis des Objekts
           move.l    a1,adrspalte        ;Datenstart
           move.w    4(a0),d0  ;Breite
@@ -2201,7 +2201,7 @@ char_weiter:
           bgt.s     kein_space
 
           movea.l   font_start,a0       ;Basis der Bibliothek
-          addq.l    #2,a0     ;Anzahl Åberspringen
+          addq.l    #2,a0     ;Anzahl √ºberspringen
 
           moveq     #56,d0    ;Space
           mulu.w    #20,d0    ;Adresse des Ob_Headers berechnen
@@ -2209,7 +2209,7 @@ char_weiter:
           move.l    a0,char_basis
 
           movea.l   font_start,a1       ;Basis der Objekte
-          addq.l    #2,a1     ;Anzahl Åberspringen
+          addq.l    #2,a1     ;Anzahl √ºberspringen
           adda.l    (a0),a1   ;=Basis des Objekts
           move.l    a1,adrspalte        ;Datenstart
 
@@ -2256,7 +2256,7 @@ scroll_it:          move.w    #336,-(sp)          ;Breite des Bildschirms in Pix
 scroller_fertig:    movem.l   (sp)+,d0-d7/a0-a6
           rts       
 
-sonder:   .DC.b ".,:' ÅÑî?û"  ;(3)
+sonder:   .DC.b ".,:' √º√§√∂?√ü"  ;(3)
           .DC.b '"$',0        ;(3)
 
           .EVEN 
@@ -2268,14 +2268,14 @@ mcode34:  movem.l   d0-d7/a0-a6,-(sp)
           bsr       mcode29
           addq.l    #2,sp
 
-          bsr       set_mousexy         ;TrÑgt die Koordinaten ein
+          bsr       set_mousexy         ;Tr√§gt die Koordinaten ein
 
           lea       $00dff000,a5
           move.w    #%0000001111111111,dmacon(a5) ;DMA aus
 
           bsr       mcode24   ;Clear Raster
           bsr       mcode55   ;Calc-Offsets
-          bsr       rst22rst1 ;und zurÅckkopieren
+          bsr       rst22rst1 ;und zur√ºckkopieren
 
           move.l    $0000006c,old_i_3   ;Alten VBL-Vektor merken
           move.l    #new_i_3,$0000006c  ;Neuen Vektor setzen
@@ -2328,8 +2328,8 @@ new_i_3:  movem.l   d0-d7/a0-a6,-(sp)
           btst      #5,d0     ;VBL?
           beq.s     raus_i_3
 
-          addq.l    #1,vbl_ct ;VBL-Counter erhîhen
-          bsr       check_rand          ;ÅberprÅfen, ob Rand bewegt werden soll
+          addq.l    #1,vbl_ct ;VBL-Counter erh√∂hen
+          bsr       check_rand          ;√ºberpr√ºfen, ob Rand bewegt werden soll
           bsr       maus_auswert
           bsr       set_mousexy         ;und neue X/Y eintragen
 
@@ -2348,17 +2348,17 @@ raus_i_3: move.w    #%0000000001110000,$00dff09c  ;Request frei
           rte       
 
 maus_auswert:       moveq     #0,d0
-          btst      #6,ciaapra          ;Links gedrÅckt?
+          btst      #6,ciaapra          ;Links gedr√ºckt?
           bne.s     kein_links
           moveq     #1,d0
 kein_links:         move.w    potgor(a5),d1
-          btst      #10,d1    ;rechts gedrÅckt?
+          btst      #10,d1    ;rechts gedr√ºckt?
           bne.s     kein_rechts
           addq.w    #2,d0
 kein_rechts:        move.w    d0,mousek
 
           lea       oldmouse,a1
-          move.w    joy0dat(a5),d0      ;MauszÑhler lesen
+          move.w    joy0dat(a5),d0      ;Mausz√§hler lesen
           move.w    d0,d1
           lsr.w     #8,d1
           sub.b     (a1),d1
@@ -2406,20 +2406,20 @@ ok3:      cmpi.w    #199,mousey
           move.w    #199,mousey
 ok4:      rts       
 
-;öberprÅft, ob Spieler in der obersten Zeile mit links geklickt hat
+;√úberpr√ºft, ob Spieler in der obersten Zeile mit links geklickt hat
 ;dann wird der Bildschirm verschoben
 check_rand:         tst.w     rand_bewegen        ;Wird Screen schon verschoben?
           beq.s     screen_move
 
           tst.w     mousey    ;Spieler in Zeile 0?
           bne.s     kein_rand
-          cmpi.w    #3,mousek ;Rechts+Links gedrÅckt?
+          cmpi.w    #3,mousek ;Rechts+Links gedr√ºckt?
           bne.s     kein_rand
 
           clr.w     rand_bewegen        ;ab jetzt wird Screen bewegt!
           rts       
 
-screen_move:        cmpi.w    #3,mousek ;Maustaste immer noch gedrÅckt?
+screen_move:        cmpi.w    #3,mousek ;Maustaste immer noch gedr√ºckt?
           beq.s     rts78
 kein_rand:          move.w    #-1,rand_bewegen    ;Screen nicht mehr bewegen
 rts78:    rts       
@@ -2427,7 +2427,7 @@ rts78:    rts
 rand_bewegen:       .DC.w -1  ;Kein Screen bewegen
 wistarty: .DC.w 41  ;Scanline, in der Bild startet
 
-;IRQ-Routine fÅr Level 2 (CIA A/Expansion Port):
+;IRQ-Routine f√ºr Level 2 (CIA A/Expansion Port):
 new_i_2:  movem.l   d0-d7/a0-a6,-(sp)
 
           moveq     #0,d0
@@ -2445,7 +2445,7 @@ i_2_auswert:        move.w    (sp),d0   ;Kontrollregister holen
 
           move.b    $00bfec01,d0        ;Tastaturbyte abholen
 
-          ori.b     #$40,$00bfee01      ;fÅr Handshake
+          ori.b     #$40,$00bfee01      ;f√ºr Handshake
 
           andi.w    #$00ff,d0
           not.b     d0        ;invertierem
@@ -2514,11 +2514,11 @@ nein:     cmp.w     head,d1   ;Buffer voll?
 tastatur_fehler:    
 buffer_voll:        
 
-          move.w    #136,d0   ;Verzîgerung fÅr Amiga 2000-A
+          move.w    #136,d0   ;Verz√∂gerung f√ºr Amiga 2000-A
 warten:   tst.w     $dff004   ;26 cc pro Schleife
           dbra      d0,warten ;ergibt 500 Mikrosekunden
 
-          andi.b    #$bf,$00bfee01      ;Handshake zurÅck
+          andi.b    #$bf,$00bfee01      ;Handshake zur√ºck
 
           bra       i_2_auswert         ;Vielleicht noch ein Music-Irq?
 
@@ -2528,7 +2528,7 @@ falsch:   move.w    (sp)+,d0  ;Kontrollregister entfernen
           move.w    #%0000000000001000,$00dff09c  ;Request frei
           rte       
 
-losgelassen:        clr.l     keypress  ;Keine Taste mehr gedrÅckt
+losgelassen:        clr.l     keypress  ;Keine Taste mehr gedr√ºckt
           bra.s     buffer_voll
 
 shift_pressed:      bset      #0,shift
@@ -2548,7 +2548,7 @@ delete_pressed:     cmpi.b    #%00000110,shift    ;CTRL+ALT?
           bne       normale_taste
           reset               ;ROM einblenden
           movea.l   4,a0
-          jmp       (a0)      ;Reset auslîsen
+          jmp       (a0)      ;Reset ausl√∂sen
 
 ;Diese Tabelle wandelt die Rawcodes der Amiga-Tastatur in
 ;ScanCodes des ST um:
@@ -2557,11 +2557,11 @@ tast_ami_st:        .DC.b $39
           .DC.b $0c,$0d,$2b   ;bis "|"=$0d
           .DC.b $39,$70
           .DC.b $10,$11,$12,$13,$14,$15,$16,$17   ;Qwert
-          .DC.b $18,$19,$1a,$1b         ;opÅ*
+          .DC.b $18,$19,$1a,$1b         ;op√º*
           .DC.b $39 ;=$1c
           .DC.b $4b,$50,$4d   ;1,2,3 (Num)
           .DC.b $1e,$1f,$20,$21,$22,$23,$24,$25   ;asdfgh
-          .DC.b $26,$27,$28   ;LîÑ#
+          .DC.b $26,$27,$28   ;L√∂√§#
           .DC.b $39,$39       ;$2b,$2c
           .DC.b $52,$48,$47   ;4,5,6 (Num)
           .DC.b $60,$2c,$2d,$2e,$2f,$30,$31       ;<yxcv
@@ -2616,9 +2616,9 @@ mcode35:  movem.l   d0-d7/a0-a6,-(sp)
           movem.l   (sp)+,d0-d7/a0-a6
           rts       
 
-;Diese Funktion spielt einen Digisound ab, dabei werden saemtliche benîtigte
+;Diese Funktion spielt einen Digisound ab, dabei werden saemtliche ben√∂tigte
 ;IRQ's installiert, und wenn Digi fertig ist, werden die Routinen wieder
-;destalliert. Wird als Startadresse 0L ÅÅbergeben wird evtl. vorhandene
+;destalliert. Wird als Startadresse 0L √º√ºbergeben wird evtl. vorhandene
 ;Abspielroutine destalliert (abschalten).
 ;C-Definition: play_digi(startadr,roundabout,startzeile,endzeile)
 ;long startadr;                 /* Startadresse */
@@ -2654,7 +2654,7 @@ mcode36:  link      a6,#0
 ;                addq.w  #1,D0                ;Nein, eines mehr
 round_round:        move.w    d0,anzahl_zeilen
           subq.w    #1,d0
-          move.w    d0,anz_start        ;fÅr nachher merken
+          move.w    d0,anz_start        ;f√ºr nachher merken
           move.l    a0,seq_tabelle      ;Beginn der Sequenztabelle
           move.w    anzahl_seq,d0
           mulu.w    #24,d0
@@ -2664,7 +2664,7 @@ round_round:        move.w    d0,anzahl_zeilen
           lsl.w     #2,d0     ;x4
           adda.w    d0,a1
           move.l    a1,zeilen_tabelle   ;Beginn der Editorzeilen
-          move.l    a1,naechste_zeile   ;Adresse der nÑchsten Editorzeile
+          move.l    a1,naechste_zeile   ;Adresse der n√§chsten Editorzeile
           lsl.w     #2,d7
           adda.w    d7,a0
           move.l    a0,start_digi       ;Beginn der Digisounds
@@ -2673,14 +2673,14 @@ round_round:        move.w    d0,anzahl_zeilen
 
           move.w    #$000f,dmacon(a5)   ;Audio-DMA aus
           move.w    #$00ff,adkcon(a5)   ;Keine Modulation
-          move.w    #64,aud0vol(a5)     ;volle LautstÑrke
+          move.w    #64,aud0vol(a5)     ;volle Lautst√§rke
 
           move.w    #1,seq_counter      ;Sofort nachladen
           bsr.s     nxt_zeile ;Alle Parameter setzen
 
-          move.w    #%0000000010000000,intreq(a5) ;Request lîschen
+          move.w    #%0000000010000000,intreq(a5) ;Request l√∂schen
           move.w    #$8201,dmacon(a5)   ;Audio-DMA ein
-          move.w    #%1100000010000000,intena(a5) ;Kann IRQ auslîsen
+          move.w    #%1100000010000000,intena(a5) ;Kann IRQ ausl√∂sen
 
           move.w    #1,digi_works       ;Digisound wird gerade gespielt
 
@@ -2693,7 +2693,7 @@ neuer_sample:       bsr.s     nxt_zeile ;Neuer Sample nachladen
           move.w    #%0000000010000000,intreq+$00dff000     ;IRQ-Freigeben
           rte       
 
-;LÑdt das nÑchste Sample nach:
+;L√§dt das n√§chste Sample nach:
 nxt_zeile:          movem.l   d0-d7/a0-a6,-(sp)
 
           lea       $00dff000,a5        ;Adresse DMA
@@ -2710,7 +2710,7 @@ nxt_zeile:          movem.l   d0-d7/a0-a6,-(sp)
           bne.s     start_vorne         ;Ja,
           cmpi.w    #-1,anzahl_zeilen   ;Letzten Sample voll laufen lassen
           blt       digi_zuende         ;Stop!
-          move.w    #1,seq_counter      ;Beim nÑchsten Mal stoppen!
+          move.w    #1,seq_counter      ;Beim n√§chsten Mal stoppen!
           bra       nxt_ende  ;und spielen lassen
 
 start_vorne:        movea.l   zeilen_tabelle,a0   ;von vorne anfangen
@@ -2719,7 +2719,7 @@ start_vorne:        movea.l   zeilen_tabelle,a0   ;von vorne anfangen
 nicht_von_vorne:    moveq     #0,d5
           move.b    (a0)+,d5  ;Anzahl der Wiederholungen
           move.w    d5,seq_counter
-          move.b    (a0)+,d5  ;nÑchste Sequenz
+          move.b    (a0)+,d5  ;n√§chste Sequenz
           movea.l   seq_tabelle,a1
           mulu.w    #24,d5    ;Werte der Sequenz
           adda.l    d5,a1
@@ -2732,7 +2732,7 @@ nicht_von_vorne:    moveq     #0,d5
           add.l     start_digi,d0       ;Ende der Sequenz
           move.l    d0,digi_end
           moveq     #0,d5
-          move.b    (a0)+,d5  ;Flag fÅr Richtung
+          move.b    (a0)+,d5  ;Flag f√ºr Richtung
 
           move.b    (a0)+,d5  ;Frequenz
           move.l    a0,naechste_zeile
@@ -2743,7 +2743,7 @@ nicht_von_vorne:    moveq     #0,d5
           move.w    0(a0,d5.w),sample_freq        ;Periodenwert merken
           move.l    digi_pos,aud0lc(a5) ;Adresse setzen
           move.l    digi_end,d0
-          sub.l     digi_pos,d0         ;LÑnge berechnen
+          sub.l     digi_pos,d0         ;L√§nge berechnen
           lsr.l     #1,d0     ;Anzahl an Worten
           move.w    d0,aud0len(a5)
 
@@ -2757,7 +2757,7 @@ digi_zuende:        move.w    #$0001,dmacon(a5)   ;DMA Audio aus
           st        halts_maul          ;Hippel wieder an
           bra.s     nxt_ende
 
-;Tabelle der verschiedenen Periodenwerte fÅr die Samplefrequenzen:
+;Tabelle der verschiedenen Periodenwerte f√ºr die Samplefrequenzen:
 period_tab:         .DC.w 3580          ;1 Khz
           .DC.w 1790          ;2 Khz
           .DC.w 1193          ;3 Khz
@@ -2809,9 +2809,9 @@ mcode47:  link      a6,#0
           beq.s     ohne_raster
 
           movea.l   10(a6),a1 ;Basis der Objekte
-          addq.l    #2,a1     ;Anzahl Åberspringen
+          addq.l    #2,a1     ;Anzahl √ºberspringen
           adda.l    (a0),a1   ;=Basis des Objekts
-          move.w    6(a0),d1  ;Hîhe des Objekts
+          move.w    6(a0),d1  ;H√∂he des Objekts
           mulu.w    10(a0),d1 ;*Breite=Anzahl Bytes
           adda.l    d1,a1     ;=Start der Raster
           bra.s     set_dbra
@@ -2822,7 +2822,7 @@ set_loop: move.w    (a1)+,d1  ;Offset des Rasters holen
           move.l    a1,-(sp)
           bsr       mcode23   ;set_raster
           addq.l    #8,sp
-          lea       32(a1),a1 ;Palette Åberspringen
+          lea       32(a1),a1 ;Palette √ºberspringen
 set_dbra: dbra      d0,set_loop
 
 ohne_raster:        
@@ -2832,9 +2832,9 @@ ohne_raster:
           move.l    20(a6),-(sp)        ;x,y
           move.l    16(a6),-(sp)        ;scr_basis
           move.w    14(a6),-(sp)        ;modus
-          move.w    6(a0),d0  ;Hîhe des Objekts
+          move.w    6(a0),d0  ;H√∂he des Objekts
           subq.w    #1,d0
-          move.w    d0,-(sp)  ;(Hîhe-1)->y2
+          move.w    d0,-(sp)  ;(H√∂he-1)->y2
           move.w    4(a0),d0  ;Breite des Objekts
           subq.w    #1,d0
           move.w    d0,-(sp)  ;(Breite-1)->x2
@@ -2873,7 +2873,7 @@ mcode48:  link      a6,#0
           adda.l    d0,a5
 
           movea.l   10(a6),a0 ;Basis der Objekte
-          addq.l    #2,a0     ;Anzahl Åberspringen
+          addq.l    #2,a0     ;Anzahl √ºberspringen
           adda.l    (a5),a0   ;Adresse der Objekt-Daten
 
           move.w    #320,-(sp)          ;Breite des Bildschirms in Pixel
@@ -2901,7 +2901,7 @@ zu_gross2:          movem.l   (sp)+,d0-d7/a0-a5
 
 
 ;Diese Routine kopiert einen rechteckigen Bildschirmbereich von einem Platz
-;zu einem anderen. Dabei werden öberlappungen NICHT beruecksichtigt.
+;zu einem anderen. Dabei werden √úberlappungen NICHT beruecksichtigt.
 ;Der neue Bereich ersetzt den alten vollstaendig (replace).
 ;Als Bildschirmbreite wird die uebergebene genommen
 ;
@@ -3086,8 +3086,8 @@ fertig_maske:       move.w    8(a6),d0  ; X1 (Source)
           blt.s     fall_2    ;Quellbreite < Zielbreite
 
 ;Zielbreite < Quellbreite:
-          subq.l    #2,a3     ;Maske eins frÅher starten
-          subq.l    #2,a1     ;Ziel eins frÅher starten
+          subq.l    #2,a3     ;Maske eins fr√ºher starten
+          subq.l    #2,a1     ;Ziel eins fr√ºher starten
           move.w    quelle_breite,ziel_breite
           bra.s     starten
 
@@ -3116,7 +3116,7 @@ fall_4:   subq.w    #2,a1
 ;Quellbreite = Zielbreite:
 fall_5:   addq.w    #2,quelle_breite    ;Fenster breiter machen
           addq.w    #2,ziel_breite
-          subq.w    #2,a1     ;Aber ein Wort frÅher starten
+          subq.w    #2,a1     ;Aber ein Wort fr√ºher starten
           subq.w    #2,a3
 
 starten:  
@@ -3136,7 +3136,7 @@ starten:
 
           move.w    14(a6),d3 ; Y2 (Source)
           sub.w     10(a6),d3 ; minus Y1 (Source)
-          addq.w    #1,d3     ; gibt Hîhe in Zeilen
+          addq.w    #1,d3     ; gibt H√∂he in Zeilen
           lsl.w     #(2+HSIZEBITS),d3   ; * 4 Planes, in HSIZEBITS schieben
           move.w    quelle_breite,d0
           lsr.w     #1,d0
@@ -3149,7 +3149,7 @@ starten:
 
           move.w    ziel_breite,d0
           neg.w     d0
-          move.w    d0,bltamod(a5)      ;Immer zurÅck auf dieselbe Maske
+          move.w    d0,bltamod(a5)      ;Immer zur√ºck auf dieselbe Maske
           move.w    d4,bltbmod(a5)      ;Source-Modulo
           move.w    d5,bltcmod(a5)      ;Destination-Modulo
           move.w    d5,bltdmod(a5)      ;Destination-Modulo
@@ -3206,7 +3206,7 @@ L0001:    .DC.w %1000000000000000,%1100000000000000,%1110000000000000,%111100000
           .DC.w %1111111111111000,%1111111111111100,%1111111111111110,%1111111111111111
 
 ;Diese Routine kopiert einen rechteckigen Bildschirmbereich von einem Platz
-;zu einem anderen. Dabei werden ‹berlappungen NICHT beruecksichtigt.
+;zu einem anderen. Dabei werden ‚ñÑberlappungen NICHT beruecksichtigt.
 ;Der neue Bereich ersetzt den alten vollstaendig (replace).
 ;Die Routine clippt den Zielbereich. Als Bildschirmbreite wird die
 ;uebergebene genommen, als Bildschirmhoehe wird 200 angenommen.
@@ -3335,13 +3335,13 @@ L0007:    .DC.l L0021
           .DC.l L0021
 
 ;Routinen fuer mindestens 2 BB breite Objekte
-L0008:    .DC.l L0026         ;4  = 0
+L0008:    .DC.l L0026         ;4 . = 0
 L0009:    .DC.l L0030
-          .DC.l L0023         ;5  = 1 -
+          .DC.l L0023         ;5 . = 1 -
           .DC.l L0033
-          .DC.l L0024         ;6  = 2
+          .DC.l L0024         ;6 . = 2
           .DC.l L002F
-          .DC.l L0025         ;7  = 3 -
+          .DC.l L0025         ;7 . = 3 -
           .DC.l L0034
           .DC.l L0025         ;12  = 4
           .DC.l L0030
@@ -3405,7 +3405,7 @@ L0015:    .DC.w %1000000000000000
 ;Routine berechnet die Startadresse des Quellrasters relativ zu:
 ;-> D0: X
 ;   D1: Y
-;   A0: Quellrasteradresse
+;<-   A0: Quellrasteradresse
 calc_quelle:        movea.l   16(a6),a0 ;Anfangsadresse Quellraster
           move.w    20(a6),d3 ;Breite Quelle in Pixel
           lsr.w     #1,d3     ;Breite in Bytes
@@ -3419,7 +3419,7 @@ calc_quelle:        movea.l   16(a6),a0 ;Anfangsadresse Quellraster
 ;Routine berechnet die Startadresse des Zielrasters relativ zu:
 ;-> D0: X
 ;   D1: Y
-;   A1: Zielrasteradresse
+;<-   A1: Zielrasteradresse
 calc_ziel:          movea.l   26(a6),a1 ;Anfangsadresse Zielraster
           move.w    30(a6),d3 ;Breite Ziel in Pixel
           lsr.w     #1,d3     ;Breite in Bytes berechnen
@@ -3468,7 +3468,7 @@ ende_tab: dbra      d7,off_loop2
           rts       
 
 
-;Tabelle zum EinfÅgen der Offsets direkt in den Programmcode
+;Tabelle zum Einf√ºgen der Offsets direkt in den Programmcode
 ;Dabei ist folgende Reihenfolge einzuhalten:
 ;Source_Offset 2. Plane, 3. Plane, 4. Plane
 ;Dest_Offset   2. Plane, 3. Plane, 4. Plane
@@ -3500,7 +3500,7 @@ off_tab:  .DC.w os401-L0021
           .DC.w os4026-L0021
           .DC.w os4027-L0021
           .DC.w os4028-L0021
-;               dc.w os4029-L0021       ;Ist ‹bersprungen worden
+;               dc.w os4029-L0021       ;Ist ‚ñÑbersprungen worden
           .DC.w os4030-L0021
           .DC.w os4031-L0021
           .DC.w os4032-L0021
@@ -3534,7 +3534,7 @@ off_tab:  .DC.w os401-L0021
           .DC.w os8026-L0021
           .DC.w os8027-L0021
           .DC.w os8028-L0021
-;               dc.w os8029-L0021       ;Ist ‹bersprungen worden
+;               dc.w os8029-L0021       ;Ist ‚ñÑbersprungen worden
           .DC.w os8030-L0021
           .DC.w os8031-L0021
           .DC.w os8032-L0021
@@ -3568,7 +3568,7 @@ off_tab:  .DC.w os401-L0021
           .DC.w os12026-L0021
           .DC.w os12027-L0021
           .DC.w os12028-L0021
-;               dc.w os12029-L0021      ;Ist ‹bersprungen worden
+;               dc.w os12029-L0021      ;Ist ‚ñÑbersprungen worden
           .DC.w os12030-L0021
           .DC.w os12031-L0021
           .DC.w os12032-L0021
@@ -4163,7 +4163,7 @@ nichts_da7:         movem.l   (sp)+,d0-d7/a0-a5
           rts                 ;und schultz
 
 ;Diese Routine kopiert einen rechteckigen Bildschirmbereich von einem Platz
-;zu einem anderen. Dabei werden ‹berlappungen NICHT beruecksichtigt.
+;zu einem anderen. Dabei werden ‚ñÑberlappungen NICHT beruecksichtigt.
 ;Der neue Bereich wird in den alten eingeknuepft, d.h. dort wo der neue
 ;Bereich Hintergrundfarbe hat, scheint der alte Bereich durch. (transparent)
 ;Diese Routine clippt den Zielbereich. Als Breite werden die uebergebene, als
@@ -4172,7 +4172,7 @@ nichts_da7:         movem.l   (sp)+,d0-d7/a0-a5
 ;Line_A #7 mit Blitter braucht ungefaehr 85% der Rechenzeit dieser Routine.
 ;Ist keine Verschiebung notwendig, ist diese Routine ca. 13 mal schneller als
 ;Line_A #7 ohne Blitter!
-; 30(a6): Breite einer Scanline in Pixel (Destination)
+;-> 30(a6): Breite einer Scanline in Pixel (Destination)
 ;  26(a6): Adresse des Bildschirms (Destination)
 ;  24(a6): y3 (Destination)
 ;  22(a6): x3 (Destination)
@@ -4305,13 +4305,13 @@ L0007t:   .DC.l L0021t
           .DC.l L0021t
 
 ;Routinen fuer mindestens 2 BB breite Objekte
-L0008t:   .DC.l L0026t        ;4  = 0
+L0008t:   .DC.l L0026t        ;4 . = 0
 L0009t:   .DC.l L0030t
-          .DC.l L0023t        ;5  = 1 -
+          .DC.l L0023t        ;5 . = 1 -
           .DC.l L0033t
-          .DC.l L0024t        ;6  = 2
+          .DC.l L0024t        ;6 . = 2
           .DC.l L002Ft
-          .DC.l L0025t        ;7  = 3 -
+          .DC.l L0025t        ;7 . = 3 -
           .DC.l L0034t
           .DC.l L0025t        ;12  = 4
           .DC.l L0030t
@@ -4968,8 +4968,8 @@ od12040:  move.w    d2,120(a1)          ;und zurueck auf Screen
 
 
 ;Diese Routine kann ganze Bildschirmteile spiegeln. Diese Bildschirmbereiche
-;mÅssen aber auf BBs liegen, d.h. sie clippt die RÑnder nicht!
-; 18(a6): y2
+;m√ºssen aber auf BBs liegen, d.h. sie clippt die R√§nder nicht!
+;-> 18(a6): y2
 ;  16(a6): x2
 ;  14(a6): y1
 ;  12(a6): x1
@@ -5003,15 +5003,15 @@ gerade88: movea.w   d7,a5     ;Breite in BBs-1 merken
           addq.w    #1,d0
           lsl.w     #1,d0     ;Breite in Bytes 3
           movea.w   #160,a3
-          suba.w    d0,a3     ;Offset fÅr linken Rand
-          movea.w   #160,a4   ;Offset fÅr rechten Rand
+          suba.w    d0,a3     ;Offset f√ºr linken Rand
+          movea.w   #160,a4   ;Offset f√ºr rechten Rand
           adda.w    d0,a4
           tst.b     ungerade2
           bne.s     gerade22
           subq.l    #2,a3
           subq.l    #2,a4
 gerade22: move.w    18(a6),d6
-          sub.w     14(a6),d6 ;Hîhe in Scanlines
+          sub.w     14(a6),d6 ;H√∂he in Scanlines
           lea.l     mirror_tab,a2
 
           moveq.l   #0,d0
@@ -5052,7 +5052,7 @@ mirror_loop1:       move.w    (a1),d2   ;Rechten Rand merken
           move.b    d1,120(a1)
           move.b    d0,121(a1)
 
-          subq.l    #2,a1     ;An Anfang des nÑchsten BB rechts
+          subq.l    #2,a1     ;An Anfang des n√§chsten BB rechts
 
           move.b    d2,d0
           move.b    0(a2,d0.w),d0
@@ -5082,7 +5082,7 @@ mirror_loop1:       move.w    (a1),d2   ;Rechten Rand merken
           move.b    0(a2,d5.w),d5
           move.b    d5,121(a0)
 
-          addq.l    #2,a0     ;nÑchster BB
+          addq.l    #2,a0     ;n√§chster BB
           dbra      d7,mirror_loop1
 
           tst.b     ungerade2
@@ -5166,8 +5166,8 @@ ungerade2:          .DC.b 0
 
 ;***************************************************************************
 ; Unpacking source for Pack-Ice Version 2.31
-; 12(A6).L: Zeiger auf den Zieldatenbereich
-;  8(A6).L: Zeiger auf die gepackten Daten
+;-> 12(A6).L: Zeiger auf den Zieldatenbereich
+;->  8(A6).L: Zeiger auf die gepackten Daten
 mcode52:  movem.l   a0/a1,-(sp)
 
           movea.l   12(sp),a0 ;Adresse der gepackten Daten
@@ -5465,7 +5465,7 @@ mcode53:  link      a6,#0
           exg.l     d1,d3
 richtungok:         sub.w     d1,d3     ;delta-y
           sub.w     d0,d2     ;delta-x
-          movea.l   d1,a5     ;Y-ZeilenzÑhler (Startzeile)
+          movea.l   d1,a5     ;Y-Zeilenz√§hler (Startzeile)
           mulu.w    #160,d1
           movea.l   logbase,a0
           move.w    d0,d4     ;Start_x
@@ -5479,7 +5479,7 @@ richtungok:         sub.w     d1,d3     ;delta-y
           bset      d0,d4     ;-> bitmuster
           tst.w     d2        ;in welche Richtung starten?
           bmi.s     linksrum
-          cmp.w     d2,d3     ;Delta_y grîûer Delta_x?
+          cmp.w     d2,d3     ;Delta_y gr√∂√üer Delta_x?
           bgt.s     dygrdx1   ;ja, diese Routine
 ;flache gerade
           move.w    d2,d7
@@ -5514,7 +5514,7 @@ dygrdx1:
 ;steile gerade
           move.w    d3,d7     ;Zeilencounter
 ;d0=zaehler d2/d3 -> delta's
-          move.w    d3,d0     ;Hîhe des Blocks
+          move.w    d3,d0     ;H√∂he des Blocks
           lsr.w     #1,d0     ;halbieren
           move.w    d4,d5     ;Bitmuster
 gloop2:   
@@ -5587,7 +5587,7 @@ keinsprung4:
           dbra      d7,gloop4
           bra       line_end
 
-;Selbst modfiziert sich, je nach Farbe, Linientyp und FÅllmuster
+;Selbst modfiziert sich, je nach Farbe, Linientyp und F√ºllmuster
 ;-> D6: Farbe
 self_modify:        move.w    line_modus,d0
           lsl.w     #4,d0     ;16 Bytes pro Opcode
@@ -5597,7 +5597,7 @@ self_modify:        move.w    line_modus,d0
 
           moveq     #0,d1     ;Offset zu den Planes
           moveq     #3,d7     ;4 Planes
-put_word: moveq     #8,d0     ;weglîschen als Default
+put_word: moveq     #8,d0     ;wegl√∂schen als Default
           lsr.w     #1,d6     ;Farbe schieben
           bcc.s     set_plane
           moveq     #0,d0     ;setzen
@@ -5607,15 +5607,15 @@ set_plane:          move.w    0(a0,d0.w),(a1)+    ;Opcode eintragen
           beq.s     nxt_plane
           move.w    4(a0,d0.w),(a1)+    ;2. Opcode eintragen
           move.w    d1,(a1)+
-nxt_plane:          addi.w    #40,d1    ;nÑchste Plane
+nxt_plane:          addi.w    #40,d1    ;n√§chste Plane
           dbra      d7,put_word
           move.l    schluss,(a1)        ;RTS etc.
 
-          movea.l   fuellmuster,a2      ;Adresse des FÅllmusters
+          movea.l   fuellmuster,a2      ;Adresse des F√ºllmusters
           rts       
 
 ;Setzt die Farbe im Bildschirmspeicher
-; D5: Bitmuster
+;-> D5: Bitmuster
 ;  A0: Bildschirmadresse
 setze_farben:       movea.l   d7,a3     ;d7 retten
 
@@ -5624,7 +5624,7 @@ setze_farben:       movea.l   d7,a3     ;d7 retten
           move.w    a5,d7     ;Y-Counter holen
           andi.w    #%0000000000001111,d7         ;nur 16'er
           add.w     d7,d7
-          and.w     0(a2,d7.w),d5       ;Mit FÅllmuster verknÅpfen
+          and.w     0(a2,d7.w),d5       ;Mit F√ºllmuster verkn√ºpfen
           move.w    d5,d7
           not.w     d7        ;und negierte Linie berechnen
 
@@ -5639,26 +5639,26 @@ donne_le_moi:       and.w     d6,0(a0)
 schluss:  move.l    a3,d7     ;d7 restaurieren
           rts       
 
-;Dies ist eine Tabelle fÅr die verschiedenen FÅllmodi. Dabei
-;steht zuerst der Opcode fÅr Replace, dann Eor und schliesslich Transparent.
-;Es sind jeweils 2 Befehle zum Setzen von Punkten und 2 zum Lîschen.
+;Dies ist eine Tabelle f√ºr die verschiedenen F√ºllmodi. Dabei
+;steht zuerst der Opcode f√ºr Replace, dann Eor und schliesslich Transparent.
+;Es sind jeweils 2 Befehle zum Setzen von Punkten und 2 zum L√∂schen.
 opcodes:  and.w     d6,0(a0)  ;Replace, Maskieren
-          or.w      d5,0(a0)  ;und FÅllmuster rein
-          and.w     d6,0(a0)  ;weglîschen, Maskieren
+          or.w      d5,0(a0)  ;und F√ºllmuster rein
+          and.w     d6,0(a0)  ;wegl√∂schen, Maskieren
           and.w     d7,0(a0)  ;und Punkte wieder weg
 
           eor.w     d5,0(a0)  ;Eor setzen
           .DC.l 0
-          eor.w     d5,0(a0)  ;Eor lîschen
+          eor.w     d5,0(a0)  ;Eor l√∂schen
           .DC.l 0
 
           or.w      d5,0(a0)  ;Transparent setzen
           .DC.l 0
-          and.w     d7,0(a0)  ;Transparent lîschen
+          and.w     d7,0(a0)  ;Transparent l√∂schen
           .DC.l 0
 
-;FÅllt eine FlÑche auf dem Bildschirm unter Verwendung der Line-Funktion
-; 16(a6).W: y2
+;F√ºllt eine Fl√§che auf dem Bildschirm unter Verwendung der Line-Funktion
+;-> 16(a6).W: y2
 ;  14(a6).W: x2
 ;  12(a6).W: y1
 ;  10(a6).W: x1
@@ -5669,7 +5669,7 @@ mcode54:  link      a6,#0
           movem.w   8(a6),d0-d4
           cmp.w     d2,d4
           bge.s     fuellen
-          exg.l     d2,d4     ;immer von oben nach unten fÅllen
+          exg.l     d2,d4     ;immer von oben nach unten f√ºllen
 fuellen:  move.w    d2,-(sp)
           move.w    d3,-(sp)
           move.w    d2,-(sp)
@@ -5721,14 +5721,14 @@ such_nxt_raster:    move.w    #1000,d6  ;Max-Wert
           move.w    #anz_raster-1,d5    ;Anzahl der zu untersuchenden Raster
           lea       hbl_system,a0       ;Tabelle der Rasters
 such_min: move.w    (a0),d0   ;Y-Position dieses Rasters
-          beq.s     nxt_raster          ;unbenutzt->nÑchsten
+          beq.s     nxt_raster          ;unbenutzt->n√§chsten
           cmp.w     d6,d0     ;Dieser Raster weiter oben?
-          bge.s     nxt_raster          ;Nein->nÑchsten
+          bge.s     nxt_raster          ;Nein->n√§chsten
           cmp.w     d7,d0     ;weiter unten als letzter Raster?
-          ble.s     nxt_raster          ;Nein->nÑchsten
+          ble.s     nxt_raster          ;Nein->n√§chsten
           lea       2(a0),a1  ;Position der Palette merken
           move.w    d0,d6     ;als neuen Kleinsten nehmen
-nxt_raster:         lea       34(a0),a0 ;nÑchsten Raster nehmen
+nxt_raster:         lea       34(a0),a0 ;n√§chsten Raster nehmen
           dbra      d5,such_min
 
           cmpi.w    #1000,d6  ;Alle Raster gesetzt?
@@ -5757,10 +5757,10 @@ fertig:   move.l    #$fffffffe,(a2)+    ;Ende der Copperlist
           movem.l   (sp)+,d1-d7/a0-a6
           rts       
 
-;Setzt in der Copperliste die Adresse eines DMA-AdresszÑhlers
-;-> D1.W: Register, welches zu setzen ist (wird erhîht)
+;Setzt in der Copperliste die Adresse eines DMA-Adressz√§hlers
+;-> D1.W: Register, welches zu setzen ist (wird erh√∂ht)
 ;   A0.L: zu schreibende Adresse
-;   A2.L: Adresse der Copperliste (wird erhîht)
+;   A2.L: Adresse der Copperliste (wird erh√∂ht)
 set_adr:  movem.l   d0/d2-d7/a0/a1/a3-a6,-(sp)
 
           move.w    d1,(a2)+
@@ -5771,25 +5771,25 @@ set_adr:  movem.l   d0/d2-d7/a0/a1/a3-a6,-(sp)
           addq.w    #2,d1     ;dann High-Pointer
           move.w    d1,(a2)+
           move.w    d0,(a2)+
-          addq.w    #2,d1     ;auf nÑchstes Register gehen
+          addq.w    #2,d1     ;auf n√§chstes Register gehen
 
           movem.l   (sp)+,d0/d2-d7/a0/a1/a3-a6
           rts       
 
 ;Diese Funktion erstellt ein Copper-Programm, welches eine gesamte
 ;Farbpalette umschaltet..
-;-> A0.L: Adresse der neuen Farbpalette (wird erhîht)
-;   A2.L: Adresse des Copperprogramms (wird erhîht)
+;-> A0.L: Adresse der neuen Farbpalette (wird erh√∂ht)
+;   A2.L: Adresse des Copperprogramms (wird erh√∂ht)
 make_copper:        movem.l   d0-d7/a1/a3-a6,-(sp)
 
           move.w    #$0180,d0 ;Offset zur Palette
           moveq     #15,d7    ;16 Farbregister
 make_2:   move.w    d0,(a2)+  ;Register eintragen
-          addq.w    #2,d0     ;nÑchstes Register
+          addq.w    #2,d0     ;n√§chstes Register
           move.w    (a0)+,d1  ;ST-Farbe holen
           lsl.w     #1,d1     ;in Amiga wandeln
           ori.w     #%0000000100010001,d1
-;          andi.w    #%0000111011101110,d1         ;Unterstes lîschen
+;          andi.w    #%0000111011101110,d1         ;Unterstes l√∂schen
 ;          move.w    d1,d2
 ;          andi.w    #%0000100010001000,d2
 ;          lsr.l     #3,d2
@@ -5827,7 +5827,7 @@ mcode56:  movem.l   d0-d7/a0-a6,-(sp)
           move.l    #rasters2,copperliste
 
           bsr       vsync
-          bsr       rst22rst1 ;und zurÅck kopieren
+          bsr       rst22rst1 ;und zur√ºck kopieren
 
           move.l    #rasters1,$00dff080 ;und 1. System wieder anzeigen
           move.l    #rasters1,copperliste
@@ -5836,7 +5836,7 @@ mcode56:  movem.l   d0-d7/a0-a6,-(sp)
           rts       
 
 ;Holt ein Zeichen aus dem Tastaturbuffer
-;Ist kein Zeichen vorhanden, bringt die Routine -1 zurÅck
+;Ist kein Zeichen vorhanden, bringt die Routine -1 zur√ºck
 mcode57:  movem.l   d1-d7/a0-a6,-(sp)
 
           move.l    #-1,zeichen
@@ -5867,18 +5867,18 @@ zeichen:  .DC.l 0
 head:     .DC.w 0
 tail:     .DC.w 0
 ;Bit 0=Shift, 1=Alt, 2=CTRL:
-shift:    .DC.b 0   ;Nichts gedrÅckt
+shift:    .DC.b 0   ;Nichts gedr√ºckt
           .EVEN 
 scancode: .IBYTES "SCANTAB.IMG"
 
 key_buffer:         .DS.b 84
 keypress: .DS.l 1
 
-;Mit Hilfe dieser Funktion kînnen die Parameter fÅr die Line-Funktion
-;eingestellt werden. Da die Fill Funktion die Line-Funktion benÅtzt, gelten
-;die Einstellungen auch fÅr die Fill-Funktion:
-;Die Funktion gibt den alten Linientyp zurÅck, bei einer öbergabe von -1 wird
-;der Linientyp nicht verÑndert.
+;Mit Hilfe dieser Funktion k√∂nnen die Parameter f√ºr die Line-Funktion
+;eingestellt werden. Da die Fill Funktion die Line-Funktion ben√ºtzt, gelten
+;die Einstellungen auch f√ºr die Fill-Funktion:
+;Die Funktion gibt den alten Linientyp zur√ºck, bei einer √úbergabe von -1 wird
+;der Linientyp nicht ver√§ndert.
 ;0=Replace, 1=Eor, 2=Transparent
 ;int line_modus(int modus);
 mcode58:  move.w    line_modus,d0
@@ -5911,7 +5911,7 @@ mcode59:  link      a6,#0
           moveq     #3,d3     ;4 Planes
 plane_loop7:        ror.b     #1,d0
           move.w    (a0),d2
-          lea       40(a0),a0 ;nÑchste Plane
+          lea       40(a0),a0 ;n√§chste Plane
           btst      d1,d2     ;Farbe gesetzt?
           beq.s     naechste_plane
           addq.w    #1,d0
@@ -5922,18 +5922,18 @@ naechste_plane:     dbra      d3,plane_loop7
           rts       
 
 
-;Bestimmt das Muster, mit dem gefÅllt werden soll. Diese Einstellung gilt fÅr
-;Linienziehen, wie fÅr fÅllen.
-;Es wird hierbei ein Pointer auf 16 Integers Åbergeben, in denen das FÅllmuster
+;Bestimmt das Muster, mit dem gef√ºllt werden soll. Diese Einstellung gilt f√ºr
+;Linienziehen, wie f√ºr f√ºllen.
+;Es wird hierbei ein Pointer auf 16 Integers √ºbergeben, in denen das F√ºllmuster
 ;zeilenweise abgespeichert wird. Es wird also, je nach y-Zeile % 16 die
-;entsprechende Zeile aus dem Muster geholt, und damit die Linie verknÅpft.
-;Ist das gesamte Integerarray mit -1 gefÅllt, also alle Bits gesetzt, wird
-;ganz normal gefÅllt.
+;entsprechende Zeile aus dem Muster geholt, und damit die Linie verkn√ºpft.
+;Ist das gesamte Integerarray mit -1 gef√ºllt, also alle Bits gesetzt, wird
+;ganz normal gef√ºllt.
 ;Wird als Integeradresse -1L angegeben, so wird die Adresse des letzten
-;FÅllmusters zurÅckgegeben.
+;F√ºllmusters zur√ºckgegeben.
 
 ;int *line_pattern(int *pattern);
-mcode60:  move.l    fuellmuster,d0      ;Adresse des alten FÅllmuster
+mcode60:  move.l    fuellmuster,d0      ;Adresse des alten F√ºllmuster
           tst.l     4(sp)
           bmi.s     gib_zurueck2
           move.l    4(sp),fuellmuster   ;Adresse
@@ -5941,13 +5941,13 @@ gib_zurueck2:       rts
 
 
 ;Dies ist die Diskettenfunktion. Ist der Modus 0, wird das TOS zum Laden
-;benutzt, sonst eine eigene Diskettenroutine. Diese Routine prÅft vor dem
+;benutzt, sonst eine eigene Diskettenroutine. Diese Routine pr√ºft vor dem
 ;Laden, ob ein entsprechendes Archiv vorhanden ist, bzw. fordert zur Einlage
-;der jeweiligen Diskette auf. Gibt die tatsÑchliche LÑnge der gelesenen Daten
-;zurÅck.
-;long loaddisk(archiv,offset,lÑnge,adr)
+;der jeweiligen Diskette auf. Gibt die tats√§chliche L√§nge der gelesenen Daten
+;zur√ºck.
+;long loaddisk(archiv,offset,l√§nge,adr)
 ;-> 18(a6): Ladeadresse
-;   14(a6): LÑnge der zu ladenden Daten
+;   14(a6): L√§nge der zu ladenden Daten
 ;   10(a6): Offset innerhalb des Archivs
 ;    8(a6): archiv [0..n]
 mcode61:  link      a6,#0
@@ -5962,11 +5962,11 @@ mcode61:  link      a6,#0
 
 once_again:         move.l    10(a6),d0 ;Offset innerhalb Archiv
           add.l     14(a6),d0 ;Erstes freies Byte
-          cmp.l     datei_laenge,d0     ;Kleiner als DateilÑnge?
+          cmp.l     datei_laenge,d0     ;Kleiner als Dateil√§nge?
           ble.s     laenge_okay
           move.l    datei_laenge,d0
           sub.l     10(a6),d0 ;-Offset
-          move.l    d0,14(a6) ;Als neue LÑnge merken
+          move.l    d0,14(a6) ;Als neue L√§nge merken
           move.l    datei_laenge,d0     ;bis zum Ende lesen
 laenge_okay:        subq.l    #1,d0     ;Letztes benutztes Byte
           divu.w    #512,d0   ;Anzahl an Sektoren vom Start
@@ -5998,7 +5998,7 @@ laenge_okay:        subq.l    #1,d0     ;Letztes benutztes Byte
           move.l    18(a6),-(sp)        ;Ladeadresse
           bsr       mcode68   ;Floppy_Read
           lea       18(sp),sp
-          move.l    14(a6),d0 ;LÑnge der Daten zurÅckgeben
+          move.l    14(a6),d0 ;L√§nge der Daten zur√ºckgeben
 
 ende_load:          movem.l   (sp)+,d1-d7/a0-a5
           unlk      a6
@@ -6010,7 +6010,7 @@ use_amigatool:      move.w    8(a6),d0  ;Archivnummer holen
 
 try_again1:         moveq     #0,d1     ;Modus
           lea       rom_grfx(pc),a1
-          moveq     #$3d,d0   ;Datei îffnen
+          moveq     #$3d,d0   ;Datei √∂ffnen
           bsr       trap_1
           move.w    d0,fhandle
           bpl.s     datei_offen
@@ -6026,19 +6026,19 @@ datei_offen:        move.l    10(a6),d1 ;Offset
           bsr       trap_1
 
           movea.l   18(a6),a0 ;Ladeadresse
-          move.l    14(a6),d1 ;LÑnge
+          move.l    14(a6),d1 ;L√§nge
           move.w    fhandle(pc),d2
           lea       rom_grfx(pc),a1
           moveq     #$3f,d0   ;Fread
           bsr       trap_1
-          move.l    d0,d7     ;LÑnge merken
+          move.l    d0,d7     ;L√§nge merken
 
           move.w    fhandle(pc),d1
           lea       rom_grfx(pc),a1
           moveq     #$3e,d0
           bsr       trap_1    ;Fclose
 
-          move.l    d7,d0     ;und LÑnge zurÅckgeben
+          move.l    d7,d0     ;und L√§nge zur√ºckgeben
           bra.s     ende_load
 
 rom_grfx: .DC.b 'D:\MEDUSA.DAT\MEDUSA_2.COL\ROM_GRFX.'
@@ -6077,11 +6077,11 @@ mcode63:  link      a6,#0
           move.b    #55,$00bfe701       ;TBHI
 
           move.b    $00bfef01,d0        ;CrB
-          andi.b    #%10010101,d0       ;Inmode=00 -> ZÑhlt Taktzyklen
+          andi.b    #%10010101,d0       ;Inmode=00 -> Z√§hlt Taktzyklen
           ori.b     #%00000001,d0       ;Start setzen
           move.b    d0,$00bfef01        ;Und Timer starten
 
-          move.b    #%10000010,$00bfed01          ;ICR, Timer B kann IRQ auslîsen
+          move.b    #%10000010,$00bfed01          ;ICR, Timer B kann IRQ ausl√∂sen
 
           move.w    #$2000,sr
 
@@ -6093,7 +6093,7 @@ re_init:  move.w    12(a6),d0 ;Songnummer
 
           moveq     #0,d0     ;volume setzen          (000 = laut)
           movea.l   music_routine,a0
-          jsr       8(a0)     ;volle lautstÑrke       (100 = leise)
+          jsr       8(a0)     ;volle lautst√§rke       (100 = leise)
 
           movea.l   music_routine,a0
           jsr       12(a0)    ;sfx initialisieren
@@ -6152,7 +6152,7 @@ zurueck2: movem.l   (sp)+,d1-d7/a0-a5
           unlk      a6
           rts       
 
-;Diese Routine lÑdt einen Spielstand von Diskette und zwar immer genau
+;Diese Routine l√§dt einen Spielstand von Diskette und zwar immer genau
 ;41472 Bytes. (9 Tracks)
 ;int load_data(nr,adr)
 mcode65:  link      a6,#0
@@ -6187,7 +6187,7 @@ mcode66:  move.w    $00dff006,d0        ;Bildschirmadresse
           rts       
 
 
-;Diese Funktion ÅberprÅft, ob ein Zeichen vorhanden ist.
+;Diese Funktion √ºberpr√ºft, ob ein Zeichen vorhanden ist.
 ;FLAG is_key(void);
 mcode67:  move.l    d1,-(sp)
 
@@ -6233,15 +6233,15 @@ mcode68:  link      a6,#0
           cmp.w     d4,d5     ;nur auf einem Track lesen?
           beq.s     nur_ein_track
 
-mehr_als_einer:     bsr       trans_start         ;Ab Startoffset Åbertragen
+mehr_als_einer:     bsr       trans_start         ;Ab Startoffset √ºbertragen
 
-          addq.w    #1,16(a6) ;nÑchsten Sektor geht's weiter
+          addq.w    #1,16(a6) ;n√§chsten Sektor geht's weiter
           move.w    sek_per_track,d0
           cmp.w     16(a6),d0 ;Startsektor 10?
           bge.s     no_step   ;Nein, also kein Step
 
 vorne_anfangen:     move.w    #1,16(a6) ;Wieder bei Sektor #1 starten
-          addq.w    #1,14(a6) ;Auf nÑchsten Track gehen
+          addq.w    #1,14(a6) ;Auf n√§chsten Track gehen
           move.w    14(a6),d6
           bsr       seek_track          ;Track anfahren
 
@@ -6254,7 +6254,7 @@ read_again2:        move.w    sek_per_track,d0
           sub.w     16(a6),d0 ;Anzahl der zu lesenden Sektoren
           movea.l   a2,a0     ;Ab Ladeadresse laden
           bsr       read_sektoren
-          adda.w    d5,a2     ;Bytes Åberspringen
+          adda.w    d5,a2     ;Bytes √ºberspringen
           bra.s     vorne_anfangen
 
 letzter_track:      move.w    22(a6),d0 ;Endsektor
@@ -6263,16 +6263,16 @@ letzter_track:      move.w    22(a6),d0 ;Endsektor
           move.w    d0,-(sp)  ;Anzahl der Sektoren retten
           movea.l   a2,a0     ;Ladeadresse
           bsr       read_sektoren
-          adda.w    d5,a2     ;öberspringen
+          adda.w    d5,a2     ;√úberspringen
           move.w    (sp)+,d0  ;Anzahl der gelesenen Sektoren
-          add.w     d0,16(a6) ;=NÑchster Sektor
+          add.w     d0,16(a6) ;=N√§chster Sektor
 
 nur_ein_sektor:     moveq     #1,d0
           lea       bitfeld,a0
           bsr       read_sektoren       ;Letzten Sektor lesen
           lea       bitfeld,a0
           move.w    24(a6),d7 ;Endoffset
-trans3:   move.b    (a0)+,(a2)+         ;Rest Åbertragen
+trans3:   move.b    (a0)+,(a2)+         ;Rest √ºbertragen
           dbra      d7,trans3
           bra.s     aus_is
 
@@ -6294,10 +6294,10 @@ aus_is:   bsr       deselect  ;Laufwerk wieder aus
           rts       
 
 
-;öbertrÑgt 1. Sektor ab Startoffset bis Sektorende
+;√úbertr√§gt 1. Sektor ab Startoffset bis Sektorende
 trans_start:        move.w    18(a6),d0 ;Startoffset
           lea       bitfeld,a0
-          adda.w    d0,a0     ;Bytes Åberspringen
+          adda.w    d0,a0     ;Bytes √ºberspringen
           move.w    #512,d1   ;Soviel Bytes kommen
           sub.w     d0,d1     ;Offset abziehen=Anzahl an Bytes
           bra.s     trans18
@@ -6305,7 +6305,7 @@ trans2:   move.b    (a0)+,(a2)+
 trans18:  dbra      d1,trans2
           rts       
 
-;Liest ab Startsektor Sektoren ein. Gibt in D5 512*n zurÅck.
+;Liest ab Startsektor Sektoren ein. Gibt in D5 512*n zur√ºck.
 ;-> D0: Anzahl der Sektoren
 ;   A0: Ladeadresse
 read_sektoren:      movem.l   d0-d4/d6/d7/a0-a6,-(sp)
@@ -6314,20 +6314,20 @@ read_sektoren:      movem.l   d0-d4/d6/d7/a0-a6,-(sp)
 read_error:         bsr       read_track          ;Track lesen
           move.w    (sp),d0   ;Anzahl holen
           move.w    16(a6),d7 ;Aktueller Sektor
-          subq.w    #1,d7     ;Beim Amiga startet die ZÑhlung bei 0
+          subq.w    #1,d7     ;Beim Amiga startet die Z√§hlung bei 0
           bra.s     ss_dbra
-sektor_trans:       tst.l     (a1)      ;Wurde Åberhaupt was geladen?
+sektor_trans:       tst.l     (a1)      ;Wurde √ºberhaupt was geladen?
           beq.s     lesefehler
           move.w    track,d1
           cmp.b     1(a1),d1  ;Richtiger Track?
           bne.s     lesefehler
           cmp.b     2(a1),d7  ;Sektor gefunden?
           bne.s     nxt_sektor3
-          addq.l    #4,a1     ;Miniheader Åberspringen
+          addq.l    #4,a1     ;Miniheader √ºberspringen
           moveq     #127,d6
 ttz:      move.l    (a1)+,(a0)+         ;eintragen
           dbra      d6,ttz
-          addq.w    #1,d7     ;nÑchster Sektor
+          addq.w    #1,d7     ;n√§chster Sektor
 ss_dbra:  lea       track_buffer,a1
           dbra      d0,sektor_trans
 
@@ -6340,9 +6340,9 @@ ss_dbra:  lea       track_buffer,a1
 nxt_sektor3:        lea       512+4(a1),a1
           bra.s     sektor_trans
 
-lesefehler:         move.w    track,-(sp)         ;gewÅnschter Track
+lesefehler:         move.w    track,-(sp)         ;gew√ºnschter Track
           moveq     #0,d6
-          bsr       seek_track          ;Restore ausfÅhren
+          bsr       seek_track          ;Restore ausf√ºhren
           move.w    (sp)+,d6
           bsr       seek_track          ;und nochmal anfahren
           bra       read_error
@@ -6457,7 +6457,7 @@ keine_zweite:       cmpi.b    #$55,2(a0)          ;$FF (Format-Mark)?
           bsr.s     decode_sektor
 
 crc_error:          
-no_sync:  addq.l    #2,a0     ;nÑchstes Wort
+no_sync:  addq.l    #2,a0     ;n√§chstes Wort
           cmpa.l    a3,a0
           blt       such_sektor
 
@@ -6466,9 +6466,9 @@ no_sync:  addq.l    #2,a0     ;nÑchstes Wort
           movem.l   (sp)+,d0-d7/a0-a6
           rts       
 
-;Diese Routine berechnet eine PrÅfsumme Åber den angegebenen Bereich
-;-> A2.L: Adresse des Bereichs (wird NICHT erhîht)
-;   D0.L: LÑnge in Bytes
+;Diese Routine berechnet eine Pr√ºfsumme √ºber den angegebenen Bereich
+;-> A2.L: Adresse des Bereichs (wird NICHT erh√∂ht)
+;   D0.L: L√§nge in Bytes
 calc_crc: movem.l   d1-d7/a0-a6,-(sp)
 
           move.w    d0,d1
@@ -6486,7 +6486,7 @@ crc_loop: move.l    (a2)+,d2
 
 ;Diese Routine dekodiert einen Sektor von A0 nach A1.
 ;-> A2.L: Quelle
-;   A1.L: Ziel (wird erhîht)
+;   A1.L: Ziel (wird erh√∂ht)
 decode_sektor:      movem.l   d0-d7/a0/a2-a6,-(sp)
 
           moveq     #127,d7   ;256 Langworte
@@ -6510,7 +6510,7 @@ dat_loop: move.l    (a2)+,d0
 mcode69:  link      a6,#0
           movem.l   d0-d7/a0-a5,-(sp)
 
-          move.w    8(a6),d0  ;gewÅnschte Disk
+          move.w    8(a6),d0  ;gew√ºnschte Disk
           cmp.w     disk_drin,d0        ;Ist die etwa noch drin?
           beq       nichts
 
@@ -6539,7 +6539,7 @@ donne:    move.b    d0,rom+8  ;Nummer des Archivs eintragen
 
           lea       bitfeld+1024+512,a0
           lea       rom,a1
-          moveq     #15,d6    ;16 EintrÑge pro Directory
+          moveq     #15,d6    ;16 Eintr√§ge pro Directory
 nxt2:     moveq     #0,d7
 kein_ende:          move.b    0(a0,d7.w),d0       ;Zeichen von Diskette lesen
           cmp.b     0(a1,d7.w),d0       ;ROM_GRFX.x?
@@ -6559,7 +6559,7 @@ kein_ende:          move.b    0(a0,d7.w),d0       ;Zeichen von Diskette lesen
           move.b    29(a0),d0
           lsl.l     #8,d0
           move.b    28(a0),d0
-          move.l    d0,datei_laenge     ;LÑnge der Datei merken
+          move.l    d0,datei_laenge     ;L√§nge der Datei merken
 
           tst.w     8(a6)     ;Sollte Datendisk eingelegt werden?
           bmi.s     falsche_disk
@@ -6589,7 +6589,7 @@ check_vbl:          tst.w     (a0)+     ;Alle VBL-Farben auf Schwarz?
           bne.s     anzeigen  ;Nein->Okay
           dbra      d7,check_vbl
 
-          clr.w     -(sp)     ;Auflîsung
+          clr.w     -(sp)     ;Aufl√∂sung
           clr.w     -(sp)     ;Zeile
           pea       alert_pal
           jsr       mcode23   ;Raster setzen
@@ -6620,8 +6620,8 @@ rom:      .DC.b 'ROM_GRFXx',0
 
 
 ;Diese Funktion schreibt eine Reihe von Sektoren auf die Diskette.
-;Achtung! Dies geschieht unter Mithilfe von hlpbuf, d.h. hlpbuf wird zerstîrt!
-;Desweiteren wird ein Verify durchgefÅhrt.
+;Achtung! Dies geschieht unter Mithilfe von hlpbuf, d.h. hlpbuf wird zerst√∂rt!
+;Desweiteren wird ein Verify durchgef√ºhrt.
 
 ;void floppy_write(void *adr,int strack,int ssektor,int soffset,
 ;                          int etrack,int esektor,int eoffset);
@@ -6678,7 +6678,7 @@ retry:    move.w    24(a6),-(sp)        ;End-Offset auf Stack
 
 okay_hiller:        movem.l   (sp)+,d0-d7/a0-a5
           unlk      a6
-          move.w    disk_error,d0       ;Fehlermeldung zurÅckgeben
+          move.w    disk_error,d0       ;Fehlermeldung zur√ºckgeben
           rts       
 
 ;Eigentliche Schreiberoutine
@@ -6708,7 +6708,7 @@ mcode70_2:          link      a6,#0
 mehr_als_einer2:    
           move.w    18(a6),d0 ;Startoffset
           lea       bitfeld,a0
-          adda.w    d0,a0     ;Bytes Åberspringen
+          adda.w    d0,a0     ;Bytes √ºberspringen
           move.w    #512,d1   ;Soviel Bytes kommen
           sub.w     d0,d1     ;Offset abziehen=Anzahl an Bytes
           bra.s     trans33
@@ -6717,15 +6717,15 @@ trans33:  dbra      d1,trans44
 
           moveq     #1,d0
           lea       bitfeld,a0          ;hier steht der neue Sektor
-          bsr       write_sektoren      ;und Sektor wieder zurÅckschreiben
+          bsr       write_sektoren      ;und Sektor wieder zur√ºckschreiben
 
-          addq.w    #1,16(a6) ;nÑchsten Sektor geht's weiter
+          addq.w    #1,16(a6) ;n√§chsten Sektor geht's weiter
           move.w    sek_per_track,d0
           cmp.w     16(a6),d0 ;Startsektor 10?
           bge.s     no_step2  ;Nein, also kein Step
 
 vorne_anfangen2:    move.w    #1,16(a6) ;Wieder bei Sektor #1 starten
-          addq.w    #1,14(a6) ;Auf nÑchsten Track gehen
+          addq.w    #1,14(a6) ;Auf n√§chsten Track gehen
           move.w    14(a6),d6
           bsr       seek_track          ;Track anfahren
 
@@ -6738,7 +6738,7 @@ no_step2: move.w    14(a6),d4 ;Starttrack
           sub.w     16(a6),d0 ;Anzahl der zu schreibenden Sektoren
           movea.l   a2,a0     ;Ab Speicheradresse speichern
           bsr       write_sektoren
-          adda.w    d5,a2     ;Bytes Åberspringen
+          adda.w    d5,a2     ;Bytes √ºberspringen
           bra.s     vorne_anfangen2
 
 letzter_track2:     move.w    22(a6),d0 ;Endsektor
@@ -6747,16 +6747,16 @@ letzter_track2:     move.w    22(a6),d0 ;Endsektor
           move.w    d0,-(sp)  ;Anzahl der Sektoren retten
           movea.l   a2,a0     ;Ladeadresse
           bsr.s     write_sektoren
-          adda.w    d5,a2     ;öberspringen
+          adda.w    d5,a2     ;√úberspringen
           move.w    (sp)+,d0  ;Anzahl der gelesenen Sektoren
-          add.w     d0,16(a6) ;=NÑchster Sektor
+          add.w     d0,16(a6) ;=N√§chster Sektor
 
 nur_ein_sektor2:    moveq     #1,d0
           lea       bitfeld,a0
           bsr       read_sektoren       ;Letzten Sektor lesen
           lea       bitfeld,a0
           move.w    24(a6),d7 ;Endoffset
-trans6:   move.b    (a2)+,(a0)+         ;Rest Åbertragen
+trans6:   move.b    (a2)+,(a0)+         ;Rest √ºbertragen
           dbra      d7,trans6
 
           moveq     #1,d0
@@ -6784,11 +6784,11 @@ aus_is2:  bsr       deselect
           movem.l   (sp)+,d0-d7/a0-a5
           unlk      a6
 
-          move.w    disk_error,d0       ;Fehlercode zurÅckgeben
+          move.w    disk_error,d0       ;Fehlercode zur√ºckgeben
           rts       
 
 
-;Schreibt ab Startsektor Sektoren. Gibt in D5 512*n zurÅck.
+;Schreibt ab Startsektor Sektoren. Gibt in D5 512*n zur√ºck.
 ;-> D0: Anzahl der Sektoren
 ;   A0: Ladeadresse
 write_sektoren:     movem.l   d0-d7/a0-a6,-(sp)
@@ -6805,7 +6805,7 @@ write_sektoren:     movem.l   d0-d7/a0-a6,-(sp)
           move.w    track,d1
           moveq     #0,d7
 bau_track:          move.b    #$ff,(a1)+
-          move.b    d1,(a1)+  ;TrackgerÅst aufbauen
+          move.b    d1,(a1)+  ;Trackger√ºst aufbauen
           move.b    d7,(a1)+
           lea       513(a1),a1
           addq.w    #1,d7
@@ -6821,7 +6821,7 @@ rewrite:  bsr       read_track          ;Track einlesen+decode
           move.w    (sp),d0   ;Anzahl holen
 
 einfuellen:         move.w    16(a6),d7 ;Startsektor
-          subq.w    #1,d7     ;beim Amiga startet die Sektor-ZÑhlung bei 0
+          subq.w    #1,d7     ;beim Amiga startet die Sektor-Z√§hlung bei 0
           bra.s     sektor_dbra
 
 sektor_loop:        tst.l     (a1)      ;Track zuende?
@@ -6830,12 +6830,12 @@ sektor_loop:        tst.l     (a1)      ;Track zuende?
           cmp.b     2(a1),d7  ;aktueller Sektor?
           bne.s     nxt_sektor
 
-          addq.l    #4,a1     ;Miniheader Åberspringen
+          addq.l    #4,a1     ;Miniheader √ºberspringen
 
 sektor_copy:        moveq     #127,d6
 trans17:  move.l    (a0)+,(a1)+         ;Sektor eintragen
           dbra      d6,trans17
-          addq.w    #1,d7     ;nÑchster Sektor
+          addq.w    #1,d7     ;n√§chster Sektor
 sektor_dbra:        lea       track_buffer,a1     ;von vorne suchen
           dbra      d0,sektor_loop
           bra.s     schreib_track
@@ -6899,7 +6899,7 @@ disk_loop:          tst.l     (a0)
           bsr       display_sektor
 
           addq.l    #4,a0
-          addq.l    #4,a1     ;Miniheader Åberspringen
+          addq.l    #4,a1     ;Miniheader √ºberspringen
 
           moveq     #127,d5
 verify_loop2:       cmpm.l    (a0)+,(a1)+
@@ -6919,7 +6919,7 @@ nxt_sek:  lea       512+4(a1),a1
 
 schreib_ende:       movem.l   (sp)+,d0-d7/a0-a6
           move.w    d0,d5
-          mulu.w    #512,d5   ;Anzahl zurÅckgeben
+          mulu.w    #512,d5   ;Anzahl zur√ºckgeben
           rts       
 
 verify_error1:      move.w    #-2,disk_error
@@ -6941,7 +6941,7 @@ kein_display3:      lea       track_buffer,a1
           move.w    sek_per_track,d7
           mulu.w    #(4+512)/4,d7
           bra.s     fdj2_dbra
-fdj2:     move.l    (a0)+,(a1)+         ;Track zurÅckschreiben
+fdj2:     move.l    (a0)+,(a1)+         ;Track zur√ºckschreiben
 fdj2_dbra:          dbra      d7,fdj2
 
           subq.w    #1,retries
@@ -6963,7 +6963,7 @@ write_track:        movem.l   d2/d3,-(sp)
           bne       L00B8     ;->Fehler->RTS
           bra       write_error
 L00B8:    lsr.w     #1,d3
-          move.w    #2,$dff09c          ;Flags rÅcksetzen
+          move.w    #2,$dff09c          ;Flags r√ºcksetzen
           move.l    a5,$dff020          ;Adresse setzen
           move.w    #$8210,$dff096
           move.w    #$7f00,$dff09e
@@ -7018,7 +7018,7 @@ wait_index:         move.l    d1,-(sp)
           move.b    $bfdd00,d0
 L0088:    move.b    $bfdd00,d0
           btst      #4,d0     ;Index Impuls da?
-          bne.s     L0089     ;ja->zurÅck
+          bne.s     L0089     ;ja->zur√ºck
           subi.l    #1,d1
           bne.s     L0088     ;weiter warten
           move.l    #-1,d0
@@ -7027,13 +7027,13 @@ L0089:    move.l    (sp)+,d1
 
 
 ;Diese Routine codiert einen Track ins MFM-Format:
-;-> A0.L: Adresse des unverschlÅsselten Tracks
+;-> A0.L: Adresse des unverschl√ºsselten Tracks
 ;   A1.L: Adresse des MFM-Tracks
-;<- D0.L: LÑnge des Tracks in Bytes
+;<- D0.L: L√§nge des Tracks in Bytes
 code_track:         movem.l   d1-d7/a0-a6,-(sp)
 
           move.w    #1000/4,d0
-track_gap:          move.l    #$aaaaaaaa,(a1)+    ;LÅcke vor den Track machen
+track_gap:          move.l    #$aaaaaaaa,(a1)+    ;L√ºcke vor den Track machen
           dbra      d0,track_gap
 
           movea.l   a0,a2     ;Trackadresse merken
@@ -7049,7 +7049,7 @@ sek_loop2:          tst.l     (a0)      ;Trackende erreicht?
           move.b    d0,3(a0)  ;eintragen
 
           bsr.s     code_sektor         ;Diesen Sektor codieren
-          addq.w    #1,d7     ;nÑchster Sektor
+          addq.w    #1,d7     ;n√§chster Sektor
           cmpi.w    #12,d7
           blt.s     sek_loop3
           bra.s     code_end
@@ -7060,22 +7060,22 @@ nxt_sektor2:        lea       512+4(a0),a0
 code_end: move.l    a1,d0     ;Trackende
           addq.l    #2,d0     ;+2
           movem.l   (sp)+,d1-d7/a0-a6
-          sub.l     a1,d0     ;-Trackstart=LÑnge
+          sub.l     a1,d0     ;-Trackstart=L√§nge
           rts       
 
 ;Diese Routine codiert einen Sektor ins MFM-Format
-;-> A0.L: Adresse des uncodierten Sektors (wird erhîht)
-;   A1.L: Adresse des MFM-Buffers (wird erhîht)
+;-> A0.L: Adresse des uncodierten Sektors (wird erh√∂ht)
+;   A1.L: Adresse des MFM-Buffers (wird erh√∂ht)
 code_sektor:        movem.l   d0-d7/a2-a6,-(sp)
 
           movea.l   a1,a5     ;Adresse merken
 
           moveq     #7,d7
           moveq     #0,d0
-code_0:   bsr       code_long ;Header lîschen
+code_0:   bsr       code_long ;Header l√∂schen
           dbra      d7,code_0
 
-          movea.l   a5,a1     ;zurÅck auf Header
+          movea.l   a5,a1     ;zur√ºck auf Header
           moveq     #0,d0
           bsr       code_long ;$aaaaaaaa eintragen
           move.l    #$44894489,4(a5)    ;Sync eintragen
@@ -7090,41 +7090,41 @@ code_0:   bsr       code_long ;Header lîschen
           lea       48(a5),a1
           bsr       code_long ;CRC eintragen
 
-          move.w    #512,d0   ;SektorlÑnge
+          move.w    #512,d0   ;Sektorl√§nge
           lea       64(a5),a1 ;Zeiger hinter Header
           bsr.s     code_block
 
           lea       64(a5),a2
-          move.w    #1024,d0  ;LÑnge in MFM Format
+          move.w    #1024,d0  ;L√§nge in MFM Format
           bsr       calc_crc
 
           lea       56(a5),a1
           bsr       code_long ;CRC eintragen
 
-          lea       512(a0),a0          ;Sektor Åberspringen
-          lea       64+1024(a5),a1      ;Header+MFM Åberspringen
+          lea       512(a0),a0          ;Sektor √ºberspringen
+          lea       64+1024(a5),a1      ;Header+MFM √ºberspringen
 
           movem.l   (sp)+,d0-d7/a2-a6
           rts       
 
-;Kodiert einen 512 Bytes groûen Datenblock ins MFM-Format
-;-> A0.L: Adresse des unverschlÅsselten Sektors
+;Kodiert einen 512 Bytes gro√üen Datenblock ins MFM-Format
+;-> A0.L: Adresse des unverschl√ºsselten Sektors
 ;   A1.L: Adresse des MFM-Formats
-;   D0.W: LÑnge des unverschlÅsselten in Bytes
+;   D0.W: L√§nge des unverschl√ºsselten in Bytes
 code_block:         movem.l   d0-d7/a0-a6,-(sp)
 
           movea.l   a0,a2
           movea.l   a1,a3
           moveq     #0,d2
-          move.w    d0,d2     ;BlocklÑnge
-          move.w    d0,d1     ;BlocklÑnge
+          move.w    d0,d2     ;Blockl√§nge
+          move.w    d0,d1     ;Blockl√§nge
           lsl.w     #2,d1
-          ori.w     #8,d1     ;Wert fÅr Blitterstart
+          ori.w     #8,d1     ;Wert f√ºr Blitterstart
           bsr       wait_blitter        ;warten bis Blitter fertig
           bsr.s     blitter_code
           movea.l   a3,a0     ;Zeiger auf codierten Block
           bsr       randsetzen
-          adda.l    d2,a0     ;Zeiger auf 1. LÅcke
+          adda.l    d2,a0     ;Zeiger auf 1. L√ºcke
           bsr       randsetzen
           adda.l    d2,a0     ;Zeiger auf Blockende
           bsr       randsetzen
@@ -7132,10 +7132,10 @@ code_block:         movem.l   d0-d7/a0-a6,-(sp)
           movem.l   (sp)+,d0-d7/a0-a6
           rts       
 
-;Diese Routine fÅhrt einen Blittertransfer durch (Blockkodierung)
+;Diese Routine f√ºhrt einen Blittertransfer durch (Blockkodierung)
 ;-> A0.L: Quelle
 ;   A1.L: Ziel
-;   D0.W: LÑnge des Quelle
+;   D0.W: L√§nge des Quelle
 ;   D1.W: Blitterstartwert
 blitter_code:       movem.l   d2/d3/a2-a4,-(sp)
 
@@ -7191,7 +7191,7 @@ blitter_code:       movem.l   d2/d3/a2-a4,-(sp)
           movem.l   (sp)+,d2/d3/a2-a4
           rts       
 
-;Maskenregister fÅr Blitter setzen
+;Maskenregister f√ºr Blitter setzen
 blitmask: lea       $dff000,a0
           moveq     #0,d0
           lea       $44(a0),a1          ;Zeiger auf 1. Maskword
@@ -7213,7 +7213,7 @@ wait_blitter:       btst      #6,$dff002
 
 ;Codiert ein Langwort ins MFM-Format:
 ;-> D0.L: Langwort
-;   A1.L: Schreibadresse (wird erhîht)
+;   A1.L: Schreibadresse (wird erh√∂ht)
 code_long:          movem.l   d0-d7,-(sp)
 
           move.l    d0,d3
@@ -7269,18 +7269,18 @@ deselect: move.b    #%11111111,$bfd100  ;DF0: deselektieren
           rts       
 
 
-;Routine fÑhrt einen bestimmten Track an und selektiert entspr. Seite
-;-> D6.W: gewÅnschter Track
+;Routine f√§hrt einen bestimmten Track an und selektiert entspr. Seite
+;-> D6.W: gew√ºnschter Track
 seek_track:         tst.w     track     ;Ist dies der 1. Aufruf?
           bpl.s     seek      ;Nein, direkt anfahren
 
-          move.l    d6,-(sp)  ;gewÅnschter Track merken
+          move.l    d6,-(sp)  ;gew√ºnschter Track merken
           moveq     #0,d6
           bsr       seek      ;zuerst Restore
           move.l    (sp)+,d6
 
 
-;FÑhrt Track an
+;F√§hrt Track an
 ;-> D6.W: Track
 seek:     tst.b     track_display       ;(9) ab hier...
           beq       kein_display        ;(9) kein Display
@@ -7321,8 +7321,8 @@ loop_ende:          movem.l   (sp)+,d0-d7/a0-a6   ;(9) ... bis hier
 kein_display:       movem.l   d0-d7/a0-a6,-(sp)
 
           move.w    track(pc),d7        ;aktueller Track
-          lsr.w     #1,d7     ;tatsÑchliche Tracknummer
-          lsr.w     #1,d6     ;gewÅnschter Track
+          lsr.w     #1,d7     ;tats√§chliche Tracknummer
+          lsr.w     #1,d6     ;gew√ºnschter Track
           bcs.s     untere_seite
           bset      #2,$bfd100          ;Obere Seite
           bra.s     seeken
@@ -7413,7 +7413,7 @@ fertig56: move.w    #$0000,$dff024      ;DMA ausschalten
           movem.l   (sp)+,d1-d7/a0-a6
           rts       
 
-;Wartet auf die AusfÅhrung eines normalen Diskbefehls:
+;Wartet auf die Ausf√ºhrung eines normalen Diskbefehls:
 wait_ready:         btst      #5,$bfe001
           bne.s     wait_ready
           rts       
@@ -7470,7 +7470,7 @@ loop_ende2:         movem.l   (sp)+,d0-d7/a0-a6   ;(9) ... bis hier
 kein_display2:      rts       
 
 
-;Konvertiert ein Grafikobjekt in ein gerÑtespezifisches Format:
+;Konvertiert ein Grafikobjekt in ein ger√§tespezifisches Format:
 ;C-Defintition: convert_objekt(int ob_nr,OBJEKTE *obj);
 mcode71:  link      a6,#0
           movem.l   d0-d7/a0-a5,-(sp)
@@ -7484,7 +7484,7 @@ mcode71:  link      a6,#0
           adda.l    d0,a0
 
           movea.l   10(a6),a1
-          addq.l    #2,a1     ;Anzahl Åberspringen
+          addq.l    #2,a1     ;Anzahl √ºberspringen
           adda.l    (a0),a1   ;Beginn des Objektdaten
 
           move.w    10(a0),d6 ;Breite in Bytes
@@ -7496,7 +7496,7 @@ mcode71:  link      a6,#0
           add.w     d6,d7
           move.w    d7,drei+2
 
-          move.w    6(a0),d7  ;Hîhe des Objekts
+          move.w    6(a0),d7  ;H√∂he des Objekts
           bra.s     neue_zeile
 neue_loop:          move.w    10(a0),d6 ;Breite des Objekts in Bytes
           lea       bitfeld,a2          ;hier aufbauen
@@ -7507,7 +7507,7 @@ copy_dbra:          dbra      d6,copy_first
 
           move.w    10(a0),d6 ;Breite in Bytes
           suba.w    d6,a1
-          suba.w    d6,a2     ;zurÅck zum Start
+          suba.w    d6,a2     ;zur√ºck zum Start
           lsr.w     #3,d6     ;Anzahl in BBs
           bra.s     kai_dbra
 copy_kai: move.w    (a2)+,d0
@@ -7597,7 +7597,7 @@ maus_daten:         .DC.w 7,7 ;Hotspot
           .DC.w %1111111111111111
 
 fast_mem: .DS.l 1   ;Startadresse des Fast-Ram
-fast_len: .DS.l 1   ;LÑnge des Fast-Ram
+fast_len: .DS.l 1   ;L√§nge des Fast-Ram
 
 sync:     .DC.w 50  ;Voreingestellt 50 Hz
 
@@ -7620,12 +7620,12 @@ retries:  .DS.w 1   ;Anzahl der Schreibversuche
 tos_da:   .DS.w 1   ;Ist TOS aktiv?
 _BasPag:  .DS.l 1   ;Adresse der Basepage
 mem_strt: .DS.l 1   ;Adresse des freien Speichers
-mem_len:  .DS.l 1   ;Grîûe des freien Speichers
-errno:    .DS.w 1   ;Globale Fehlernummer (fÅr Library)
+mem_len:  .DS.l 1   ;Gr√∂√üe des freien Speichers
+errno:    .DS.w 1   ;Globale Fehlernummer (f√ºr Library)
 
 first_sek:          .DS.w 1
 sek_per_track:      .DS.w 1
-datei_laenge:       .DS.l 1   ;Die LÑnge der Datei in Bytes
+datei_laenge:       .DS.l 1   ;Die L√§nge der Datei in Bytes
 
 digi_works:         .DS.w 1
 anzahl_seq:         .DS.w 1
@@ -7662,7 +7662,7 @@ mouseform:          .DS.w 1
 hot_spotx:          .DS.w 1
 hot_spoty:          .DS.w 1
 
-maus_sprite:        .DS.w 34  ;fÅr den Maussprite
+maus_sprite:        .DS.w 34  ;f√ºr den Maussprite
 spr_off:  .DS.w 2   ;Ende des Sprites
 
 adrspalte:          .DS.l 1
@@ -7699,7 +7699,7 @@ copperliste:        .DS.l 1   ;Adresse der aktiven Copperliste
 hbl_system:         .DS.w anz_raster*(1+16)       ;Y-Position+Paletten
 rasters1: .DS.w 50+(anz_raster*34)      ;dargestellte Rasterpalette
 rasters2: .DS.w 50+(anz_raster*34)      ;Aufbaurastertabelle
-end_rasters:                  ;Zum Berechnen der LÑnge
+end_rasters:                  ;Zum Berechnen der L√§nge
 
 rasters:  .DS.l 1
 old_i_3:  .DS.l 1   ;Alter IRQ-Level 3 Vektor
@@ -7708,7 +7708,7 @@ amiga_raw:          .DS.w 1
 
 offsets:  .DS.w 6
 
-;BSS fÅr mcode49 (Blitter_Copy):
+;BSS f√ºr mcode49 (Blitter_Copy):
 x1_bb:    .DS.w 1
 x2_bb:    .DS.w 1
 x3_bb:    .DS.w 1

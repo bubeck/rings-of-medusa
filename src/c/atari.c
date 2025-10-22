@@ -1,12 +1,12 @@
   				       
 /* Dieses File beinhaltet alle Funktionen, die absolut Atarispezifisch sind
-   diese mÅssen entsprechend fÅr andere Computer ersetzt werden */
+   diese m√ºssen entsprechend f√ºr andere Computer ersetzt werden */
 
 #include "includes.c"
 
 long ssp;               /* Supervisorstackpointer */
 
-/* FÅllmuster zum kompletten AusfÅllen von FlÑchen: */
+/* F√ºllmuster zum kompletten Ausf√ºllen von Fl√§chen: */
 int solid[16] = {
 	-1,-1,-1,-1,-1,-1,-1,-1,
 	-1,-1,-1,-1,-1,-1,-1,-1 };
@@ -55,7 +55,7 @@ void init_atari()
   init_hardware();             /* Intialisiert die Hardware */
 	
 	line_mode(0);												/* Replace */
-	line_pattern(solid);								/* Komplett ausgefÅllt */
+	line_pattern(solid);								/* Komplett ausgef√ºllt */
 	
   srand(rnd());										/* Zufallszahlengenerator initialisieren */
 
@@ -77,7 +77,7 @@ void init_hardware()
 
 long wait_key()
 {
-  /* Wartet bis eine Taste gedrÅckt wurde und liefert diese zurÅck */
+  /* Wartet bis eine Taste gedr√ºckt wurde und liefert diese zur√ºck */
   long taste;
   
   while((taste=get_key())==-1L) 
@@ -94,11 +94,11 @@ long wait_key()
 
 void make_bus_error()
 {
- 	/* Diese Funktion lîût einen Buserror aus -> Debugger */
+ 	/* Diese Funktion l√∂√üt einen Buserror aus -> Debugger */
   char *x;
   
   x=(char *)5;
-  (*x)++;									/* und tschÅû.... */
+  (*x)++;									/* und tsch√º√ü.... */
 }
 
 #endif
@@ -108,7 +108,7 @@ int color,x,y;
 {
   /* Zeichnet einen einzigen Punkt auf den Bildschirm */
   
-  line(color,x,y,x,y);				/* Nicht gerade elegant, aber zweckmÑûig... */
+  line(color,x,y,x,y);				/* Nicht gerade elegant, aber zweckm√§√üig... */
 }
 
 #ifndef COPYPROT
@@ -141,12 +141,12 @@ void programmende()
 
 void init_archiv()
 {
-	/* ôffnet das Archiv, lÑût aber noch alle Files auf der Diskette
+	/* √ñffnet das Archiv, l√§√üt aber noch alle Files auf der Diskette
 			d.h. es wird kein Speicher alloziert */
 	int i;
 
 	file_offset[OFFSET_DAT]=0;										/* 1. File beginnt ganz vorne */
-	file_len[OFFSET_DAT]=10000;										/* hat auf jeden Fall diese LÑnge */
+	file_len[OFFSET_DAT]=10000;										/* hat auf jeden Fall diese L√§nge */
 	file_disk[OFFSET_DAT]=0;											/* und im 1. Archiv */
 	ram_max=-10;																	/* Bisher keine Files in Ramdisk */
 
@@ -163,7 +163,7 @@ void init_archiv()
 
 void fill_ramdisk()
 {
-  /* FÅllt das 'ramdisk'-system */
+  /* F√ºllt das 'ramdisk'-system */
   int i;
   long akt_len;
 	int akt_file;
@@ -213,21 +213,21 @@ void fill_ramdisk()
 	for(i=ram_min;i<=ram_max;i++) {
 		file_offset[i]=akt_pos;
 		akt_pos+=file_len[i];
-    if ((akt_pos&1)!=0) akt_pos++;              /* aufrunden auf gerade LÑnge */
+    if ((akt_pos&1)!=0) akt_pos++;              /* aufrunden auf gerade L√§nge */
 		}
 }
 
 long ram_needed(ram_max)
 int ram_max;
 {
-  /* Berechnet, wie groû Ramdisk sein mÅûte, damit dieses File noch reingeht */
+  /* Berechnet, wie gro√ü Ramdisk sein m√º√üte, damit dieses File noch reingeht */
   register int i;
   register long groesse;
 
   groesse=0;
   for(i=0;i<=ram_max;i++) {
     groesse+=file_len[i];
-    if ((groesse&1)!=0) groesse++;              /* aufrunden auf gerade LÑnge */
+    if ((groesse&1)!=0) groesse++;              /* aufrunden auf gerade L√§nge */
     }
   return(groesse);
 }
@@ -236,7 +236,7 @@ void load_digisound(file_nr,adresse)
 int file_nr;
 void *adresse;
 {
-	/* LÑdt einen Digisound und konvertiert diesen entsprechend */
+	/* L√§dt einen Digisound und konvertiert diesen entsprechend */
 	long len;
 	
 	if (digi_works) digi_aus();
@@ -265,7 +265,7 @@ void *adresse;
 void load_sprites(name)
 int name;
 {
-  /* LÑdt die Sprites Datei */
+  /* L√§dt die Sprites Datei */
 
   load_bibliothek(name,sprite_mem);     /* Datei laden, soviel wie geht */
 }
@@ -287,11 +287,11 @@ unsigned char zeichen;
   /* Wandelt ASCII-Zeichen in internen Zeichensatz */
 
   switch (zeichen) {
-    case 0x9a: zeichen='#'-' ';             /* Å */
+    case 0x9a: zeichen='#'-' ';             /* √º */
                break;
-    case 0x8e: zeichen='&'-' ';             /* é */
+    case 0x8e: zeichen='&'-' ';             /* √Ñ */
                break;
-    case 0x99: zeichen='$'-' ';             /* ô */
+    case 0x99: zeichen='$'-' ';             /* √ñ */
                break;
     default: zeichen-=' ';
     }
@@ -337,4 +337,3 @@ int var;
 
 #endif
 	
-

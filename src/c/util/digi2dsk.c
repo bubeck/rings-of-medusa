@@ -1,6 +1,6 @@
 
 /* Dieses Programm schreibt den Digisound "E:\HASEL.SEQ" auf
-   die RÅckseite der Disk in Drive A:
+   die R√ºckseite der Disk in Drive A:
    Diskformat in A: 82/10 */
 
 #include <stdio.h>

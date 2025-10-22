@@ -1,7 +1,7 @@
 
 ;Install-Amiga:
 ;installiert (Im Zeichen der Medusa) auf dem Amiga..
-;� 1990 by Till Bubeck!
+;(C) 1990 by Till Bubeck!
 
 ;Bootsektor 0/0-0/1
 ;Direktory 0/2
@@ -34,7 +34,7 @@ ohne_format:    lea     buffer,A0
                 bsr     trap_1          ;Boot_Sektor lesen
 
                 lea     buffer,A0
-                bsr     executable      ;Bootsektor ausf갿rbar machen
+                bsr     executable      ;Bootsektor ausf체hrbar machen
 
                 move.w  #511,-(SP)
                 move.w  #2,-(SP)
@@ -129,10 +129,10 @@ schreib_long:   moveq   #-1,D1          ;Alle Bits setzen
                 dbra    D7,schreib_long
                 clr.w   (A1)            ;Ende
 
-                lea     track_buffer,A0 ;ab hier 갶ertragen
+                lea     track_buffer,A0 ;ab hier 체bertragen
 ;                lea     hlpbuf,A0
 ;                lea     original,A0
-                move.l  #40000,D1       ;L꼗ge des Speicherbereichs
+                move.l  #40000,D1       ;L채nge des Speicherbereichs
                 lea     st_adresse(PC),A1 ;hier hin schreiben
                 move.w  #$80,D0         ;Send_2_ST
                 trap    #1
@@ -141,7 +141,7 @@ schreib_long:   moveq   #-1,D1          ;Alle Bits setzen
 
 alert:          rts
 
-;Bringt File auf Amiga-Diskette und tr꼏t ins Directory ein:
+;Bringt File auf Amiga-Diskette und tr채gt ins Directory ein:
 ;-> A0.L: Directory-Eintragsname
 ;   A1.L: Atari-Filename
 put_file:       move.l  A0,-(SP)
@@ -182,7 +182,7 @@ dir_loop:       move.b  (A0)+,(A1)+
                 bne.s   dir_loop
 
                 movea.l directory,A1
-                move.l  D0,D1           ;L꼗ge der Datei in Bytes
+                move.l  D0,D1           ;L채nge der Datei in Bytes
                 move.b  D1,28(A1)
                 lsr.l   #8,D1
                 move.b  D1,29(A1)
@@ -198,17 +198,17 @@ dir_loop:       move.b  (A0)+,(A1)+
 
                 move.w  first_sek,D2    ;Start dieser Datei
 
-                divu    #512,D0         ;Anzahl an Sektoren f걊 Datei
+                divu    #512,D0         ;Anzahl an Sektoren f체r Datei
                 addq.w  #1,D0           ;+1 als Rest
 
-                add.w   D0,first_sek    ;n꼊hste Schreibposition
+                add.w   D0,first_sek    ;n채chste Schreibposition
                 move.w  first_sek,D1    ;Ende der Datei
                 subq.w  #1,D1           ;nur bis eins davor
 
-                addi.l  #32,directory   ;n꼊hsten Eintrag
+                addi.l  #32,directory   ;n채chsten Eintrag
                 rts
 
-;Macht einen Bootsektor ausf갿rbar
+;Macht einen Bootsektor ausf체hrbar
 ;-> A0.L: Zeiger auf die beiden Bootsektoren
 executable:     movem.l D0-A6,-(SP)
 
@@ -229,7 +229,7 @@ no_carry3:      move.l  D1,4(A2)        ;und eintragen
                 movem.l (SP)+,D0-A6
                 rts
 
-;Dies ist ein ausf갿rbarer Amiga-Bootsektor
+;Dies ist ein ausf체hrbarer Amiga-Bootsektor
 boot:           DC.B 'DOS',0
 checksum:       DC.L 0
 root:           DC.L $0370
@@ -240,13 +240,13 @@ color:          move.w  D0,$DFF180
 
 
 ;Dies ist die Diskettenfunktion. Ist der Modus 0, wird das TOS zum Laden
-;benutzt, sonst eine eigene Diskettenroutine. Diese Routine pr갽t vor dem
+;benutzt, sonst eine eigene Diskettenroutine. Diese Routine pr체ft vor dem
 ;Laden, ob ein entsprechendes Archiv vorhanden ist, bzw. fordert zur Einlage
-;der jeweiligen Diskette auf. Gibt die tats꼊hliche L꼗ge der gelesenen Daten
-;zur갷k.
-;long loaddisk(archiv,offset,l꼗ge,adr)
+;der jeweiligen Diskette auf. Gibt die tats채chliche L채nge der gelesenen Daten
+;zur체ck.
+;long loaddisk(archiv,offset,l채nge,adr)
 ;-> 18(a6): Ladeadresse
-;   14(a6): L꼗ge der zu ladenden Daten
+;   14(a6): L채nge der zu ladenden Daten
 ;   10(a6): Offset innerhalb des Archivs
 ;    8(a6): archiv [0..n]
 mcode61:        link    A6,#0
@@ -291,7 +291,7 @@ mcode61:        link    A6,#0
                 move.l  18(A6),-(SP)    ;Ladeadresse
                 bsr     mcode68         ;Floppy_Read
                 lea     18(SP),SP
-                move.l  14(A6),D0       ;L꼗ge der Daten zur갷kgeben
+                move.l  14(A6),D0       ;L채nge der Daten zur체ckgeben
 
 ende_load:      movem.l (SP)+,D1-A5
                 unlk    A6
@@ -303,7 +303,7 @@ use_amigatool:  move.w  8(A6),D0        ;Archivnummer holen
 
 try_again1:     moveq   #0,D1           ;Modus
                 lea     rom_grfx(PC),A1
-                moveq   #$3D,D0         ;Datei 봣fnen
+                moveq   #$3D,D0         ;Datei 철ffnen
                 bsr     trap_1
                 move.w  D0,fhandle
                 bpl.s   datei_offen
@@ -319,19 +319,19 @@ datei_offen:    move.l  10(A6),D1       ;Offset
                 bsr     trap_1
 
                 movea.l 18(A6),A0       ;Ladeadresse
-                move.l  14(A6),D1       ;L꼗ge
+                move.l  14(A6),D1       ;L채nge
                 move.w  fhandle(PC),D2
                 lea     rom_grfx(PC),A1
                 moveq   #$3F,D0         ;Fread
                 bsr     trap_1
-                move.l  D0,D7           ;L꼗ge merken
+                move.l  D0,D7           ;L채nge merken
 
                 move.w  fhandle(PC),D1
                 lea     rom_grfx(PC),A1
                 moveq   #$3E,D0
                 bsr     trap_1          ;Fclose
 
-                move.l  D7,D0           ;und L꼗ge zur갷kgeben
+                move.l  D7,D0           ;und L채nge zur체ckgeben
                 bra.s   ende_load
 
 ;Einsprung in den Amigatool-Treiber:
@@ -374,7 +374,7 @@ mcode64:        link    A6,#0
                 unlk    A6
                 rts
 
-;Diese Routine l꼋t einen Spielstand von Diskette und zwar immer genau
+;Diese Routine l채dt einen Spielstand von Diskette und zwar immer genau
 ;32256 Bytes. (7 Tracks)
 ;int load_data(nr,adr)
 mcode65:        link    A6,#0
@@ -433,15 +433,15 @@ mcode68:        link    A6,#0
                 cmp.w   D4,D5           ;nur auf einem Track lesen?
                 beq.s   nur_ein_track
 
-mehr_als_einer: bsr     trans_start     ;Ab Startoffset 갶ertragen
+mehr_als_einer: bsr     trans_start     ;Ab Startoffset 체bertragen
 
-                addq.w  #1,16(A6)       ;n꼊hsten Sektor geht's weiter
+                addq.w  #1,16(A6)       ;n채chsten Sektor geht's weiter
                 move.w  sek_per_track,D0
                 cmp.w   16(A6),D0       ;Startsektor 10?
                 bge.s   no_step         ;Nein, also kein Step
 
 vorne_anfangen: move.w  #1,16(A6)       ;Wieder bei Sektor #1 starten
-                addq.w  #1,14(A6)       ;Auf n꼊hsten Track gehen
+                addq.w  #1,14(A6)       ;Auf n채chsten Track gehen
                 move.w  14(A6),D6
                 bsr     seek_track      ;Track anfahren
 
@@ -454,7 +454,7 @@ read_again2:    move.w  sek_per_track,D0
                 sub.w   16(A6),D0       ;Anzahl der zu lesenden Sektoren
                 movea.l A2,A0           ;Ab Ladeadresse laden
                 bsr     read_sektoren
-                adda.w  D5,A2           ;Bytes 갶erspringen
+                adda.w  D5,A2           ;Bytes 체berspringen
                 bra.s   vorne_anfangen
 
 letzter_track:  move.w  22(A6),D0       ;Endsektor
@@ -463,16 +463,16 @@ letzter_track:  move.w  22(A6),D0       ;Endsektor
                 move.w  D0,-(SP)        ;Anzahl der Sektoren retten
                 movea.l A2,A0           ;Ladeadresse
                 bsr     read_sektoren
-                adda.w  D5,A2           ;쉇erspringen
+                adda.w  D5,A2           ;횥berspringen
                 move.w  (SP)+,D0        ;Anzahl der gelesenen Sektoren
-                add.w   D0,16(A6)       ;=N꼊hster Sektor
+                add.w   D0,16(A6)       ;=N채chster Sektor
 
 nur_ein_sektor: moveq   #1,D0
                 lea     bitfeld,A0
                 bsr     read_sektoren   ;Letzten Sektor lesen
                 lea     bitfeld,A0
                 move.w  24(A6),D7       ;Endoffset
-trans3:         move.b  (A0)+,(A2)+     ;Rest 갶ertragen
+trans3:         move.b  (A0)+,(A2)+     ;Rest 체bertragen
                 dbra    D7,trans3
                 bra.s   aus_is
 
@@ -494,10 +494,10 @@ aus_is:         bsr     deselect        ;Laufwerk wieder aus
                 rts
 
 
-;쉇ertr꼏t 1. Sektor ab Startoffset bis Sektorende
+;횥bertr채gt 1. Sektor ab Startoffset bis Sektorende
 trans_start:    move.w  18(A6),D0       ;Startoffset
                 lea     bitfeld,A0
-                adda.w  D0,A0           ;Bytes 갶erspringen
+                adda.w  D0,A0           ;Bytes 체berspringen
                 move.w  #512,D1         ;Soviel Bytes kommen
                 sub.w   D0,D1           ;Offset abziehen=Anzahl an Bytes
                 bra.s   trans1
@@ -505,7 +505,7 @@ trans2:         move.b  (A0)+,(A2)+
 trans1:         dbra    D1,trans2
                 rts
 
-;Liest ab Startsektor Sektoren ein. Gibt in D5 512*n zur갷k.
+;Liest ab Startsektor Sektoren ein. Gibt in D5 512*n zur체ck.
 ;-> D0: Anzahl der Sektoren
 ;   A0: Ladeadresse
 read_sektoren:  movem.l D0-D4/D6-A6,-(SP)
@@ -514,20 +514,20 @@ read_sektoren:  movem.l D0-D4/D6-A6,-(SP)
 read_error:     bsr     read_track      ;Track lesen
                 move.w  (SP),D0         ;Anzahl holen
                 move.w  16(A6),D7       ;Aktueller Sektor
-                subq.w  #1,D7           ;Beim Amiga startet die Z꼑lung bei 0
+                subq.w  #1,D7           ;Beim Amiga startet die Z채hlung bei 0
                 bra.s   ss_dbra
-sektor_trans:   tst.l   (A1)            ;Wurde 갶erhaupt was geladen?
+sektor_trans:   tst.l   (A1)            ;Wurde 체berhaupt was geladen?
                 beq.s   lesefehler
                 move.w  track,D1
                 cmp.b   1(A1),D1        ;Richtiger Track?
                 bne.s   lesefehler
                 cmp.b   2(A1),D7        ;Sektor gefunden?
                 bne.s   nxt_sektor3
-                addq.l  #4,A1           ;Miniheader 갶erspringen
+                addq.l  #4,A1           ;Miniheader 체berspringen
                 moveq   #127,D6
 ttz:            move.l  (A1)+,(A0)+     ;eintragen
                 dbra    D6,ttz
-                addq.w  #1,D7           ;n꼊hster Sektor
+                addq.w  #1,D7           ;n채chster Sektor
 ss_dbra:        lea     track_buffer,A1
                 dbra    D0,sektor_trans
 
@@ -540,9 +540,9 @@ ss_dbra:        lea     track_buffer,A1
 nxt_sektor3:    lea     512+4(A1),A1
                 bra.s   sektor_trans
 
-lesefehler:     move.w  track,-(SP)     ;gew걆schter Track
+lesefehler:     move.w  track,-(SP)     ;gew체nschter Track
                 moveq   #0,D6
-                bsr     seek_track      ;Restore ausf갿ren
+                bsr     seek_track      ;Restore ausf체hren
                 move.w  (SP)+,D6
                 bsr     seek_track      ;und nochmal anfahren
                 bra     read_error
@@ -647,7 +647,7 @@ keine_zweite:   cmpi.b  #$55,2(A0)      ;$FF (Format-Mark)?
                 bsr.s   decode_sektor
 
 crc_error:
-no_sync:        addq.l  #2,A0           ;n꼊hstes Wort
+no_sync:        addq.l  #2,A0           ;n채chstes Wort
                 cmpa.l  A3,A0
                 blt     such_sektor
 
@@ -656,9 +656,9 @@ no_sync:        addq.l  #2,A0           ;n꼊hstes Wort
                 movem.l (SP)+,D0-A6
                 rts
 
-;Diese Routine berechnet eine Pr갽summe 갶er den angegebenen Bereich
-;-> A2.L: Adresse des Bereichs (wird NICHT erh봦t)
-;   D0.L: L꼗ge in Bytes
+;Diese Routine berechnet eine Pr체fsumme 체ber den angegebenen Bereich
+;-> A2.L: Adresse des Bereichs (wird NICHT erh철ht)
+;   D0.L: L채nge in Bytes
 calc_crc:       movem.l D1-A6,-(SP)
 
                 move.w  D0,D1
@@ -676,7 +676,7 @@ crc_loop:       move.l  (A2)+,D2
 
 ;Diese Routine dekodiert einen Sektor von A0 nach A1.
 ;-> A2.L: Quelle
-;   A1.L: Ziel (wird erh봦t)
+;   A1.L: Ziel (wird erh철ht)
 decode_sektor:  movem.l D0-A0/A2-A6,-(SP)
 
                 moveq   #127,D7         ;256 Langworte
@@ -700,7 +700,7 @@ dat_loop:       move.l  (A2)+,D0
 mcode69:        link    A6,#0
                 movem.l D0-A5,-(SP)
 
-                move.w  8(A6),D0        ;gew걆schte Disk
+                move.w  8(A6),D0        ;gew체nschte Disk
                 cmp.w   disk_drin,D0    ;Ist die etwa noch drin?
                 beq     nichts
 
@@ -721,21 +721,21 @@ insert_again:   move.w  #511,-(SP)      ;End_Offset
                 move.w  D0,sek_per_track ;Sektoren pro Track
                 move.b  $12(A0),D0
                 lsl.w   #8,D0
-                move.b  $11(A0),D0      ;Verzeichnisgr뵞e
+                move.b  $11(A0),D0      ;Verzeichnisgr철횩e
                 ext.l   D0
                 divu    #16,D0
-                move.w  D0,D1           ;Anzahl an Sektoren f걊s Directory
+                move.w  D0,D1           ;Anzahl an Sektoren f체rs Directory
                 swap    D0
                 tst.w   D0
                 beq.s   geht_auf
-                addq.w  #1,D1           ;+1 f걊 den Rest
+                addq.w  #1,D1           ;+1 f체r den Rest
 geht_auf:       move.b  $17(A0),D0
                 lsl.w   #8,D0
-                move.b  $16(A0),D0      ;Gr뵞e der FAT
+                move.b  $16(A0),D0      ;Gr철횩e der FAT
                 add.w   D0,D0           ;da 2 FATs
-                addq.w  #2,D0           ;f걊 Bootsektor
+                addq.w  #2,D0           ;f체r Bootsektor
                 move.w  D0,D2
-                add.w   D1,D2           ;+Gr뵞e des Directory=erster Datensektor
+                add.w   D1,D2           ;+Gr철횩e des Directory=erster Datensektor
                 move.w  D2,first_sek
                 ext.l   D0
                 divu    sek_per_track,D0 ;10 Sektoren/Track
@@ -765,7 +765,7 @@ donne:          move.b  D0,rom+8        ;Nummer des Archivs eintragen
 
                 lea     bitfeld+1024+512,A0
                 lea     rom,A1
-                moveq   #15,D6          ;16 Eintr꼏e pro Directory
+                moveq   #15,D6          ;16 Eintr채ge pro Directory
 nxt2:           moveq   #0,D7
 kein_ende:      move.b  0(A0,D7.w),D0   ;Zeichen von Diskette lesen
                 cmp.b   0(A1,D7.w),D0   ;ROM_GRFX.x?
@@ -816,8 +816,8 @@ rom:            DC.B 'ROM_GRFXx',0
 
 
 ;Diese Funktion schreibt eine Reihe von Sektoren auf die Diskette.
-;Achtung! Dies geschieht unter Mithilfe von hlpbuf, d.h. hlpbuf wird zerst봱t!
-;Desweiteren wird ein Verify durchgef갿rt.
+;Achtung! Dies geschieht unter Mithilfe von hlpbuf, d.h. hlpbuf wird zerst철rt!
+;Desweiteren wird ein Verify durchgef체hrt.
 
 ;void floppy_write(void *adr,int strack,int ssektor,int soffset,
 ;                          int etrack,int esektor,int eoffset);
@@ -854,7 +854,7 @@ mcode70:        link    A6,#0
 mehr_als_einer2:
                 move.w  18(A6),D0       ;Startoffset
                 lea     bitfeld,A0
-                adda.w  D0,A0           ;Bytes 갶erspringen
+                adda.w  D0,A0           ;Bytes 체berspringen
                 move.w  #512,D1         ;Soviel Bytes kommen
                 sub.w   D0,D1           ;Offset abziehen=Anzahl an Bytes
                 bra.s   trans33
@@ -863,15 +863,15 @@ trans33:        dbra    D1,trans44
 
                 moveq   #1,D0
                 lea     bitfeld,A0      ;hier steht der neue Sektor
-                bsr     write_sektoren  ;und Sektor wieder zur갷kschreiben
+                bsr     write_sektoren  ;und Sektor wieder zur체ckschreiben
 
-                addq.w  #1,16(A6)       ;n꼊hsten Sektor geht's weiter
+                addq.w  #1,16(A6)       ;n채chsten Sektor geht's weiter
                 move.w  sek_per_track,D0
                 cmp.w   16(A6),D0       ;Startsektor 10?
                 bge.s   no_step2        ;Nein, also kein Step
 
 vorne_anfangen2:move.w  #1,16(A6)       ;Wieder bei Sektor #1 starten
-                addq.w  #1,14(A6)       ;Auf n꼊hsten Track gehen
+                addq.w  #1,14(A6)       ;Auf n채chsten Track gehen
                 move.w  14(A6),D6
                 bsr     seek_track      ;Track anfahren
 
@@ -884,7 +884,7 @@ no_step2:       move.w  14(A6),D4       ;Starttrack
                 sub.w   16(A6),D0       ;Anzahl der zu schreibenden Sektoren
                 movea.l A2,A0           ;Ab Speicheradresse speichern
                 bsr     write_sektoren
-                adda.w  D5,A2           ;Bytes 갶erspringen
+                adda.w  D5,A2           ;Bytes 체berspringen
                 bra.s   vorne_anfangen2
 
 letzter_track2: move.w  22(A6),D0       ;Endsektor
@@ -893,16 +893,16 @@ letzter_track2: move.w  22(A6),D0       ;Endsektor
                 move.w  D0,-(SP)        ;Anzahl der Sektoren retten
                 movea.l A2,A0           ;Ladeadresse
                 bsr.s   write_sektoren
-                adda.w  D5,A2           ;쉇erspringen
+                adda.w  D5,A2           ;횥berspringen
                 move.w  (SP)+,D0        ;Anzahl der gelesenen Sektoren
-                add.w   D0,16(A6)       ;=N꼊hster Sektor
+                add.w   D0,16(A6)       ;=N채chster Sektor
 
 nur_ein_sektor2:moveq   #1,D0
                 lea     bitfeld,A0
                 bsr     read_sektoren   ;Letzten Sektor lesen
                 lea     bitfeld,A0
                 move.w  24(A6),D7       ;Endoffset
-trans6:         move.b  (A2)+,(A0)+     ;Rest 갶ertragen
+trans6:         move.b  (A2)+,(A0)+     ;Rest 체bertragen
                 dbra    D7,trans6
 
                 moveq   #1,D0
@@ -930,11 +930,11 @@ aus_is2:        bsr     deselect
                 movem.l (SP)+,D0-A5
                 unlk    A6
 
-                move.w  disk_error,D0   ;Fehlercode zur갷kgeben
+                move.w  disk_error,D0   ;Fehlercode zur체ckgeben
                 rts
 
 
-;Schreibt ab Startsektor Sektoren. Gibt in D5 512*n zur갷k.
+;Schreibt ab Startsektor Sektoren. Gibt in D5 512*n zur체ck.
 ;-> D0: Anzahl der Sektoren
 ;   A0: Ladeadresse
 write_sektoren: movem.l D0-A6,-(SP)
@@ -951,7 +951,7 @@ write_sektoren: movem.l D0-A6,-(SP)
                 move.w  track,D1
                 moveq   #0,D7
 bau_track:      move.b  #$FF,(A1)+
-                move.b  D1,(A1)+        ;Trackger걌t aufbauen
+                move.b  D1,(A1)+        ;Trackger체st aufbauen
                 move.b  D7,(A1)+
                 lea     513(A1),A1
                 addq.w  #1,D7
@@ -960,14 +960,14 @@ bau_track:      move.b  #$FF,(A1)+
                 clr.l   (A1)            ;Ende der Liste
 
                 move.w  D0,-(SP)        ;Anzahl auf Stack
-                bra.s   einf걄len
+                bra.s   einf체llen
 
 single:         move.w  D0,-(SP)
 rewrite:        bsr     read_track      ;Track einlesen+decode
                 move.w  (SP),D0         ;Anzahl holen
 
-einf걄len:      move.w  16(A6),D7       ;Startsektor
-                subq.w  #1,D7           ;beim Amiga startet die Sektor-Z꼑lung bei 0
+einf체llen:      move.w  16(A6),D7       ;Startsektor
+                subq.w  #1,D7           ;beim Amiga startet die Sektor-Z채hlung bei 0
                 bra.s   sektor_dbra
 
 sektor_loop:    tst.l   (A1)            ;Track zuende?
@@ -976,12 +976,12 @@ sektor_loop:    tst.l   (A1)            ;Track zuende?
                 cmp.b   2(A1),D7        ;aktueller Sektor?
                 bne.s   nxt_sektor
 
-                addq.l  #4,A1           ;Miniheader 갶erspringen
+                addq.l  #4,A1           ;Miniheader 체berspringen
 
 sektor_copy:    moveq   #127,D6
 trans17:        move.l  (A0)+,(A1)+     ;Sektor eintragen
                 dbra    D6,trans17
-                addq.w  #1,D7           ;n꼊hster Sektor
+                addq.w  #1,D7           ;n채chster Sektor
 sektor_dbra:    lea     track_buffer,A1 ;von vorne suchen
                 dbra    D0,sektor_loop
                 bra.s   schreib_track
@@ -1041,7 +1041,7 @@ disk_loop:      tst.l   (A0)
                 bne.s   nxt_ss
 
                 addq.l  #4,A0
-                addq.l  #4,A1           ;Miniheader 갶erspringen
+                addq.l  #4,A1           ;Miniheader 체berspringen
 
                 moveq   #127,D5
 verify_loop2:   cmpm.l  (A0)+,(A1)+
@@ -1061,7 +1061,7 @@ nxt_sek:        lea     512+4(A1),A1
 
 schreib_ende:   movem.l (SP)+,D0-A6
                 move.w  D0,D5
-                mulu    #512,D5         ;Anzahl zur갷kgeben
+                mulu    #512,D5         ;Anzahl zur체ckgeben
                 rts
 
 verify_error1:  move.w  #-2,disk_error
@@ -1080,7 +1080,7 @@ verify_error:   bsr     flash_amiga
                 move.w  sek_per_track,D7
                 mulu    #(4+512)/4,D7
                 bra.s   fdj2_dbra
-fdj2:           move.l  (A0)+,(A1)+     ;Track zur갷kschreiben
+fdj2:           move.l  (A0)+,(A1)+     ;Track zur체ckschreiben
 fdj2_dbra:      dbra    D7,fdj2
 
                 subq.w  #1,retries
@@ -1110,7 +1110,7 @@ write_track:    movem.l D2-D3,-(SP)
                 bne     L00B8           ;->Fehler->RTS
                 bra     write_error
 L00B8:          lsr.w   #1,D3
-                move.w  #2,$DFF09C      ;Flags r갷ksetzen
+                move.w  #2,$DFF09C      ;Flags r체cksetzen
                 move.l  A5,$DFF020      ;Adresse setzen
                 move.w  #$8210,$DFF096
                 move.w  #$7F00,$DFF09E
@@ -1165,7 +1165,7 @@ wait_index:     move.l  D1,-(SP)
                 move.b  $BFDD00,D0
 L0088:          move.b  $BFDD00,D0
                 btst    #4,D0           ;Index Impuls da?
-                bne.s   L0089           ;ja->zur갷k
+                bne.s   L0089           ;ja->zur체ck
                 sub.l   #1,D1
                 bne.s   L0088           ;weiter warten
                 move.l  #-1,D0
@@ -1174,13 +1174,13 @@ L0089:          move.l  (SP)+,D1
 
 
 ;Diese Routine codiert einen Track ins MFM-Format:
-;-> A0.L: Adresse des unverschl걌selten Tracks
+;-> A0.L: Adresse des unverschl체sselten Tracks
 ;   A1.L: Adresse des MFM-Tracks
-;<- D0.L: L꼗ge des Tracks in Bytes
+;<- D0.L: L채nge des Tracks in Bytes
 code_track:     movem.l D1-A6,-(SP)
 
                 move.w  #1000/4,D0
-track_gap:      move.l  #$AAAAAAAA,(A1)+ ;L갷ke vor den Track machen
+track_gap:      move.l  #$AAAAAAAA,(A1)+ ;L체cke vor den Track machen
                 dbra    D0,track_gap
 
                 movea.l A0,A2           ;Trackadresse merken
@@ -1196,7 +1196,7 @@ sek_loop2:      tst.l   (A0)            ;Trackende erreicht?
                 move.b  D0,3(A0)        ;eintragen
 
                 bsr.s   code_sektor     ;Diesen Sektor codieren
-                addq.w  #1,D7           ;n꼊hster Sektor
+                addq.w  #1,D7           ;n채chster Sektor
                 cmp.w   #12,D7
                 blt.s   sek_loop3
                 bra.s   code_end
@@ -1207,22 +1207,22 @@ nxt_sektor2:    lea     512+4(A0),A0
 code_end:       move.l  A1,D0           ;Trackende
                 addq.l  #2,D0           ;+2
                 movem.l (SP)+,D1-A6
-                sub.l   A1,D0           ;-Trackstart=L꼗ge
+                sub.l   A1,D0           ;-Trackstart=L채nge
                 rts
 
 ;Diese Routine codiert einen Sektor ins MFM-Format
-;-> A0.L: Adresse des uncodierten Sektors (wird erh봦t)
-;   A1.L: Adresse des MFM-Buffers (wird erh봦t)
+;-> A0.L: Adresse des uncodierten Sektors (wird erh철ht)
+;   A1.L: Adresse des MFM-Buffers (wird erh철ht)
 code_sektor:    movem.l D0-D7/A2-A6,-(SP)
 
                 movea.l A1,A5           ;Adresse merken
 
                 moveq   #7,D7
                 moveq   #0,D0
-code_0:         bsr     code_long       ;Header l봲chen
+code_0:         bsr     code_long       ;Header l철schen
                 dbra    D7,code_0
 
-                movea.l A5,A1           ;zur갷k auf Header
+                movea.l A5,A1           ;zur체ck auf Header
                 moveq   #0,D0
                 bsr     code_long       ;$aaaaaaaa eintragen
                 move.l  #$44894489,4(A5) ;Sync eintragen
@@ -1237,41 +1237,41 @@ code_0:         bsr     code_long       ;Header l봲chen
                 lea     48(A5),A1
                 bsr     code_long       ;CRC eintragen
 
-                move.w  #512,D0         ;Sektorl꼗ge
+                move.w  #512,D0         ;Sektorl채nge
                 lea     64(A5),A1       ;Zeiger hinter Header
                 bsr.s   code_block
 
                 lea     64(A5),A2
-                move.w  #1024,D0        ;L꼗ge in MFM Format
+                move.w  #1024,D0        ;L채nge in MFM Format
                 bsr     calc_crc
 
                 lea     56(A5),A1
                 bsr     code_long       ;CRC eintragen
 
-                lea     512(A0),A0      ;Sektor 갶erspringen
-                lea     64+1024(A5),A1  ;Header+MFM 갶erspringen
+                lea     512(A0),A0      ;Sektor 체berspringen
+                lea     64+1024(A5),A1  ;Header+MFM 체berspringen
 
                 movem.l (SP)+,D0-D7/A2-A6
                 rts
 
-;Kodiert einen 512 Bytes gro엁n Datenblock ins MFM-Format
-;-> A0.L: Adresse des unverschl걌selten Sektors
+;Kodiert einen 512 Bytes gro횩en Datenblock ins MFM-Format
+;-> A0.L: Adresse des unverschl체sselten Sektors
 ;   A1.L: Adresse des MFM-Formats
-;   D0.W: L꼗ge des unverschl걌selten in Bytes
+;   D0.W: L채nge des unverschl체sselten in Bytes
 code_block:     movem.l D0-A6,-(SP)
 
                 movea.l A0,A2
                 movea.l A1,A3
                 moveq   #0,D2
-                move.w  D0,D2           ;Blockl꼗ge
-                move.w  D0,D1           ;Blockl꼗ge
+                move.w  D0,D2           ;Blockl채nge
+                move.w  D0,D1           ;Blockl채nge
                 lsl.w   #2,D1
-                or.w    #8,D1           ;Wert f걊 Blitterstart
+                or.w    #8,D1           ;Wert f체r Blitterstart
                 bsr     wait_blitter    ;warten bis Blitter fertig
                 bsr.s   blitter_code
                 movea.l A3,A0           ;Zeiger auf codierten Block
                 bsr     randsetzen
-                adda.l  D2,A0           ;Zeiger auf 1. L갷ke
+                adda.l  D2,A0           ;Zeiger auf 1. L체cke
                 bsr     randsetzen
                 adda.l  D2,A0           ;Zeiger auf Blockende
                 bsr     randsetzen
@@ -1279,10 +1279,10 @@ code_block:     movem.l D0-A6,-(SP)
                 movem.l (SP)+,D0-A6
                 rts
 
-;Diese Routine f갿rt einen Blittertransfer durch (Blockkodierung)
+;Diese Routine f체hrt einen Blittertransfer durch (Blockkodierung)
 ;-> A0.L: Quelle
 ;   A1.L: Ziel
-;   D0.W: L꼗ge des Quelle
+;   D0.W: L채nge des Quelle
 ;   D1.W: Blitterstartwert
 blitter_code:   movem.l D2-D3/A2-A4,-(SP)
 
@@ -1338,7 +1338,7 @@ blitter_code:   movem.l D2-D3/A2-A4,-(SP)
                 movem.l (SP)+,D2-D3/A2-A4
                 rts
 
-;Maskenregister f걊 Blitter setzen
+;Maskenregister f체r Blitter setzen
 blitmask:       lea     $DFF000,A0
                 moveq   #0,D0
                 lea     $44(A0),A1      ;Zeiger auf 1. Maskword
@@ -1360,7 +1360,7 @@ wait_blitter:   btst    #6,$DFF002
 
 ;Codiert ein Langwort ins MFM-Format:
 ;-> D0.L: Langwort
-;   A1.L: Schreibadresse (wird erh봦t)
+;   A1.L: Schreibadresse (wird erh철ht)
 code_long:      movem.l D0-D7,-(SP)
 
                 move.l  D0,D3
@@ -1490,18 +1490,18 @@ deselect:       move.b  #%11111111,$BFD100 ;DF0: deselektieren
                 rts
 
 
-;Routine f꼑rt einen bestimmten Track an und selektiert entspr. Seite
-;-> D6.W: gew걆schter Track
+;Routine f채hrt einen bestimmten Track an und selektiert entspr. Seite
+;-> D6.W: gew체nschter Track
 seek_track:     tst.w   track           ;Ist dies der 1. Aufruf?
                 bpl.s   seek            ;Nein, direkt anfahren
 
-                move.l  D6,-(SP)        ;gew걆schter Track merken
+                move.l  D6,-(SP)        ;gew체nschter Track merken
                 moveq   #0,D6
                 bsr     seek            ;zuerst Restore
                 move.l  (SP)+,D6
 
 
-;F꼑rt Track an
+;F채hrt Track an
 ;-> D6.W: Track
 seek:           movem.l D0-A6,-(SP)
 
@@ -1526,8 +1526,8 @@ seek:           movem.l D0-A6,-(SP)
                 bsr     trap_1
 
 kein_tool1:     move.w  track(PC),D7    ;aktueller Track
-                lsr.w   #1,D7           ;tats꼊hliche Tracknummer
-                lsr.w   #1,D6           ;gew걆schter Track
+                lsr.w   #1,D7           ;tats채chliche Tracknummer
+                lsr.w   #1,D6           ;gew체nschter Track
                 bcs.s   untere_seite
                 bset    #2,$BFD100      ;Obere Seite
                 bra.s   seeken
@@ -1608,7 +1608,7 @@ fertig:         move.w  #$00,$DFF024    ;DMA ausschalten
                 movem.l (SP)+,D1-A6
                 rts
 
-;Wartet auf die Ausf갿rung eines normalen Diskbefehls:
+;Wartet auf die Ausf체hrung eines normalen Diskbefehls:
 wait_ready:     btst    #5,$BFE001
                 bne.s   wait_ready
                 rts
@@ -1642,16 +1642,16 @@ rom2_dir:       DC.B 'ROM_GRFX2  ',0
 
 message:        DC.B 27,"E"
                 DC.B 'Installationsprogramm "The Return of Medusa"',13,10
-                DC.B '� 1991 by Till Bubeck',13,10,10
-                DC.B 'Wenn die Disk auch formatiert werden soll, bitte "+" dr갷ken. ',13,10,0
+                DC.B '(C) 1991 by Till Bubeck',13,10,10
+                DC.B 'Wenn die Disk auch formatiert werden soll, bitte "+" dr체cken. ',13,10,0
 
 track_str:      DC.B 13,'Track: '
 track_nr:       DC.B 'xxx',0
 ver_error:      DC.B '    <- Verify Error!',13,10,0
 
-amigatool:      DC.W 0          ;Kein Amigatool vorhanden (f걊 den Loader)
-track_at_buffer:DC.W -1         ;Track im Buffer (ung걄tig)
-first_sek:      DC.W 10         ;n꼊hster Schreibstart (0..n)
+amigatool:      DC.W 0          ;Kein Amigatool vorhanden (f체r den Loader)
+track_at_buffer:DC.W -1         ;Track im Buffer (ung체ltig)
+first_sek:      DC.W 10         ;n채chster Schreibstart (0..n)
 sek_per_track:  DC.W 11
 
 disk_drin:      DC.W -10        ;Welche Disk ist jetzt im Laufwerk? (Noch keine)

@@ -28,7 +28,7 @@
 
 #include "FILENAME.C"
 #include "const.c"              /* Alle Konstanten holen */
-#include "grund.c"              /* Konstantendefintion der UntergrÅnde */
+#include "grund.c"              /* Konstantendefintion der Untergr√ºnde */
 #include "typedef.c"            /* Typendefinitionen */
 #include "extern.c"
 #include "prototype.c"          /* Alle Funktionsprototypen */

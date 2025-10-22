@@ -19,7 +19,7 @@ void change_all_reagenz(reagenz,relativ)
 int reagenz;
 int relativ;
 {
-	/* Zieht bei allen ReagenzglÑsern eins ... */
+	/* Zieht bei allen Reagenzgl√§sern eins ... */
 	int member;
 	
 	for(member=0;member<PARTY;member++) {
@@ -44,14 +44,14 @@ int member;
 int reagenz;
 int relativ;
 {
-	/* Erniedert den Wasserstand einer SÑule */
+	/* Erniedert den Wasserstand einer S√§ule */
 	int wert;
 	char *tot;
 	PARTY_MEMBER *partyp;
 	int i;
 		
 	wert=party[member].reagenz[reagenz];
-	if (!treffer_cheat) wert+=relativ;					/* Bei Cheat keine VerÑnderung mehr */
+	if (!treffer_cheat) wert+=relativ;					/* Bei Cheat keine Ver√§nderung mehr */
 	if (wert<=0) {
 		wert=0;
 		if (member==0) {											/* Spieler? */
@@ -113,14 +113,14 @@ int x,y;
 FLAG is_tot(member)
 int member;
 {
-	/* öberprÅft, ob der Member der Party tot ist */
+	/* √úberpr√ºft, ob der Member der Party tot ist */
 	
 	return(party[member].reagenz[0]==0 || party[member].reagenz[1]==0 || party[member].reagenz[2]==0);
 }
 
 void draw_reagenz()
 {
-	/* zeichnet alle ReagenzglÑser neu */
+	/* zeichnet alle Reagenzgl√§ser neu */
 	int member;
 	
 	Hm();
@@ -128,7 +128,7 @@ void draw_reagenz()
 		draw_rea(member);
 		}
 
-	copy_reagenz();											/* Kopiert ReagenzglÑser auf 2. Screen */
+	copy_reagenz();											/* Kopiert Reagenzgl√§ser auf 2. Screen */
 	Sm();
 }
 
@@ -152,7 +152,7 @@ void draw_rea_stand(member,rea)
 int member;											/* Welches Member? */
 int rea;												/* Welches Reagenzglas? */
 {
-	/* Zeichnet den FlÅssigkeitsstand in einem Reagenzstand neu */
+	/* Zeichnet den Fl√ºssigkeitsstand in einem Reagenzstand neu */
 	
 	int rea_x;
 	int breite,hoehe;
@@ -169,10 +169,10 @@ int rea;												/* Welches Reagenzglas? */
 					
 		rea_x=member*80+36+rea*14;				/* Hier startet das Reagenzglas */
 	
-		wasserhoehe=party[member].reagenz[rea]*hoehe/255;		/* Hîhe der FlÅssigkeit */
+		wasserhoehe=party[member].reagenz[rea]*hoehe/255;		/* H√∂he der Fl√ºssigkeit */
 		if (wasserhoehe>hoehe) wasserhoehe=hoehe;
 		
-		if (wasserhoehe!=reagenz_stand[member*3+rea]) {			/* Nur bei VerÑnderung zeichnen */
+		if (wasserhoehe!=reagenz_stand[member*3+rea]) {			/* Nur bei Ver√§nderung zeichnen */
 			draw_obj_part(0,reagenz,36,15,36+breite-1,15+hoehe-1,MOVE,scr1,rea_x,15);	/* Glas leer */
 			draw_obj_part(1,reagenz,0,hoehe-wasserhoehe,breite-1,hoehe-1,MOVE,scr1,rea_x,15+hoehe-wasserhoehe);
 			reagenz_stand[member*3+rea]=wasserhoehe;
@@ -183,7 +183,7 @@ int rea;												/* Welches Reagenzglas? */
 
 void copy_reagenz()
 {
-	/* Kopiert die ReagenzglÑser auf den 2. Screen */
+	/* Kopiert die Reagenzgl√§ser auf den 2. Screen */
 	
 	Hm();
 	cpy_raster(scr1,scr2,0,0,319,44,0,0);
@@ -193,11 +193,11 @@ void copy_reagenz()
 void draw_glaeser(member)
 int member;
 {
-	/* Zeichnet die ReagenzglÑser einer bestimmten Person und beschriftet diese */
+	/* Zeichnet die Reagenzgl√§ser einer bestimmten Person und beschriftet diese */
 	void *oldlogbase;
 		
 	Hm();
-	draw_obj(0,reagenz,MOVE,scr1,member*80,0);		/* ReagenzglÑser zeichnen */
+	draw_obj(0,reagenz,MOVE,scr1,member*80,0);		/* Reagenzgl√§ser zeichnen */
 	draw_schiessflag(member);
 		
 	oldlogbase=logbase;
@@ -257,7 +257,7 @@ void draw_lampenanzeige()
 void set_enemies(waende)
 BUNKERWAND **waende;
 {
-	/* TrÑgt alle Items, die sich an dieser Stelle im Bunker befinden in die
+	/* Tr√§gt alle Items, die sich an dieser Stelle im Bunker befinden in die
 		 Objektliste ein */
 	
 	set_enemy(waende,bunker_x,bunker_y,8,162,0);			/* auf Spielerfeld */
@@ -302,10 +302,10 @@ int verkleinerung;
 void feuer_enemy(nummer)
 int nummer;
 {
-	/* Dieser Gegner hat in dem Bunker einen Schuû abgegeben: */
+	/* Dieser Gegner hat in dem Bunker einen Schu√ü abgegeben: */
 	int i;
 
-	enemy[nummer].fight=TRUE;					/* Jetzt kÑmpft er */
+	enemy[nummer].fight=TRUE;					/* Jetzt k√§mpft er */
 	shot.ob_mem=shoots;
 	shot.ob_nr=1;
 
@@ -352,11 +352,11 @@ void do_enemy_shot()
 	int x1_neu,y1_neu,x2_neu,y2_neu;
 	
 	if (shot.ob_mem!=NULL) {					/* Schuss vorhanden */
-		if (shot.last_vbl==0) dif=shot.speed;		/* Erster Schuû sofort und ohne Zeit fÅr draw_bunker() */
+		if (shot.last_vbl==0) dif=shot.speed;		/* Erster Schu√ü sofort und ohne Zeit f√ºr draw_bunker() */
 		else dif=vbl_ct-shot.last_vbl;				
 		if (dif>=shot.speed) {					/* Weiterbewegen */
 			shot.last_vbl=vbl_ct;
-			dif/=shot.speed;							/* Wieviel Schritte Åberspringen? */
+			dif/=shot.speed;							/* Wieviel Schritte √ºberspringen? */
 			shot.entfernung+=dif;							
 			if (shot.entfernung>40) {
 				shot.ob_mem=NULL;						/* Schuss zuende */
@@ -370,7 +370,7 @@ void do_enemy_shot()
 					/* Trefferabfrage: */
 					if (x==bunker_x && y==bunker_y) {			/* Treffer am Spieler */
 						blitz(0xfff);
-						staerke=8+enemy[shot.gegner].speed/15;	/* SchussstÑrke Gegner 8..25 */ 
+						staerke=8+enemy[shot.gegner].speed/15;	/* Schussst√§rke Gegner 8..25 */ 
 						for(i=0;i<PARTY;i++) 
 							if (!is_tot(i)) {
 								abzug=staerke*(1.0-party[i].protection/200.0);		/* 0.5..1.0 */
@@ -431,7 +431,7 @@ void do_enemy_shot()
 void set_items(waende)
 BUNKERWAND **waende;
 {
-	/* TrÑgt alle Items, die sich an dieser Stelle im Bunker befinden in die
+	/* Tr√§gt alle Items, die sich an dieser Stelle im Bunker befinden in die
 		 Objektliste ein */
 
 	LAGE pos[4];											/* Wo liegt welche Ecke? */
@@ -644,7 +644,7 @@ FLAG move_enemies()
 					ep->x+=dx;
 					ep->y+=dy;
 					ep->richtung=neue_richtung;
-					ep->fight=FALSE;						/* Feind kÑmpft nicht mehr */
+					ep->fight=FALSE;						/* Feind k√§mpft nicht mehr */
 					}
 				else {												/* Noch nicht bewegen */
 					ep->next_move-=differenz;				/* Abziehen */
@@ -707,7 +707,7 @@ int item_nr;											/* Welches Item will der Spieler werfen -1=Keines */
 	int x1,y1,x2,y2;
 	int breite,hoehe;
 	int links,rechts;
-	static long old_schuss_vbl=0;				/* Wann darf der nÑchste Schuss kommen? */
+	static long old_schuss_vbl=0;				/* Wann darf der n√§chste Schuss kommen? */
 	FLAG kann_schiessen=FALSE;
 	static FLAG alert_da=FALSE;
 	void *bib;
@@ -716,7 +716,7 @@ int item_nr;											/* Welches Item will der Spieler werfen -1=Keines */
 	
 	key_throw=FALSE;
 	if (item_nr>=0)										/* Objekt zum Werfen? */
-		 if (item[item_nr].typ==KEY) key_throw=TRUE;	/* SchlÅssel? */
+		 if (item[item_nr].typ==KEY) key_throw=TRUE;	/* Schl√ºssel? */
 		
 	if (!key_throw && vbl_ct>old_schuss_vbl+50) {	/* Nur einmal pro Sekunde */
 	
@@ -734,7 +734,7 @@ int item_nr;											/* Welches Item will der Spieler werfen -1=Keines */
 			for(i=0;i<PARTY;i++) {
 				links=party[i].hand[0];
 				rechts=party[i].hand[1];
-				if (links!=-1 && rechts!=-1) 			/* Beide HÑnde voll */			
+				if (links!=-1 && rechts!=-1) 			/* Beide H√§nde voll */			
 					if ((item[links].typ==WAFFE && item[rechts].typ==MUNITION) ||
 							(item[links].typ==MUNITION && item[rechts].typ==WAFFE)) {
 						if (item[links].typ==MUNITION) {
@@ -743,7 +743,7 @@ int item_nr;											/* Welches Item will der Spieler werfen -1=Keines */
 									item[links].flag--;
 									schussstaerke+=item[rechts].flag;
 									}
-								else kann_schiessen=TRUE;				/* er kînnte Schiessen */
+								else kann_schiessen=TRUE;				/* er k√∂nnte Schiessen */
 								}
 							}
 						else 
@@ -752,16 +752,16 @@ int item_nr;											/* Welches Item will der Spieler werfen -1=Keines */
 									item[rechts].flag--;
 									schussstaerke+=item[links].flag;
 									}
-								else kann_schiessen=TRUE;				/* Er kînnte Schiessen */
+								else kann_schiessen=TRUE;				/* Er k√∂nnte Schiessen */
 								}
 						}
 				}
 			}
 			
-		if (schussstaerke>0) {							/* Es war noch ein Schuû da... */
+		if (schussstaerke>0) {							/* Es war noch ein Schu√ü da... */
 			if (schuss_cheat) schussstaerke*=2;				/* Schuss doppelt so stark */
 			Hm();
-			copy_bunker_screen();							/* auf 2. Screen Åbertragen */
+			copy_bunker_screen();							/* auf 2. Screen √ºbertragen */
 			copy_screen(scr1,hlpbuf);
 			
 			oldsync=sync;
@@ -769,7 +769,7 @@ int item_nr;											/* Welches Item will der Spieler werfen -1=Keines */
 		
 			oldhelligkeit=helligkeit;
 			if (item_nr<0) {								/* Richtiger Schuss */
-				while(helligkeit<6) {						/* Schuû volle Helligkeit */
+				while(helligkeit<6) {						/* Schu√ü volle Helligkeit */
 					helligkeit++;
 					set_bunker_pal();
 					}
@@ -816,13 +816,13 @@ int item_nr;											/* Welches Item will der Spieler werfen -1=Keines */
 			sync=oldsync;
 		
 			while(helligkeit!=oldhelligkeit) {
-				if (helligkeit<oldhelligkeit) helligkeit++;			/* ZurÅck auf alte Helligkeit */
+				if (helligkeit<oldhelligkeit) helligkeit++;			/* Zur√ºck auf alte Helligkeit */
 				else helligkeit--;
 				set_bunker_pal();
 				}
 			Sm();
 			}
-		else 													/* SchussstÑrke>0 */
+		else 													/* Schussst√§rke>0 */
 			if (kann_schiessen && !alert_da) {
 				dungeon_alert(romstr532);
 				dungeon_alert(romstr533);
@@ -838,7 +838,7 @@ FLAG check_4_enemy(entfernung,item_nr)
 int entfernung;									/* Entfernung zum Spieler */
 int *item_nr;										/* Was hat der Spieler in der Hand -1=Nichts */
 {
-	/* öberprÅft, ob an dieser Stelle ein Gegner bzw. Wand ist. */
+	/* √úberpr√ºft, ob an dieser Stelle ein Gegner bzw. Wand ist. */
 	register ENEMY *ep;
 	register int i;
 	int x,y;
@@ -903,19 +903,19 @@ int von,bis;								/* Animationsbilder */
 
 void copy_bunker_screen()
 {
-	/* Kopiert Screen1 auf Screen2 und paût die Automapvariablen an */
+	/* Kopiert Screen1 auf Screen2 und pa√üt die Automapvariablen an */
 		
 	Hm();
 	copy_screen(scr1,scr2);
 
-	auto_nr=0;												/* Alle Changes sind Åbertragen */
+	auto_nr=0;												/* Alle Changes sind √ºbertragen */
 	player[0]=player[1];							/* Und Spieler an selber Position */
 	Sm();
 }
 
 void medusa()
 {
-	/* Der Spieler hat die letzte TÅr des Bunkers geîffnet -> Medusa kommt */
+	/* Der Spieler hat die letzte T√ºr des Bunkers ge√∂ffnet -> Medusa kommt */
 	int animation;
 	FLAG spiegel_da=FALSE;
 	int i,j;
@@ -975,7 +975,7 @@ int med_nr,kug_nr;
 	/* Zeichnet die Medusaanimation auf Screen 2 */
 	
 	Hm();
-	cpy_raster(hlpbuf,scr2,0,45,319,167,0,45);			/* weglîschen */
+	cpy_raster(hlpbuf,scr2,0,45,319,167,0,45);			/* wegl√∂schen */
 	draw_obj(med_nr,walls,ODER,scr2,med_koord_x[med_nr],med_koord_y[med_nr]);
 	if (kug_nr!=-1) 
 		draw_obj((kug_nr>9) ? kug_nr-4 : kug_nr,walls,ODER,scr2,kug_koord_x[kug_nr-6],kug_koord_y[kug_nr-6]);
@@ -1013,7 +1013,7 @@ void finale()
   laenge=load_bibliothek(OVER_D_TXT,scr2+20000);
 #endif
 
-	decrypt((unsigned char *)scr2+20000,laenge);				/* Scroller entschlÅsseln */
+	decrypt((unsigned char *)scr2+20000,laenge);				/* Scroller entschl√ºsseln */
 
   load_objekte(METALL_OBJ,pack_buf);					/* Scroller laden */
 
@@ -1033,4 +1033,3 @@ void finale()
 	longjmp(restart,1);
 }
 
-

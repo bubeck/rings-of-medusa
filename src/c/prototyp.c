@@ -1,11 +1,11 @@
 
 
 /* Prototype-Deklarationen:
-   Ω 1990 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, Tel: 07151/66437   */
+   ‚ïú 1990 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, Tel: 07151/66437   */
 
 
 
-/* Prototypen fÅr: RASTER.C: */
+/* Prototypen f√ºr: RASTER.C: */
 
 void pic_move(char *quelle,int y1,int y2,int y3);
 void cpy_raster(char *quelle,char *ziel,int x1,int y1,int x2,int y2,int x3,int y3);
@@ -23,7 +23,7 @@ void shrink2(float size,void *shrink_buff,int ob_nr,void *ob_mem,int x_start,int
 void draw_grow_obj(int ob_nr,void *ob_mem,int modus,void *screen,int x,int y);
 
 
-/* Prototypen fÅr: ATARI.C: */
+/* Prototypen f√ºr: ATARI.C: */
 
 void flash_amiga(void);
 void hippel_sfx(int sound_nr);
@@ -43,7 +43,7 @@ unsigned char wandel(unsigned char zeichen);
 void debug(int nr,char text[],int var);
 
 
-/* Prototypen fÅr: CITY.C: */
+/* Prototypen f√ºr: CITY.C: */
 
 void city(void);
 void calc_gehalt(void);
@@ -100,7 +100,7 @@ void barracks(int num);
 void draw_delay(int x,int y,unsigned char wert);
 
 
-/* Prototypen fÅr: CITY2.C: */
+/* Prototypen f√ºr: CITY2.C: */
 
 void subway(void);
 void bank(int num);
@@ -119,7 +119,7 @@ void open_window(int x0,int y0);
 void close_window(void);
 
 
-/* Prototypen fÅr: DUNGEON.C: */
+/* Prototypen f√ºr: DUNGEON.C: */
 
 FLAG dungeon(int nr);
 void aufzug(unsigned int feld);
@@ -181,7 +181,7 @@ FLAG platz_in_item(void);
 void load_waende(void);
 
 
-/* Prototypen fÅr: DUNG2.C: */
+/* Prototypen f√ºr: DUNG2.C: */
 
 void change_all_reagenz(int reagenz,int relativ);
 void change_reagenz(int member,int reagenz,int relativ);
@@ -214,7 +214,7 @@ void draw_medusa(int med_nr,int kug_nr);
 void finale(void);
 
 
-/* Prototypen fÅr: FIGHT.C: */
+/* Prototypen f√ºr: FIGHT.C: */
 
 void test_fight(void);
 void minus_einheit(int company,long tote);
@@ -246,7 +246,7 @@ void show_soldiers(void);
 void verlier_schiff(int nr);
 
 
-/* Prototypen fÅr: INIT.C: */
+/* Prototypen f√ºr: INIT.C: */
 
 void vari_init(void);
 void load_pics(void);
@@ -277,7 +277,7 @@ void totenkopf(void);
 void zeichne_totenkopf(int y);
 
 
-/* Prototypen fÅr: IO.C: */
+/* Prototypen f√ºr: IO.C: */
 
 void linker(int file_nr,int fun_nr,int par1,int par2,void *par3);
 void writexy(int farbe,int x,int y,char string[]);
@@ -358,7 +358,7 @@ void switch_screens(void);
 void init_maus(void);
 
 
-/* Prototypen fÅr: LAND.C: */
+/* Prototypen f√ºr: LAND.C: */
 
 FLAG land_map(short nr,FLAG scrollen,int rich,int x,int y);
 void load_map(int nr);
@@ -410,7 +410,7 @@ int such_insel(void);
 short get_land(int x,int y);
 
 
-/* Prototypen fÅr: MAIN.C: */
+/* Prototypen f√ºr: MAIN.C: */
 
 void main(void);
 void draw_peilgeraete(void);
@@ -449,7 +449,7 @@ void blitz(int color);
 void autsch(void);
 
 
-/* Prototypen fÅr: LEISTEN.C: */
+/* Prototypen f√ºr: LEISTEN.C: */
 
 void do_board(void);
 void bunker_steuerung(void);

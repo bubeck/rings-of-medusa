@@ -746,5 +746,5 @@ That's it. Good luck with the game!
 #define romstr620 "PLEASE INSERT DISK           'X' IN DRIVE    A:"		
 #define romstr621 "PLEASE INSERT YOUR SAVE GAME DISK IN DRIVE      A:"
 #define romstr622 "I CAN ONLY USE DISKS WITH 9/10 SEKTORS PER TRACK. FORMAT WITH DESKTOP."
-#define romstr623 "DISK ERROR! TRY AGAIN OR CHANGE DISK."
+#define romstr623 "DISK ERROR! TRY AGAIN OR CHANGE DISK."
 

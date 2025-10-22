@@ -1,23 +1,23 @@
 ;************************************************************************
 ;* Send-Prg - Sendet Medusa.prg aus dem aktuellen Pfad zum Amiga
-;* ½1989 by ä-soft, written by Markus Fritze           18.06.1988 01:30 *
+;* (C)1989 by Î£-soft, written by Markus Fritze           18.06.1988 01:30 *
 ;************************************************************************
 
 ladeadresse     EQU $00065000   ;Adresse 'LOADER.ABS' im Amiga
 
                 movea.l 4(SP),A6             ;Basepageadresse holen
-                movea.w #$0100+$0400,A5      ;Gr”že der Basepage + Stackgr”že (1k)
-                adda.l  12(A6),A5            ;+ Gr”že des TEXT-Segments
-                adda.l  20(A6),A5            ;+ Gr”že des DATA-Segments
-                adda.l  28(A6),A5            ;+ Gr”že des BSS-Segments
-                move.l  A5,D1                ;= Gesamtl„nge des Programms
-                and.w   #$FFFE,D1            ;L„nge nun gerade
+                movea.w #$0100+$0400,A5      ;GrÃ¶ÃŸe der Basepage + StackgrÃ¶ÃŸe (1k)
+                adda.l  12(A6),A5            ;+ GrÃ¶ÃŸe des TEXT-Segments
+                adda.l  20(A6),A5            ;+ GrÃ¶ÃŸe des DATA-Segments
+                adda.l  28(A6),A5            ;+ GrÃ¶ÃŸe des BSS-Segments
+                move.l  A5,D1                ;= GesamtlÃ¤nge des Programms
+                and.w   #$FFFE,D1            ;LÃ¤nge nun gerade
                 add.l   A6,D1                ;+ Programmstart (Basepageadresse)
                 movea.l D1,SP                ;Stack endet dort
-                move.l  A5,-(SP)             ;Programml„nge
+                move.l  A5,-(SP)             ;ProgrammlÃ¤nge
                 move.l  A6,-(SP)             ;Adresse der Basepage
                 move.l  #$004A0000,-(SP)     ;Funktionsnummer + Dummyword (0)
-                trap    #1                   ;Mshrink(0,Basepageadr,Prgl„nge)
+                trap    #1                   ;Mshrink(0,Basepageadr,PrglÃ¤nge)
                 lea     12(SP),SP            ;Nur noch den Stack korrigieren
 
                 clr.w   -(SP)

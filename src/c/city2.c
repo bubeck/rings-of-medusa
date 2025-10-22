@@ -203,7 +203,7 @@ void buy_sell(name,waren_max,warenn,warenn_len,waren_preis,waren_city,waren_play
 char *name;                 /* Store, Stable, etc. */
 int waren_max;              /* Anzahl der Waren */
 char warenn[];              /* Name der Waren als Array */
-int warenn_len;             /* L„nge in Bytes eines Namens */
+int warenn_len;             /* LÃ¤nge in Bytes eines Namens */
 unsigned int waren_preis[];          /* Preis in der Stadt */
 long waren_city[];          /* Anzahl der Waren in der Stadt */
 long waren_player[];        /* Anazhl der Waren bei Player */
@@ -237,7 +237,7 @@ int ort;                    /* siehe const.c */
     if (newprice) {
       Hm();
       if (ort==AKTIEN)
-        betrag=chosen_menge*kurswert(waren_nummer);    /* Maklergebhr */
+        betrag=chosen_menge*kurswert(waren_nummer);    /* MaklergebÃ¼hr */
       else
         betrag=(long)waren_preis[waren_nummer]*chosen_menge;
 
@@ -268,7 +268,7 @@ int ort;                    /* siehe const.c */
         }
 
       if (ort==AKTIEN)
-        betrag=chosen_menge*kurswert(waren_nummer)*1.02;    /* Maklergebhr */
+        betrag=chosen_menge*kurswert(waren_nummer)*1.02;    /* MaklergebÃ¼hr */
       else
         betrag=(long)waren_preis[waren_nummer]*chosen_menge;
 
@@ -297,7 +297,7 @@ int ort;                    /* siehe const.c */
         }
 
       if (ort==AKTIEN)
-        betrag=chosen_menge*kurswert(waren_nummer)*0.98;    /* Maklergebhr */
+        betrag=chosen_menge*kurswert(waren_nummer)*0.98;    /* MaklergebÃ¼hr */
       else
         betrag=(long)waren_preis[waren_nummer]*chosen_menge;
 
@@ -315,11 +315,11 @@ int ort;                    /* siehe const.c */
 		
 	  if (maus_in(303,83,309,153)) {									/* Scrollbalken */
 			Hm();
-			draw_obj_part(0,pack_buf+32000,299,14,304,84,MOVE,scr1,304,83);		/* Alten l”schen */
+			draw_obj_part(0,pack_buf+32000,299,14,304,84,MOVE,scr1,304,83);		/* Alten lÃ¶schen */
 			move_objekt(1,pack_buf+32000,MOVE,0,pack_buf,
 									STOP_R|STOP_L|STOP_O|STOP_U,304,83,308,154,TRUE);
 			hol_maus();
-      ausrahmen(waren_nummer,seite);        						/* Alten Rahmen l”schen */
+      ausrahmen(waren_nummer,seite);        						/* Alten Rahmen lÃ¶schen */
 			if (my>118 && waren_max>=10) {
 				seite=1;
 				waren_nummer=10;
@@ -399,14 +399,14 @@ void show_buy_sell(name,waren_max,warenn,warenn_len,waren_preis,
 char *name;                 /* Store, Stable, etc. */
 int waren_max;              /* Anzahl der Waren */
 char warenn[];              /* Name der Waren als Array */
-int warenn_len;             /* L„nge in Bytes eines Namens */
+int warenn_len;             /* LÃ¤nge in Bytes eines Namens */
 unsigned int waren_preis[];          /* Preis in der Stadt */
 long waren_city[];          /* Anzahl der Waren in der Stadt */
 long waren_player[];        /* Anazhl der Waren bei Player */
 int ort;                    /* siehe const.c */
 int seite,waren_nummer;
 {
-  /* Baut Bildschirm fr Buy_sell neu auf */
+  /* Baut Bildschirm fÃ¼r Buy_sell neu auf */
 
   Hm();
 
@@ -416,7 +416,7 @@ int seite,waren_nummer;
 	open_window(7,69);
 	draw_obj(1,pack_buf+32000,MOVE,scr1,304,(seite==0) ? 83 : 119);	/* Scrollbalken zeichnen */
 	
-  center(0,71,name);                 /* šberschrift schreiben */
+  center(0,71,name);                 /* Ãœberschrift schreiben */
   writexy(0,14,80,romstr227);
   writexy(0,  54,  80,romstr228);
   if (ort==LADEN || ort==AKTIEN) writexy(0,78,80,romstr229);
@@ -446,7 +446,7 @@ int seite,waren_nummer;
 void store_goods(waren_max,warenn,warenn_len,waren_preis,waren_city,seite,ort)
 int waren_max;              /* Maximalzahl der Waren */
 char warenn[];              /* Name der Waren als Array */
-int warenn_len;             /* L„nge eines Warennamens in Byte */
+int warenn_len;             /* LÃ¤nge eines Warennamens in Byte */
 unsigned int waren_preis[];          /* Preise der Waren in der Stadt */
 long waren_city[];          /* Anzahl der Waren in der Stadt */
 int seite;                  /* darzustellende Seite */
@@ -487,7 +487,7 @@ int ort;                    /* siehe const.c */
 void your_goods(waren_max,warenn,warenn_len,waren_player,seite)
 int waren_max;              /* Maximalzahl der Waren */
 char warenn[];              /* Name der Waren als Array */
-int warenn_len;             /* L„nge eines Warennamens in Byte */
+int warenn_len;             /* LÃ¤nge eines Warennamens in Byte */
 long waren_player[];         /* Anzahl der Waren, beim Player */
 int seite;                  /* darzustellende Seite */
 {
@@ -522,7 +522,7 @@ int warennummer,seite;
 void ausrahmen(warennummer,seite)
 int warennummer,seite;
 {
-  /* L”scht den Rahmen wieder */
+  /* LÃ¶scht den Rahmen wieder */
   drec(11,90+(warennummer-10*seite)*6-1,54,90+(warennummer-10*seite)*6+5);
   drec(211,90+(warennummer-10*seite)*6-1,254,90+(warennummer-10*seite)*6+5);
 }
@@ -565,8 +565,8 @@ int num;
   bevoelkerung[num]=people[num]+zuwachs;            /* Bevoelkerungszahl */
 
   /* Warenpreis berechnen:
-        groe Bev”lkerung  -> teure Preise
-        kleine Bev”lkerung -> niedere Preise
+        groÃŸe BevÃ¶lkerung  -> teure Preise
+        kleine BevÃ¶lkerung -> niedere Preise
         */
   /* Mengenzuwachs berechnen: */
 
@@ -625,7 +625,7 @@ int waren_nummer;
   long datum;
   double xalt,yalt,xneu,yneu;
   double day_x;
-  long unter_grenze,ober_grenze;            /* 10% darunter, darber */
+  long unter_grenze,ober_grenze;            /* 10% darunter, darÃ¼ber */
   long delta_y;
 
   Hm();
@@ -654,7 +654,7 @@ int waren_nummer;
   xalt=260.0;
   yalt=110.0+aktie_fun(aktie_x[waren_nummer]+day_x)*35.0;
   for(i=0;i<120;i++) {
-    day_x-=1.0/180.0;                         /* Ein Tag zurck */
+    day_x-=1.0/180.0;                         /* Ein Tag zurÃ¼ck */
     xneu=xalt-1.75;                           /* 1.75 Pixel/Tag */
     yneu=110.0+aktie_fun(aktie_x[waren_nummer]+(double)day_x)*35.0;
     line(0,(int)xalt,(int)yalt,(int)xneu,(int)yneu);
@@ -677,7 +677,7 @@ int waren_nummer;
 void open_window(x0,y0)
 int x0,y0;
 {
-	/* ™ffnet ein Fenster an dieser Position */
+	/* Ã–ffnet ein Fenster an dieser Position */
 	void *window;
 	
 	Hm();
@@ -687,7 +687,7 @@ int x0,y0;
 
 	window_x=x0-2;
 	window_y=y0;
-	window_breite=objekt_breite(0,window);				/* fr close merken */
+	window_breite=objekt_breite(0,window);				/* fÃ¼r close merken */
 	window_hoehe=objekt_hoehe(0,window);
 	
 	draw_grow_obj(0,window,MOVE,scr1,window_x,window_y);
@@ -708,4 +708,3 @@ void close_window()
 }
 
 
-

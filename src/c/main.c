@@ -4,33 +4,33 @@
 
 Programm: Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt (Wochenende und Semesterferien)
 									Tel: 07151-66437
-					bzw. Till Bubeck, Schloûbergstr. 9, 7400 TÅbingen (wÑhrend des Semsters)
+					bzw. Till Bubeck, Schlo√übergstr. 9, 7400 T√ºbingen (w√§hrend des Semsters)
 									Tel: 07071-49612
 Grafik:	  Torsten Zimmermann, Steinackerstr. 12, 7520 Bruchsal
 									Tel: 07251-84170
-Musik:		Jochen Hippel, Flîrsheimerstr. 27, 6719 Bischheim
+Musik:		Jochen Hippel, Fl√∂rsheimerstr. 27, 6719 Bischheim
 									Tel: 06352-8602
 
 Konvertierungen:
 
 Amiga und ST: Till Bubeck, s.o.
 PC-Version: 	C: Martin Kreutz, Taubenstr. 61, 4300 Essen 17, Tel: 0201/570036
-							Mcode: Volker Zinke, Weuenstraûe 36, 4300 Essen, Tel: 0201/623465
-C-64:					Steve Kups, Fîhrenstr. 13, 8800 Ansbach, Tel: 0981-13771
+							Mcode: Volker Zinke, Weuenstra√üe 36, 4300 Essen, Tel: 0201/623465
+C-64:					Steve Kups, F√∂hrenstr. 13, 8800 Ansbach, Tel: 0981-13771
 
 Sonstige:
 
-Co-Programmierer: Christian Weber, Bruggerweg 2, CH-8037 ZÅrich, Tel: 0041-12726197
-Story: Matthias Krenzel, BrÅderstr. 61, 5630 Remscheid 1, Tel.: 02191-75944
+Co-Programmierer: Christian Weber, Bruggerweg 2, CH-8037 Z√ºrich, Tel: 0041-12726197
+Story: Matthias Krenzel, Br√ºderstr. 61, 5630 Remscheid 1, Tel.: 02191-75944
 Bunkerdesign:	Peter Richter, Tel: 0201-743432
 Vertrieb: Starbyte Software, Nordring 71, 4630 Bochum 1, Tel: 0234/680460			
 Federal Express: 07150-30070, Kun-Nr.: 14301012
 
 Promotion: Tronicverlag GmbH, ASM-Redaktion, z.Hd. Eva Hoogh, Postfach, 3440 Eschwege,
 					 Tel.: 05651-30011							
-					 Amiga Joker, z.Hd. Herr Labiner, Untere Parkstr. 67, 8013 Haar b. MÅnchen
+					 Amiga Joker, z.Hd. Herr Labiner, Untere Parkstr. 67, 8013 Haar b. M√ºnchen
 					 Markt & Technik Verlag, Red. Powerplay, z.Hd. Herrn Weitz,
-											 Hans-Pinsel-Str. 2 8013 Haar b. MÅnchen
+											 Hans-Pinsel-Str. 2 8013 Haar b. M√ºnchen
 
 																							*/
 																							
@@ -56,7 +56,7 @@ Promotion: Tronicverlag GmbH, ASM-Redaktion, z.Hd. Eva Hoogh, Postfach, 3440 Esc
 
 #include "filename.c"
 #include "const.c"              /* Alle Konstanten holen */
-#include "grund.c"              /* Konstantendefintion der UntergrÅnde */
+#include "grund.c"              /* Konstantendefintion der Untergr√ºnde */
 #include "typedef.c"            /* Typendefinitionen */
 #include "global.c"             /* Variablendeklarationen */
 #include "prototyp.c"           /* Alle Funktionsprototypen */
@@ -75,7 +75,7 @@ void main()
   save_version=0x005;       						/* Version des Savefiles */
 
   init_medusa();             /* Ramdisk, Speicher, Files etc. */
-  setjmp(restart);          /* Hier Einsprungpunkt fÅr erneutes Starten */
+  setjmp(restart);          /* Hier Einsprungpunkt f√ºr erneutes Starten */
 
   re_initialize();          /* Den Rest voll initliaisieren */
 
@@ -100,10 +100,10 @@ void main()
 
     if (map==SEA) sea_move();                 /* SPieler bewegt sich auf dem Meer */
 
-    if (mk == 1) {           /* Knopf gedrÅckt */
+    if (mk == 1) {           /* Knopf gedr√ºckt */
 	    if ((mx != sx[0]) || (my != sy[0])) {  		/* Maus woanders ? */
         update_coordinates();     					/* Grenze angelaufen */
-        get_ground();            					/* Holt die UntergrÅnde der Sprites */
+        get_ground();            					/* Holt die Untergr√ºnde der Sprites */
         test_ground();  				        		/* testet den Untergrund auf Wasser etc. */
         if(sx[0] != sxalt[0] || sy[0] != syalt[0]) {   /* Figur bewegt? */
           show_ground();               				/* Untergrund, Zeit, etc. zeigen */
@@ -135,21 +135,21 @@ void main()
       }
 
     simulation();           /* Gegnerische Armeen bewegen, Vulkane etc. */
-    test_fight();           /* prÅfen, ob Spieler und Gegner zusammentreffen */
+    test_fight();           /* pr√ºfen, ob Spieler und Gegner zusammentreffen */
     check_cheat();          /* Testet, ob Cheateingabe gemacht wurde */
     button=NOTHING;
-    test_untergrund();      /* PrÅft ob Spieler im Sumpf oder verhexten Wald */
+    test_untergrund();      /* Pr√ºft ob Spieler im Sumpf oder verhexten Wald */
     draw_mobs();            /* Sprites auf neuem Screen zeichnen */
     draw_peilgeraete();     /* Peilgeraete rotieren */
     swap_screens();         /* Screens umschalten */
-    delete_peilgeraete();   /* PeilgerÑte weglîschen */
-    delete_mobs();          /* Alte Sprites lîschen */
+    delete_peilgeraete();   /* Peilger√§te wegl√∂schen */
+    delete_mobs();          /* Alte Sprites l√∂schen */
     }
 }
 
 void draw_peilgeraete()
 {
-  /* Rotiert die Strahlen des FunkpeilgerÑtes, falls diese eingeschaltet
+  /* Rotiert die Strahlen des Funkpeilger√§tes, falls diese eingeschaltet
      sind.. */
   int i,j;
  	int old_line_mode;
@@ -160,7 +160,7 @@ void draw_peilgeraete()
 	logbase=scr2;									/* Auf Scr2 zeichnen */
 
   for(i=0;i<2;i++)
-    if (peilgeraet[i].on) {         /* GerÑt eingeschaltet? */
+    if (peilgeraet[i].on) {         /* Ger√§t eingeschaltet? */
       if (scr2==scrn_1) ziel=&peilgeraet[i].dest_1;
       else ziel=&peilgeraet[i].dest_2;
 
@@ -218,7 +218,7 @@ void draw_peilgeraete()
           line(4,peilgeraet[i].x,peilgeraet[i].y,ziel->x,ziel->y);
           wait_once(1);
           }
-        swap_screens();                            /* zurÅckschalten */
+        swap_screens();                            /* zur√ºckschalten */
         copy_screen(pack_buf,scr2);         /* restaurieren */
 				logbase=scr2;
 				hippel_sfx(PEILSTRAHL);
@@ -231,7 +231,7 @@ void draw_peilgeraete()
 
 void delete_peilgeraete()
 {
-  /* Lîscht die Strahlen des FunkpeilgerÑtes, falls diese eingeschaltet
+  /* L√∂scht die Strahlen des Funkpeilger√§tes, falls diese eingeschaltet
      sind.. */
   int i;
 	int old_line_mode;						/* Alter Modus der Line-Funktion */
@@ -245,10 +245,10 @@ void delete_peilgeraete()
     if (scr2==scrn_1) ziel=&peilgeraet[i].dest_1;
     else ziel=&peilgeraet[i].dest_2;
 
-    if (ziel->x>=0) {                   /* Strahl weglîschen */
+    if (ziel->x>=0) {                   /* Strahl wegl√∂schen */
 			old_line_mode=line_mode(1);			/* EOR-MODUS */
       line(15,peilgeraet[i].x,peilgeraet[i].y,ziel->x,ziel->y);
-      ziel->x=-1;                       /* Strahl ungÅltig */
+      ziel->x=-1;                       /* Strahl ung√ºltig */
       line_mode(old_line_mode);				/* Alten Modus wieder setzen */
       }
     }
@@ -313,8 +313,8 @@ int rnd_winkel()
 
 void peilung()
 {
-  /* Hiermit kann der Spieler ein PeilgerÑt setzen */
-  int nr,i;                   /* Nummer des PeilgerÑtes */
+  /* Hiermit kann der Spieler ein Peilger√§t setzen */
+  int nr,i;                   /* Nummer des Peilger√§tes */
   register int x,y;
   int schatz_x,schatz_y;                /* Pixelkoordinaten des Schatzes */
   double winkel,radius;
@@ -323,11 +323,11 @@ void peilung()
 
 	if (ycargo_menge[11]<=0) alert(romstr249);
 	else if (bunker_nr[map][0]<128 || bunker_nr[map][1]<128) {		/* wenigstens 1 Bunker? */
-		if (bunker_nr[map][0]<128 && bunker_nr[map][1]<128) {		/* Zwei EingÑnge -> auswÑhlen */
+		if (bunker_nr[map][0]<128 && bunker_nr[map][1]<128) {		/* Zwei Eing√§nge -> ausw√§hlen */
 			bun_nr1=bunker_nr[map][0];								/* Nummer des 1. Bunkers */
 			bun_nr2=bunker_nr[map][1];								/* Nummer des 2. Bunkers */
 			if (!bunker_bekannt[bun_nr1] && !bunker_bekannt[bun_nr2])		/* Beide Bunker unbekannt */
-				bunker_zahl=zufall(2);								/* Einen von beiden wÑhlen */
+				bunker_zahl=zufall(2);								/* Einen von beiden w√§hlen */
 			else {
 				if (!bunker_bekannt[bun_nr1]) bunker_zahl=0;			/* Bunker 1 unbekannt */
 				else bunker_zahl=1;								/* Sonst Bunker 2 nehmen */
@@ -351,16 +351,16 @@ void peilung()
 	
 	  nr=-1;
 	  for(i=1;i>=0;i--)
-	    if (!peilgeraet[i].on) nr=i;        /* PeilgerÑt an ? */
+	    if (!peilgeraet[i].on) nr=i;        /* Peilger√§t an ? */
 	
-	  if (nr==-1) return;                   /* Beide PeilgerÑte sind an */
+	  if (nr==-1) return;                   /* Beide Peilger√§te sind an */
 
 		ycargo_menge[11]--;							/* Einen Quarz weniger */
 			
-	  seed=map*233.43;                      /* Startwert fÅr Zufallszahl */
-	  for(i=0;i<10;i++) rnd_winkel();       /* ein biûchen zufallen... */
+	  seed=map*233.43;                      /* Startwert f√ºr Zufallszahl */
+	  for(i=0;i<10;i++) rnd_winkel();       /* ein bi√üchen zufallen... */
 	
-	  winkel=(rnd_winkel()+120.0*i)*(2.0*PI/360.0);               /* 0..90¯ */
+	  winkel=(rnd_winkel()+120.0*i)*(2.0*PI/360.0);               /* 0..90¬∞ */
 	
 	  radius=10.0+rnd_winkel()/6.428;                       /* 10..24 */
 	  schatz_x+=(int)(radius*cos(winkel));
@@ -370,7 +370,7 @@ void peilung()
 	  if (schatz_y<leiste_y)  schatz_y=leiste_y;
 	  if (schatz_y>166) schatz_y=166;
 	
-	  peilgeraet[nr].x=sx[0];               /* Standort des PeilgerÑtes */
+	  peilgeraet[nr].x=sx[0];               /* Standort des Peilger√§tes */
 	  peilgeraet[nr].y=sy[0];
 	  peilgeraet[nr].ziel.x=sx[0];
 	  peilgeraet[nr].ziel.y=leiste_y;		/* Senkrecht starten */
@@ -421,16 +421,16 @@ void peilung()
 	      }
 	    }
 		hippel_sfx(PEILSTRAHL);
-		peilsound=TRUE;									/* Peilsound ist zu hîren */
+		peilsound=TRUE;									/* Peilsound ist zu h√∂ren */
 		}
 	else alert(romstr250);
 }
 
 void peilgeraet_aus()
 {
-	/* Schaltet die PeilgerÑte aus */
+	/* Schaltet die Peilger√§te aus */
 	
-  peilgeraet[0].on=peilgeraet[1].on=FALSE;            /* PeilgerÑte aus */
+  peilgeraet[0].on=peilgeraet[1].on=FALSE;            /* Peilger√§te aus */
   peilgeraet[0].dest_1.x=peilgeraet[0].dest_2.x=-1;   /* nicht neu gezeichnet */
   peilgeraet[1].dest_1.x=peilgeraet[1].dest_2.x=-1;
 
@@ -452,7 +452,7 @@ void such_rohstoffe()
 	FLAG rahmen_da=FALSE;
 	int radius;
 	
-  clear_buttons(TRUE);          /* nur VerÑnderung */
+  clear_buttons(TRUE);          /* nur Ver√§nderung */
   copy_buttons();               /* Leiste auf 2. Screen */
 
   alert(romstr251);
@@ -501,7 +501,7 @@ void such_rohstoffe()
 			if (my>169) button_leiste();
 
     simulation();           /* Gegnerische Armeen bewegen, Vulkane etc. */
-    test_fight();           /* prÅfen, ob Spieler und Gegner zusammentreffen */
+    test_fight();           /* pr√ºfen, ob Spieler und Gegner zusammentreffen */
 
 		if (--zeichnen>=0) {
 			if (rahmen_da) {
@@ -518,8 +518,8 @@ void such_rohstoffe()
     draw_mobs();            /* Sprites auf neuem Screen zeichnen */
     draw_peilgeraete();     /* Peilgeraete rotieren */
     swap_screens();         /* Screens umschalten */
-    delete_peilgeraete();   /* PeilgerÑte weglîschen */
-    delete_mobs();          /* Alte Sprites lîschen */
+    delete_peilgeraete();   /* Peilger√§te wegl√∂schen */
+    delete_mobs();          /* Alte Sprites l√∂schen */
     }
 
 	line_mode(oldmode);
@@ -530,7 +530,7 @@ void such_rohstoffe()
   armeeteil[0][3]=pio_zahl;
   writexy_anzeige();              /* ggf. anzeigen */
 
-  if (auf_schiff) redraw_buttons(PAUSE|EDITOR|PEILUNG);   /* Wird hier was geÑndert, dann */
+  if (auf_schiff) redraw_buttons(PAUSE|EDITOR|PEILUNG);   /* Wird hier was ge√§ndert, dann */
   else redraw_buttons(PAUSE|EDITOR|SEARCH|DIG|PEILUNG);   /* auch in sea_move()! */
                                     /* und in re_initialize() !!! */
   copy_buttons();                   /* und auf 2. Screen */
@@ -544,16 +544,16 @@ long pio_zahl;
   FLAG found1,found2,found3,found4;	/* Wurde was gefunden? */
   int radius;           				/* Radius in dem gefunden wird */
 
-  radius=pio_zahl/100L;         /* 100 Pios fÅr ein RasterkÑstchen */
+  radius=pio_zahl/100L;         /* 100 Pios f√ºr ein Rasterk√§stchen */
   if (radius>5) radius=5;       /* max. 5 Einheiten */
   found1=such_roh2(radius,EISEN,GOLD);       /* Eisen .. Gold suchen */
 
-  radius=pio_zahl/300L;         /* 200 Pios fÅr ein RasterkÑstchen */
+  radius=pio_zahl/300L;         /* 200 Pios f√ºr ein Rasterk√§stchen */
   if (radius>2) radius=2;
   found2=such_roh2(radius,SCHATZ,SCHATZ);      /* Schatz suchen */
   found3=such_roh2(radius,GIMMIG,GIMMIG);      /* Gimmicks suchen */
 
-	radius=pio_zahl/150L;							/* 300 Pios fÅr ein RasterkÑstchen */
+	radius=pio_zahl/150L;							/* 300 Pios f√ºr ein Rasterk√§stchen */
 	if (radius>3) radius=3;
 	found4=such_roh2(radius,BUNKER_1,BUNKER_2);				/* Bunker suchen */
 	
@@ -588,7 +588,7 @@ int start_wert,end_wert;    /* Sachen, die gefunden werden */
       if (rohstoff>=start_wert && rohstoff<=end_wert)
         if (!is_mine(map,x,y)) {
 					if (start_wert==EISEN && end_wert==GOLD) {			/* Suche nach Eisen..Gold */
-						if (rohstoff==GIMMIG) continue;					/* Dann Gimmick Åberspringen */
+						if (rohstoff==GIMMIG) continue;					/* Dann Gimmick √ºberspringen */
 						}
 	        if (rohstoff==SCHATZ || rohstoff==GIMMIG) {
 						found=TRUE;
@@ -624,7 +624,7 @@ void mach_mine()
       else {
         if (minenzahl>MINE_MAX) {
           alert(romstr257);
-          money+=30000L;                /* Geld zurÅckgeben */
+          money+=30000L;                /* Geld zur√ºckgeben */
           }
         else neue_mine();
         }
@@ -668,7 +668,7 @@ void neue_mine()
   minenzahl++;
   besuch_mine(minenzahl-1);          /* Jetzt Besuch in der Mine */
 
-  such_platz();                 /* Sucht einen neuen Platz fÅr den Spieler */
+  such_platz();                 /* Sucht einen neuen Platz f√ºr den Spieler */
 }
 
 void besuch_mine(nr)
@@ -745,7 +745,7 @@ int nr;
             newmoney=TRUE;                    /* Balken neu zeichnen */
             }
           }
-        if (my>88 && my<105) {          /* Neuer Fîrderturm */
+        if (my>88 && my<105) {          /* Neuer F√∂rderturm */
           Krec(29,89,156,105);
           if (mine[nr].turm_zahl<3)
             if (money>5000L)
@@ -775,7 +775,7 @@ int nr;
             else money_alert();
           else alert(romstr265);
           }
-        if (my>123 && my<142) {         		/* Neuer ôltank */
+        if (my>123 && my<142) {         		/* Neuer √ñltank */
           Krec(29,125,156,141);
           if (mine[nr].silo_zahl<3)
             if (money>4000L) 
@@ -790,22 +790,22 @@ int nr;
             else money_alert();
           else alert(romstr267);
           }
-        if (my>142) {                     /* Mine schlieûen */
+        if (my>142) {                     /* Mine schlie√üen */
           Krec(29,143,156,159);
           if (money>5000L) {
             if (yes_no(romstr268)) {
               money-=5000L;
               if (mine[nr].rohstoff<=GOLD) {          				/* Hier war Rohstoff */
                 ground_change(EBENE,map,mine[nr].x,mine[nr].y);     	/* Rohstoff weg */
-	              put_untergrund(EBENE,mine[nr].x,mine[nr].y);    		/* Mine lîschen */
+	              put_untergrund(EBENE,mine[nr].x,mine[nr].y);    		/* Mine l√∂schen */
 								}
 							else {
                 ground_change(mine[nr].rohstoff,map,mine[nr].x,mine[nr].y);     	/* Rohstoff weg */
-	              put_untergrund(mine[nr].rohstoff,mine[nr].x,mine[nr].y);    		/* Mine lîschen */
+	              put_untergrund(mine[nr].rohstoff,mine[nr].x,mine[nr].y);    		/* Mine l√∂schen */
                 }
 							minenzahl--;
               for(i=nr;i<minenzahl;i++) {
-                mine[i]=mine[i+1];           /* Anderen Minen aufrÅcken */
+                mine[i]=mine[i+1];           /* Anderen Minen aufr√ºcken */
                 }
               button=EXIT_BTN;            /* gleichzeitig raus */
               }
@@ -817,7 +817,7 @@ int nr;
 
 	while (digi_works) ; 					/* Warten bis Digisound fertig ist */
 	
-	wait_once(1);									/* Stîrungen abfangen */
+	wait_once(1);									/* St√∂rungen abfangen */
 	digi_aus();										/* Digisound abschalten */
 	
   redraw_buttons(old_buttons);          /* Alte Leiste wiederherstellen */
@@ -831,12 +831,12 @@ int nr;                 /* Nummer der Mine */
   long tage,prod;                    /* Wieviel Tage nicht mehr abgeholt */
   char datum_text[30];
   char *menge,*menge2;                  /* Pointer auf string */
-	int oel_pos;									/* Position des ôlstrahls */
+	int oel_pos;									/* Position des √ñlstrahls */
 
   tage=heute-mine[nr].zuletzt;                          /* Anzahl an Tagen */
   prod=mine[nr].turm_zahl*tage*(zufall(4)+1);
 
-  if (mine[nr].im_lager+prod>mine[nr].silo_zahl*150L) {   	/* Paût das ins Lager? */
+  if (mine[nr].im_lager+prod>mine[nr].silo_zahl*150L) {   	/* Pa√üt das ins Lager? */
     prod=mine[nr].silo_zahl*150L-mine[nr].im_lager;        	/* Soviel kam dazu */
     }
   /* in Prod steht das, was maximal gelagert werden konnte, jetzt bestimmen,
@@ -895,7 +895,7 @@ int nr;                 /* Nummer der Mine */
 
   Sm();
 
-	return(oel_pos);									/* Hier kommt's ôl raus */
+	return(oel_pos);									/* Hier kommt's √ñl raus */
 }
 
 int draw_mine(screen,nr)
@@ -936,13 +936,13 @@ int nr;														/* Nummer der Mine */
 
 	Sm();
 
-	return(xmax);												/* Hier kommt's ôl raus */
+	return(xmax);												/* Hier kommt's √ñl raus */
 }
 
 void animier_mine(oel_pos)
 int oel_pos;
 {
-	/* Animiert den ôlstrahl der Mine */
+	/* Animiert den √ñlstrahl der Mine */
 	static int oel_nr=3;
 
 	if (oel_pos>=0) {
@@ -956,7 +956,7 @@ int oel_pos;
 
 void check_cheat()
 {
-  /* Zeigt die Helpseite an und gibt dann TRUE zurÅck */
+  /* Zeigt die Helpseite an und gibt dann TRUE zur√ºck */
 	long taste;
 	
   if (cheat_on)                /* Nur wenn Cheat-Check an ist */
@@ -968,9 +968,9 @@ void check_cheat()
 }
 
 void cheat_auswert(bunker)
-FLAG bunker;												/* Wurde im Bunker HELP gedrÅckt? */
+FLAG bunker;												/* Wurde im Bunker HELP gedr√ºckt? */
 {
-  /* Zeigt die Helpseite an und wertet TastendrÅcke aus */
+  /* Zeigt die Helpseite an und wertet Tastendr√ºcke aus */
   long oldleiste;
 	long taste;
 	void *oldlogbase;
@@ -1136,8 +1136,8 @@ FLAG bunker;												/* Wurde im Bunker HELP gedrÅckt? */
     } while((int)taste!=13 && button!=EXIT_BTN);
 
   redraw_buttons(oldleiste);
-	set_raster(0,63,NULL);							/* Formularraster lîschen */
-	set_raster(0,80,NULL);							/* T.Bubeck Raster lîschen */
+	set_raster(0,63,NULL);							/* Formularraster l√∂schen */
+	set_raster(0,80,NULL);							/* T.Bubeck Raster l√∂schen */
 	show_raster();
 	button=NOTHING;
 }
@@ -1154,14 +1154,14 @@ void simulation()
 {
   /* Es werden hier die Bewegungen der gegnerischen Armeen erzeugt */
 
-  vulkane();                    /* LÑût Vulkane rauchen */
+  vulkane();                    /* L√§√üt Vulkane rauchen */
   move_armies();                /* Bewegt die gegnerischen Armeensprites */
   switch_sprites();             /* Sprites an- oder ausschalten */
 }
 
 void vulkane()
 {
-  /* Sorgt dafÅr, daû ab und zu Vulkane rauchen */
+  /* Sorgt daf√ºr, da√ü ab und zu Vulkane rauchen */
   if (vulkan_aktiv) {           /* Ist ein Vulkan schon aktiv? */
     ani_vulkan();               /* Ja, Dann animieren */
     }
@@ -1180,10 +1180,10 @@ void ani_vulkan()
   if (--vulkan_counter!=0) return;
   vulkan_counter=5;
 
-  sn[vulkan_n]++;          /* NÑchstes Bild */
+  sn[vulkan_n]++;          /* N√§chstes Bild */
   if (sn[vulkan_n]==63) {          /* Ende der Animation? */
     sn[vulkan_n]=59;
-    vulkan_stufe++;                     /* NÑchste Stufe */
+    vulkan_stufe++;                     /* N√§chste Stufe */
     switch (vulkan_stufe) {
       case 1:
         sx[vulkan_n]=vulkanx-2;
@@ -1232,7 +1232,7 @@ void such_vulkan()
             break;
     }
 
-  anzahl=zufall(anzahl);                    /* Einen Vulkan auswÑhlen */
+  anzahl=zufall(anzahl);                    /* Einen Vulkan ausw√§hlen */
 
   for(x=startx;x<endx;x++)
     for(y=starty;y<endy;y++)                       /* enspr. Vulkan suchen */
@@ -1340,7 +1340,7 @@ void editor()
   leiste_oben(romstr312);
   loc = CITY;
   leiste_y=64;
-  msminy=63;                     /* hîher darf Maus nicht */
+  msminy=63;                     /* h√∂her darf Maus nicht */
   c_pic(STORE_OBJ);
   leiste_oben(romstr313);
 
@@ -1368,16 +1368,16 @@ void editor()
     do {
 			taste=get_key();
 			if (taste!=-1) {
-				tast_repeat=15;											/* Startverzîgerung */
+				tast_repeat=15;											/* Startverz√∂gerung */
 				}
 			else 
-				if (keypress!=0) 							/* Taste noch gedrÅckt? */
+				if (keypress!=0) 							/* Taste noch gedr√ºckt? */
 					if (--tast_repeat<=0) {
 						tast_repeat=3;
 						taste=keypress;
 						}
 					else wait_once(1);
-				else {												/* Taste nicht gedrÅckt */
+				else {												/* Taste nicht gedr√ºckt */
 					button=NOTHING;
   		    hol_maus();
 	    	  if (my>167 && mk!=0) button_leiste();
@@ -1462,7 +1462,7 @@ void editor()
 long minimum(w1,w2)
 long w1,w2;
 {
-  /* gibt den kleineren Wert zurÅck */
+  /* gibt den kleineren Wert zur√ºck */
   if (w1<w2) return(w1);
   else return(w2);
 }
@@ -1500,7 +1500,7 @@ long max,real;
 }
 
 void game_over(txt1,txt2)
-char txt1[],txt2[];                 /* 2 Zeilen BegrÅndung fÅr Game over */
+char txt1[],txt2[];                 /* 2 Zeilen Begr√ºndung f√ºr Game over */
 {
   status(txt1,txt2);                /* Status anzeigen */
 
@@ -1509,8 +1509,8 @@ char txt1[],txt2[];                 /* 2 Zeilen BegrÅndung fÅr Game over */
 
 void make_adresses()
 {
-  /* Dies ist wohl die verrÅckteste Funktion von Medusa:
-     Sie schreibt die Adresse und Grîûe der Variablen ab poi, die gesavt oder
+  /* Dies ist wohl die verr√ºckteste Funktion von Medusa:
+     Sie schreibt die Adresse und Gr√∂√üe der Variablen ab poi, die gesavt oder
      geladen werden beim Spielstand */
 
   register long *poi;
@@ -1542,4 +1542,3 @@ void autsch()
 }
 
 
-

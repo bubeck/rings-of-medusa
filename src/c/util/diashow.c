@@ -25,7 +25,7 @@
 #include "FILENAME.C"
 #include "strings.c"
 #include "const.c"              /* Alle Konstanten holen */
-#include "grund.c"              /* Konstantendefintion der UntergrÅnde */
+#include "grund.c"              /* Konstantendefintion der Untergr√ºnde */
 #include "typedef.c"            /* Typendefinitionen */
 #include "global.c"             /* Variablendeklarationen */
 
@@ -72,7 +72,7 @@ main()
 
   init_atari();
   alloc_mem();
-  rez = Getrez();               /* momentane Auflîsungh holen */
+  rez = Getrez();               /* momentane Aufl√∂sungh holen */
   if (rez>0) lo_res();          /* Wenn nicht Low-Res, dann einschalten */
   hbl_init();
 
@@ -92,7 +92,7 @@ init_atari()
      Hardware */
 
   init_hardware();             /* Intialisiert die Hardware */
-  init_gem();                  /* ôffnet GEM Arbeitsumgebung */
+  init_gem();                  /* √ñffnet GEM Arbeitsumgebung */
 
   blitter=check_blitter();     /* Schaut, ob Blitter vorhanden */
   if (blitter) {
@@ -110,7 +110,7 @@ init_hardware()
 
 init_gem()
 {
-  /* ôffnet Gem-Workstation und stellt Default ein */
+  /* √ñffnet Gem-Workstation und stellt Default ein */
 
   open_work();
 
@@ -118,16 +118,16 @@ init_gem()
   graf_mouse(M_OFF,0);              /* Betriebsystemmaus weg */
   la_init();                        /* LINE_A initialisieren */
   Kbshift((int)Kbshift(-1) | 16);
-  vsl_width(handle,1);              /* DÅnne Linie */
+  vsl_width(handle,1);              /* D√ºnne Linie */
 }
 
 alloc_mem()
 {
-  /* holt den benîtigten Speicher */
+  /* holt den ben√∂tigten Speicher */
   long i;
   char *poi;
 
-  pack_buf=(char *)Malloc(32000L);           /* Ladebereich fÅr gepackte Bilder */
+  pack_buf=(char *)Malloc(32000L);           /* Ladebereich f√ºr gepackte Bilder */
   hlpbuf=(char *)Malloc(32000L);           /* Hilfspeicher */
   scr1 = oldbase=Logbase();                          /* 1. Bildschirm */
   scr2_mem = Malloc(32000L+256L);            /* 2. Bildschirm */
@@ -150,7 +150,7 @@ char filename[];
     Fclose(fh);
     fade_out();
 
-    copy_zeilen(scr2,scr1,200);         /* Bild Åbertragen */
+    copy_zeilen(scr2,scr1,200);         /* Bild √ºbertragen */
     for(i=9;i>=0;i--) offlist[i]=save_1[i];
 
     fade_in();
@@ -188,7 +188,7 @@ programmende()
                 move.l  #0x0a0a0000,0xff8800
                 }
   Super(ssp);
-  Pterm0();                 /* und zurÅck zum Desktop */
+  Pterm0();                 /* und zur√ºck zum Desktop */
 }
 
 exit_atari()

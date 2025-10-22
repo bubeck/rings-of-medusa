@@ -20,23 +20,23 @@ int muster[32][2] = {
   2,4,              /* EISEN */
   2,5,              /* DIAMANTEN */
   2,6,              /* NITHRIL */
-  2,3,              /* ™L */
+  2,3,              /* Ã–L */
   2,7,              /* GAS */
   12,2,             /* GIMMIG */
   2,2,              /* GOLD */
   8,0,              /* EBENE */
   8,4,              /* SUMPF */
   12,4,             /* RUINE */
-  4,0,              /* WšSTE TROCKEN */
-  4,2,              /* WšSTE */
-  4,1,              /* HALBWšSTE */
-  4,4,              /* BRšCKE */
+  4,0,              /* WÃœSTE TROCKEN */
+  4,2,              /* WÃœSTE */
+  4,1,              /* HALBWÃœSTE */
+  4,4,              /* BRÃœCKE */
   6,0,              /* WALD */
   6,2,              /* DICHTER WALD */
-  1,4,              /* HšGEL */
+  1,4,              /* HÃœGEL */
   9,2,              /* WADI */
   12,1,             /* SLUMS */
-  0,1,              /* EINGŽNGE */
+  0,1,              /* EINGÃ„NGE */
   0,6,
   0,5,
   0,3,
@@ -45,7 +45,7 @@ int muster[32][2] = {
   9,7,              /* SCHILD */
   1,0,              /* HINDERNIS */
   1,2,              /* VULKAN */
-  10,1,             /* HAFENEINGŽNGE */
+  10,1,             /* HAFENEINGÃ„NGE */
   10,6,
   9,0 };              /* WASSER */
 
@@ -132,7 +132,7 @@ main()
         }
 
       for(i=1;i<9;i++)
-        if (pel[i]!=15)         /* šberprfen, ob ganzer Kasten richtig */
+        if (pel[i]!=15)         /* ÃœberprÃ¼fen, ob ganzer Kasten richtig */
           if (pel[i]!=pel[0]) {
             c_home();
             sprintf(str,"Eck- und Kastenfarbe verschieden!\n\r X:%d  Y:%d\n\r",x+1,y+1);
@@ -159,7 +159,7 @@ loop:               moveq   #0,d0
                     move.b  (a0)+,d0        ;Byte holen
                     move.w  d6,d5           ;kopieren der Bitposition
                     sub.w   #4,d5           ;wie oft schieben
-                    bmi     gebrochen       ;geht ber Bytegrenze
+                    bmi     gebrochen       ;geht Ã¼ber Bytegrenze
                     rol.w   d5,d0           ;schieben
                     or.b    d0,(a1)
                     tst.w   d5              ;null geschoben?
@@ -287,11 +287,11 @@ char adr[];
 }
 
 pic_move(h,quelle,zeile,z2,anzahl)
-int h;                  /* handle, wird aber nicht ben”tigt */
+int h;                  /* handle, wird aber nicht benÃ¶tigt */
 long quelle;            /* Zeiger auf Bufferanfang */
 int zeile;              /* Zeile des Ursprungsbildes, ab der geschaufelt werden soll */
 long z2;                /* Zeile, ab der Bild auf Screen erscheint */
-int anzahl;             /* Anzahl der Zeilen, die bertragen werden sollen */
+int anzahl;             /* Anzahl der Zeilen, die Ã¼bertragen werden sollen */
 {
   Hm();
   copy_zeilen(quelle+zeile*160L,Logbase()+z2*160L,anzahl);

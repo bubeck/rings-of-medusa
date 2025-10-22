@@ -7,8 +7,8 @@ typedef signed char FLAG;
 
 typedef struct {            /* Beschreibt die Steuerung der Gegner */
     int heimat;             /* Heimatstadt */
-    int angriff_zahl;       /* Zahl der Angriffe, die Spieler schon durchgefÅhrt hat */
-    unsigned int wait;      /* ZÑhler, wenn Armee an einer Kreuzung wartet */
+    int angriff_zahl;       /* Zahl der Angriffe, die Spieler schon durchgef√ºhrt hat */
+    unsigned int wait;      /* Z√§hler, wenn Armee an einer Kreuzung wartet */
     int weltpos;            /* Position der Armee in der Weltkarte */
     int x,y;                /* X,Y Position der Armee */
     int sprite;             /* Nr des Sprites (0..SPR_MAX) */
@@ -28,12 +28,12 @@ typedef struct {
     } SCHIFF;
 
 typedef struct {
-  unsigned char rohstoff;               /* Welcher Rohstoff wird gefîrdert */
-  long datum;                /* Wann hat die Mine geîffnet */
+  unsigned char rohstoff;               /* Welcher Rohstoff wird gef√∂rdert */
+  long datum;                /* Wann hat die Mine ge√∂ffnet */
   long ges_menge;           /* Wieviel bisher produziert */
-  unsigned int turm_zahl;            /* Anzahl an FîrdertÅrmen */
+  unsigned int turm_zahl;            /* Anzahl an F√∂rdert√ºrmen */
   unsigned int filter_zahl;          /* -"- an Filtern */
-	unsigned int silo_zahl;			/* Anzahl an ôlturmen */
+	unsigned int silo_zahl;			/* Anzahl an √ñlturmen */
   long im_lager;            /* Wieviel ist noch im Lager */
   long zuletzt;             /* Wann war Spieler zuletzt da? */
   long vorkommen;              /* Wieviel ist noch in der Mine drin */
@@ -53,17 +53,17 @@ typedef struct {
 
 typedef struct {
   int x,y;                  /* Koordinaten des Mittelpunktes */
-  int kante;                /* KantenlÑnge */
+  int kante;                /* Kantenl√§nge */
   } QUADRAT;
 
 typedef struct {
-  FLAG on;                  /* GerÑt eingeschaltet? */
-  int x,y;                  /* Standort des PeilgerÑtes */
+  FLAG on;                  /* Ger√§t eingeschaltet? */
+  int x,y;                  /* Standort des Peilger√§tes */
   KOORD ziel;               /* aktuelle Zielkoordinate des Randes */
   int dx,dy;                /* Delta x/y */
-  KOORD dest_1,dest_2;      /* Lîsch-Zielpunkte der Screens (x negativ->ungÅltig) */
+  KOORD dest_1,dest_2;      /* L√∂sch-Zielpunkte der Screens (x negativ->ung√ºltig) */
   KOORD schatz;             /* Koordinaten des Randpunktes, wo Strahl blitzt */
-  int umdrehungen;          /* Anzahl der Umdrehungen, die GerÑt schon gemacht */
+  int umdrehungen;          /* Anzahl der Umdrehungen, die Ger√§t schon gemacht */
   } PEILGERAET;
 
 enum objekt_modus { MOVE=0,ODER,PALETTE };
@@ -74,7 +74,7 @@ typedef struct {
   unsigned char y;					/* Y-Position auf Screen */
   int x2;										/* Rechter Rand des Objekts auf Screen */
   unsigned char tiefe;			/* Tiefe des Objekts auf dem Bildschirm 0=ganz vorne */
-  unsigned char ob_nr;			/* Nummer des zugehîrigen Objekts */
+  unsigned char ob_nr;			/* Nummer des zugeh√∂rigen Objekts */
   unsigned char ob_x;				/* X-Koordinate des linken Randes innerhalb des Objektes */
 	FLAG knuepfen;						/* Ist Objekt transparent, d.h. keine Wand ... */
 	unsigned char modus;			/* Bestimmt den Modus bei obj_draw */
@@ -108,17 +108,17 @@ typedef struct {							/* Gegnerstruktur */
 	unsigned int richtung:3;		/* 0=N, 1=NO, 2=O, ... */
 	signed int fight:1;					/* Flag, in den Kampf verwickelt */
 	unsigned int speed:8;				/* Geschwindigkeit in VBL's */
-	unsigned int next_move:8;		/* Wann soll als nÑchstes bewegt werden? */
+	unsigned int next_move:8;		/* Wann soll als n√§chstes bewegt werden? */
 	unsigned int staerke:8;			/* Staerke des Gegners 0=Tot */
 	} ENEMY;
 
 typedef struct {
 	void *ob_mem;								/* Nimmt Zeiger auf NEOchrome Objekte auf (NULL=unbenutzt) */
 	int ob_nr;									/* Objektnummer des Schusses */
-	int dx,dy;			  					/* Schuûrichtung */
+	int dx,dy;			  					/* Schu√ürichtung */
 	int x,y;										/* Startposition des Schusses */
 	int entfernung;							/* Entfernung des Schusses vom Startpunkt in 10-tel Feldern */
-	int gegner;									/* Nummer des zugehîrigen Feindes */
+	int gegner;									/* Nummer des zugeh√∂rigen Feindes */
 	long last_vbl;							/* VBL der letzten Animationsstufe */
 	int speed;									/* Geschwindigkeit in VBL's pro Schritt */
 	int x1,y1,x2,y2;						/* Position auf Screen x1=-1 -> kein Schuss da */
@@ -136,7 +136,7 @@ typedef struct {							/* Struktur von BUNKER.DAT */
 	unsigned int frei;					/* Wieviele Felder sind LEER */
 	} STATISTIK;
 	
-typedef struct {							/* Welche VerÑnderung ist noch nicht auf 2. Screen */
+typedef struct {							/* Welche Ver√§nderung ist noch nicht auf 2. Screen */
 	unsigned char x,y;
 	unsigned char wert;
 	} AUTOMAP2;
@@ -160,8 +160,8 @@ typedef struct {							/* Zur Lagebestimmung der Objekte in den Ecken des Bunker
 	unsigned char tiefe;				/* und welche Tiefe? */
 	} LAGE;
 
-typedef struct {							/* Dient zur Bestimmung, welches BodenstÅck im Bunker, welche */
-	unsigned char feld;					/* item[].pos, item[].x, item[].y reprÑsentiert */
+typedef struct {							/* Dient zur Bestimmung, welches Bodenst√ºck im Bunker, welche */
+	unsigned char feld;					/* item[].pos, item[].x, item[].y repr√§sentiert */
 	signed char distance;				/* Entfernung zur Spielerposition */
 	} BUNKERLAGE;
 

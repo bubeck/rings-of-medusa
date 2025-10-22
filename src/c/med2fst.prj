@@ -1,5 +1,5 @@
 
-; Projektdatei fÅr Rings of Medusa II
+; Projektdatei f√ºr Rings of Medusa II
 ; Atari ST
 ; (C) 1990 by 	Till Bubeck
 ;		    	Ziegeleistr. 28
@@ -9,20 +9,20 @@
 
 # Allgemeiner Aufbau:
 #
-# - Definitionszeilen fÅr Regeln, Optionen und Voreinstellungen
+# - Definitionszeilen f√ºr Regeln, Optionen und Voreinstellungen
 # - Name des Zielprogramms, das erzeugt werden soll
 # - '=' Trennzeichen zur Modulliste
-# - Liste, der fÅr die Erzeugung des Programms benîtigten Module
+# - Liste, der f√ºr die Erzeugung des Programms ben√∂tigten Module
 # - Alle Kommentare beginnen mit '#' oder ';'
 
-# Bei Definition der Regeln kînnen folgende spezielle Namen verwendet werden
+# Bei Definition der Regeln k√∂nnen folgende spezielle Namen verwendet werden
 #
-# - $FILE		aktuell zu Åbersetzende Datei
-# - $FLAGS	aktuelle Standardoptionen fÅr den Vorgang
-# - $LINKLIST	alle Module, die fÅrs Linken benîtigt werden
+# - $FILE		aktuell zu √ºbersetzende Datei
+# - $FLAGS	aktuelle Standardoptionen f√ºr den Vorgang
+# - $LINKLIST	alle Module, die f√ºrs Linken ben√∂tigt werden
 # - $TARGET	Namen des Zielprogramms
 
-# Die Aufrufpfade mÅssen gegebenenfalls angepaût werden, damit
+# Die Aufrufpfade m√ºssen gegebenenfalls angepa√üt werden, damit
 # Compiler, Linker,... immer gefunden werden.
 
 # Aufruf des Compilers
@@ -60,9 +60,9 @@ O:\CITY2.C
 O:\LAND.C
 O:\IO.C
 
-# Benîtigte Bibliotheken:
+# Ben√∂tigte Bibliotheken:
 
-O:\LIB\TCFLTLIB.LIB				;Flieûkommaroutinen
+O:\LIB\TCFLTLIB.LIB				;Flie√ükommaroutinen
 O:\LIB\TCSTDLIB.LIB				;Standard C Bibliothek 
 O:\LIB\TCTOSLIB.LIB				;TOS Bibliothek
 

@@ -1,5 +1,5 @@
-;SÑmtliche Files fÅr Rings of Medusa II
-;Ω 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, Tel: 07151/66437
+;S√§mtliche Files f√ºr Rings of Medusa II
+;‚ïú 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, Tel: 07151/66437
 ;
 ;Jetzt kommt der Pfad, von wo die Files gelesen werden:
 D:\MEDUSA\MEDUSA_2.COL\GRAFIX.PKD\
@@ -13,17 +13,17 @@ ROM_GRFX
 ;Jetzt kommt der Pfad des Filename.c:
 E:\MEDUSA\MEDUSA_2.COL\C\FILENAME.C
 ;
-;Jetzt kommt die Grîûe des ersten Archives, also das, das auf die Boot-
+;Jetzt kommt die Gr√∂√üe des ersten Archives, also das, das auf die Boot-
 ;Diskette kommt:
 200000
-;Jetzt die Grîûe eines normalen Archivs:
+;Jetzt die Gr√∂√üe eines normalen Archivs:
 402432
 ;Jetzt kommt die Nummer des Files, das als erstes in die Ramdisk kommen
-;soll, also alle vorherigen werden Åbersprungen und nicht in die
+;soll, also alle vorherigen werden √ºbersprungen und nicht in die
 ;Ramdisk eingelesen
 19
 ;Jetzt folgen die Files, die in die Bibliotheken aufgenommen werden
-;bei 1 beginnt die ZÑhlung. Fehlt eine Extension wird *.PKD genommen.
+;bei 1 beginnt die Z√§hlung. Fehlt eine Extension wird *.PKD genommen.
 ;Steht hinter dem Filenamen ein 'P' so wird das File auf Wunsch mit
 ;dem ICE!-Packer gepackt. Steht hinter dem Filenamen ein 'C', so wird der
 ;Crown-Packer verwendet.

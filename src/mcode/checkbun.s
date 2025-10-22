@@ -1,9 +1,9 @@
 ******************************************************************************
 ***                                                                        ***
-***              Bunkerchecker V1.0 fÅr Rings of Medusa II                 ***
+***              Bunkerchecker V1.0 f√ºr Rings of Medusa II                 ***
 ***                                                                        ***
 ***                                                                        ***
-***   Ω1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, 07151/66437   ***
+***   ‚ïú1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, 07151/66437   ***
 ***                                                                        ***
 ******************************************************************************
 
@@ -26,18 +26,18 @@ KEY_ENDE        EQU 2000
                 OUTPUT 'CHECKBUN.TTP'
 
                 movea.l 4(SP),A6        ;Basepageadresse holen
-                movea.w #$0100+$0400,A5 ;Grîûe der Basepage + Stackgrîûe (1k)
-                adda.l  12(A6),A5       ;+ Grîûe des TEXT-Segments
-                adda.l  20(A6),A5       ;+ Grîûe des DATA-Segments
-                adda.l  28(A6),A5       ;+ Grîûe des BSS-Segments
-                move.l  A5,D1           ;= GesamtlÑnge des Programms
-                and.w   #$FFFE,D1       ;LÑnge nun gerade
+                movea.w #$0100+$0400,A5 ;Gr√∂√üe der Basepage + Stackgr√∂√üe (1k)
+                adda.l  12(A6),A5       ;+ Gr√∂√üe des TEXT-Segments
+                adda.l  20(A6),A5       ;+ Gr√∂√üe des DATA-Segments
+                adda.l  28(A6),A5       ;+ Gr√∂√üe des BSS-Segments
+                move.l  A5,D1           ;= Gesamtl√§nge des Programms
+                and.w   #$FFFE,D1       ;L√§nge nun gerade
                 add.l   A6,D1           ;+ Programmstart (Basepageadresse)
                 movea.l D1,SP           ;Stack endet dort
-                move.l  A5,-(SP)        ;ProgrammlÑnge
+                move.l  A5,-(SP)        ;Programml√§nge
                 move.l  A6,-(SP)        ;Adresse der Basepage
                 move.l  #$4A0000,-(SP)  ;Funktionsnummer + Dummyword (0)
-                trap    #1              ;Mshrink(0,Basepageadr,PrglÑnge)
+                trap    #1              ;Mshrink(0,Basepageadr,Prgl√§nge)
                 lea     12(SP),SP       ;Nur noch den Stack korrigieren
 
                 IF disk_version=0
@@ -105,7 +105,7 @@ keine_null:     swap    D0
                 lea     12(SP),SP
 
                 move.l  A6,-4(A4)       ;Adresse merken
-                move.l  D0,-4(A5)       ;und LÑnge merken
+                move.l  D0,-4(A5)       ;und L√§nge merken
                 adda.l  D0,A6
 
                 move.w  #$3E,-(SP)
@@ -116,9 +116,9 @@ nxt_bunker:     addq.w  #1,D7
                 cmp.w   #bunker_zahl,D7
                 ble.s   lesen_loop
 
-                lea     tÅren(PC),A0
+                lea     t√ºren(PC),A0
                 move.w  #(2*max_tuer)-1,D7
-clr:            move.b  #-1,(A0)+       ;Alle TÅren und SchlÅssel unbenutzt
+clr:            move.b  #-1,(A0)+       ;Alle T√ºren und Schl√ºssel unbenutzt
                 dbra    D7,clr
 
                 clr.w   -(SP)
@@ -131,45 +131,45 @@ clr:            move.b  #-1,(A0)+       ;Alle TÅren und SchlÅssel unbenutzt
                 lea     titel(PC),A4
                 bsr     write_string
 
-                lea     tÅren(PC),A1
-                lea     schlÅssel(PC),A2
+                lea     t√ºren(PC),A1
+                lea     schl√ºssel(PC),A2
                 lea     bunker_start(PC),A5
                 lea     bunker_len(PC),A6
                 lea     stat,A3         ;Hier Statistik aufbauen
                 moveq   #1,D7           ;Bunker #0
 check_bunker:   movea.l (A5)+,A0        ;Startadresse
-                move.l  (A6)+,D6        ;LÑnge
+                move.l  (A6)+,D6        ;L√§nge
                 beq.s   nxt_bunker2
                 lsr.l   #1,D6           ;Anzahl Worte berechnen
-                subq.l  #2,D6           ;2 Worte Åbersprungen
-                addq.l  #4,A0           ;Grîûe Åberspringen
-                move.w  D6,(A3)         ;GesamtlÑnge eintragen
+                subq.l  #2,D6           ;2 Worte √ºbersprungen
+                addq.l  #4,A0           ;Gr√∂√üe √ºberspringen
+                move.w  D6,(A3)         ;Gesamtl√§nge eintragen
 
 check_loop:     move.w  (A0)+,D0        ;Wert holen
                 bne.s   kein_leerfeld
                 addq.w  #1,2(A3)        ;ein Feld mehr
-kein_leerfeld:  cmp.w   #DOOR_ZU_START,D0 ;TÅr Nummer 1 nicht prÅfen
+kein_leerfeld:  cmp.w   #DOOR_ZU_START,D0 ;T√ºr Nummer 1 nicht pr√ºfen
                 beq.s   nxt_wert
-                bcs.s   keine_tÅr1      ;blt
+                bcs.s   keine_t√ºr1      ;blt
                 cmp.w   #DOOR_ZU_ENDE,D0
-                bhi.s   keine_tÅr1      ;bgt
+                bhi.s   keine_t√ºr1      ;bgt
 
-                sub.w   #DOOR_ZU_START,D0 ;TÅrnummer berechnen
-check_tÅr:      tst.b   1(A1,D0.w)      ;TÅr schon vorhanden?
-                bpl     tÅr_doppelt
+                sub.w   #DOOR_ZU_START,D0 ;T√ºrnummer berechnen
+check_t√ºr:      tst.b   1(A1,D0.w)      ;T√ºr schon vorhanden?
+                bpl     t√ºr_doppelt
                 move.b  D7,1(A1,D0.w)   ;Bunkernummer eintragen
                 bra.s   nxt_wert
 
-keine_tÅr1:     cmp.w   #DOOR_AUF_START,D0
+keine_t√ºr1:     cmp.w   #DOOR_AUF_START,D0
                 beq.s   nxt_wert
-                bcs.s   keine_tÅr2
+                bcs.s   keine_t√ºr2
                 cmp.w   #DOOR_AUF_ENDE,D0
-                bhi.s   keine_tÅr2
+                bhi.s   keine_t√ºr2
 
                 sub.w   #DOOR_AUF_START,D0
-                bra.s   check_tÅr
+                bra.s   check_t√ºr
 
-keine_tÅr2:     cmp.w   #KEY_START,D0   ;SchlÅssel 1 nicht berÅcksichtigen
+keine_t√ºr2:     cmp.w   #KEY_START,D0   ;Schl√ºssel 1 nicht ber√ºcksichtigen
                 beq.s   nxt_wert
                 bcs.s   keine_key
                 cmp.w   #KEY_ENDE,D0
@@ -179,7 +179,7 @@ keine_tÅr2:     cmp.w   #KEY_START,D0   ;SchlÅssel 1 nicht berÅcksichtigen
                 tst.b   1(A2,D0.w)      ;Key schon vorhanden?
                 bpl     key_doppelt
                 move.b  D7,1(A2,D0.w)   ;keynummer eintragen
-                tst.b   schlÅssel+131
+                tst.b   schl√ºssel+131
                 bra.s   nxt_wert
 
 keine_key:
@@ -188,7 +188,7 @@ nxt_wert:       subq.w  #1,D6
                 bge.s   check_loop
 
 nxt_bunker2:    addq.l  #4,A3           ;Statistik weiter
-                addq.w  #1,D7           ;nÑchster Bunker
+                addq.w  #1,D7           ;n√§chster Bunker
                 cmp.w   #bunker_zahl,D7
                 ble     check_bunker
 
@@ -201,7 +201,7 @@ save:           clr.w   -(SP)
 
                 pea     stat
                 suba.l  #stat,A3
-                move.l  A3,-(SP)        ;LÑnge
+                move.l  A3,-(SP)        ;L√§nge
                 move.w  D0,-(SP)
                 move.w  #$40,-(SP)
                 trap    #1
@@ -211,32 +211,32 @@ save:           clr.w   -(SP)
                 trap    #1
                 addq.l  #4,SP
 
-                lea     tÅren+max_tuer(PC),A3
+                lea     t√ºren+max_tuer(PC),A3
 such_ende:      tst.b   -(A3)
                 bmi.s   such_ende
 
                 moveq   #0,D7
-                lea     tÅren(PC),A1
-                lea     schlÅssel(PC),A2
-check_lost_key: tst.b   (A1)            ;TÅr vorhanden?
-                bmi.s   tÅr_fehlt
-                tst.b   (A2)            ;zugehîriger SchlÅssel da?
-                bpl.s   nxt_tÅr         ;ja->Weitermachen
+                lea     t√ºren(PC),A1
+                lea     schl√ºssel(PC),A2
+check_lost_key: tst.b   (A1)            ;T√ºr vorhanden?
+                bmi.s   t√ºr_fehlt
+                tst.b   (A2)            ;zugeh√∂riger Schl√ºssel da?
+                bpl.s   nxt_t√ºr         ;ja->Weitermachen
 
-                move.w  D7,D0           ;SchlÅsselnummer
+                move.w  D7,D0           ;Schl√ºsselnummer
                 lea     key_m1(PC),A4
                 bsr     itoa
                 lea     bun12(PC),A4
-                move.b  (A1),D0         ;SchlÅsselnummer
+                move.b  (A1),D0         ;Schl√ºsselnummer
                 bsr     itoa
 
                 lea     key_m(PC),A4
                 bsr.s   write_string
 
-nxt_tÅr:        addq.l  #1,A1
+nxt_t√ºr:        addq.l  #1,A1
                 addq.l  #1,A2
-                addq.w  #1,D7           ;nÑchste TÅr
-                cmpa.l  A3,A1           ;Ende der TÅren erreicht?
+                addq.w  #1,D7           ;n√§chste T√ºr
+                cmpa.l  A3,A1           ;Ende der T√ºren erreicht?
                 ble.s   check_lost_key
 
                 lea     eof(PC),A4
@@ -250,17 +250,17 @@ nxt_tÅr:        addq.l  #1,A1
 check_ende:     clr.w   -(SP)
                 trap    #1
 
-tÅr_fehlt:      lea     tÅr_m1(PC),A4
+t√ºr_fehlt:      lea     t√ºr_m1(PC),A4
                 move.w  D7,D0
                 bsr.s   itoa
 
-                lea     tÅr_m(PC),A4
+                lea     t√ºr_m(PC),A4
                 bsr.s   write_string
 
-                bra.s   nxt_tÅr
+                bra.s   nxt_t√ºr
 
-tÅr_doppelt:    addq.w  #1,D0
-                lea     tÅr1(PC),A4
+t√ºr_doppelt:    addq.w  #1,D0
+                lea     t√ºr1(PC),A4
                 bsr.s   itoa
                 lea     bun1(PC),A4
                 subq.w  #1,D0
@@ -270,7 +270,7 @@ tÅr_doppelt:    addq.w  #1,D0
                 move.b  D7,D0           ;Bunker 2
                 bsr.s   itoa
 
-                lea     tÅr_dop(PC),A4
+                lea     t√ºr_dop(PC),A4
                 bsr.s   write_string
 
                 bra     nxt_wert
@@ -341,29 +341,29 @@ f_nr:           DC.B 'xx.dat',0
 titel:          DC.B 13,10,13,10
                 DC.B 'Fehler in den Medusa II Bunkern: ',13,10,13,10,0
 
-tÅr_dop:        DC.B 'TÅr '
-tÅr1:           DC.B 'xxxx doppelt in Bunker '
+t√ºr_dop:        DC.B 'T√ºr '
+t√ºr1:           DC.B 'xxxx doppelt in Bunker '
 bun1:           DC.B 'xxxx und '
 bun2:           DC.B 'xxxx.',13,10,0
-key_dop:        DC.B 'SchlÅssel '
+key_dop:        DC.B 'Schl√ºssel '
 key1:           DC.B 'xxxx doppelt in Bunker '
 bun11:          DC.B 'xxxx und '
 bun21:          DC.B 'xxxx.',13,10,0
-key_m:          DC.B 'SchlÅssel fÅr TÅr '
+key_m:          DC.B 'Schl√ºssel f√ºr T√ºr '
 key_m1:         DC.B 'xxxx in Bunker '
 bun12:          DC.B 'xxxx fehlt.',13,10,0
-tÅr_m:          DC.B 'TÅr '
-tÅr_m1:         DC.B 'xxxx nicht verwendet.',13,10,0
+t√ºr_m:          DC.B 'T√ºr '
+t√ºr_m1:         DC.B 'xxxx nicht verwendet.',13,10,0
 eof:            DC.B 13,10,'- EOF -',0
 
                 BSS
 
 fhandle:        DS.W 1
 
-tÅren:          DS.B max_tuer   ;(-1=Unbenutzt, Sonst Bunkernummer)
-schlÅssel:      DS.B max_tuer   ;(-1=Unbenutzt; Sonst Bunkernummer)
+t√ºren:          DS.B max_tuer   ;(-1=Unbenutzt, Sonst Bunkernummer)
+schl√ºssel:      DS.B max_tuer   ;(-1=Unbenutzt; Sonst Bunkernummer)
 
-bunker_start:   DS.L 60         ;Platz fÅr 60 Bunker
+bunker_start:   DS.L 60         ;Platz f√ºr 60 Bunker
 bunker_len:     DS.L 60         ;-'-
 
 stat:           DS.B 60000      ;Hier Statistik aufbauen

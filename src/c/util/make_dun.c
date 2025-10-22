@@ -31,9 +31,9 @@ char path[64]="D:\\MEDUSA\\MEDUSA_2.COL\\BUNKER\\MAPS\\BUNKER*.NEO",file[64];
 char path_file[64];
 char str[100];
 int tos_pal[16];                /* Alte Palette */
-int tos_rez;                    /* Alte Auflîsung */
+int tos_rez;                    /* Alte Aufl√∂sung */
 
-int lkeys;                      /* Anzahl der lokalen SchlÅssel */
+int lkeys;                      /* Anzahl der lokalen Schl√ºssel */
 unsigned int bunker[20000];
 int bun_len;
 
@@ -42,7 +42,7 @@ int tos2vdi[16] = {             /* Wandelt Registernummer in Vdi-Farbe */
 int vdi2tos[16] = {             /* Wandelt VDI-Farbe in Registernummer */
   0,15,1,2,4,6,3,5,7,8,9,10,12,14,11,13 };
 
-TUERE door[256];                /* Alle lokalen TÅren */
+TUERE door[256];                /* Alle lokalen T√ºren */
 
 /* Prototypen: */
   
@@ -146,7 +146,7 @@ void get_bunker()
   int x,y;
   unsigned int farbe,wert;
   FLAG zeile_da;
-  int xmax,ymax;                    /* Breite/Hîhe Bunker */
+  int xmax,ymax;                    /* Breite/H√∂he Bunker */
   int i;
 
   for(i=0;i<256;i++) door[i].key=door[i].door=FALSE;    /* Nicht vorhanden */
@@ -186,14 +186,14 @@ void get_bunker()
           bunker[bun_len++]=0;
           break;
         case 1:
-					if (wert>=32768) {				/* geîffnete TÅre */
+					if (wert>=32768) {				/* ge√∂ffnete T√ºre */
 						bunker[bun_len++]=36000+(wert-32768)-1;
 						}
 					else
-	          bunker[bun_len++]=32768+wert-1;           /* geschlossene TÅre */
+	          bunker[bun_len++]=32768+wert-1;           /* geschlossene T√ºre */
           break;
 				case 4:										
-					bunker[bun_len++]=wert;				/* SchlÅssel */
+					bunker[bun_len++]=wert;				/* Schl√ºssel */
 					break;
         case 5:
           bunker[bun_len++]=65534;                /* Startposition */
@@ -202,7 +202,7 @@ void get_bunker()
 					bunker[bun_len++]=16384+wert;			/* Aufzug */
 					break;
 				case 9:
-					bunker[bun_len++]=32768;							/* Dummy-TÅre */
+					bunker[bun_len++]=32768;							/* Dummy-T√ºre */
 					break;
 				case 11:
 					bunker[bun_len++]=32768+16384+wert-1;		/* Gegner */

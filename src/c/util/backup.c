@@ -1,6 +1,6 @@
 
 /* Version 1.0 */
-/* Backup Accessory - speichert alle verÑnderten Files auf Harddisk */
+/* Backup Accessory - speichert alle ver√§nderten Files auf Harddisk */
 
 #include <stdio.h>
 #include <obdefs.h>
@@ -15,7 +15,7 @@
 #define FALSE 0
 
 int drive;                  /* aktuelles Laufwerk */
-int drv_map;                /* mîgliche Laufwerke */
+int drv_map;                /* m√∂gliche Laufwerke */
 long *save,*save2,*org;                 /* sichert den Bildschirm */
 int i,button;
 char zielpfad[80];              /* Zielpfadnamen */
@@ -26,7 +26,7 @@ int x,y,w,h;
 dta *dtadr;
 int time;                   /* Uhrzeit der Abspeicherung */
 long memory;
-long max_len;               /* maximale LÑnge des Speichers */
+long max_len;               /* maximale L√§nge des Speichers */
 
 main()
 {
@@ -60,7 +60,7 @@ main()
   max_len-=60000L;                  /* 60K freilassen */
   memory=Malloc(max_len);
 
-  drv_map=Drvmap();         /* alle mîglichen Laufwerke holen */
+  drv_map=Drvmap();         /* alle m√∂glichen Laufwerke holen */
   if ((drv_map&16==16))
     if (Fsfirst("E:\\LASER_C",16)>=0) {  /* Ordner vorhanden */
       strcpy(zielpfad,"E:\\LASER_C\\*.*");
@@ -154,7 +154,7 @@ char quellpfad[];
         hier_pfad[len]='\\';
         hier_pfad[len+1]=0;
         backup(hier_pfad);
-        Dsetpath(quellpfad);                 /* und wieder schlieûen */
+        Dsetpath(quellpfad);                 /* und wieder schlie√üen */
         }
       else test_file(quellpfad,dta_loc);
 
@@ -185,7 +185,7 @@ dta dta_act;
   set_name(quellfile);
   draw_name();
 
-  if (time<dta_act.dta_time) {      /* File muû kopiert werden */
+  if (time<dta_act.dta_time) {      /* File mu√ü kopiert werden */
     objc_offset(box,WRITE,&x,&y);
     w=box[WRITE].ob_width;
     h=box[WRITE].ob_height;

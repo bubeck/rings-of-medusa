@@ -2,9 +2,9 @@
 ;Blitteransteuerung
 
 ;Dies ist ein kommentierter Auszug aus TOS 1.4
-;Es stellt die Auswertung der Eingabewerte fÅr Line_A #7 BitBlt dar.
+;Es stellt die Auswertung der Eingabewerte f√ºr Line_A #7 BitBlt dar.
 
-;Ω 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt
+;‚ïú 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt
 
                 OPT X+
                 DEFAULT 1
@@ -18,7 +18,7 @@ Begin:          adda.w  #76,A6               ;Ans Ende des Parameterblocks gehen
                 move.w  -46(A6),D7           ;Destination Y1
                 move.w  D0,D4
                 move.w  D2,D6
-                move.w  -74(A6),D1           ;Hîhe in Pixeln
+                move.w  -74(A6),D1           ;H√∂he in Pixeln
                 subq.w  #1,D1
                 add.w   D1,D5                ;Source Y2
                 add.w   D1,D7                ;Destination Y2
@@ -64,7 +64,7 @@ blitter:        lea     $00FF8A3C,A5         ;Blitter Opcoderegister
                 lsr.w   #4,D6                ;Destination X2 -'-
                 move.w  D4,D1                ;Source X2 BB
                 sub.w   D0,D4                ;Breite in BBs-1
-                muls    -54(A6),D1           ;Offset zum nÑchsten Word dergleichen Plane (Source)
+                muls    -54(A6),D1           ;Offset zum n√§chsten Word dergleichen Plane (Source)
                 move.w  -16(A6),D5           ;Source Y2
                 muls    -52(A6),D5           ;Breite Quelle in Bytes
                 add.l   D1,D5                ;Offset im Screen
@@ -76,7 +76,7 @@ blitter:        lea     $00FF8A3C,A5         ;Blitter Opcoderegister
                 move.l  D3,D5                ;Maske
                 swap    D5                   ;vertauschen
                 and.l   D5,D3                ;und nur noch eine Maske
-L0002:          muls    -40(A6),D1           ;Offset zum nÑchsten Wort dergleichen Plane (Dest)
+L0002:          muls    -40(A6),D1           ;Offset zum n√§chsten Wort dergleichen Plane (Dest)
                 move.w  -8(A6),D5            ;Destination Y2
                 move.w  D5,-24(A6)           ;merken
                 muls    -38(A6),D5           ;Breite des Zielrasters in Bytes
@@ -91,7 +91,7 @@ L0002:          muls    -40(A6),D1           ;Offset zum nÑchsten Wort dergleich
                 tst.w   D7                   ;Skew positiv?
                 bge.s   L0004
 L0003:          move.w  D0,D1                ;Source X1
-                muls    -54(A6),D1           ;Offset zum nÑchsten Wort dergleichen Plane
+                muls    -54(A6),D1           ;Offset zum n√§chsten Wort dergleichen Plane
                 move.w  -60(A6),D5           ;Source Y1
                 muls    -52(A6),D5           ;Breite Quelle in Bytes
                 add.l   D1,D5                ;=Offset
@@ -119,8 +119,8 @@ L0004:          move.w  #-1,-18(A5)          ;mittlere Maske
 L0005:          cmp.w   D4,D6                ;Breite Quelle=Breite Ziel?
                 bne.s   L0006
                 addq.w  #4,D1                ;im Status merken
-L0006:          move.w  -54(A6),D2           ;Offset zum nÑchsten Wort dergleichen Plane (Source)
-                move.w  -40(A6),D3           ;Offset zum nÑchsten Wort dergleichen Plane (Dest)
+L0006:          move.w  -54(A6),D2           ;Offset zum n√§chsten Wort dergleichen Plane (Source)
+                move.w  -40(A6),D3           ;Offset zum n√§chsten Wort dergleichen Plane (Dest)
                 move.w  D4,D0                ;Breite Quelle in BBs
                 muls    D2,D4                ;mal Offsets
                 neg.w   D4
@@ -145,7 +145,7 @@ L0007:          move.w  D6,-12(A5)           ;Modulo Ziel setzen
 L0008:          and.w   #$000F,D7            ;Skew
                 or.w    skew_tabelle(PC,D1.w),D7 ;je nach Status den Skew umrechnen
                 move.w  D3,-14(A5)
-                move.w  D2,-28(A5)           ;Offset zum nÑchsten Wort dergleichen Plane (Source)
+                move.w  D2,-28(A5)           ;Offset zum n√§chsten Wort dergleichen Plane (Source)
                 bne.s   L000A
                 bset    #7,D7                ;im Skew das Vorzeichen setzen
                 bra.s   L000A
@@ -167,11 +167,11 @@ skew_tabelle:   or.w    D0,D0
                 or.b    D0,D0
                 or.b    D0,D0
 
-L000A:          movea.w -50(A6),A2           ;Offset zur nÑchsten Plane (Source)
-                movea.w -36(A6),A3           ;Offset zur nÑchsten Plane (Dest)
+L000A:          movea.w -50(A6),A2           ;Offset zur n√§chsten Plane (Source)
+                movea.w -36(A6),A3           ;Offset zur n√§chsten Plane (Dest)
                 move.w  -68(A6),D2           ;Hintergrundfarbe
                 move.w  -70(A6),D3           ;Vordergrundfarbe
-                move.w  -74(A6),D4           ;Hîhe in Pixeln
+                move.w  -74(A6),D4           ;H√∂he in Pixeln
                 move.w  -72(A6),D5           ;Anzahl der Farbplanes
                 move.w  #$0200,-2(A5)        ;HOP-Register (Nur Source-Daten)
                 movea.l -34(A6),A4           ;Zeiger auf 16-Bit-Masken
@@ -201,10 +201,10 @@ L000B:          move.l  A0,-24(A5)           ;Source-Adresse
                 addx.w  D6,D6
                 lsr.w   #1,D2                ;Hintergrundfarbe
                 addx.w  D6,D6
-                move.b  -66(A6,D6.w),-1(A5)  ;log.VerknÅpfung
+                move.b  -66(A6,D6.w),-1(A5)  ;log.Verkn√ºpfung
                 move.w  D7,(A5)              ;Transfer starten
                 adda.w  A2,A0
-                adda.w  A3,A1                ;und auf nÑchste Plane gehen
+                adda.w  A3,A1                ;und auf n√§chste Plane gehen
 L000C:          tas.b   (A5)                 ;Blitter fertig?
                 nop
                 bmi.s   L000C

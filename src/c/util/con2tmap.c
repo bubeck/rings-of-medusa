@@ -143,7 +143,7 @@ loop:               moveq   #0,d0
                     move.b  (a0)+,d0        ;Byte holen
                     move.w  d6,d5           ;kopieren der Bitposition
                     sub.w   #4,d5           ;wie oft schieben
-                    bmi     gebrochen       ;geht Åber Bytegrenze
+                    bmi     gebrochen       ;geht √ºber Bytegrenze
                     rol.w   d5,d0           ;schieben
                     or.b    d0,(a1)
                     tst.w   d5              ;null geschoben?

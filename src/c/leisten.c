@@ -16,7 +16,7 @@ FLAG option_changed;
 
 void do_board()
 {
-  /* Abfrageroutine fÅr das Board */
+  /* Abfrageroutine f√ºr das Board */
 
   switch (option_nr) {                  /* je nach Board verzweigen */
     case 1:                             /* Anzeige */
@@ -42,7 +42,7 @@ void bunker_steuerung()
   do {
   	hol_maus();
   	if (maus_in(100,171,110,179)) {               /* Close */
-      new_option();                               /* NÑchstes Optionsboard */
+      new_option();                               /* N√§chstes Optionsboard */
       break;
       }
     if (is_key()) break;
@@ -52,7 +52,7 @@ void bunker_steuerung()
 
 void check_scroller()
 {
-	/* öberprÅft, ob das Schliessfeld geklickt oder in den Scrollbutton */
+	/* √úberpr√ºft, ob das Schliessfeld geklickt oder in den Scrollbutton */
 	int scrollpos,scrolldelta;
 	void *oldlogbase;
 	char zeichen[2];
@@ -61,7 +61,7 @@ void check_scroller()
 	do {
 		hol_maus();
     if (maus_in(100,171,110,179)) {               /* Close */
-      new_option();                               /* NÑchstes Optionsboard */
+      new_option();                               /* N√§chstes Optionsboard */
       break;
       }
     if (maus_in(128,194,140,199)) {         		/* Scrollbutton */
@@ -134,10 +134,10 @@ void wait_close()
       }
 
     if (maus_in(100,171,110,179)) {               /* Close */
-      new_option();                               /* NÑchstes Optionsboard */
+      new_option();                               /* N√§chstes Optionsboard */
       break;
       }
-    if (mk==3) {													/* Beide Knîpfe gedrÅckt? */
+    if (mk==3) {													/* Beide Kn√∂pfe gedr√ºckt? */
 			mk=1;																/* Wegen maus_in() */
 			if (maus_in(149,173,149,176) && option_nr==3) {         /* Cheat an */
 				cheat_on=!cheat_on;
@@ -154,7 +154,7 @@ void option_city()
      nicht eingeschaltet haben */
 
   if (option_nr==1) {                   /* Er hat sie an */
-    option_nr--;                        /* Eins zurÅck */
+    option_nr--;                        /* Eins zur√ºck */
     option_changed=TRUE;
     }
   else option_changed=FALSE;
@@ -174,7 +174,7 @@ void option_city_ende()
 
 void new_option()
 {
-  /* Dreht das nÑchste Optionsboard rein, kopiert es in die Leiste */
+  /* Dreht das n√§chste Optionsboard rein, kopiert es in die Leiste */
 
   option_nr++;
   if (option_nr==5) option_nr=0;
@@ -190,7 +190,7 @@ void new_option()
 
 void draw_options()
 {
-	/* Zeichnet das momentan aktive Board auf den Screen und trÑgt ggf. Werte ein: */
+	/* Zeichnet das momentan aktive Board auf den Screen und tr√§gt ggf. Werte ein: */
 	
 	draw_obj(4+option_nr,leisten,0,scr1,96,169);
 	writexy_anzeige();
@@ -198,8 +198,8 @@ void draw_options()
 
 void writexy_anzeige()
 {
-  /* In der Anzeigetafel stehen die Werte fÅr Money und Soldiers, hat sich
-     irgendeiner dieser Werte geÑndert wird er mit dieser Funktion ausgegeben
+  /* In der Anzeigetafel stehen die Werte f√ºr Money und Soldiers, hat sich
+     irgendeiner dieser Werte ge√§ndert wird er mit dieser Funktion ausgegeben
      */
   void *oldlogbase;
 
@@ -229,7 +229,7 @@ void writexy_anzeige()
 }
 
 void clear_buttons(redraw)
-FLAG redraw;                        /* TRUE: nur verÑnderte zeichnen */
+FLAG redraw;                        /* TRUE: nur ver√§nderte zeichnen */
                                     /* FALSE: komplett neu kopieren */
 {
   init_buttons(redraw,0L);                 /* Alle aus */
@@ -238,7 +238,7 @@ FLAG redraw;                        /* TRUE: nur verÑnderte zeichnen */
 void redraw_buttons(butt)
 long butt;
 {
-  /* Zeichnet nur die Buttons neu, die sich geÑndert haben */
+  /* Zeichnet nur die Buttons neu, die sich ge√§ndert haben */
 
   init_buttons(TRUE,butt);
 }
@@ -283,7 +283,7 @@ FLAG redraw;                        /* s.o. */
   for(i=0;i<19;i++) {
     element=menu_nr[i];             /* Wert des Menupunktes */
     if ((bleiste&element)==0 &&
-           ((bleiste_old&element)!=0 || !redraw)) {     /* lîschen */
+           ((bleiste_old&element)!=0 || !redraw)) {     /* l√∂schen */
       for(j=0;j<4;j++)
         pxy[j]=menu_koord[i*4+j];   /* Koordinaten holen */
   		fill(5,menu_koord[i*4],menu_koord[i*4+1],menu_koord[i*4+2],menu_koord[i*4+3]);
@@ -343,7 +343,7 @@ void options()
   int x;
 
 #ifdef FRANZ
-  x=180;                        /* Koordinate fÅr Sure? */
+  x=180;                        /* Koordinate f√ºr Sure? */
 #else
   x=192;
 #endif
@@ -352,7 +352,7 @@ void options()
     hol_maus();
     if (mk==1) {
 	    if (maus_in(100,171,110,179)) {               /* Close */
-        new_option();            	                   /* NÑchstes Optionsboard */
+        new_option();            	                   /* N√§chstes Optionsboard */
         return;
         }
       Hm();
@@ -440,23 +440,23 @@ void options()
 void flip(option_nr)
 int option_nr;
 {
-  /* dreht die untere Leiste, so daû die Options sichtbar werden */
+  /* dreht die untere Leiste, so da√ü die Options sichtbar werden */
   /* Kopiert dann die untere Leiste auf den Screen2 */
   int i;
 
   Hm();
 
-	wait_sync(0);							/* Timer rÅcksetzen */
+	wait_sync(0);							/* Timer r√ºcksetzen */
   for(i=0;i<6;i++) {
     stauch();               /* 6 mal stauchen->Board dreht weg */
-    wait_sync(3);           /* biûchen warten */
+    wait_sync(3);           /* bi√üchen warten */
     }
 
   dehn(option_nr);               /* neues Bild reindrehen */
 
 	draw_options();									/* und Werte eintragen */
 	
-  /* Auf 2. Bildschirm Åbertragen: */
+  /* Auf 2. Bildschirm √ºbertragen: */
 	copy_buttons();
   Sm();
 }
@@ -466,15 +466,15 @@ int option_nr;
 {
   int i,j;
 
-	wait_sync(0);										/* Timer rÅcksetzen */
+	wait_sync(0);										/* Timer r√ºcksetzen */
 	
   zeichne(option_nr,15,15);      /* mittlerste Zeile des neuen Bildes zeichnen */
 
   for(i=0;i<6;i++) {        /* 6 mal ausdehnen */
-    for(j=0;j<15;j++) {     /* 15 Zeilen obere HÑlfte und 15 untere */
-      zeichne(option_nr,j,aufklapp[i][j]);       /* obere HÑlfte zeichnen */
+    for(j=0;j<15;j++) {     /* 15 Zeilen obere H√§lfte und 15 untere */
+      zeichne(option_nr,j,aufklapp[i][j]);       /* obere H√§lfte zeichnen */
       if (aufklapp[i][14-j]!=-1)
-        zeichne(option_nr,16+j,30-aufklapp[i][14-j]);      /* untere HÑlfte */
+        zeichne(option_nr,16+j,30-aufklapp[i][14-j]);      /* untere H√§lfte */
       }
     wait_sync(3);
     }
@@ -502,7 +502,7 @@ void stauch()
   for(i=0;i<40;i+=2) 
   	cpy_raster(scr1,scr1,96,169+copylist[i],223,169+copylist[i],96,169+copylist[i+1]);
 
-	/* und oberen und unteren Rand weglîschen: */
+	/* und oberen und unteren Rand wegl√∂schen: */
 	oldscreen=logbase;
 	logbase=scr1;
 	fill(0,96,169,223,173);
@@ -512,7 +512,7 @@ void stauch()
 
 void load_leisten()
 {
-  /* LÑdt die Leisten und den Kopierschutz und startet ihn. */
+  /* L√§dt die Leisten und den Kopierschutz und startet ihn. */
 	long laenge;
 		
 	option_nr=0;									/* 1. Board ist aktiv */
@@ -527,4 +527,3 @@ void load_leisten()
 #endif
 }
 
-

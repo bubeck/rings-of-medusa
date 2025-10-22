@@ -1,14 +1,14 @@
 
 /* Hierbei handelt es sich um das Bindeglied zwischen Assembler und C
-	 fÅr Rings of Medusa II von:
+	 f√ºr Rings of Medusa II von:
 	
 	 Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, Tel.: 07151-66437	*/
 	
 
 /* Zuerst die Prototypen der Assemblerfunktionen:
-   Die Funktionen sind auf Grund der EinschrÑnkungen auf max. 8 Zeichen
+   Die Funktionen sind auf Grund der Einschr√§nkungen auf max. 8 Zeichen
    durchnumeriert:
-   Eine ausfÅhrliche Funktionsbeschreibung findet sich in mcode.s,
+   Eine ausf√ºhrliche Funktionsbeschreibung findet sich in mcode.s,
    dem Assemblersourcecode. */
 
 extern void cdecl mcode1(int x,int y,int zeichen);
@@ -163,19 +163,19 @@ extern void mcode75(void);
 
 /* Jetzt kommen die Variablendefinitionen, die in mcode.o definiert werden */
 
-extern volatile long keypress;					/* Die momentan gedrÅckte Taste, Scancode+Ascii. Bleibt
+extern volatile long keypress;					/* Die momentan gedr√ºckte Taste, Scancode+Ascii. Bleibt
 																Solange auf ihrem Wert, bis die Taste losgelassen wurde.
 																Dann wird ihr Wert 0 */
-extern volatile unsigned long vbl_ct;		/* Wird bei jedem VBL um eins erhîht */
+extern volatile unsigned long vbl_ct;		/* Wird bei jedem VBL um eins erh√∂ht */
 extern void *mem_strt;				/* Start des freien Speichers */
-extern long mem_len;					/* LÑnge des freien Speichers */
+extern long mem_len;					/* L√§nge des freien Speichers */
 extern void *fast_mem;				/* Nur bei Amiga: Adresse des Fast-Mem */
-extern long fast_len;					/* Only Amiga: LÑnge des Fast_Mem */
+extern long fast_len;					/* Only Amiga: L√§nge des Fast_Mem */
 extern int tos_da;						/* Flag, ob TOS da ist oder nicht */
 extern int musik_an;					/* Flag, ob Musik spielen soll 0=AUS */
 extern void *game_music;			/* Zeiger auf den Beginn der Spielmusik */
 extern int hbl_system[][17];		/* Das HBL-System */
-extern int chcrypt[];         	/* in Mcode.o zum öberpÅfen */
+extern int chcrypt[];         	/* in Mcode.o zum √úberp√ºfen */
 extern void *logbase;					/* Log. Bildschirmadresse, es wird immer auf diesen
 																		Screen gezeichnet, wenn nicht explizit ein Parameter
 																		die Screenadresse angibt. */

@@ -1,13 +1,13 @@
           	            
-/* Dieser Part regelt die grundsÑtzlichen Installationen von Crown, sowie
+/* Dieser Part regelt die grunds√§tzlichen Installationen von Crown, sowie
    das entsprechende Abmelden, z.B. des Speichers etc... */
 
 #include "includes.c"           /* Definiert alle Variablen als Extern,... */
 
-int file_anzahl;            /* fÅr Show-Dir */
-int soundnr;              /* FÅr IRQ-Musik */
+int file_anzahl;            /* f√ºr Show-Dir */
+int soundnr;              /* F√ºr IRQ-Musik */
 
-int schoner_x,schoner_y;				/* FÅr Bildschirmschoner */
+int schoner_x,schoner_y;				/* F√ºr Bildschirmschoner */
 
 char *music_end;								/* Hier endet die Musik in den Buffern */
 
@@ -66,7 +66,7 @@ void vari_init()
     steuer[i].heimat=-1;         /* Armee nicht benutzt */
     }
 
-  for(zeile=0;zeile<15;zeile++) {               /* Memo lîschen */
+  for(zeile=0;zeile<15;zeile++) {               /* Memo l√∂schen */
     for(spalte=0;spalte<74;spalte++)
       memo[zeile][spalte]=' ';
     memo[zeile][spalte]=0;                  /* EOS */
@@ -83,7 +83,7 @@ void vari_init()
   pos_string[6]=39;                          /* apostroph */
   pos_string[7]=' ';
   pos_string[9]=' ';
-  pos_string[13]='[';                       /* Vorbereiten fÅr calc_pos */
+  pos_string[13]='[';                       /* Vorbereiten f√ºr calc_pos */
   pos_string[14]=' ';
   pos_string[17]=39;
   pos_string[18]=' ';
@@ -91,14 +91,14 @@ void vari_init()
 
 	level=1.0;										/* Spiellevel */
 	
-	exit_anzahl=99;								/* Beim nÑchsten Exit bitte ein Passwort */
+	exit_anzahl=99;								/* Beim n√§chsten Exit bitte ein Passwort */
 }
 
 void load_pics()
 {
 	long laenge,laenge_packed;
 	
-  load_leisten();											/* LÑdt die Leisten in leisten[] */
+  load_leisten();											/* L√§dt die Leisten in leisten[] */
 
   laenge=load_objekte(FORMULAR_OBJ,music_end);				/* Formularobjekt laden */
   draw_obj(0,music_end,MOVE,music_end+laenge,0,0);				/* Formular zeichnen */
@@ -111,7 +111,7 @@ void load_pics()
 
 void load_alerts()
 {
-	/* LÑdt die Alertboxen */
+	/* L√§dt die Alertboxen */
 	long laenge;
 	
 	clear_screen(scr1);
@@ -120,7 +120,7 @@ void load_alerts()
 	
   laenge=load_objekte(ALERT_OBJ,music_end);	/* Alerts hier hin laden, da wind_form[] zu klein
 																	zum entpacken */
-	memcpy(wind_form,music_end,laenge);			/* Dann in wind_form[] Åbertragen */
+	memcpy(wind_form,music_end,laenge);			/* Dann in wind_form[] √ºbertragen */
 	
 #ifndef COPYPROT
 	if (laenge<sizeof(wind_form)) {
@@ -140,7 +140,7 @@ void hol_maus()
 
   mx=mousex;
   my=mousey;            /* Holt sich die aktuellen Mauswerte aus den IRQ */
-  mk=mousek;          	/* Variablen, und Åbergibt sie dem Aufrufer */
+  mk=mousek;          	/* Variablen, und √ºbergibt sie dem Aufrufer */
 
 	if (mx==schoner_x && my==schoner_y && !is_key()) {						/* Maus nicht bewegt? */
 		if (vbl_ct>counter) {
@@ -155,7 +155,7 @@ void hol_maus()
 		}
 
  #ifndef COPYPROT
-  if (FALSE && mk==2 && my_system) {          /* rechter Knopf gedrÅckt */
+  if (FALSE && mk==2 && my_system) {          /* rechter Knopf gedr√ºckt */
     fill(0,0,0,100,12);
     writexy(15,0,0,romstr022);
     writexy(15,8,0,str(3,(long)mx));
@@ -165,7 +165,7 @@ void hol_maus()
     writexy(15,36,6,str(3,(long)(mx-mx%4)));
     writexy(15,48,6,romstr025);
     writexy(15,88,6,str(3,(long)(my-my%6)));
-/*    mk=2;                               /* Keine Taste gedrÅckt */ */
+/*    mk=2;                               /* Keine Taste gedr√ºckt */ */
     }
   if ((my==msminy || my==0) && mk==3 && my_system) programmende();
 
@@ -253,7 +253,7 @@ unsigned int *scr;
 
 void save_pic()
 {
-  /* SPieler hat rechte Shifttaste gedrÅckt, und kann jetzt eine Diashow machen */
+  /* SPieler hat rechte Shifttaste gedr√ºckt, und kann jetzt eine Diashow machen */
   long taste;
   char filename[40];
   int fh;
@@ -297,7 +297,7 @@ int *a,*b;
 
 void alloc_mem()
 {
-  /* holt den benîtigten Speicher */
+  /* holt den ben√∂tigten Speicher */
   long poi_wert;
 
 #ifndef COPYPROT
@@ -310,7 +310,7 @@ void alloc_mem()
   scr1=logbase=(char *)((poi_wert/256L+1)*256L);           /* auf Pageanfang bringen */
 	scr2=scr1+32000;
 	hlpbuf=scr2+32000;
-	pack_buf=hlpbuf+32000;													/* Pack_Buf ist 64K groû! */
+	pack_buf=hlpbuf+32000;													/* Pack_Buf ist 64K gro√ü! */
 
 	trf_buf=pack_buf+32000;						/* Hier kommt der Traffic hin */
 }
@@ -333,7 +333,7 @@ void show_free()
 
 void load_music()
 {
-  /* LÑdt die Lademusik und startet Sie */
+  /* L√§dt die Lademusik und startet Sie */
 	long laenge;
 	
   clear_screen(scr2);
@@ -354,7 +354,7 @@ void init_medusa()
 {
   /* initialisiert alle Dateistrukturen und Speicherstrukturen von Crown */
 		
-	alloc_mem();							/* Verteilt den verfÅgbaren Speicher */
+	alloc_mem();							/* Verteilt den verf√ºgbaren Speicher */
   vari_init();                  /* Initialisiert die globalen Variablen */
   init_atari();                 /* Initialisiert das Atari System */
 
@@ -364,14 +364,14 @@ void init_medusa()
 
   load_music();                 /* Lademusik an */
 
-	load_pics();                  /* Alle benîtigten Files laden */
+	load_pics();                  /* Alle ben√∂tigten Files laden */
 	intro();										/* Diashow anzeigen */
 #ifdef AMIGA
 	intro_off();								/* Beim Amiga gleich abschalten! */
 #endif
   show_free();                  /* Zeigt den freien Speicher an */
 
-  fill_ramdisk();            			/* Ramdisk-system auffÅllen */
+  fill_ramdisk();            			/* Ramdisk-system auff√ºllen */
 
 #ifndef AMIGA	
 	intro_off();								/* Und Intro abschalten */
@@ -399,8 +399,8 @@ char *adr;
 
 void re_initialize()
 {
-  /* Diese Funktion fÅhrt alle Installationen durch, die beim ersten Starten
-     bzw. jedem weiteren Starten von Crown durchgefÅhrt werden mÅssen */
+  /* Diese Funktion f√ºhrt alle Installationen durch, die beim ersten Starten
+     bzw. jedem weiteren Starten von Crown durchgef√ºhrt werden m√ºssen */
   char version[100];
 	int len;
 	FLAG steffi_cheat=FALSE;
@@ -447,7 +447,7 @@ void re_initialize()
 					steffi_cheat=TRUE;
 					center(15,100,romstr033);
 					i=1000;
-					draw_obj(1,pack_buf,MOVE,scr1,0,0);		/* Einmal fÅr Palette zeichnen */
+					draw_obj(1,pack_buf,MOVE,scr1,0,0);		/* Einmal f√ºr Palette zeichnen */
 					show_raster();
 					}
 				}
@@ -495,9 +495,9 @@ void re_initialize()
 
   Sm();
 
-  load_sprites(SPRITES_IMG);    /* lÑdt die Sprites */
+  load_sprites(SPRITES_IMG);    /* l√§dt die Sprites */
 
-  anfangseinstellungen();       /* Crown Variablen rÅcksetzen */
+  anfangseinstellungen();       /* Crown Variablen r√ºcksetzen */
 	set_armies();									/* Armeen setzen */
 
   loc=LAND;
@@ -521,8 +521,8 @@ void re_initialize()
   if (player_name[0]==0)                            /* Spieler hat nicht eingegeben */
     strcpy(player_name,romstr047);
 
-  wait_sync(0);                 /* Sync-ZÑhler rÅcksetzen */
-  clear_time();                 /* Zeit rÅcksetzen */
+  wait_sync(0);                 /* Sync-Z√§hler r√ºcksetzen */
+  clear_time();                 /* Zeit r√ºcksetzen */
 
 	schoner_x=mx+1;							/* Um Bildschirmschoner kaltzustellen */
 }
@@ -549,22 +549,22 @@ int x,y;
 		cpy_raster(scr2,hlpbuf,0,y,319,y+40,0,y);				/* Copyrights retten */
 
 	  while(*koord!=255) {
-			cpy_raster(hlpbuf,scr2,0,y,319,y+40,0,y);			/* FÅller weglîschen */
+			cpy_raster(hlpbuf,scr2,0,y,319,y+40,0,y);			/* F√ºller wegl√∂schen */
 	    xneu=x+*koord++;
 	    yneu=y+*koord++;
 			logbase=scr2;
 	    plot_pixel(15,xneu,yneu);
 			cpy_raster(scr2,hlpbuf,0,y,319,y+40,0,y);			/* Unterschrift retten */
 			draw_obj_part(0,pack_buf,0,0,objekt_breite(0,pack_buf)-1,objekt_hoehe(0,pack_buf)-1,
-												ODER,scr2,xneu,yneu);			/* FÅller ohne Raster zeichnen */
+												ODER,scr2,xneu,yneu);			/* F√ºller ohne Raster zeichnen */
 			if (first_paint) {
-				draw_obj(0,pack_buf,1,scr2,xneu,yneu);			/* FÅller mit Rastern zeichnen */
+				draw_obj(0,pack_buf,1,scr2,xneu,yneu);			/* F√ºller mit Rastern zeichnen */
 				show_raster();
 				first_paint=FALSE;
 				}
 			swap_screens();
 	    }
-		cpy_raster(hlpbuf,scr1,0,y,319,y+40,0,y);			/* FÅller weglîschen */
+		cpy_raster(hlpbuf,scr1,0,y,319,y+40,0,y);			/* F√ºller wegl√∂schen */
 		Sm();
 		}
 }
@@ -587,7 +587,7 @@ void anfangseinstellungen()
 	spieler_status=KAEMPFER;						/* Noch ist Spieler gar nichts */
 	schatznummer=0;											/* Bisher auch kein Schatz gefunden */
 	
-  ground_nr=0;                  /* noch keine UntergrundsÑnderung */
+  ground_nr=0;                  /* noch keine Untergrunds√§nderung */
   minenzahl=0;                  /* Spieler hat keine Mine */
   kontostand=0;                 /* Nichts auf dem Konto */
   start_darlehen=FALSE;         /* Nein, er hat ~ noch nicht */
@@ -605,7 +605,7 @@ void anfangseinstellungen()
   map=welt[pos_welt];           /* map initialisieren */
   vulkan_aktiv=FALSE;           /* Im Moment kein Vulkan aktiv */
 
-  startwert=zufall(5);       	/* 0..4, fÅr unterschiedliche Spiele */
+  startwert=zufall(5);       	/* 0..4, f√ºr unterschiedliche Spiele */
 
   schiffbesitz=schiffbau=0;     /* Keine im Besitz und im Bau */
   armee_status=AN_LAND;         /* Armee ist an Land */
@@ -620,11 +620,11 @@ void anfangseinstellungen()
   money=0L;                 /* Spieler hat kein Geld */
 
 	/* Bunker initialisieren: */
-	for(i=0;i<TUERMAX;i++) put_2bit(tueren,i,2);		/* Alle TÅren sind undefiniert, d.h. wie
+	for(i=0;i<TUERMAX;i++) put_2bit(tueren,i,2);		/* Alle T√ºren sind undefiniert, d.h. wie
 																				  im Bunkerfile eingetragen */
 	for(i=0;i<PARTY;i++) {
-		for(j=0;j<3;j++) party[i].reagenz[j]=(i>0) ? 0 : 128;			/* 50% gefÅllt */
-		party[i].hand[0]=party[i].hand[1]=				/* Leere HÑnde */
+		for(j=0;j<3;j++) party[i].reagenz[j]=(i>0) ? 0 : 128;			/* 50% gef√ºllt */
+		party[i].hand[0]=party[i].hand[1]=				/* Leere H√§nde */
 		party[i].helm=party[i].unterteil=party[i].oberteil=party[i].schuhe=-1;
 		party[i].schiessen=FALSE;
 		}
@@ -635,16 +635,16 @@ void anfangseinstellungen()
 	
 	init_objekte();									/* Objekte initialisieren */
 	automapping=FALSE;							/* Kein Automapping */
-	helligkeit=0;										/* Volle LichtstÑrke zu Beginn */
+	helligkeit=0;										/* Volle Lichtst√§rke zu Beginn */
 	
 	for(i=0;i<10;i++) prisoner[i].befreit=FALSE;
 	
   /* Spielerarmee initialisieren: */
 
-  last_fight=0;                 /* noch nie miteinander gekÑmpft */
+  last_fight=0;                 /* noch nie miteinander gek√§mpft */
 
   gesamt_gehalt=0;
-  armeegesamt[0]=0;             /* rÅcksetzen */
+  armeegesamt[0]=0;             /* r√ºcksetzen */
   motivation[0]=50.0;           /* Motivation bei 50% */
   for(i=0;i<EINHEITEN;i++) {
     for(k=0;k<EIGENSCHAFTEN;k++) training[0][i][k]=0.0;
@@ -656,7 +656,7 @@ void anfangseinstellungen()
     }
 /*
 	if (my_system) {
-		armeeteil[0][3]=1000;				/* 1000 AufklÑrer rein */
+		armeeteil[0][3]=1000;				/* 1000 Aufkl√§rer rein */
 		armeegesamt[0]=1000;
 		} */
 		
@@ -688,13 +688,13 @@ void anfangseinstellungen()
       }
     }
 
-  sterben_jetzt=FALSE;                          /* Beim nÑchsten Sumpf nicht sterben */
+  sterben_jetzt=FALSE;                          /* Beim n√§chsten Sumpf nicht sterben */
 
   for(i=0;i<SCHIFFMAX;i++) flotte[i].typ=-1;     /* Spieler hat noch kein Schiff */
   for(i=0;i<SCHIFFSTYPEN;i++) ship_own[i]=0;
 
   /* Durchschnittspreise der Waren=Aktienpreis ermitteln: */
-  for(i=0;i<WAREN;i++) aktie_preis[i]=0;         /* Durchschnitt lîschen */
+  for(i=0;i<WAREN;i++) aktie_preis[i]=0;         /* Durchschnitt l√∂schen */
 
   load_bibliothek(CITIES_WAR,hlpbuf);
 
@@ -706,7 +706,7 @@ void anfangseinstellungen()
     }
 
   for(i=0;i<WAREN;i++) {
-    ycargo_menge[i]=0L;                     /* Spieler-Waren lîschen */
+    ycargo_menge[i]=0L;                     /* Spieler-Waren l√∂schen */
     aktie_da[i]=2000;                       /* 2000 Aktien pro Sorte */
     aktie_x[i]=zufall(50);                  /* Startposition des Aktienwertes */
 		aktie_preis[i]*=2;
@@ -714,8 +714,8 @@ void anfangseinstellungen()
     }
 	ycargo_menge[10]=7;						/* Ein paar Batterien hat er schon */
 	
-  for(i=0;i<ROHSTOFFE;i++) ymetal[i]=0L;        /* Rohstoffe lîschen */
-  for(i=0;i<STALLWAREN;i++) ystable_menge[i]=0; /* Stallwaren lîschen */
+  for(i=0;i<ROHSTOFFE;i++) ymetal[i]=0L;        /* Rohstoffe l√∂schen */
+  for(i=0;i<STALLWAREN;i++) ystable_menge[i]=0; /* Stallwaren l√∂schen */
 
   bank_zuletzt=heute;               /* heute war er zuletzt in der Bank */
 
@@ -725,7 +725,7 @@ void anfangseinstellungen()
       for(k=0;k<EIGENSCHAFTEN;k++)
         stadt_training[i][j][k]=100*(20.0+(float)((wirkung[j][k])*12));   /* 20% .. 80% */
 
-    belong[i]=99;                    /* Stadt gehîrt Medusa */
+    belong[i]=99;                    /* Stadt geh√∂rt Medusa */
 
     city_last[i]=heute-30L;         /* zuletzt betreten, vor einem Monat */
 
@@ -760,21 +760,21 @@ void anfangseinstellungen()
     for(j=0;j<EINHEITEN;j++) {
       proz_10=((long)stadt_armee[i][j]*10L)/100L;         /* 10 % */
       stadt_armee[i][j]=stadt_armee[i][j]-proz_10+(long)zufall((int)proz_10*2);
-      adelay[i][j]=0;                   /* Zeitverzîgerung beim Angriff */
-      for(k=0;k<3;k++) stadt_aus[i][k][j]=(stadt_armee[i][j]*100L)/66L;   /* 2/3 ausgerÅstet */
+      adelay[i][j]=0;                   /* Zeitverz√∂gerung beim Angriff */
+      for(k=0;k<3;k++) stadt_aus[i][k][j]=(stadt_armee[i][j]*100L)/66L;   /* 2/3 ausger√ºstet */
       }
   }
 
 	belong[13]=belong[14]=belong[15]=belong[19]=belong[20]=GEGNER;
-  for(i=22;i<CITIES;i++) belong[i]=GEGNER;              /* InselstÑdte sind frei */
+  for(i=22;i<CITIES;i++) belong[i]=GEGNER;              /* Inselst√§dte sind frei */
 }
 
 void intro()
 {
-	/* ErzÑhlt die Geschichte von Medusa II 
-		 ErlÑuterung zur Fallunterscheidung AMIGA:
-		 	 Da beim Amiga der Scroller auf raster_replace basiert, ist es nicht mîglich, wÑhrend
-			 der Scroller lÑuft, den raster_replace() zu benutzen (wird von draw_obj(,,MOVE,,) benutzt).
+	/* Erz√§hlt die Geschichte von Medusa II 
+		 Erl√§uterung zur Fallunterscheidung AMIGA:
+		 	 Da beim Amiga der Scroller auf raster_replace basiert, ist es nicht m√∂glich, w√§hrend
+			 der Scroller l√§uft, den raster_replace() zu benutzen (wird von draw_obj(,,MOVE,,) benutzt).
 			 Deshalb: draw_obj(,,ODER,,)			*/			 
 			 
 	int steuer_neu;
@@ -806,9 +806,9 @@ void intro()
 	load_objekte(ROM_II_OBJ,music_end);
 	draw_obj(0,music_end,MOVE,scr1,0,0);
 	fade_in();
-	wait_sync(0);										/* Beim nÑchsten auch wirklich 300 warten */
+	wait_sync(0);										/* Beim n√§chsten auch wirklich 300 warten */
 	wait_sync_klick(300);
-	while (is_key()) wait_key();			/* Tastaturbuffer lîschen */
+	while (is_key()) wait_key();			/* Tastaturbuffer l√∂schen */
 	fade_out();
 	clear_screen(scr1);
 		
@@ -822,13 +822,13 @@ void intro()
   scroller_laenge=load_bibliothek(INIT_D_TXT,music_end);
 #endif
 
-	decrypt((unsigned char *)music_end,scroller_laenge);		/* Scroller entschlÅsseln */
+	decrypt((unsigned char *)music_end,scroller_laenge);		/* Scroller entschl√ºsseln */
 	scroller_laenge++;										/* Sicherheitsabstand */
 	if (scroller_laenge&1) scroller_laenge++;				/* Gerade machen */
 	
 	metal_obj=music_end+scroller_laenge;					/* Hier kommen die Objekte hin */
   laenge=load_objekte(METALL_OBJ,metal_obj);				/* Scroller laden */
-	if (laenge&1) laenge++;								/* LÑnge gerade machen */
+	if (laenge&1) laenge++;								/* L√§nge gerade machen */
 	
   init_scroller(scr1,157,music_end,metal_obj,metal_obj+laenge,FALSE);
   scradr=init_vbl(mcode33);     			            /* Laufschrift an */
@@ -904,7 +904,7 @@ void decrypt(txt,laenge)
 unsigned char *txt;
 long laenge;
 {
-	/* EntschlÅsselt einen Scroller */
+	/* Entschl√ºsselt einen Scroller */
 	register int wert2,wert1;
 	register int j;
 	
@@ -922,7 +922,7 @@ long laenge;
 
 void load_game()
 {
-  /* LÑdt ein Spiel und initialisiert CROWN entsprechend */
+  /* L√§dt ein Spiel und initialisiert CROWN entsprechend */
   int nr;
 	char dir[11][70];
 	int i;
@@ -940,7 +940,7 @@ void load_game()
 	
   while (button!=EXIT_BTN) {
     wait_klick();
-    if (mk==1) {                        /* Knopf wurde gedrÅckt */
+    if (mk==1) {                        /* Knopf wurde gedr√ºckt */
       nr=(my-97)/8;
       if (nr>=0 && nr<8) {
       	if (strcmp(dir[nr],romstr052)!=0) {
@@ -957,11 +957,11 @@ void load_game()
       }
     } 
 
-	set_raster(0,63,NULL);					/* Formularraster lîschen */
+	set_raster(0,63,NULL);					/* Formularraster l√∂schen */
 	show_raster();
 
 	copy_screen(scr2,scr1);
-	auto_nr=0;												/* Alle Changes sind Åbertragen */
+	auto_nr=0;												/* Alle Changes sind √ºbertragen */
 	player[0]=player[1];							/* Und Spieler an selber Position */
 
 	button=NOTHING;
@@ -1029,7 +1029,7 @@ char dir[11][70];
 void load_it(nr)
 int nr;
 {
-  /* LÑdt das File */
+  /* L√§dt das File */
 	
   make_adresses();                  /* Adressen nach hlpbuf speichern */
 	load_data(nr,pack_buf);			 /* Abgespeichertes File laden */
@@ -1038,8 +1038,8 @@ int nr;
 		alert(romstr059);
 		}		
 	else {
-		copyvar(FALSE);                   /* und Åbernehmen */
-	  money^='ATRI';                    /* entschlÅsseln */
+		copyvar(FALSE);                   /* und √ºbernehmen */
+	  money^='ATRI';                    /* entschl√ºsseln */
   	vbl_ct_save=vbl_ct;					 /* Heute wurde zuletzt gespeichert. */
 		}
 	draw_whole=2;									/* Automap neu zeichnen */
@@ -1048,7 +1048,7 @@ int nr;
 long copyvar(saveflag)
 FLAG saveflag;                  /* True=Speicher, FAlse,=LAden */
 {
-  /* Kopiert sÑmtliche Variablenwerte in pack_buf-pack_buff+40000 */
+  /* Kopiert s√§mtliche Variablenwerte in pack_buf-pack_buff+40000 */
   long *poi;
   long laenge;
   char *scrpoi,*adresse;
@@ -1063,7 +1063,7 @@ FLAG saveflag;                  /* True=Speicher, FAlse,=LAden */
     scrpoi+=laenge;
     }
   laenge=(long)scrpoi-(long)(pack_buf+32000);
-  return(laenge);                  /* LÑnge zurÅck */
+  return(laenge);                  /* L√§nge zur√ºck */
 }
 
 void save_it(nr)
@@ -1072,7 +1072,7 @@ int nr;
   /* Speichert das File */
 
   Hm();
-  money^='ATRI';                    /* VerschlÅsseln */
+  money^='ATRI';                    /* Verschl√ºsseln */
 
   make_adresses();                  /* Adressen nach hlpbuf speichern */
   copyvar(TRUE);                       /* Kopiert Werte in scr2 */
@@ -1081,7 +1081,7 @@ int nr;
 		alert(romstr060);
 	else vbl_ct_save=vbl_ct;		/* Heute wurde zuletzt gespeichert */
 
-  money^='ATRI';                    /* entschlÅsseln */
+  money^='ATRI';                    /* entschl√ºsseln */
   Sm();
 }
 
@@ -1128,11 +1128,11 @@ void save_game()
 	    	}
     	}
 
-		set_raster(0,63,NULL);					/* Formularraster lîschen */
+		set_raster(0,63,NULL);					/* Formularraster l√∂schen */
 		show_raster();
 		
 		copy_screen(scr2,scr1);
-		auto_nr=0;												/* Alle Changes sind Åbertragen */
+		auto_nr=0;												/* Alle Changes sind √ºbertragen */
 		player[0]=player[1];							/* Und Spieler an selber Position */
 
 		button=NOTHING;
@@ -1144,7 +1144,7 @@ void save_game()
 
 void totenkopf()
 {
-	/* Stellt den Totenkopf dar und lÑût ihn ein biûchen reden */
+	/* Stellt den Totenkopf dar und l√§√üt ihn ein bi√üchen reden */
 	int anzahl;
 	long laenge;
 	
@@ -1157,7 +1157,7 @@ void totenkopf()
 
 	fade_out(); 							  /* Bild ausblenden */
 	clear_raster();
-	clear_screen(scr1); 				/* Bildschirm lîschen */
+	clear_screen(scr1); 				/* Bildschirm l√∂schen */
 
 	zeichne_totenkopf(0);					/* Totenkopf in Grundposition zeichnen */
 	switch_screens();
@@ -1182,4 +1182,3 @@ int y;
 }
 
 
-

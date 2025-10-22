@@ -1,4 +1,4 @@
-/* Franz”sische Version: */
+/* FranzÃ¶sische Version: */
 
 #define FRANZ
 
@@ -366,7 +366,7 @@
 #define romstr274 "FERMETURE D UNE MINE~(COUT: 5000)"
 #define romstr275 "ENTREPOT:~~"
 #define romstr276 "CETTE MINE A ETE OUVERTE~~"
-#define romstr277 "UND F™RDERTE BISHER šBER~~~~~~"
+#define romstr277 "UND FÃ–RDERTE BISHER ÃœBER~~~~~~"
 #define romstr278 "GLISSEUR:"
 #define romstr279 "ORDURE"
 #define romstr280 "ORDURE."
@@ -378,7 +378,7 @@
 #define romstr286 "O: PRESENTER LES TIREURS"
 #define romstr287 "T: PRESENTER LES TIREURS"
 #define romstr288 "K: ENTRER DANS LA CASERNE"
-#define romstr289 "+: GESCHW. ERH™HEN"
+#define romstr289 "+: GESCHW. ERHÃ–HEN"
 #define romstr290 "0: PLUS D ARGENT"
 #define romstr291 "B: BATAILLE NAVALE"
 #define romstr292 "F: BATAILLE TERRESTRE"
@@ -590,7 +590,7 @@
 #define romstr498 "SANTE:    %"
 #define romstr499 "L HABILLEMENT  : #0%"							/* Amount */
 #define romstr500 "STATUT:"
-#define romstr501 "S™LDNER           "
+#define romstr501 "SÃ–LDNER           "
 #define romstr502 "CECI EST UN BON REPAS!"
 #define romstr503 "CECI EST QUELQUE CHOSE A BOIRE."
 #define romstr504 "CECI EST UNE TROUSSE DE SOIN."
@@ -712,4 +712,4 @@
 #define romstr620 "INSERES S,T.P LA DISQUETTE           'X' DANS LE LECTEUR A:"		
 #define romstr621 "INSERES S.T.P TA DISQUEETE SAVE DANS LE LECTEUR A:"
            
-
+

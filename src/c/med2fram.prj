@@ -1,4 +1,4 @@
-; Projektdatei fÅr Rings of Medusa II (Farbe), Ramdisk-Version
+; Projektdatei f√ºr Rings of Medusa II (Farbe), Ramdisk-Version
 ; (C) 1990 by Till Bubeck
 ;             Ziegeleistr. 28
 ;             7056 Weinstadt
@@ -21,7 +21,7 @@ CITY
 CITY2
 LAND
 IO
-TCFLTLIB.LIB										;Flieûkommaroutinen
+TCFLTLIB.LIB										;Flie√ükommaroutinen
 TCSTDLIB.LIB
 TCTOSLIB.LIB
 

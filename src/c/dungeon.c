@@ -3,7 +3,7 @@
 
 	 gesamte Abhandlung der Bunker
 
-	 Ω 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt
+	 ‚ïú 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt
 						 Tel.: 07151-66437 (Semensterferien/Wochenende)
 							oder 07071/49612 (Studium)
 																		  */
@@ -37,21 +37,21 @@ int nr;
 	char *pw;
 	FLAG first_taste;
 		
-	/* Simulationsverzîgerer initialisieren: */
+	/* Simulationsverz√∂gerer initialisieren: */
 	hungercounter=durstcounter=enemycounter=lampencounter=vbl_ct;
 	
 	akt_bunker=(unsigned char)nr;					/* Spieler ist jetzt in diesem Bunker */
 
 	loc = CITY;
 	leiste_y=64;
-	msminy=0; 								  /* hîher darf Maus nicht */
+	msminy=0; 								  /* h√∂her darf Maus nicht */
 
 	sx[0]=sxalt[0];
-	sy[0]=syalt[0]; 					  /* Sprite zurÅcksetzen */
+	sy[0]=syalt[0]; 					  /* Sprite zur√ºcksetzen */
 
 	option_city();						  /* Bereitet Options auf Stadt vor */
 
-	load_waende();						  /* LÑdt die BunkerwÑnde */
+	load_waende();						  /* L√§dt die Bunkerw√§nde */
 	init_dungeon(akt_bunker,START_POS);		   /* Holt Dungeon von der Disk */
 
 	Hm();
@@ -60,7 +60,7 @@ int nr;
 	clear_raster();
 
 	fade_out(); 							  									/* Bild ausblenden */
-	clear_screen(scr1); 												/* Bildschirm lîschen */
+	clear_screen(scr1); 												/* Bildschirm l√∂schen */
 	show_buttons(FALSE);
 
 	redraw_buttons((cheat_on) ? EXIT_BTN|LOAD|SAVE|PAUSE : LOAD|SAVE|PAUSE);					
@@ -70,7 +70,7 @@ int nr;
 
 	set_raster(0,45,(tv_modus) ? tv_pal : bunker_pal);
 	draw_bunker(TRUE);						/* Spieler hat sich bewegt->Automap updaten */
-	draw_reagenz();								/* Zeichnet die ReagenzglÑser neu */
+	draw_reagenz();								/* Zeichnet die Reagenzgl√§ser neu */
 	
 	fade_in();
 	
@@ -90,12 +90,12 @@ int nr;
 		hunger_durst();										/* Hunger bzw. Durst simulieren */
 		bewegt=move_enemies();						/* ggf. Feinde bewegen */
 		
-		taste=0;													/* Nichts gedrÅckt */
+		taste=0;													/* Nichts gedr√ºckt */
 		hol_maus(); 											/* Mauskoordinaten holen */
 		bun_x1=bunker_x+bunker_dx;					/* Feld in einer Einheit Entfernung */
 		bun_y1=bunker_y+bunker_dy;
 
-		if (maus_in(0,46,144,124)) {					/* Schiessen oder TÅre îffnen */
+		if (maus_in(0,46,144,124)) {					/* Schiessen oder T√ºre √∂ffnen */
 			old_tuer=bunker[bun_x1][bun_y1];
 			bedien_tuer(-1);								/* Nichts in der Hand */
 			if (old_tuer==START_POS) break;				/* Ausgang gefunden! */
@@ -111,7 +111,7 @@ int nr;
 		if (mk==0) first_taste=TRUE;							/* erster Repeat nach 15 VBL's */
 		
 		if (option_nr==4) {														/* Steuerpanel zu sehen */
-			if (maus_in(115,173,163,194)) {								/* Im Bereich der Knîpfe? */
+			if (maus_in(115,173,163,194)) {								/* Im Bereich der Kn√∂pfe? */
 				btn_nr=(my-173)/12*3+(mx-115)/16;									/* Nr des Buttons */
 				switch (btn_nr) {
 					case 0: taste=0x520000;												/* Entsprechenden Tastendruck simulieren */
@@ -130,12 +130,12 @@ int nr;
 					}
 
 				if (taste!=-1L) 								/* Taste da? */
-					if (first_taste) {							/* Neu gedrÅckt? */
-						next_key_vbl=vbl_ct+15;					/* Dann nÑchste Taste in 15 VBL's */
+					if (first_taste) {							/* Neu gedr√ºckt? */
+						next_key_vbl=vbl_ct+15;					/* Dann n√§chste Taste in 15 VBL's */
 						first_taste=FALSE;						/* Und dann normal */
 						}
 					else {
-						if (vbl_ct>next_key_vbl) next_key_vbl=vbl_ct+3;	/* Zeit fÅr Repeat gewartet? */
+						if (vbl_ct>next_key_vbl) next_key_vbl=vbl_ct+3;	/* Zeit f√ºr Repeat gewartet? */
 						else taste=-1;							/* Nein, weiter warten */
 						}
 					
@@ -150,7 +150,7 @@ int nr;
 			if (taste!=-1L) next_key_vbl=vbl_ct+15;		/* in 15 VBL's den ersten Repeat */
 			else {
 				taste=0;
-				if (keypress!=0) {				/* Taste noch gedrÅckt */
+				if (keypress!=0) {				/* Taste noch gedr√ºckt */
 					if (vbl_ct>next_key_vbl) {
 						taste=keypress;
 						next_key_vbl=vbl_ct+3;			/* Alle 3 VBL's ein Tastenrepeat */
@@ -170,7 +170,7 @@ int nr;
 			case 0x39: 
 				old_tuer=bunker[bun_x1][bun_y1];
 				mk=1;
-				mx=my=100;										/* TÅr îffnen simulieren */
+				mx=my=100;										/* T√ºr √∂ffnen simulieren */
 				bedien_tuer(-1);							/* Nichts in der Hand */
 				if (old_tuer==START_POS) goto bunker_ende;	/* Ausgang gefunden! */
 				break;
@@ -229,13 +229,13 @@ int nr;
 					bunker_x+=bunker_dx;
 					bunker_y+=bunker_dy;
 					press_button(3);
-					richtung++;															/* ZurÅckdrehen */
+					richtung++;															/* Zur√ºckdrehen */
 					if (richtung>3) richtung=0;
 					berechne_richtung();
 					new_draw=moved=TRUE;
 					}
 				else {
-					richtung++;															/* ZurÅckdrehen */
+					richtung++;															/* Zur√ºckdrehen */
 					if (richtung>3) richtung=0;
 					berechne_richtung();
 					wandgelaufen();
@@ -249,13 +249,13 @@ int nr;
 					bunker_x+=bunker_dx;
 					bunker_y+=bunker_dy;
 					press_button(5);
-					richtung--;															/* ZurÅckdrehen */
+					richtung--;															/* Zur√ºckdrehen */
 					if (richtung<0) richtung=3;
 					berechne_richtung();
 					new_draw=moved=TRUE;
 					}
 				else {
-					richtung--;															/* ZurÅckdrehen */
+					richtung--;															/* Zur√ºckdrehen */
 					if (richtung<0) richtung=3;
 					berechne_richtung();
 					wandgelaufen();
@@ -317,7 +317,7 @@ bunker_ende:
 
 		decrypt(shrink_buff,laenge);
 	
-		anzahl=atoi(such_string(1,shrink_buff));				/* Anzahl der Passwîrter */
+		anzahl=atoi(such_string(1,shrink_buff));				/* Anzahl der Passw√∂rter */
 		nr=zufall(anzahl);
 
 		do {
@@ -350,13 +350,13 @@ bunker_ende:
 					}
 			
 			map=land;
-			load_ground(map);							/* UntergrÅnde laden */
+			load_ground(map);							/* Untergr√ºnde laden */
 		
 			such_land(BUNKER_1+nummer);				/* Bunker suchen */
 			sx[0]=sxalt[0]=grundx;
 			sy[0]=syalt[0]=grundy;										/* Spielersprite setzen */
 			sn[0]=0;
-			get_ground(); 					  				/* neue UntergrÅnde holen */
+			get_ground(); 					  				/* neue Untergr√ºnde holen */
 			option_city_ende();							/* Options im Board ggf. zeichnen */
 			land_an();
 			akt_bunker=-1;
@@ -369,7 +369,7 @@ bunker_ende:
 void aufzug(feld)
 unsigned int feld;
 {
-	/* Der Spieler ist in einem Aufzug und hat auf den Knopf gedrÅckt... */
+	/* Der Spieler ist in einem Aufzug und hat auf den Knopf gedr√ºckt... */
 	int hoehe,breite;
 	int y;
 	int stocks,akt_stock;
@@ -391,7 +391,7 @@ unsigned int feld;
 	hippel_sfx(AUFZUG_AN);
 	
 	if (nach_oben) {
-		/* Zuerst TÅr aus den Bereich scrollen: */
+		/* Zuerst T√ºr aus den Bereich scrollen: */
 		for(y=hoehe-1;y>=0;y--) {
 			cpy_raster(scr1,scr2,24,51,166,150,24,52);
 			draw_obj_part(5,walls,8,y,breite-1,y,MOVE,scr2,24,51);
@@ -405,7 +405,7 @@ unsigned int feld;
 				draw_obj_part(5,walls,8,y,breite-1,y,MOVE,scr2,24,51);
 				switch_screens();
 				}
-		/* TÅr reinscrollen: */
+		/* T√ºr reinscrollen: */
 		for(y=hoehe-1;y>=0;y--) {
 			cpy_raster(scr1,scr2,24,51,166,150,24,52);
 			cpy_raster(hlpbuf,scr2,24,51+y,167,51+y,24,51);
@@ -414,7 +414,7 @@ unsigned int feld;
 			}
 		}
 	else {
-		/* Zuerst TÅr aus den Bereich scrollen: */
+		/* Zuerst T√ºr aus den Bereich scrollen: */
 		for(y=0;y<hoehe;y++) {
 			cpy_raster(scr1,scr2,24,52,167,150,24,51);
 			draw_obj_part(5,walls,8,y,breite-1,y,MOVE,scr2,24,150);
@@ -428,7 +428,7 @@ unsigned int feld;
 				draw_obj_part(5,walls,8,y,breite-1,y,MOVE,scr2,24,150);
 				switch_screens();
 				}
-		/* TÅr reinscrollen: */
+		/* T√ºr reinscrollen: */
 		for(y=0;y<hoehe+1;y++) {
 			cpy_raster(scr1,scr2,24,52,167,150,24,51);
 			cpy_raster(hlpbuf,scr2,24,51+y,167,51+y,24,150);
@@ -450,13 +450,13 @@ unsigned int feld;
 
 void schliesse_tuer()
 {
-	/* Schlieût eine TÅre (fÅr den Aufzug) */
+	/* Schlie√üt eine T√ºre (f√ºr den Aufzug) */
 	unsigned int tuer;
 	int i;
 	int breite1,breite2,hoehe;
 	
 	tuer=bunker[bunker_x+bunker_dx][bunker_y+bunker_dy]-DOOR_AUF_START;
-	put_2bit(tueren,tuer,ZU);						/* TÅr ist jetzt zu */
+	put_2bit(tueren,tuer,ZU);						/* T√ºr ist jetzt zu */
 	
 	Hm();
 	copy_bunker_screen();						/* Scr1->Scr2 -> Beide Screens gleich */
@@ -466,24 +466,24 @@ void schliesse_tuer()
 
 	hippel_sfx(TUER_AN);
 	
-	breite1=objekt_breite(11,walls);					/* SchiebetÅr links */
+	breite1=objekt_breite(11,walls);					/* Schiebet√ºr links */
 	hoehe=objekt_hoehe(11,walls);
-	breite2=objekt_breite(12,walls);					/* SchiebetÅr rechts */
+	breite2=objekt_breite(12,walls);					/* Schiebet√ºr rechts */
 
 	for(i=64;i>=0;i--) {
 		cpy_raster(hlpbuf,scr2,0,69,319,69+hoehe-1,0,69);				/* Hintergrund hin */
 		if (i<breite1)
-			draw_obj_part(11,walls,													/* SchiebetÅr links */
+			draw_obj_part(11,walls,													/* Schiebet√ºr links */
 						i,0,breite1-1,hoehe-1,
 						1,scr2,49,69);
 		if (i<breite2)
-			draw_obj_part(12,walls,													/* SchiebetÅr rechts */
+			draw_obj_part(12,walls,													/* Schiebet√ºr rechts */
 						0,0,breite2-i-1,hoehe-1,
 						1,scr2,94+i,69);
 
 		switch_screens();
 		}
-	/* bunker[bunker_x+bunker_dx][bunker_y+bunker_dy]=DOOR_START+1;		/* Zune TÅre hin */  */
+	/* bunker[bunker_x+bunker_dx][bunker_y+bunker_dy]=DOOR_START+1;		/* Zune T√ºre hin */  */
 
 	Sm();
 
@@ -493,26 +493,26 @@ void schliesse_tuer()
 int bedien_tuer(item_nr)
 int item_nr;												/* Das hat der Spieler in der Hand */
 {
-	/* Der Spieler will eine TÅr îffnen */
+	/* Der Spieler will eine T√ºr √∂ffnen */
 	unsigned int feld;
 	unsigned int door_nr;
 	FLAG tuer_offen=FALSE;
 	
 	feld=bunker[bunker_x+bunker_dx][bunker_y+bunker_dy];
-	if (maus_in(75,88,116,129) && is_door(feld) && !is_open_door(feld)) {			/* Geschlossene TÅre? */
-		door_nr=feld-DOOR_ZU_START+1;						/* Nummer der TÅre berechnen */
-		if (door_cheat) item_nr=door_nr-1;					/* SchlÅssel ist da */
-		if (feld==START_POS) door_nr=1;					/* StarttÅre geht immer auf */
+	if (maus_in(75,88,116,129) && is_door(feld) && !is_open_door(feld)) {			/* Geschlossene T√ºre? */
+		door_nr=feld-DOOR_ZU_START+1;						/* Nummer der T√ºre berechnen */
+		if (door_cheat) item_nr=door_nr-1;					/* Schl√ºssel ist da */
+		if (feld==START_POS) door_nr=1;					/* Startt√ºre geht immer auf */
 		if (feld>=PRISONER_START && feld<=PRISONER_END) {	/* Gefangener */
 			free_prisoner();
 			tuer_offen=TRUE;
 			}
 		else 
 			if (door_nr==1) {
-				oeffne_tuer();					/* TÅr 1 ohne SchlÅssel îffnen */
+				oeffne_tuer();					/* T√ºr 1 ohne Schl√ºssel √∂ffnen */
 				tuer_offen=TRUE;
 				}
-			else if (item_nr>=0 && item[item_nr].typ==KEY && item[item_nr].flag==door_nr) {				/* fÅr diese TÅr? */
+			else if (item_nr>=0 && item[item_nr].typ==KEY && item[item_nr].flag==door_nr) {				/* f√ºr diese T√ºr? */
 				if (door_nr==133) {
 					if (yes_no(romstr489)) {
 						oeffne_tuer();
@@ -523,14 +523,14 @@ int item_nr;												/* Das hat der Spieler in der Hand */
 				else {
 					oeffne_tuer();
 					tuer_offen=TRUE;
-					item[item_nr].bun_nr=254;					/* SchlÅssel ist weg */
+					item[item_nr].bun_nr=254;					/* Schl√ºssel ist weg */
 					item_nr=-1;										/* Nichts mehr in der hand */
 					}
 				}
 		}
 
 	if (!tuer_offen) {
-		item_nr=do_shoot(item_nr);				/* Keine TÅr -> Schiessen */
+		item_nr=do_shoot(item_nr);				/* Keine T√ºr -> Schiessen */
 		}
 		
 	return(item_nr);											/* Das hat er jetzt in der Hand */
@@ -538,20 +538,20 @@ int item_nr;												/* Das hat der Spieler in der Hand */
 
 void oeffne_tuer()
 {
-	/* ôffnet eine TÅre */
+	/* √ñffnet eine T√ºre */
 
 	unsigned int tuer,tuer_nr,tuer_typ;
 	int i;
 	int breite1,breite2,hoehe;
 
-	tuer=bunker[bunker_x+bunker_dx][bunker_y+bunker_dy];					/* Alte TÅre merken */
+	tuer=bunker[bunker_x+bunker_dx][bunker_y+bunker_dy];					/* Alte T√ºre merken */
 	tuer_nr=tuer-DOOR_ZU_START;
 
 	if (tuer==START_POS) {
 		tuer_nr=0;
 		}
 		
-	bunker[bunker_x+bunker_dx][bunker_y+bunker_dy]=tuer_nr+DOOR_AUF_START;	/* Offene TÅre hin */
+	bunker[bunker_x+bunker_dx][bunker_y+bunker_dy]=tuer_nr+DOOR_AUF_START;	/* Offene T√ºre hin */
 
 	Hm();
 	copy_bunker_screen();						/* Scr1->Scr2 , Beide Screens gleich */
@@ -569,24 +569,24 @@ void oeffne_tuer()
 
 	hippel_sfx(TUER_AN);
 	
-	if (is_aufzug_door(bunker_x+bunker_dx,bunker_y+bunker_dy)) tuer_typ=1;		/* SchiebetÅr */
+	if (is_aufzug_door(bunker_x+bunker_dx,bunker_y+bunker_dy)) tuer_typ=1;		/* Schiebet√ºr */
 	else tuer_typ=tuer%3;
 	
 	switch (tuer_typ) {
 		case 0:
 		case 1:
-			breite1=objekt_breite(11,walls);					/* SchiebetÅr links */
+			breite1=objekt_breite(11,walls);					/* Schiebet√ºr links */
 			hoehe=objekt_hoehe(11,walls);
-			breite2=objekt_breite(12,walls);					/* SchiebetÅr rechts */
+			breite2=objekt_breite(12,walls);					/* Schiebet√ºr rechts */
 
 			for(i=0;i<65;i++) {
 				cpy_raster(hlpbuf,scr2,0,69,319,69+hoehe-1,0,69);				/* Hintergrund hin */
 				if (i<breite1)
-					draw_obj_part(11,walls,													/* SchiebetÅr links */
+					draw_obj_part(11,walls,													/* Schiebet√ºr links */
 								i,0,breite1-1,hoehe-1,
 								1,scr2,49,69);
 				if (i<breite2)
-					draw_obj_part(12,walls,													/* SchiebetÅr rechts */
+					draw_obj_part(12,walls,													/* Schiebet√ºr rechts */
 								0,0,breite2-i-1,hoehe-1,
 								1,scr2,94+i,69);
 
@@ -595,12 +595,12 @@ void oeffne_tuer()
 			break;
 
 		case 2:
-			breite1=objekt_breite(13,walls);								/* VierertÅre */
+			breite1=objekt_breite(13,walls);								/* Vierert√ºre */
 			hoehe=objekt_hoehe(13,walls);
 
 			for(i=0;i<=hoehe;i++) {
 				cpy_raster(hlpbuf,scr2,0,69,319,69+hoehe*2-1,0,69);				/* Hintergrund hin */
-				draw_obj_part(13,walls,									/* Und VierteltÅre hin */
+				draw_obj_part(13,walls,									/* Und Viertelt√ºre hin */
 						i,i,breite1-1,hoehe-1,
 						1,scr2,49,69);
 				draw_obj_part(13,walls,
@@ -619,7 +619,7 @@ void oeffne_tuer()
 
 	hippel_sfx(TUER_AUS);
 	
-	if (tuer!=START_POS) put_2bit(tueren,tuer_nr,AUF);		/* TÅr ist jetzt auf */
+	if (tuer!=START_POS) put_2bit(tueren,tuer_nr,AUF);		/* T√ºr ist jetzt auf */
 
 	hol_maus();
 }
@@ -627,7 +627,7 @@ void oeffne_tuer()
 void press_button(nr)
 int nr;
 {
-	/* Spieler hat auf einen Richtungsknopf gedrÅckt, dieser muû jetzt gedrÅckt gezeichnet werden */
+	/* Spieler hat auf einen Richtungsknopf gedr√ºckt, dieser mu√ü jetzt gedr√ºckt gezeichnet werden */
 	int zeile,spalte;
 
 	if (option_nr==4) {							/* Nur wenn Board zu sehen ist: */
@@ -644,7 +644,7 @@ int nr;
 
 void release_button()
 {
-	/* Der Aufbau des Bunkers ist fertig, jetzt muû der Knopf wieder losgelassen werden: */
+	/* Der Aufbau des Bunkers ist fertig, jetzt mu√ü der Knopf wieder losgelassen werden: */
 
 	if (button_pressed!=-1) {
 		zeile=button_pressed/3;
@@ -671,7 +671,7 @@ void berechne_richtung()
 
 	print_richtung();
 	Hm();
-	cpy_raster(scr1,scr2,171,176,214,192,171,176);		/* Auf 2. Screen Åbertragen */
+	cpy_raster(scr1,scr2,171,176,214,192,171,176);		/* Auf 2. Screen √ºbertragen */
 	Sm();
 }
 
@@ -719,7 +719,7 @@ FLAG moved;											/* Hat sich Spieler bewegt? */
 	logbase=oldlogbase;
 	
 	swap_screens();
-	release_button();												/* Wenn Knopf gedrÅckt, dann loslassen */
+	release_button();												/* Wenn Knopf gedr√ºckt, dann loslassen */
 		
 	if (shot.ob_mem!=NULL) {						/* Schuss ist unterwegs */
 		Hm();
@@ -739,24 +739,24 @@ void *screen;													/* Zeichenscreen */
 	int akt;
 	int x_links,x_rechts;
 	FLAG spiegeln;
-	int wandcounter;								/* Nummer des nÑchsten freien wand[]-Eintrags */
-	BUNKERWAND wand[WANDMAX];						/* Hier werden die BunkerwÑnde vor dem Zeichnen eingetragen
+	int wandcounter;								/* Nummer des n√§chsten freien wand[]-Eintrags */
+	BUNKERWAND wand[WANDMAX];						/* Hier werden die Bunkerw√§nde vor dem Zeichnen eingetragen
 																		 und nach der Tiefe sortiert. */
 	register BUNKERWAND *waende;							/* -> wand[] */
 	void *bibliothek;
 	int ob_nr;
 
-	startwaende=wand;												/* Hier beginn die WÑnde */
+	startwaende=wand;												/* Hier beginn die W√§nde */
 	spiegeln=(richtung&1) ^ (bunker_x&1) ^ (bunker_y&1);			/* ab und zu spiegeln */
 
-	wandcounter=bau_waende(spiegeln,wand);						/* Baut die WÑnde im Array auf */
+	wandcounter=bau_waende(spiegeln,wand);						/* Baut die W√§nde im Array auf */
 
 	if (FALSE && my_system) {
 		writexy_fast(0,0,romstr490);
 		writexy_fast(32,0,str(2,(long)wandcounter));
 		}
 		
-	/* Pass 1: WÑnde zeichnen (only solids) */
+	/* Pass 1: W√§nde zeichnen (only solids) */
 	draw_obj(0,walls,0,screen,0,46);					/* Hintergrund zeichnen */
 
 	x_links=-1;																			/* Ganz links starten */
@@ -765,7 +765,7 @@ void *screen;													/* Zeichenscreen */
 			bibliothek=enemy_obj;
 			ob_nr=wand[akt].ob_nr-240;
 			}
-		else if (wand[akt].ob_nr>=220) {				/* Feindschuû? */
+		else if (wand[akt].ob_nr>=220) {				/* Feindschu√ü? */
 			ob_nr=wand[akt].ob_nr-220;
 			bibliothek=fire;
 			}
@@ -804,7 +804,7 @@ int x1,x2;											/* Linker und rechter Rand des Objektes */
 void *screen;
 {
 	/* Es wurde ein Objekt gefunden, welches ganz vorne liegt, aber transparent ist.
-		 Deshalb mÅssen alle dahinter liegenden Objekte ebenfalls gezeichnet werden... */
+		 Deshalb m√ºssen alle dahinter liegenden Objekte ebenfalls gezeichnet werden... */
 	int x_links,x_rechts;
 	int xl_alt;
 	int akt;
@@ -815,7 +815,7 @@ void *screen;
 		if (x_rechts>x2) x_rechts=x2;
 
 		/* Ab jetzt alle davorliegenden transparenten Objekte von hinten nach vorne zeichnen: */
-		/* Gab es eine LÅcke zwischen den solid Objects? */
+		/* Gab es eine L√ºcke zwischen den solid Objects? */
 		if (x_links>xl_alt) draw_transparent(999,wand,wandcounter,xl_alt,x_links-1,screen);
 		draw_transparent(wand[akt].tiefe,wand,wandcounter,x_links,x_rechts,screen);
 
@@ -847,7 +847,7 @@ void *screen;
 	void *old_logbase;
 	
 	void *bibliothek;								/* Welche Grafikbibliothek soll genommen werden? */
-	int ob_nr;											/* tatsÑchliche Objektnummer */
+	int ob_nr;											/* tats√§chliche Objektnummer */
 	int verkleinerung;
 	
 	while (TRUE) {
@@ -874,7 +874,7 @@ void *screen;
 							bibliothek=enemy_obj;
 							ob_nr=wand[i].ob_nr-240;
 							}
-						else if (wand[i].ob_nr>=220) {				/* Feindschuû? */
+						else if (wand[i].ob_nr>=220) {				/* Feindschu√ü? */
 							bibliothek=fire;
 							ob_nr=wand[i].ob_nr-220;
 							}
@@ -895,7 +895,7 @@ void *screen;
 							case 64: verkleinerung=130; break;			/* Enemy */
 							default: verkleinerung=0; break;
 							}				
-						if (verkleinerung) {					/* Item, muû verkleinert werden */
+						if (verkleinerung) {					/* Item, mu√ü verkleinert werden */
 							breite=objekt_breite(ob_nr,bibliothek);		/* unverkleinerte Breite */
 							mult=(255-verkleinerung)/255.0;			/* 0.0=0% 1.0=100% */
 							links=(wand[i].ob_x+(xl-wand[i].x1))/mult;
@@ -935,7 +935,7 @@ BUNKERWAND wand[];
 int wandcounter;
 FLAG only_solid;												/* Sollen nur Solid Objects gefunden werden? */
 int *x1;
-int *akt,*x2;													/* Hier wird Ergebnis zurÅckgegeben */
+int *akt,*x2;													/* Hier wird Ergebnis zur√ºckgegeben */
 {
 	/* Sucht beginnend ab x1 nach einer Kante, wobei die Kante mit der kleinsten Tiefe
 			bevorzugt wird. */
@@ -954,11 +954,11 @@ int *akt,*x2;													/* Hier wird Ergebnis zurÅckgegeben */
 					xmin=wand[i].x2;
 					l_index=i;
 					}
-	if (l_index==-1) {															/* hier kommt eine LÅcke */
+	if (l_index==-1) {															/* hier kommt eine L√ºcke */
 		tiefemin=xmin=999;
 		for(i=0;i<wandcounter;i++)
 			if (!only_solid || !wand[i].knuepfen) {										/* Please only solid */
-				if (wand[i].x1>*x1 && wand[i].x1<=xmin) {				/* Mîglichst weit links */
+				if (wand[i].x1>*x1 && wand[i].x1<=xmin) {				/* M√∂glichst weit links */
 					if (wand[i].x1==xmin) {												/* An gleicher Startposition? */
 						if (wand[i].tiefe<tiefemin) {								/* Dann den, der weiter vorne */
 							xmin=wand[i].x1;
@@ -988,7 +988,7 @@ int *akt,*x2;													/* Hier wird Ergebnis zurÅckgegeben */
 				}
 
 	*akt=l_index;
-	if (r_index>=0) *x2=wand[r_index].x1-1;								/* Bis zum nÑchsten Objekt */
+	if (r_index>=0) *x2=wand[r_index].x1-1;								/* Bis zum n√§chsten Objekt */
 	else *x2=wand[l_index].x2;														/* Dieses hier ganz anzeigen */
 
 	return(TRUE);
@@ -998,7 +998,7 @@ int bau_waende(spiegeln,waende)
 FLAG spiegeln;
 BUNKERWAND *waende;
 {
-	/* baut im Array wand[] die Bunkerwand auf und gibt zurÅck wieviel EintrÑge benutzt wurden */
+	/* baut im Array wand[] die Bunkerwand auf und gibt zur√ºck wieviel Eintr√§ge benutzt wurden */
 	int dx,dy;
 	int x1,y1;
 	int x2,y2;
@@ -1088,9 +1088,9 @@ BUNKERWAND *waende;
 	 	if (is_door(bunker[x1][y1])) {
 			waende->knuepfen=TRUE;
 			waende->modus=ODER;
-	 		waende++->ob_nr=8;							/* TÅrrahmen */
-			if (!is_open_door(bunker[x1][y1])) {			/* TÅr ist zu! */
-				(waende-1)->knuepfen=FALSE;				/* geschl. TÅr ist !transparent */
+	 		waende++->ob_nr=8;							/* T√ºrrahmen */
+			if (!is_open_door(bunker[x1][y1])) {			/* T√ºr ist zu! */
+				(waende-1)->knuepfen=FALSE;				/* geschl. T√ºr ist !transparent */
 				tuer=bunker[x1][y1];
 				if (tuer>=PRISONER_START && tuer<=PRISONER_END) {
 					waende->x1=68;
@@ -1101,20 +1101,20 @@ BUNKERWAND *waende;
 					waende->ob_x=0;
 			 		waende++->ob_nr=20;					/* Prisonerschild */
 					}				
-				door_nr=tuer-DOOR_ZU_START+1;						/* Nummer der TÅre berechnen */
-				if (door_nr>1 && tuer!=START_POS && !(tuer>=PRISONER_START && tuer<=PRISONER_END)) {					/* SchlÅssel nîtig? */
+				door_nr=tuer-DOOR_ZU_START+1;						/* Nummer der T√ºre berechnen */
+				if (door_nr>1 && tuer!=START_POS && !(tuer>=PRISONER_START && tuer<=PRISONER_END)) {					/* Schl√ºssel n√∂tig? */
 					if (item[door_nr-1].grafik<8) ob_nr=22;				/* Chequekarte */
-					else ob_nr=21;									/* SchlÅssel */
+					else ob_nr=21;									/* Schl√ºssel */
 					waende->x1=97-objekt_breite(ob_nr,walls)/2;
 					waende->x2=waende->x1+objekt_breite(ob_nr,walls)-1;
 				 	waende->y=109-objekt_hoehe(ob_nr,walls)/2;
 					waende->tiefe=22;
 					waende->knuepfen=TRUE;
 					waende->ob_x=0;
-			 		waende++->ob_nr=ob_nr;					/* SchlÅsselloch */
+			 		waende++->ob_nr=ob_nr;					/* Schl√ºsselloch */
 					}				
 					
-				if (is_aufzug_door(x1,y1)) tuer=1;			/* SchiebetÅr */
+				if (is_aufzug_door(x1,y1)) tuer=1;			/* Schiebet√ºr */
 				switch (tuer%3) {
 					case 0:
 					case 1:
@@ -1124,7 +1124,7 @@ BUNKERWAND *waende;
 									waende->tiefe=24;
 									waende->knuepfen=TRUE;
 									waende->ob_x=0;
-							 		waende++->ob_nr=11;					/* SchiebetÅr links */
+							 		waende++->ob_nr=11;					/* Schiebet√ºr links */
 
 									waende->x1=94;
 									waende->x2=94+objekt_breite(12,walls)-1;
@@ -1133,13 +1133,13 @@ BUNKERWAND *waende;
 									waende->knuepfen=TRUE;
 									waende->ob_x=0;
 									waende->modus=ODER;
-							 		waende++->ob_nr=12;					/* SchiebetÅr rechts */
+							 		waende++->ob_nr=12;					/* Schiebet√ºr rechts */
 									break;
 					case 2:	waende->x1=48;
 									waende->x2=48+objekt_breite(13,walls)-1;
 								 	waende->y=46+23;
 									waende->tiefe=24;
-									waende->knuepfen=TRUE;					/* VierertÅr */
+									waende->knuepfen=TRUE;					/* Vierert√ºr */
 									waende->ob_x=0;
 							 		waende++->ob_nr=13;
 
@@ -1171,7 +1171,7 @@ BUNKERWAND *waende;
 			waende++->ob_nr=5;						/* Normale Wand */
 		}
 
-	/* WÑnde in 2 Einheiten Entfernung: */
+	/* W√§nde in 2 Einheiten Entfernung: */
 
 	if (is_wand(bunker[x2-dx][y2-dy])) {				/* Feld 1 links des Spielers */
 		waende->x1=0;
@@ -1204,11 +1204,11 @@ BUNKERWAND *waende;
 			waende->ob_x=0;
 			waende->knuepfen=TRUE;
 			waende->modus=ODER;
-			waende++->ob_nr=9;						/* TÅrrahmen */
-			if (!is_open_door(bunker[x2][y2])) {					/* TÅr ist zu */
-				(waende-1)->knuepfen=FALSE;						/* geschl. TÅr ist !transparent */
+			waende++->ob_nr=9;						/* T√ºrrahmen */
+			if (!is_open_door(bunker[x2][y2])) {					/* T√ºr ist zu */
+				(waende-1)->knuepfen=FALSE;						/* geschl. T√ºr ist !transparent */
 				tuer=bunker[x2][y2];
-				if (is_aufzug_door(x2,y2)) tuer=1;					/* SchiebetÅr */
+				if (is_aufzug_door(x2,y2)) tuer=1;					/* Schiebet√ºr */
 				switch (tuer%3) {
 					case 0:
 					case 1:
@@ -1216,7 +1216,7 @@ BUNKERWAND *waende;
 						waende->x2=65+objekt_breite(15,walls)-1;
 						waende->y=70;
 						waende->tiefe=39;
-						waende->ob_nr=15;								/* SchiebetÅr */
+						waende->ob_nr=15;								/* Schiebet√ºr */
 						waende->knuepfen=TRUE;
 						waende++->ob_x=0;
 						break;
@@ -1225,7 +1225,7 @@ BUNKERWAND *waende;
 						waende->x2=65+objekt_breite(16,walls)-1;
 						waende->y=70;
 						waende->tiefe=39;
-						waende->ob_nr=16;								/* SchiebetÅr */
+						waende->ob_nr=16;								/* Schiebet√ºr */
 						waende->knuepfen=TRUE;
 						waende++->ob_x=0;
 						break;
@@ -1236,13 +1236,13 @@ BUNKERWAND *waende;
 			waende++->ob_nr=6;
 		}
 
-	/* WÑnde in 3 Einheiten Entfernung: */
+	/* W√§nde in 3 Einheiten Entfernung: */
 
 	if (is_wand(bunker[x3+dx][y3+dy])) {					/* Wand rechts des SPielers */
 		waende->x1=117;
 		waende->x2=191;
 		waende->y=46+19;
-		waende->tiefe=70;										/* SchrÑge */
+		waende->tiefe=70;										/* Schr√§ge */
 		waende->ob_nr=7;
 		waende->knuepfen=FALSE;
 		waende++->ob_x=5;
@@ -1267,13 +1267,13 @@ BUNKERWAND *waende;
 		waende->ob_x=16;
 		if (is_door(bunker[x3][y3])) {
 			waende->ob_x=0;
-			waende->knuepfen=TRUE;					/* offener TÅrrahmen ist transparent */
+			waende->knuepfen=TRUE;					/* offener T√ºrrahmen ist transparent */
 			waende->modus=ODER;
-			waende++->ob_nr=10;						/* TÅrrahmen */
+			waende++->ob_nr=10;						/* T√ºrrahmen */
 			if (!is_open_door(bunker[x3][y3])) {
-				(waende-1)->knuepfen=FALSE;			/* geschlossener TÅrrahmen ist nicht transparent */
+				(waende-1)->knuepfen=FALSE;			/* geschlossener T√ºrrahmen ist nicht transparent */
 				tuer=bunker[x3][y3];
-				if (is_aufzug_door(x3,y3)) tuer=1;				/* SchiebetÅr */
+				if (is_aufzug_door(x3,y3)) tuer=1;				/* Schiebet√ºr */
 				switch(tuer%3) {
 					case 0:
 					case 1:
@@ -1281,7 +1281,7 @@ BUNKERWAND *waende;
 						waende->x2=76+objekt_breite(17,walls)-1;
 						waende->y=46+29;
 						waende->tiefe=60;
-						waende->ob_nr=17;								/* SchiebetÅr */
+						waende->ob_nr=17;								/* Schiebet√ºr */
 						waende->knuepfen=TRUE;
 						waende++->ob_x=0;
 						break;
@@ -1290,7 +1290,7 @@ BUNKERWAND *waende;
 						waende->x2=76+objekt_breite(18,walls)-1;
 						waende->y=46+29;
 						waende->tiefe=60;
-						waende->ob_nr=18;								/* VierertÅr */
+						waende->ob_nr=18;								/* Vierert√ºr */
 						waende->knuepfen=TRUE;
 						waende++->ob_x=0;
 						break;
@@ -1304,7 +1304,7 @@ BUNKERWAND *waende;
 	set_enemies(&waende);					/* Setzt die Gegner in die Bunker */
 	set_items(&waende);						/* Und noch die Items drauflegen */
 
-	return(waende-start);					/* Soviel EintrÑge wurden benutzt */
+	return(waende-start);					/* Soviel Eintr√§ge wurden benutzt */
 }
 
 void set_bunker_pal()
@@ -1313,16 +1313,16 @@ void set_bunker_pal()
 		 gesetzt */
 	int i;
 		
-	for(i=0;i<16;i++) bunker_raster[i]=(tv_modus) ? tv_pal[i] : bunker_pal[i];	/* Palette Åbertragen */
+	for(i=0;i<16;i++) bunker_raster[i]=(tv_modus) ? tv_pal[i] : bunker_pal[i];	/* Palette √ºbertragen */
 	
 	set_raster(0,45,bunker_raster);
-	fade_raster(45,6-helligkeit);				/* und entsprechend abschwÑchen */
+	fade_raster(45,6-helligkeit);				/* und entsprechend abschw√§chen */
 	show_raster();										/* Und anzeigen */
 }
 
 void do_taschenlampe()
 {
-	/* Von Zeit zu Zeit wird die Taschenlampe schwÑcher */
+	/* Von Zeit zu Zeit wird die Taschenlampe schw√§cher */
 	FLAG dunkler=FALSE;
 		
 	if (vbl_ct>lampencounter+6*50*60) {
@@ -1335,7 +1335,7 @@ void do_taschenlampe()
 		}
 
 	helligkeit=ycargo_menge[10];
-	if (helligkeit>6) helligkeit=6;			/* Volle LampenstÑrke */
+	if (helligkeit>6) helligkeit=6;			/* Volle Lampenst√§rke */
 	
 	if (dunkler) set_bunker_pal();
 }
@@ -1347,7 +1347,7 @@ void draw_whole_automap()
 	int wert;
 	int farbe;
 	
-	fill(0,194,48,319,167);						/* Weglîschen */
+	fill(0,194,48,319,167);						/* Wegl√∂schen */
 	
 	if (automapping) 
 		for(y=0;y<30;y++)
@@ -1373,8 +1373,8 @@ int x,y;											/* Angabe in AutomapKoordinaten */
 	switch (wert) {
 		case 0: farbe=0; break;					/* Nichts */
 		case 1:	farbe=13; break;					/* Wand */
-		case 2:	if (is_open_door(bunker[x+3][y+3])) farbe=2;	/* Geîffnete TÅr */
-						else farbe=10;							/* geschlossene TÅr */
+		case 2:	if (is_open_door(bunker[x+3][y+3])) farbe=2;	/* Ge√∂ffnete T√ºr */
+						else farbe=10;							/* geschlossene T√ºr */
 						break;
 		case 3: farbe=6; break;					/* Item */
 		case 4: farbe=15; break;					/* Spieler */
@@ -1400,7 +1400,7 @@ int farbe,x,y;
 
 void map_update()
 {
-	/* Der Spieler hat sich ein Feld weiter bewegt, jetzt muû die Automap auf den neuesten
+	/* Der Spieler hat sich ein Feld weiter bewegt, jetzt mu√ü die Automap auf den neuesten
 		 Stand gebracht werden. */
 
 	auto_nr=0;											/* Bisher keine Updates */
@@ -1465,7 +1465,7 @@ void draw_updates()
 		}
 	
 	if (player[0].x>=0)									/* Spieler vorhanden? */
-		draw_automap(get_automap(player[0].x,player[0].y),player[0].x,player[0].y);	/* Alten Spieler lîschen */
+		draw_automap(get_automap(player[0].x,player[0].y),player[0].x,player[0].y);	/* Alten Spieler l√∂schen */
 	
 	for(i=0;i<auto_nr;i++) 	
 		draw_automap(automap_2[i].wert,automap_2[i].x,automap_2[i].y);
@@ -1498,7 +1498,7 @@ int x,y;
 	if (auto_nr<16) {
 		automap_2[auto_nr].x=x;
 		automap_2[auto_nr].y=y;
-		automap_2[auto_nr++].wert=wert;		/* fÅr 2. Screen merken */
+		automap_2[auto_nr++].wert=wert;		/* f√ºr 2. Screen merken */
 		}
 }
 
@@ -1538,7 +1538,7 @@ int x,y;															/* Position im Bunker */
 	int mauspos;
 	long wert;
 	
-	/* Welches BodenstÅck im Bunker reprÑsentiert welche Position? 
+	/* Welches Bodenst√ºck im Bunker repr√§sentiert welche Position? 
 		 pos[0]=hinten links
 		 pos[1]=hinten rechts
 		 pos[2]=vorne links
@@ -1578,8 +1578,8 @@ int x,y;															/* Position im Bunker */
 					mauspos=47+objekt_hoehe(item[item_nr].grafik,items)/2;
 					if (ende!=0 && mousey<mauspos) set_mousepos(mousex,mauspos);
 					}
-				} while(ende!=0);								/* tatsÑchlicher Abbruch */	
-			auto_nr=0;												/* Alle Changes sind Åbertragen */
+				} while(ende!=0);								/* tats√§chlicher Abbruch */	
+			auto_nr=0;												/* Alle Changes sind √ºbertragen */
 			player[0]=player[1];							/* Und Spieler an selber Position */
 			draw_whole=0;											/* Kein Neuzeichnen der Automap */
 			}
@@ -1595,11 +1595,11 @@ int x,y;															/* Position im Bunker */
 				}
 			else {
 				swap(&party[member].hand[hand],&item_nr);
-				draw_haende();									/* Die HÑnde neu zeichnen */
+				draw_haende();									/* Die H√§nde neu zeichnen */
 				}
 			wait_mouse(0);
 			}
-		if (maus_in(0,46,144,124)) {					/* TÅre îffnen 77,104,106,114 */
+		if (maus_in(0,46,144,124)) {					/* T√ºre √∂ffnen 77,104,106,114 */
 			item_nr=bedien_tuer(item_nr);
 			}
 		if (maus_in(24,125,167,167)) {					/* User will Item aufnehmen/Ablegen */
@@ -1655,7 +1655,7 @@ int x,y;															/* Position im Bunker */
 							item[item_nr].bun_nr=254;				/* Item jetzt weg */
 							break;
 						}
-					draw_bunker(FALSE);						/* Objekt weglîschen */
+					draw_bunker(FALSE);						/* Objekt wegl√∂schen */
 					}
 				}
 			else {													/* Item ablegen */
@@ -1678,7 +1678,7 @@ int x,y;															/* Position im Bunker */
 			}				
 		} while(item_nr!=-1);							/* Solange er noch was in der Hand hat */
 
-	while (is_key()) wait_key();						/* Tastaturbuffer lîschen */
+	while (is_key()) wait_key();						/* Tastaturbuffer l√∂schen */
 	hol_maus();
 }
 
@@ -1704,7 +1704,7 @@ int member_nr;
 	
 	if (is_tot(member_nr)) member_nr=0;		/* Wenn tot auf Spieler gehen */
 
-	laenge=load_objekte(MENSCH_OBJ,walls);				/* öber die WÑnde laden */
+	laenge=load_objekte(MENSCH_OBJ,walls);				/* √úber die W√§nde laden */
 	prisoner_obj=walls+laenge;
 	load_objekte(PRISONER_OBJ,prisoner_obj);
 	
@@ -1729,7 +1729,7 @@ int member_nr;
 		button=NOTHING;
 		
 		if (item_nr!=-1) {
-			if (item[item_nr].typ<HELM || item[item_nr].typ>SCHUHE) {		/* Keine KleidungsstÅcke */
+			if (item[item_nr].typ<HELM || item[item_nr].typ>SCHUHE) {		/* Keine Kleidungsst√ºcke */
 				move_objekt(item[item_nr].grafik,item_rea,ODER,0,hlpbuf,
 															STOP_R|STOP_L|STOP_O|STOP_U,0,0,319,rasterpos,TRUE);
 				}
@@ -1747,7 +1747,7 @@ int member_nr;
 						mauspos=rasterpos+1+objekt_hoehe(item[item_nr].grafik-51+7,walls)/2;
 						if (ende!=0 && mousey<mauspos) set_mousepos(mousex,mauspos);
 						}
-					} while(ende!=0);								/* tatsÑchlicher Abbruch */	
+					} while(ende!=0);								/* tats√§chlicher Abbruch */	
 			}
 		else {
 			hol_maus();
@@ -1764,7 +1764,7 @@ int member_nr;
 					}
 				if (reagenz>=0) {
 					mund(4);											/* Mund bewegen */
-					subtract_reagenz(member_nr,reagenz,item[item_nr].flag);	/* NÑhrwert */
+					subtract_reagenz(member_nr,reagenz,item[item_nr].flag);	/* N√§hrwert */
 					item[item_nr].bun_nr=254;					/* Objekt ist weg */
 					item_nr=-1;										/* und weg bei der Maus */
 					charakter_ausgabe(member_nr);					/* Und Werte neu ausgeben */
@@ -1828,11 +1828,11 @@ int member_nr;
 					if (my<26) hand=0;							/* Linke Hand? */
 					else hand=1;										/* Rechte Hand? */
 					swap(&party[nr].hand[hand],&item_nr);
-					draw_hand(nr);									/* Die HÑnde neu zeichnen */
+					draw_hand(nr);									/* Die H√§nde neu zeichnen */
 					}
 			wait_mouse(0);
 			}
-		if (mk==2 && my<46) {						/* Neuen Member wÑhlen */
+		if (mk==2 && my<46) {						/* Neuen Member w√§hlen */
 			if (mx/80!=member_nr) {					/* nicht derselbe? */
 				if (!is_tot(mx/80)) {
 					neuer_member=TRUE;
@@ -1846,20 +1846,20 @@ int member_nr;
 		} while (!(button==EXIT_BTN || mk==2 && my>46));	/* Bis zum Rechtsklick auf obere Leiste */
 			
 	Hm();
-	draw_rea(member_nr);							/* und zurÅck zu den HÑnden */
+	draw_rea(member_nr);							/* und zur√ºck zu den H√§nden */
 	copy_reagenz();
 	Sm();
 	
-	load_objekte(BUNKER_OBJ,walls);				/* WÑnde wieder einladen */
+	load_objekte(BUNKER_OBJ,walls);				/* W√§nde wieder einladen */
 	
-	auto_nr=0;												/* Alle Changes sind Åbertragen */
+	auto_nr=0;												/* Alle Changes sind √ºbertragen */
 	player[0]=player[1];							/* Und Spieler an selber Position */
 	draw_whole=1;											/* Und neu zeichnen der Automap */
 
 	redraw_buttons(old_buttons);
 	copy_buttons();
 	
-	set_raster(0,rasterpos,NULL);				/* Figurraster lîschen */
+	set_raster(0,rasterpos,NULL);				/* Figurraster l√∂schen */
 	draw_bunker(FALSE);
 	set_bunker_pal();
 	show_raster();
@@ -1876,7 +1876,7 @@ int member_nr;
 
 void draw_haende()
 {
-	/* zeichnet alle HÑnde neu */
+	/* zeichnet alle H√§nde neu */
 	int member;
 	
 	Hm();
@@ -1895,7 +1895,7 @@ int member;
 
 	if (!is_tot(member)) {
 		Hm();
-		draw_obj_part(0,reagenz,10,9,30,43,MOVE,scr1,member*80+10,9);	/* Altes lîschen */
+		draw_obj_part(0,reagenz,10,9,30,43,MOVE,scr1,member*80+10,9);	/* Altes l√∂schen */
 	
 		x=19+member*80;
 		y=10+6;
@@ -2076,7 +2076,7 @@ int member;
 	long prot;
 	
 	Hm();
-	draw_obj_part(1,walls,216,5,257,89,MOVE,scr1,216,45+objekt_hoehe(0,walls)+5);	/* Figur lîschen */
+	draw_obj_part(1,walls,216,5,257,89,MOVE,scr1,216,45+objekt_hoehe(0,walls)+5);	/* Figur l√∂schen */
 	draw_kleidung(party[member].helm,237,75,176+8,83);
 	draw_kleidung(party[member].oberteil,237,90,272+8,93);
 	draw_kleidung(party[member].unterteil,237,118,172+8,127);
@@ -2098,7 +2098,7 @@ int member;
 
 long prot_erhoeh(item_nr,wertung)
 int item_nr;
-int wertung;					/* Wie ist das KleidungsstÅck gewichtet */
+int wertung;					/* Wie ist das Kleidungsst√ºck gewichtet */
 {
 	if (item_nr!=-1) return(item[item_nr].flag*wertung);
 	else return(0);
@@ -2110,7 +2110,7 @@ int x_center;
 int y;
 int text_x,text_y;									/* Koordinaten der Prozentangabe */
 {
-	/* Zeichnet ein KleidungsstÅck */
+	/* Zeichnet ein Kleidungsst√ºck */
 	int ob_nr;
 	int prozent;
 	
@@ -2129,7 +2129,7 @@ unsigned char feld[];
 int pos;
 {
 	/* Holt aus einem Feld aus Bytes den Eintrag an Position 'pos', wobei jeder Eintrag
-	   1 Bit groû ist. */
+	   1 Bit gro√ü ist. */
 	register int index,shift;
 	
 	index=pos/8;
@@ -2143,14 +2143,14 @@ int pos;
 int wert;
 {
 	/* Speichert in einem Feld aus Bytes den Eintrag an Position 'pos', wobei jeder Eintrag
-	   1 Bit groû ist. */
+	   1 Bit gro√ü ist. */
 	register int index;
 	register int shift;
 	register unsigned char maske;
 	
 	index=pos/8;
 	shift=7-(pos%8);
-	maske=~(1<<shift);						/* Maske zum Lîschen bereechnen */
+	maske=~(1<<shift);						/* Maske zum L√∂schen bereechnen */
 	feld[index]&=maske;						/* ausmaskieren */
 	feld[index]|=wert<<shift;			/* einodern */
 }
@@ -2160,7 +2160,7 @@ unsigned char feld[];
 int pos;
 {
 	/* Holt aus einem Feld aus Bytes den Eintrag an Position 'pos', wobei jeder Eintrag
-	   2 Bit groû ist. */
+	   2 Bit gro√ü ist. */
 	register int index,shift;
 	
 	index=pos/4;
@@ -2174,14 +2174,14 @@ int pos;
 int wert;
 {
 	/* Speichert in einem Feld aus Bytes den Eintrag an Position 'pos', wobei jeder Eintrag
-	   2 Bit groû ist. */
+	   2 Bit gro√ü ist. */
 	register int index;
 	register int shift;
 	register unsigned char maske;
 	
 	index=pos/4;
 	shift=6-(pos%4)*2;
-	maske=~(3<<shift);						/* Maske zum Lîschen bereechnen */
+	maske=~(3<<shift);						/* Maske zum L√∂schen bereechnen */
 	feld[index]&=maske;						/* ausmaskieren */
 	feld[index]|=wert<<shift;			/* einodern */
 }
@@ -2189,7 +2189,7 @@ int wert;
 FLAG liegt_item(x,y)
 int x,y;
 {
-	/* öberprÅft, ob an dieser Stelle Items liegen */
+	/* √úberpr√ºft, ob an dieser Stelle Items liegen */
 	
 	return(get_1bit(itemmap,(x-3)+(y-3)*80)==1);
 }
@@ -2197,7 +2197,7 @@ int x,y;
 FLAG is_aufzug_door(x,y)
 int x,y;
 {
-	/* öberprÅft, ob es sich bei diesem Feld um eine AufzugstÅre handelt */
+	/* √úberpr√ºft, ob es sich bei diesem Feld um eine Aufzugst√ºre handelt */
 	
 	if (is_door(bunker[x][y]) && 
 				(is_aufzug(bunker[x-1][y]) ||
@@ -2210,7 +2210,7 @@ int x,y;
 FLAG is_aufzug(feld)
 unsigned int feld;
 {
-	/* öberprÅft, ob dieses Feld ein Aufzugsfeld ist */
+	/* √úberpr√ºft, ob dieses Feld ein Aufzugsfeld ist */
 	
 	return(feld>=LIFT_START && feld<=LIFT_END);
 }
@@ -2218,7 +2218,7 @@ unsigned int feld;
 FLAG is_door(feld)
 unsigned int feld;
 {
-	/* öberprÅft, ob dieses Feld eine TÅr ist (offen oder geschlossen) */
+	/* √úberpr√ºft, ob dieses Feld eine T√ºr ist (offen oder geschlossen) */
 
 	return (feld==START_POS || (feld>=DOOR_ZU_START && feld<DOOR_AUF_END) || 
 														(feld>=PRISONER_START && feld<=PRISONER_END));
@@ -2227,7 +2227,7 @@ unsigned int feld;
 FLAG is_open_door(feld)
 unsigned int feld;
 {
-	/* öberprÅft, ob Feld eine geîffnete TÅre ist: */
+	/* √úberpr√ºft, ob Feld eine ge√∂ffnete T√ºre ist: */
 	
 	return(feld>=DOOR_AUF_START && feld<=DOOR_AUF_END);
 }
@@ -2235,7 +2235,7 @@ unsigned int feld;
 FLAG betretbar(feld)
 unsigned int feld;
 {
-	/* öberprÅft, ob Feld in Bunker betretbar ist */
+	/* √úberpr√ºft, ob Feld in Bunker betretbar ist */
 
 	if (feld==START_POS || feld==WALL || (feld>=DOOR_ZU_START && feld<=DOOR_ZU_END) ||
 						(feld>=PRISONER_START && feld<=PRISONER_END))
@@ -2247,7 +2247,7 @@ unsigned int feld;
 FLAG enemy_betretbar(x,y)
 unsigned int x,y;
 {
-	/* öberprÅft, ob ein Feld im Bunker fÅr die Feinde betretbar ist */
+	/* √úberpr√ºft, ob ein Feld im Bunker f√ºr die Feinde betretbar ist */
 	
 	return(betretbar(bunker[x][y]) && !is_aufzug_door(x,y));
 }
@@ -2255,7 +2255,7 @@ unsigned int x,y;
 FLAG is_wand(feld)
 unsigned int feld;
 {
-	/* öberprÅft, ob dieses Feld entweder eine Wand, oder eine TÅr ist */
+	/* √úberpr√ºft, ob dieses Feld entweder eine Wand, oder eine T√ºr ist */
 
 	return (feld==START_POS || feld==HIDDEN_WALL || feld==WALL || 
 					(feld>=DOOR_ZU_START && feld<=DOOR_AUF_END) || (feld>=PRISONER_START && feld<=PRISONER_END));
@@ -2274,7 +2274,7 @@ unsigned int startfeld;
 	unsigned int feld;
 	unsigned int prisoner_nr;
 	
-	load_dungeon(nr); 			 				/* LÑdt Dungeon von Disk */
+	load_dungeon(nr); 			 				/* L√§dt Dungeon von Disk */
 
 	bunker_x=-1;
 	/* Startposition suchen: */
@@ -2286,7 +2286,7 @@ unsigned int startfeld;
 				bunker_y=y;
 				}
 			
-			if (feld==START_POS && nr==21) bunker[x][y]=LEER;	/* Startfeld in Bunker #0 lîschen */
+			if (feld==START_POS && nr==21) bunker[x][y]=LEER;	/* Startfeld in Bunker #0 l√∂schen */
 			
 			if (feld>=PRISONER_START && feld<=PRISONER_END) {	/* Prisoner */
 				prisoner_nr=feld-PRISONER_START;
@@ -2322,7 +2322,7 @@ unsigned int startfeld;
 						}
 					}
 				else {
-					objekt=feld-ITEM_START;					/* SchlÅsselnummer bestimmen */
+					objekt=feld-ITEM_START;					/* Schl√ºsselnummer bestimmen */
 					if (item[objekt].bun_nr==255) {			/* Wurde Item schon bewegt? */
 						item[objekt].bun_nr=nr;				/* In diesem Bunker */
 						item[objekt].bun_x=x;
@@ -2333,7 +2333,7 @@ unsigned int startfeld;
 				bunker[x][y]=LEER;						/* Objekt weg nehmen */
 				}
 
-			if (feld>=DOOR_ZU_START && feld<=DOOR_AUF_END) {		/* TÅr? */
+			if (feld>=DOOR_ZU_START && feld<=DOOR_AUF_END) {		/* T√ºr? */
 				if (is_open_door(feld)) {
 					tuer_nr=feld-DOOR_AUF_START;
 					tuer_ist_status=AUF;
@@ -2342,9 +2342,9 @@ unsigned int startfeld;
 					tuer_nr=feld-DOOR_ZU_START;
 					tuer_ist_status=ZU;
 					}
-				tuer=get_2bit(tueren,tuer_nr);							/* Sollstatus der TÅr holen */
+				tuer=get_2bit(tueren,tuer_nr);							/* Sollstatus der T√ºr holen */
 				tuer_soll_status=tuer&1;
-				if ((tuer&2)!=0) {										/* TÅrstatus noch unbekannt */
+				if ((tuer&2)!=0) {										/* T√ºrstatus noch unbekannt */
 					if (tuer_soll_status!=0) 
 						tuer_soll_status=1-tuer_ist_status;					/* invertieren */
 					else	
@@ -2355,7 +2355,7 @@ unsigned int startfeld;
 				}
 			}
 
-	for(i=0;i<50*80;i++) put_1bit(itemmap,i,0);			/* Alle Items lîschen */
+	for(i=0;i<50*80;i++) put_1bit(itemmap,i,0);			/* Alle Items l√∂schen */
 	for(i=0;i<ITEMMAX;i++) {
 		if (item[i].bun_nr==nr) {						/* Objekt in diesem Bunker? */
 			if (item[i].bun_x==255) {						/* Position undefiniert */
@@ -2402,7 +2402,7 @@ unsigned int startfeld;
 		bunker_y+=bunker_dy;
 		}
 	
-	auto_nr=0;												/* Keine VerÑnderung */
+	auto_nr=0;												/* Keine Ver√§nderung */
 	player[0].x=player[1].x=-1;					/* Kein Spieler bisher gezeichnet */
 	draw_whole=2;											/* gesamte Karte auf beide Screens zeichnen */
 	
@@ -2439,16 +2439,16 @@ int nr;
 	load_bibliothek(BUNKER0_DAT+nr,bunker_buf);
 
 	xmax=*bunker_buf++;
-	ymax=*bunker_buf++;									/* Grîûe des Bunkers holen */
+	ymax=*bunker_buf++;									/* Gr√∂√üe des Bunkers holen */
 
 	for(x=0;x<=xmax;x++) 
 		for(y=0;y<=ymax;y++) 
-			bunker[x+3][y+3]=*bunker_buf++; 				/* Und Bunker Åbertragen */
+			bunker[x+3][y+3]=*bunker_buf++; 				/* Und Bunker √ºbertragen */
 }
 
 void init_objekte()
 {
-	/* LÑdt die Objekte von Disk und initialisiert die entsprechenden Strukturen */
+	/* L√§dt die Objekte von Disk und initialisiert die entsprechenden Strukturen */
 	int i,j,bunker;
 	int item_nr,item_pos;
 	OBJEKT_DISK *obj;
@@ -2464,16 +2464,16 @@ void init_objekte()
 			party[i].tasche[j]=-1;			/* Tasche leer */
 	
 	for(i=0;i<TUERMAX;i++) {
-		item[i].bun_nr=255;					/* Position des SchlÅssels ist unbestimmt */
+		item[i].bun_nr=255;					/* Position des Schl√ºssels ist unbestimmt */
 		item[i].pos=zufall(4);			/* Liegt in irgendeiner Ecke */
 		item[i].typ=KEY;
-		item[i].grafik=zufall(36);		/* Irgendein SchlÅssel */
-		item[i].flag=i+1;						/* FÅr TÅr i */
+		item[i].grafik=zufall(36);		/* Irgendein Schl√ºssel */
+		item[i].flag=i+1;						/* F√ºr T√ºr i */
 		}
 	
 	obj=pack_buf+32000;										/* In hlpbuf laden */
 	laenge=load_bibliothek(OBJEKT_DAT,obj);
-	if (laenge&1) laenge++;								/* LÑnge gerade machen */
+	if (laenge&1) laenge++;								/* L√§nge gerade machen */
 	
 	statistik=pack_buf+32000+laenge;					/* Bunkerstatistik hier hin */
 	load_bibliothek(BUNKER_DAT,statistik);
@@ -2534,7 +2534,7 @@ void init_objekte()
 
 FLAG platz_in_item()
 {
-	/* öberprÅft, ob noch ein weiteres Objekt in item[] aufgenommen werden kann. */
+	/* √úberpr√ºft, ob noch ein weiteres Objekt in item[] aufgenommen werden kann. */
 
 	if (my_system) 	 
 		if (item_max>=ITEMMAX) internal(build(romstr522,item_max));
@@ -2543,7 +2543,7 @@ FLAG platz_in_item()
 
 void load_waende()
 {
-	/* LÑdt alle Grafiken des Bunkers in den Speicher */
+	/* L√§dt alle Grafiken des Bunkers in den Speicher */
 	long laenge;
 
 	reagenz=pack_buf;
@@ -2565,7 +2565,7 @@ void load_waende()
 	laenge=load_objekte(SHOTS_OBJ,shoots);
 			
 	walls=shoots+laenge;
-	laenge=load_objekte(BUNKER_OBJ,walls);		/* Walls mÅssen direkt vor Shrink_Buff liegen */
+	laenge=load_objekte(BUNKER_OBJ,walls);		/* Walls m√ºssen direkt vor Shrink_Buff liegen */
 
 	shrink_buff=walls+laenge;					/* Ab hier Verkleinerungsbuffer */
 
@@ -2581,4 +2581,3 @@ void load_waende()
 }
 
 
-

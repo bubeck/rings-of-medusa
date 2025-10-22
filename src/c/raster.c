@@ -1,7 +1,7 @@
                
-/* Dieser Part stellt alle Raster-Routinen zur VerfÅgung, um also
+/* Dieser Part stellt alle Raster-Routinen zur Verf√ºgung, um also
    rechteckige Grafikbereiche zu bearbeiten.
-   Weiterhin sind hier sÑmtliche Funktionen zur Objektebearbeitung
+   Weiterhin sind hier s√§mtliche Funktionen zur Objektebearbeitung
    zu finden.
 
    Copyright 1990 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt
@@ -23,8 +23,8 @@ typedef struct {
 typedef struct {
   long offset;              /* Offset in den Objektspeicher */
   int breite;               /* Breite des Objekts in Pixeln */
-  int hoehe;                /* Hîhe des Objekts in Pixeln */
-  unsigned char maske;      /* Hat Objekt eine Maske (unbenÅtzt) */
+  int hoehe;                /* H√∂he des Objekts in Pixeln */
+  unsigned char maske;      /* Hat Objekt eine Maske (unben√ºtzt) */
   unsigned char planes;     /* Wieviel Planes hat Objekt */
   int breite_bytes;         /* Breite des Objekts in Bytes */
   int x_neo;                /* Position innerhalb Neochrom-Bild (unwichtig) */
@@ -35,9 +35,9 @@ typedef struct {
 
 void pic_move(quelle,y1,y2,y3)
 char *quelle;           /* Zeiger auf Bufferanfang */
-int y1;                 /* Startzeile, ab der Åbertragen wird */
-int y2;                 /* Endzeile, bis zu der Åbertragen wird */
-int y3;                 /* Startzeile auf Screen, wohin Åbertragen wird */
+int y1;                 /* Startzeile, ab der √ºbertragen wird */
+int y2;                 /* Endzeile, bis zu der √ºbertragen wird */
+int y3;                 /* Startzeile auf Screen, wohin √ºbertragen wird */
 {
 	/* Kopiert aus einem 320 Pixel breiten Buffer auf den Bildschirm, und zwar Zeilenweise
 		 von y1-y2 nach y3 auf den Bildschirm */
@@ -52,8 +52,8 @@ char *quelle,*ziel;                   /* Adresse Quell- und Zielbildschirm */
 int x1,y1,x2,y2;                    /* Koordinaten im Quellscreen */
 int x3,y3;                          /* Linke obere Ecke im Zielscreen */
 {
-  /* Kopiert rechteckiges GrafikstÅck von einem Screen zum anderen */
-  /* Dabei muû der Screen in Low-Res sein und eine Breite von 320 Pixeln haben */
+  /* Kopiert rechteckiges Grafikst√ºck von einem Screen zum anderen */
+  /* Dabei mu√ü der Screen in Low-Res sein und eine Breite von 320 Pixeln haben */
 
   if (x1==0 && x2==319 && x3==0)            					/* Ganze Bildschirmzeilen? */
     copy_zeilen(quelle+y1*160L,ziel+y3*160L,y2-y1+1);   		/* Schnelle Routine */
@@ -64,8 +64,8 @@ long load_objekte(file_nr,adr)
 int file_nr;
 char *adr;
 {
-	/* LÑdt Objekte und wirft alle unwichtigen Objektheader raus
-		 Gibt die LÑnge der Objektdatei VOR dem Rauswerfen der Header zurÅck. */
+	/* L√§dt Objekte und wirft alle unwichtigen Objektheader raus
+		 Gibt die L√§nge der Objektdatei VOR dem Rauswerfen der Header zur√ºck. */
 		 		 
   OBJEKT_HEADER1 *ob_header;
   OBJEKT_HEADER2 *ob_header2;
@@ -83,9 +83,9 @@ char *adr;
         ob_header->version==0x0101) {
 	  ob_header2=(OBJEKT_HEADER2 *)(adr+sizeof(OBJEKT_HEADER1)+ob_header->internal);
 		laenge=ob_header2->dateilaenge;
-	  memcpy(adr,&ob_header2->anzahl,laenge);			/* Filenamen Åberspringen */
+	  memcpy(adr,&ob_header2->anzahl,laenge);			/* Filenamen √ºberspringen */
 		convert_objekte(adr);												/* Richtig konvertieren */
-    return(max_laenge);													/* + LÑnge der Åbersprugenen Header */
+    return(max_laenge);													/* + L√§nge der √ºbersprugenen Header */
     }
   else return(0L);              /* Fehler! */
 }
@@ -93,7 +93,7 @@ char *adr;
 void convert_objekte(ob_mem)
 int *ob_mem;
 {
-	/* Konvertiert einen komplette Objektbibliothek in ein GerÑtespezifisches Format: */
+	/* Konvertiert einen komplette Objektbibliothek in ein Ger√§tespezifisches Format: */
 	int anzahl,i;
 	OBJEKT *obj;
 	
@@ -121,7 +121,7 @@ int size;									/* 0..255, 0=Normal, 255=miniklein */
 int ob_nr;
 void *ob_mem;
 {
-	/* Berechnet die Hîhe des Objekts, wenn es entsprechend verkleinert ist */
+	/* Berechnet die H√∂he des Objekts, wenn es entsprechend verkleinert ist */
 	float groesse;
 	
 	groesse=(255-size)/255.0;								/* 0.0=0%, 1.0=100% */
@@ -146,7 +146,7 @@ int objekt_hoehe(ob_nr,ob_mem)
 int ob_nr;
 int *ob_mem;
 {
-  /* Berechnet die Hîhe des entsprechenden Objekts */
+  /* Berechnet die H√∂he des entsprechenden Objekts */
   OBJEKT *obj;
   
   if (ob_nr>=(*ob_mem++)) return(0);									/* Soviel Objekte sind nicht da */
@@ -158,26 +158,26 @@ int *ob_mem;
 unsigned int move_objekt(ob_nr,ob_mem,modus,ziel_y,ziel_mem,clip_modus,clipx1,clipy1,clipx2,clipy2,switch_scr)
 int ob_nr;
 int *ob_mem;
-int modus;											/* VerknÅpfungsmodus */
+int modus;											/* Verkn√ºpfungsmodus */
 int ziel_y;											/* Retten des Hintergrundes */
 void *ziel_mem;
 unsigned int clip_modus;					/* Siehe Clipmodus in typedef.c */
 int clipx1,clipy1,clipx2,clipy2;
 FLAG switch_scr;									/* 2 Bildschirmtechnik? */
 {
-	/* Bewegt ein Objekt innerhalb eines Rechtecks ggf. unter BerÅcksichtigung der 2 Bildschirm-
+	/* Bewegt ein Objekt innerhalb eines Rechtecks ggf. unter Ber√ºcksichtigung der 2 Bildschirm-
 		 technik. */
 	int mx1,my1;							/* Diese Mausposition */
 	int mx2,my2;							/* letzte Mausposition */
 	int breite,hoehe;
 	unsigned int abbruch=0;
 		
-	breite=objekt_breite(ob_nr,ob_mem);					/* Grîûe des Objekts holen */
+	breite=objekt_breite(ob_nr,ob_mem);					/* Gr√∂√üe des Objekts holen */
 	hoehe=objekt_hoehe(ob_nr,ob_mem);
 	
 	Hm();
 	
-	if (switch_scr) copy_screen(scr1,scr2);					/* auf 2. Bildschirm Åbertragen */
+	if (switch_scr) copy_screen(scr1,scr2);					/* auf 2. Bildschirm √ºbertragen */
 	cpy_raster(scr1,ziel_mem,0,clipy1,319,clipy2,0,ziel_y);		/* Hintergrund retten */
 
 	mx2=my2=-1;															/* In jedem Fall zeichnen */
@@ -229,7 +229,7 @@ FLAG switch_scr;									/* 2 Bildschirmtechnik? */
 		my2=my1;												/* Alte Mausposition merken */
 		} while(mk==0 && abbruch==0);
 
-	if (switch_scr) copy_screen(scr2,scr1);		/* mit gelîschtem Objekt zurÅckÅbertragen */
+	if (switch_scr) copy_screen(scr2,scr1);		/* mit gel√∂schtem Objekt zur√ºck√ºbertragen */
 
 	hol_maus();
 	Sm();
@@ -239,10 +239,10 @@ FLAG switch_scr;									/* 2 Bildschirmtechnik? */
 
 void draw_shrink_obj(size,shrink_buff,ob_nr,ob_mem,modus,scr,x,y)
 int size;									/* 0..255: 0 entspricht 100%, 255 entspricht miniklein */
-void *shrink_buff;				/* Buffer, der zum Verkleinern benÅtzt wird */
+void *shrink_buff;				/* Buffer, der zum Verkleinern ben√ºtzt wird */
 int ob_nr;
 void *ob_mem;
-int modus;								/* VerknÅpfungsmodus */
+int modus;								/* Verkn√ºpfungsmodus */
 void *scr;
 int x,y;
 {
@@ -254,11 +254,11 @@ int x,y;
 
 void draw_shrink_obj_part(size,shrink_buff,ob_nr,ob_mem,x1,y1,x2,y2,modus,scr,x,y)
 int size;									/* 0..255: 0 entspricht 100%, 254 entspricht miniklein */
-void *shrink_buff;				/* Buffer, der zum Verkleinern benÅtzt wird */
+void *shrink_buff;				/* Buffer, der zum Verkleinern ben√ºtzt wird */
 int ob_nr;
 void *ob_mem;
 int x1,y1,x2,y2;					/* Bereich innerhalb des Objektes */
-int modus;								/* VerknÅpfungsmodus */
+int modus;								/* Verkn√ºpfungsmodus */
 void *scr;
 int x,y;
 {
@@ -279,7 +279,7 @@ void shrink1(float size,void *shrink_buff,int ob_nr,void *ob_mem,int x_start,int
 	int ymax,xmax;
 	KOORD groesse;
 
-	if (size>=0.999) {									/* Volle Grîûe */
+	if (size>=0.999) {									/* Volle Gr√∂√üe */
 		draw_obj_part(ob_nr,ob_mem,x_start,y_start,x_end,y_end,modus,scr,x_scr,y_scr);
 		}
 	else {
@@ -353,4 +353,3 @@ int x,y;
 	draw_obj(ob_nr,ob_mem,modus,screen,x,y);
 }
 
-

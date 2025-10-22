@@ -1,6 +1,6 @@
 
-		/* Preisberechnung fÅr Rings of Medusa II 
-			 Ω by Till Bubeck (3.6.1991)	*/
+		/* Preisberechnung f√ºr Rings of Medusa II 
+			 ‚ïú by Till Bubeck (3.6.1991)	*/
 			 
 #include <stdio.h>
 #include <tos.h>
@@ -14,7 +14,7 @@
 #include <math.h>
 #include "o:\filename.c"
 #include "o:\const.c"              /* Alle Konstanten holen */
-#include "o:\grund.c"              /* Konstantendefintion der UntergrÅnde */
+#include "o:\grund.c"              /* Konstantendefintion der Untergr√ºnde */
 #include "o:\typedef.c"            /* Typendefinitionen */
 #include "o:\global.c"             /* Variablendeklarationen */
 
@@ -43,27 +43,27 @@ int prod[CITIES][5] = {
 	17,18,0,0,0,										/* B1 Cyborg, Androiden */
 	10,0,0,0,0,											/* B2 Arznei */
 	6,0,0,0,0,											/* C0 Fische */
-	14,0,0,0,0,											/* E0 Fîrderturm */
+	14,0,0,0,0,											/* E0 F√∂rderturm */
 	19,0,0,0,0,											/* F0 Computer */
 	20,0,0,0,0,											/* F1 Chips */
 	7,0,0,0,0,											/* F2 Waffen */
 	1,0,0,0,0,											/* F3 Milch */
 	13,0,0,0,0,											/* G0 Sklaven */
-	2,3,0,0,0,											/* H0 KÑse, Salat */
-	4,0,0,0,0,											/* H1 épfel */
+	2,3,0,0,0,											/* H0 K√§se, Salat */
+	4,0,0,0,0,											/* H1 √Ñpfel */
 	6,22,23,0,0,										/* I0 Fische */
 	19,0,0,0,0,											/* I1 Computer */
 	7,0,0,0,0,											/* I2 Waffen */
 	15,0,0,0,0,											/* J0 Filterstufe */
 	11,0,0,0,0,											/* K0 Cyclotron */
-	16,0,0,0,0,											/* L0 ôltank */
+	16,0,0,0,0,											/* L0 √ñltank */
 	5,21,24,0,0,										/* M0 Fleisch */
 	6,26,25,0,0,										/* M1 Fisch */
 	5,0,0,0,0,											/* N0 Fleisch */
 	8,27,28,0,0,										/* O0 Crack */
 	9,22,23,0,0,										/* P0 Acid 54 */
 	10,24,25,0,0,										/* P1 Arznei */
-	2,3,0,0,0,											/* P2 KÑse, Salat */
+	2,3,0,0,0,											/* P2 K√§se, Salat */
 	18,0,0,0,0,											/* Q0 Androiden */
 	11,28,29,0,0 };									/* R0 Cyclotron */
 
@@ -83,8 +83,8 @@ int zufall(int grenze);
 
 void main()
 {
-  /* Berechnet die Preise in den einzelnen StÑdten, je nach Entfernung und
-     Produkt, das die StÑdte produzieren */
+  /* Berechnet die Preise in den einzelnen St√§dten, je nach Entfernung und
+     Produkt, das die St√§dte produzieren */
   int fh;
 
   load_gmaps();
@@ -110,7 +110,7 @@ void calculate()
   long preis;
 
   for(std=0;std<CITIES;std++) {
-    printf("Berechne fÅr Stadt %d\n",std);
+    printf("Berechne f√ºr Stadt %d\n",std);
     for(waren=1;waren<=WAREN+STALLWAREN+ROHSTOFFE;waren++) {
       if (wait) 
 				if (waren<23)
@@ -124,7 +124,7 @@ void calculate()
 				goto raus;
 				}
 
-      /* PrÅfen, ob selber produziert wird */
+      /* Pr√ºfen, ob selber produziert wird */
       for(i=0;i<5;i++)
         if (prod[std][i]==waren) break;
 
@@ -133,7 +133,7 @@ void calculate()
         }
       else {                        /* Wird hier nicht produziert */
 
-        /* nÑchste Stadt suchen, in der Ware produziert wird */
+        /* n√§chste Stadt suchen, in der Ware produziert wird */
 
         abstand_min=20000;                          /* max. */
 
@@ -181,7 +181,7 @@ raus:
 
 void load_gmaps()
 {
-  /* LÑdt alle GMAP's */
+  /* L√§dt alle GMAP's */
 
   load_prc("D:\\MEDUSA\\MEDUSA_2.COL\\MAPS\\GMAPS\\GMAPS.DAT",gmap);
 	trans_gmap(13,16);
@@ -199,7 +199,7 @@ int quelle,ziel;
 
 void get_koord()
 {
-  /* Holt sich die Koordinaten der StÑdte */
+  /* Holt sich die Koordinaten der St√§dte */
   int land;
   int x,y;
   int nr;
@@ -260,14 +260,14 @@ void *name,*adr;
     Fread(fh,40000L,adr);
     Fclose(fh);
     }
-	else printf("Fehler! Datei %s kann nicht geîffnet werden!",name);
+	else printf("Fehler! Datei %s kann nicht ge√∂ffnet werden!",name);
 }
 
 int get_ground(land,x,y)
 int land,x,y;
 {
   /* holt sich aus GMAP den WEG, X/Y bereits in Rasterangaben */
-  /* ist X/Y auûerhalb, gibt Funktion -1 zurÅck */
+  /* ist X/Y au√üerhalb, gibt Funktion -1 zur√ºck */
 
   return(get_groundxy(land,x*4,y*4+25));
 }
@@ -299,13 +299,13 @@ int land,x,y;
   anzahl=bit-4;                                 /* um soviel wird geschoben */
   if (anzahl>=0) {                              /* ist voll in op1 */
     wert=op1>>anzahl;                           /* hier verwendet LASER_C "ASR"! */
-    wert&=31;                                   /* nur 5 Bits gÅltig */
+    wert&=31;                                   /* nur 5 Bits g√ºltig */
     }
   else {
     wert=op1<<(-anzahl);                        /* aus op1 holen */
-    wert&=31;                                   /* nur 5 Bits gÅltig */
+    wert&=31;                                   /* nur 5 Bits g√ºltig */
     op2>>=8+anzahl;                             /* Achtung, anzahl ist negativ! */
-                /* ^^^ LASER_C verwendet ASR, d.h. obere Bits lîschen */
+                /* ^^^ LASER_C verwendet ASR, d.h. obere Bits l√∂schen */
     op2&=(1<<(-anzahl))-1;
     wert|=op2;
     }
@@ -319,7 +319,7 @@ void make_world()
   int i;
 	int pos;
 
-  for(i=0;i<225;i++) welt[i]=SEA;           /* Am Anfang war Åberall Wasser... */
+  for(i=0;i<225;i++) welt[i]=SEA;           /* Am Anfang war √ºberall Wasser... */
 
 	welt[95]=11;
   welt[96]=10;
@@ -371,7 +371,7 @@ int such_insel()
 short get_land(x,y)
 int x,y;
 {
-  /* Holt aus welt[] die Landschaft unter BerÅcksichtigung der Kugerlform */
+  /* Holt aus welt[] die Landschaft unter Ber√ºcksichtigung der Kugerlform */
 
   if (x<0) x+=15;
   if (x>=15) x-=15;

@@ -1,6 +1,6 @@
 
 #define SCHATZ 0
-#define EISEN 1             /* Alle folgenden UntergrÅnde sind begehbar. */
+#define EISEN 1             /* Alle folgenden Untergr√ºnde sind begehbar. */
 #define DIAMANTEN 2
 #define NITHRIL 3
 #define OEL 4
@@ -54,4 +54,3 @@
 
 /* der 1. Weg hat also den Eintrag 2 in Trafficmap ! */
 
-

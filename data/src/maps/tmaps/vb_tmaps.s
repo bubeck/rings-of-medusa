@@ -33,8 +33,8 @@ L0000:          bsr     L0001
                 trap    #1
                 addq.l  #8,SP
                 pea     memory(PC)
-                suba.l  #memory,A6           ;DateilÑnge berechnen
-                move.l  A6,-(SP)             ;->DateilÑnge
+                suba.l  #memory,A6           ;Dateil√§nge berechnen
+                move.l  A6,-(SP)             ;->Dateil√§nge
                 move.w  D0,-(SP)
                 move.w  #$0040,-(SP)         ;FWRITE
                 trap    #1

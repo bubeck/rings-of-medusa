@@ -9,9 +9,9 @@ char *fileselect(path,file,ext_info)
 char path[],file[];
 char ext_info[];
 {
-  /* Benutzer kann Pfad und File 갶ergeben, dabei werden dann
-     die Adresse des kompletten Zugriffspfades zur갷kgegeben,
-     Sollte der Benutzer Abbruch anklicken, wird NULL zur갷kgegeben */
+  /* Benutzer kann Pfad und File 체bergeben, dabei werden dann
+     die Adresse des kompletten Zugriffspfades zur체ckgegeben,
+     Sollte der Benutzer Abbruch anklicken, wird NULL zur체ckgegeben */
 
   int i;
   int backslash;
@@ -33,7 +33,7 @@ char ext_info[];
     }
   i=0;
   do {
-    path_file[backslash+i]=file[i];         /* Filenamen anh꼗gen */
+    path_file[backslash+i]=file[i];         /* Filenamen anh채ngen */
     } while(file[i++]!=0);
 
   return(path_file);

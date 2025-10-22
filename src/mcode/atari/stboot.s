@@ -1,9 +1,9 @@
 
-;Bootsektor fÅr Signs of Medusa (II)
+;Bootsektor f√ºr Signs of Medusa (II)
 ;by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt
-;Dieser Bootsektor lÑdt die Tracks 1+2 nach $70000 und startet sie ohne
+;Dieser Bootsektor l√§dt die Tracks 1+2 nach $70000 und startet sie ohne
 ;sie vorher zu relozieren!
-;LÑnge der FATs: 2+2, Directory: 5 Sektoren (80 EintrÑge)->1. File auf 1,1
+;L√§nge der FATs: 2+2, Directory: 5 Sektoren (80 Eintr√§ge)->1. File auf 1,1
 
                 OPT P+
 
@@ -15,15 +15,15 @@
 
                 lea     $080000,SP      ;SP setzen
 
-                clr.l   $24.w           ;VBL-Counter lîschen
+                clr.l   $24.w           ;VBL-Counter l√∂schen
                 lea     $0150.w,A0
                 movem.l vbl(PC),D0-D7
-                movem.l D0-D7,(A0)      ;Programm Åbertragen
+                movem.l D0-D7,(A0)      ;Programm √ºbertragen
                 move.l  A0,$70.w        ;VBL setzen
                 lea     $0150+vbl_rte-vbl.w,A0
 
                 clr.b   $FFFFFA07.w
-                andi.b  #%1000000,$FFFFFA09.w ;Alle IRQ's (auûer Tastatur) aus
+                andi.b  #%1000000,$FFFFFA09.w ;Alle IRQ's (au√üer Tastatur) aus
 
                 moveq   #$12,D0         ;disable Mouse
                 bsr     send_ikbd
@@ -71,7 +71,7 @@ clr_loop:       move.l  D0,(A0)+
                 jmp     -20*512(A0)     ;nach $70000 springen
 
 
-;Liest ab Startsektor Sektoren ein. Gibt in D5 512*n zurÅck.
+;Liest ab Startsektor Sektoren ein. Gibt in D5 512*n zur√ºck.
 ;-> D0: Anzahl der Sektoren
 ;   A0: Ladeadresse
 read_sektoren:  move.w  D0,-(SP)        ;Anzahl retten
@@ -103,7 +103,7 @@ restore_fdc:    move.w  #$80,(A4)       ;Kommandoregister
                 cmpi.w  #4,D0           ;Spur 0 erreicht?
                 bne.s   restore_fdc
 
-;FÑhrt Track D6 an, macht ggf. Restore
+;F√§hrt Track D6 an, macht ggf. Restore
 seek_track:     move.w  #$86,(A4)       ;Datareg.
                 move.w  D6,D7           ;Starttrack setzen
                 bsr.s   fdcout
@@ -113,7 +113,7 @@ seek_track:     move.w  #$86,(A4)       ;Datareg.
                 lea     dflag(PC),A6
                 clr.b   (A6)            ;Kein DMA-Transfer
                 bsr.s   fdcout
-                bsr.s   waitfertig      ;auf AusfÅhrung warten
+                bsr.s   waitfertig      ;auf Ausf√ºhrung warten
                 andi.w  #%11000,D0      ;nur CRC/RNF
                 bne.s   restore_fdc     ;nicht gefunden, Restore first
                 rts
@@ -147,10 +147,10 @@ waitloop:       dbra    D0,waitloop
                 move    (SP)+,SR
                 rts
 
-; wartet auf vollstÑndige AusfÅhrung
-; verÑnderte Register: ?
-waitfertig:     move.l  #$060000,D7     ;Timeout ZÑhler
-poll:           btst    #5,(A5)         ;IRQ ausgelîst?
+; wartet auf vollst√§ndige Ausf√ºhrung
+; ver√§nderte Register: ?
+waitfertig:     move.l  #$060000,D7     ;Timeout Z√§hler
+poll:           btst    #5,(A5)         ;IRQ ausgel√∂st?
                 beq.s   fix_und_fertig
                 subq.l  #1,D7
                 beq.s   fix_und_fertig  ;Normalerweise Timeout
@@ -184,7 +184,7 @@ send_ikbd:      btst    #1,$FFFFFC00.w  ;ACIA bereit?
                 move.b  D0,$FFFFFC02.w  ;und senden
                 rts
 
-vbl:            addq.w  #1,$24.w        ;VBL-Counter erhîhen
+vbl:            addq.w  #1,$24.w        ;VBL-Counter erh√∂hen
 vbl_rte:        rte
 
 dflag:          DC.B 0          ;Flag, ob DMA-Transfer

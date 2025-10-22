@@ -1,5 +1,5 @@
 
-/* In dieser Datei wird eingestellt, was fr eine Version von
+/* In dieser Datei wird eingestellt, was fÃ¼r eine Version von
 
    Rings of Medusa II - The Return of Medusa 
    (C) 1992 by Till Bubeck
@@ -26,35 +26,35 @@
 
     0.01: erste Version, Beginn der Aktienkurse (9.3.1990)
 					Bunker, Archiv, draw_obj, neue Raster, neue tastaturroutine,
-					viele interne Žnderungen
+					viele interne Ã„nderungen
 					-> PCW-Show, T. Zimmermann (12.09.90)
 		0.02:	nahezu alle Betriebsystemaufrufe rausgeschmissen.
 		0.03:	Erste Amiga-Version, Carsten Borgmeier (Power Play Preview)
-		0.04: Expressversion fr European Computer Trade Show at London
+		0.04: Expressversion fÃ¼r European Computer Trade Show at London
 					Erste Objekte in den Bunkern, Roulette fertig (11.4.1991)
-		0.05:	neue GMAPs, neue TMAPS, s„mtliche Konstanten angepažt, 
-					neue Stadtgrafiken, Schilder, Aufzge in den Bunkern
+		0.05:	neue GMAPs, neue TMAPS, sÃ¤mtliche Konstanten angepaÃŸt, 
+					neue Stadtgrafiken, Schilder, AufzÃ¼ge in den Bunkern
 					-> erste Volltestversion (10.5.1991)
-		0.06: Intro, Automapper, Tren bleiben offen (28.5.1991)
-		0.07: Items k”nnen bewegt werden, betretbare W„nde, Windows in den St„dten,
+		0.06: Intro, Automapper, TÃ¼ren bleiben offen (28.5.1991)
+		0.07: Items kÃ¶nnen bewegt werden, betretbare WÃ¤nde, Windows in den StÃ¤dten,
 				  verkleinerte Items, neue Mine und Kampfsprites (ASM-Version) (6.6.1991)
 		0.08: 
 		0.09: komplett neue Paletten in den Bunkern, bewegte Gegner, Musik
 		0.10: Amiga Joker Version (20.6.1991)
-		0.11: animierte Gegner, neue Reagenzgl„ser und Objekte,
+		0.11: animierte Gegner, neue ReagenzglÃ¤ser und Objekte,
 					Notizblockbug entfernt (29.6.1991)
 					-> ASM, Powerplay, Starbyte, Zimmermann
-		0.12: Gefangene, Reagenzgl„ser mit Funktion, Totenkopf.
+		0.12: Gefangene, ReagenzglÃ¤ser mit Funktion, Totenkopf.
 					-> Starbyte, Zimmermann (4.7.1991)
 		0.13: -> Starbyte (8.7.1991)
 		0.14: 1. Version des Spielerschusses, Laden und Abspeichern in den Bunkern,
 				  Taschenlampe jetzt mit Funktion. -> Starbyte (9.7.1991)
-		0.15: Laden und Abspeichern 2. Teil, Schuž des Spielers, Schuž macht heller,
+		0.15: Laden und Abspeichern 2. Teil, SchuÃŸ des Spielers, SchuÃŸ macht heller,
 		      Kleidung hat einen Sinn, Prisonerbilder, Charakterausgabe.
 					-> Starbyte, ASM (10.7.1991)
 		0.16: -> Zimmermann (12.7.1991)
 		0.17: Passwortabfrage, neue Cheatabfrage, additives Schiessen, Finale,
-					Gegnerschuž jetzt komplett.
+					GegnerschuÃŸ jetzt komplett.
 		0.18: erste Endversion, noch ohne Schiffskampf.		
 		0.19: viele Fehler behoben, Suchradius wird angezeigt, kaputter Schiffskampf
 					neue Verteilung der Objekte, bessere Passwortabfrage
@@ -62,18 +62,18 @@
 		0.20: Schiffskampf, ICC #2 (1.8.1991)
 		1.00: Schiffskampf okay, sonstige Bugs behoben.
 					-> ASM, Starbyte (1.8.1991)
-		1.01: Roboter schiežen nun auch von hinten, Schwierigkeitsgrad des Schiffskampfes
-					erh”ht. -> ASM (7.8.1991)
-		1.02: Lade/Tastaturbug behoben. Neue Passw”rter.
+		1.01: Roboter schieÃŸen nun auch von hinten, Schwierigkeitsgrad des Schiffskampfes
+					erhÃ¶ht. -> ASM (7.8.1991)
+		1.02: Lade/Tastaturbug behoben. Neue PasswÃ¶rter.
 					-> Master Atari, Test Amiga (12.8.1991)
-		1.03: Roboter nicht auf Aufzugstren.
+		1.03: Roboter nicht auf AufzugstÃ¼ren.
 		      -> Master Atari (13.8.1991)
 		1.04: Amigaversion, Atari Master -> Starbyte, Zimmermann (15.8.1991)
-		1.05: Objekte k”nnen geworfen werden, kleinere Bugs beseitigt, neue Passw”rter
+		1.05: Objekte kÃ¶nnen geworfen werden, kleinere Bugs beseitigt, neue PasswÃ¶rter
 					Amiga, Atari Master -> Starbyte (19.8.1991)
 		1.06: Passwortabfrage jetzt im Hellen, "Faites vos jeux".
 					Amiga, Atari Master -> Starbyte (20.8.1991)
-		1.07: Handshake fr Tastatur auf 75 æs angepažt (Amiga 2000-A)
+		1.07: Handshake fÃ¼r Tastatur auf 75 Âµs angepaÃŸt (Amiga 2000-A)
 					Amiga Master -> Starbyte (28.8.1991)
 		1.08: Suchrahmenbug, Schildbug entfernt
 					Atari, Amiga Master -> Starbyte (9.9.1991)
@@ -83,13 +83,13 @@
 		1.10: Suchbunkerbug beseitigt.
 					Amiga, Atari Master -> Starbyte (25.9.1991)
 		1.11: neuer LOADER.SRC mit RAM-Test ohne $ff8001-Zugriff (ST)
-					Schlsselwerfbug, Datendiskettenformat umgestellt
+					SchlÃ¼sselwerfbug, Datendiskettenformat umgestellt
 					Amiga, Atari Master -> Starbyte (7.10.1991)
 		1.12: englische Version, abschalten der Intro beim Amiga
 		      Amiga Master -> Starbyte (2.12.1991)
-		1.13: englische Version mit englischen Passw”rtern
+		1.13: englische Version mit englischen PasswÃ¶rtern
 		      Amiga, Atari Master -> Starbyte (3.1.1992)
-		1.14: korrigierte englische Passw”rter, wegen Handbuchumbruch
+		1.14: korrigierte englische PasswÃ¶rter, wegen Handbuchumbruch
 		      Amiga, Atari Master -> Starbyte (27.1.1992)
 		1.15: englische Insertmeldung
 		      Amiga Master -> Starbyte (10.2.1992)

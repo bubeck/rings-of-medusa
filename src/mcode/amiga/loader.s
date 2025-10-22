@@ -1,7 +1,7 @@
 ;************************************************************************
-;* Loader fÅr Medusa.prg (Amiga)
-;* LÑdt MEDUSA.PRG an die Ladeadresse, reloziert es und springt es an
-;* Ω1990 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, 07151/66437
+;* Loader f√ºr Medusa.prg (Amiga)
+;* L√§dt MEDUSA.PRG an die Ladeadresse, reloziert es und springt es an
+;* (C)1990 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, 07151/66437
 ;************************************************************************
 
 ladeadresse     EQU $00000300
@@ -14,9 +14,9 @@ dmacon          EQU $00000096   ;DMA-Kontrollregister (Write)
 dmaconr         EQU $00000002   ;DMA-Kontrollregister (Read)
 
 aud0lc          EQU $000000A0   ;Adresse des Digisounds
-aud0len         EQU $000000A4   ;LÑnge in Worten
+aud0len         EQU $000000A4   ;L√§nge in Worten
 aud0per         EQU $000000A6   ;Sample-Frequemz
-aud0vol         EQU $000000A8   ;LautstÑrke
+aud0vol         EQU $000000A8   ;Lautst√§rke
 
 adkcon          EQU $0000009E   ;Kontrollregister Modulation
 
@@ -65,7 +65,7 @@ programmstart:  lea     $00080000,SP
 
                 lea     $00077000,A0    ;Screenpointer
                 move.w  #7999,D7
-clear_screen:   clr.l   (A0)+           ;Bildschirm lîschen
+clear_screen:   clr.l   (A0)+           ;Bildschirm l√∂schen
                 dbra    D7,clear_screen
 
                 movem.l copperliste(PC),D0-A6
@@ -78,7 +78,7 @@ clear_screen:   clr.l   (A0)+           ;Bildschirm lîschen
                 move.l  #$00000100,$0000006C.w ;VBL-Vektor setzen
 
                 move.w  #%0011111111111111,$00DFF09A ;Alles aus
-                move.w  #%0011111111111111,$00DFF09C ;Request Bits lîschen
+                move.w  #%0011111111111111,$00DFF09C ;Request Bits l√∂schen
                 move.w  #%1100000000100000,$00DFF09A ;VBL an
                 move    #$2000,SR
 
@@ -149,7 +149,7 @@ color_loop:     move.w  (A0)+,D0
                 tst.w   amigatool
                 bne     load_disk
 
-                bsr     get_len         ;LÑnge der MEDUSA_A.PRG holen
+                bsr     get_len         ;L√§nge der MEDUSA_A.PRG holen
                 bra     load_medusa
 
 load_disk:      move.w  #511,-(SP)      ;End_Offset
@@ -166,21 +166,21 @@ load_disk:      move.w  #511,-(SP)      ;End_Offset
 s1:             lea     bitfeld+512(PC),A0
                 move.b  $0012(A0),D0
                 lsl.w   #8,D0
-                move.b  $0011(A0),D0    ;Verzeichnisgrîûe
+                move.b  $0011(A0),D0    ;Verzeichnisgr√∂√üe
                 ext.l   D0
                 divu    #16,D0
-                move.w  D0,D1           ;Anzahl an Sektoren fÅrs Directory
+                move.w  D0,D1           ;Anzahl an Sektoren f√ºrs Directory
                 swap    D0
-                tst.w   D0              ;noch ein Rest Åbrig?
+                tst.w   D0              ;noch ein Rest √ºbrig?
                 beq.s   geht_auf
-                addq.w  #1,D1           ;+1 fÅr den Rest
+                addq.w  #1,D1           ;+1 f√ºr den Rest
 geht_auf:       move.b  $0017(A0),D0
                 lsl.w   #8,D0
-                move.b  $0016(A0),D0    ;Grîûe der FAT
+                move.b  $0016(A0),D0    ;Gr√∂√üe der FAT
                 add.w   D0,D0           ;da 2 FATs
-                addq.w  #2,D0           ;fÅr Bootsektor
+                addq.w  #2,D0           ;f√ºr Bootsektor
                 move.w  D0,D2           ;Beginn des Directorys
-                add.w   D1,D2           ;+Grîûe des Directory=erster Datensektor
+                add.w   D1,D2           ;+Gr√∂√üe des Directory=erster Datensektor
                 move.w  D2,first_sek
                 ext.l   D0
                 divu    sek_per_track(PC),D0 ;11 Sektoren/Track
@@ -203,7 +203,7 @@ geht_auf:       move.b  $0017(A0),D0
 
                 lea     bitfeld+1024+512(PC),A0
                 lea     medusa(PC),A1
-                moveq   #15,D6          ;16 EintrÑge pro Directory
+                moveq   #15,D6          ;16 Eintr√§ge pro Directory
 nxt2:           moveq   #0,D7
 kein_ende:      move.b  0(A0,D7.w),D0   ;Zeichen von Diskette lesen
                 cmp.b   0(A1,D7.w),D0   ;MEDUSA.PRG?
@@ -220,7 +220,7 @@ kein_ende:      move.b  0(A0,D7.w),D0   ;Zeichen von Diskette lesen
                 lsl.w   #8,D0
                 move.b  30(A0),D0
                 lsl.l   #8,D0
-                move.b  29(A0),D0       ;Lénge der Datei holen
+                move.b  29(A0),D0       ;L√Ñnge der Datei holen
                 lsl.l   #8,D0
                 move.b  28(A0),D0
                 move.l  D0,medusa_len
@@ -242,16 +242,16 @@ load_medusa:    pea     prg_header(PC)
                 lea     14(SP),SP
 
                 movea.l textlen(PC),A0
-                adda.l  datalen,A0      ;LÑnge des Programms
+                adda.l  datalen,A0      ;L√§nge des Programms
 
                 pea     ladeadresse+256 ;Hier hin laden
-                move.l  A0,-(SP)        ;LÑnge
-                pea     28.w            ;Header Åberspringen
+                move.l  A0,-(SP)        ;L√§nge
+                pea     28.w            ;Header √ºberspringen
                 clr.w   -(SP)           ;Archiv
                 bsr     mcode61         ;Programm lesen
                 lea     14(SP),SP
 
-                movea.w #28,A0          ;Grîûe des Headers
+                movea.w #28,A0          ;Gr√∂√üe des Headers
                 adda.l  textlen,A0
                 adda.l  datalen,A0
                 lea     ladeadresse+256,A1 ;Hier startet das Programm
@@ -260,8 +260,8 @@ load_medusa:    pea     prg_header(PC)
 
                 pea     (A1)            ;Ladeadresse=BSS
                 move.l  medusa_len(PC),D0
-                sub.l   A0,D0           ;-Startoffset=LÑnge der Daten
-                move.l  D0,-(SP)        ;LÑnge
+                sub.l   A0,D0           ;-Startoffset=L√§nge der Daten
+                move.l  D0,-(SP)        ;L√§nge
                 pea     (A0)            ;Startoffset der Relozinfo
                 clr.w   -(SP)           ;Archiv
                 bsr     mcode61
@@ -274,9 +274,9 @@ load_medusa:    pea     prg_header(PC)
                 adda.l  (A1)+,A0        ;Erste zu relozierende Adresse
 reloz:          add.l   D0,(A0)         ;relozieren
 no1:            moveq   #0,D6
-                move.b  (A1)+,D6        ;nÑchsten Wert holen
+                move.b  (A1)+,D6        ;n√§chsten Wert holen
                 beq.s   no_reloz
-                cmp.b   #1,D6           ;254 Åberspringen?
+                cmp.b   #1,D6           ;254 √ºberspringen?
                 beq.s   eins
                 adda.l  D6,A0           ;Soviel Bytes weitergehen
                 bra.s   reloz
@@ -335,15 +335,15 @@ mcode68:        link    A6,#0
                 cmp.w   D4,D5           ;nur auf einem Track lesen?
                 beq.s   nur_ein_track
 
-mehr_als_einer: bsr     trans_start     ;Ab Startoffset Åbertragen
+mehr_als_einer: bsr     trans_start     ;Ab Startoffset √ºbertragen
 
-                addq.w  #1,16(A6)       ;nÑchsten Sektor geht's weiter
+                addq.w  #1,16(A6)       ;n√§chsten Sektor geht's weiter
                 move.w  sek_per_track(PC),D0
                 cmp.w   16(A6),D0       ;Startsektor 10?
                 bge.s   no_step         ;Nein, also kein Step
 
 vorne_anfangen: move.w  #1,16(A6)       ;Wieder bei Sektor #1 starten
-                addq.w  #1,14(A6)       ;Auf nÑchsten Track gehen
+                addq.w  #1,14(A6)       ;Auf n√§chsten Track gehen
                 move.w  14(A6),D6
                 bsr     seek_track      ;Track anfahren
 
@@ -356,7 +356,7 @@ read_again2:    move.w  sek_per_track(PC),D0
                 sub.w   16(A6),D0       ;Anzahl der zu lesenden Sektoren
                 movea.l A2,A0           ;Ab Ladeadresse laden
                 bsr.s   read_sektoren
-                adda.w  D5,A2           ;Bytes Åberspringen
+                adda.w  D5,A2           ;Bytes √ºberspringen
                 bra.s   vorne_anfangen
 
 letzter_track:  move.w  22(A6),D0       ;Endsektor
@@ -365,16 +365,16 @@ letzter_track:  move.w  22(A6),D0       ;Endsektor
                 move.w  D0,-(SP)        ;Anzahl der Sektoren retten
                 movea.l A2,A0           ;Ladeadresse
                 bsr.s   read_sektoren
-                adda.w  D5,A2           ;öberspringen
+                adda.w  D5,A2           ;√úberspringen
                 move.w  (SP)+,D0        ;Anzahl der gelesenen Sektoren
-                add.w   D0,16(A6)       ;=NÑchster Sektor
+                add.w   D0,16(A6)       ;=N√§chster Sektor
 
 nur_ein_sektor: moveq   #1,D0
                 lea     bitfeld(PC),A0
                 bsr.s   read_sektoren   ;Letzten Sektor lesen
                 lea     bitfeld(PC),A0
                 move.w  24(A6),D7       ;Endoffset
-trans3:         move.b  (A0)+,(A2)+     ;Rest Åbertragen
+trans3:         move.b  (A0)+,(A2)+     ;Rest √ºbertragen
                 dbra    D7,trans3
                 bra.s   aus_is
 
@@ -396,10 +396,10 @@ aus_is:         bsr     deselect        ;Laufwerk wieder aus
                 rts
 
 
-;öbertrÑgt 1. Sektor ab Startoffset bis Sektorende
+;√úbertr√§gt 1. Sektor ab Startoffset bis Sektorende
 trans_start:    move.w  18(A6),D0       ;Startoffset
                 lea     bitfeld(PC),A0
-                adda.w  D0,A0           ;Bytes Åberspringen
+                adda.w  D0,A0           ;Bytes √ºberspringen
                 move.w  #512,D1         ;Soviel Bytes kommen
                 sub.w   D0,D1           ;Offset abziehen=Anzahl an Bytes
                 bra.s   trans19
@@ -408,7 +408,7 @@ trans19:        dbra    D1,trans2
                 rts
 
 
-;Liest ab Startsektor Sektoren ein. Gibt in D5 512*n zurÅck.
+;Liest ab Startsektor Sektoren ein. Gibt in D5 512*n zur√ºck.
 ;-> D0: Anzahl der Sektoren
 ;   A0: Ladeadresse
 read_sektoren:  movem.l D0-D4/D6-A6,-(SP)
@@ -417,9 +417,9 @@ read_sektoren:  movem.l D0-D4/D6-A6,-(SP)
 read_error:     bsr.s   read_track      ;Track lesen
                 move.w  (SP),D0         ;Anzahl holen
                 move.w  16(A6),D7       ;Aktueller Sektor
-                subq.w  #1,D7           ;Beim Amiga startet die ZÑhlung bei 0
+                subq.w  #1,D7           ;Beim Amiga startet die Z√§hlung bei 0
                 bra.s   ss_dbra
-sektor_trans:   tst.l   (A1)            ;Wurde Åberhaupt was geladen?
+sektor_trans:   tst.l   (A1)            ;Wurde √ºberhaupt was geladen?
                 beq.s   lesefehler
                 move.w  track(PC),D1
                 cmp.b   1(A1),D1        ;Richtiger Track?
@@ -427,10 +427,10 @@ sektor_trans:   tst.l   (A1)            ;Wurde Åberhaupt was geladen?
                 cmp.b   2(A1),D7        ;Sektor gefunden?
                 bne.s   nxt_sektor3
                 moveq   #127,D6
-                addq.l  #4,A1           ;Miniheader Åberspringen
+                addq.l  #4,A1           ;Miniheader √ºberspringen
 ttz:            move.l  (A1)+,(A0)+     ;eintragen
                 dbra    D6,ttz
-                addq.w  #1,D7           ;nÑchster Sektor
+                addq.w  #1,D7           ;n√§chster Sektor
 ss_dbra:        lea     track_buffer(PC),A1
                 dbra    D0,sektor_trans
 
@@ -443,9 +443,9 @@ ss_dbra:        lea     track_buffer(PC),A1
 nxt_sektor3:    lea     512+4(A1),A1
                 bra.s   sektor_trans
 
-lesefehler:     move.w  track(PC),-(SP) ;gewÅnschter Track
+lesefehler:     move.w  track(PC),-(SP) ;gew√ºnschter Track
                 moveq   #0,D6
-                bsr     seek_track      ;Restore ausfÅhren
+                bsr     seek_track      ;Restore ausf√ºhren
                 move.w  (SP)+,D6
                 bsr     seek_track      ;und nochmal anfahren
                 bra.s   read_error
@@ -538,7 +538,7 @@ keine_zweite:   cmpi.b  #$55,2(A0)      ;$FF (Format-Mark)?
                 bsr.s   decode_sektor
 
 crc_error:
-no_sync:        addq.l  #2,A0           ;nÑchstes Wort
+no_sync:        addq.l  #2,A0           ;n√§chstes Wort
                 cmpa.l  A3,A0
                 blt.s   such_sektor
 
@@ -547,9 +547,9 @@ no_sync:        addq.l  #2,A0           ;nÑchstes Wort
                 movem.l (SP)+,D0-A6
                 rts
 
-;Diese Routine berechnet eine PrÅfsumme Åber den angegebenen Bereich
-;-> A2.L: Adresse des Bereichs (wird NICHT erhîht)
-;   D0.L: LÑnge in Bytes
+;Diese Routine berechnet eine Pr√ºfsumme √ºber den angegebenen Bereich
+;-> A2.L: Adresse des Bereichs (wird NICHT erh√∂ht)
+;   D0.L: L√§nge in Bytes
 calc_crc:       movem.l D1-A6,-(SP)
 
                 move.w  D0,D1
@@ -567,7 +567,7 @@ crc_loop:       move.l  (A2)+,D2
 
 ;Diese Routine dekodiert einen Sektor von A0 nach A1.
 ;-> A2.L: Quelle
-;   A1.L: Ziel (wird erhîht)
+;   A1.L: Ziel (wird erh√∂ht)
 decode_sektor:  movem.l D0-A0/A2-A6,-(SP)
 
                 moveq   #127,D7         ;256 Langworte
@@ -602,24 +602,24 @@ deselect:       move.b  #%11111111,$00BFD100 ;DF0: deselektieren
                 rts
 
 
-;Routine fÑhrt einen bestimmten Track an und selektiert entspr. Seite
-;-> D6.W: gewÅnschter Track
+;Routine f√§hrt einen bestimmten Track an und selektiert entspr. Seite
+;-> D6.W: gew√ºnschter Track
 seek_track:     tst.w   track           ;Ist dies der 1. Aufruf?
                 bpl.s   seek            ;Nein, direkt anfahren
 
-                move.l  D6,-(SP)        ;gewÅnschter Track merken
+                move.l  D6,-(SP)        ;gew√ºnschter Track merken
                 moveq   #0,D6
                 bsr.s   seek            ;zuerst Restore
                 move.l  (SP)+,D6
 
 
-;FÑhrt Track an
+;F√§hrt Track an
 ;-> D6.W: Track
 seek:           movem.l D0-A6,-(SP)
 
                 move.w  track(PC),D7    ;aktueller Track
-                lsr.w   #1,D7           ;tatsÑchliche Tracknummer
-                lsr.w   #1,D6           ;gewÅnschter Track
+                lsr.w   #1,D7           ;tats√§chliche Tracknummer
+                lsr.w   #1,D6           ;gew√ºnschter Track
                 bcs.s   untere_seite
                 bset    #2,$00BFD100    ;Obere Seite
                 bra.s   seeken
@@ -696,7 +696,7 @@ fertig_hiller:  move.w  #$0000,$00DFF024 ;DMA ausschalten
                 movem.l (SP)+,D1-A6
                 rts
 
-;Wartet auf die AusfÅhrung eines normalen Diskbefehls:
+;Wartet auf die Ausf√ºhrung eines normalen Diskbefehls:
 wait_ready:     btst    #5,$00BFE001
                 bne.s   wait_ready
                 rts
@@ -718,13 +718,13 @@ track_nr:       DC.B 'xx',0
 
 
 ;Dies ist die Diskettenfunktion. Ist der Modus 0, wird das TOS zum Laden
-;benutzt, sonst eine eigene Diskettenroutine. Diese Routine prÅft vor dem
+;benutzt, sonst eine eigene Diskettenroutine. Diese Routine pr√ºft vor dem
 ;Laden, ob ein entsprechendes Archiv vorhanden ist, bzw. fordert zur Einlage
-;der jeweiligen Diskette auf. Gibt die tatsÑchliche LÑnge der gelesenen Daten
-;zurÅck.
-;long loaddisk(modus,archiv,offset,lÑnge,adr)
+;der jeweiligen Diskette auf. Gibt die tats√§chliche L√§nge der gelesenen Daten
+;zur√ºck.
+;long loaddisk(modus,archiv,offset,l√§nge,adr)
 ;-> 18(a6): Ladeadresse
-;   14(a6): LÑnge der zu ladenden Daten
+;   14(a6): L√§nge der zu ladenden Daten
 ;   10(a6): Offset innerhalb des Archivs
 ;    8(a6): archiv [0..n]
 mcode61:        tst.w   amigatool       ;Amigatool vorhanden?
@@ -770,13 +770,13 @@ mcode61:        tst.w   amigatool       ;Amigatool vorhanden?
                 unlk    A6
                 rts
 
-;LÑdt Medusa.prg Åber's Amigatool
+;L√§dt Medusa.prg √ºber's Amigatool
 load_tool:      link    A6,#0
                 movem.l D1-A5,-(SP)
 
                 moveq   #0,D1           ;Modus
                 lea     medusa_a(PC),A1
-                moveq   #$3D,D0         ;Datei îffnen
+                moveq   #$3D,D0         ;Datei √∂ffnen
                 bsr     trap_1
                 move.w  D0,fhandle
 
@@ -787,25 +787,25 @@ load_tool:      link    A6,#0
                 bsr     trap_1
 
                 movea.l 18(A6),A0       ;Ladeadresse
-                move.l  14(A6),D1       ;LÑnge
+                move.l  14(A6),D1       ;L√§nge
                 move.w  fhandle(PC),D2
                 lea     medusa_a(PC),A1
                 moveq   #$3F,D0         ;Fread
                 bsr     trap_1
-                move.l  D0,D7           ;LÑnge merken
+                move.l  D0,D7           ;L√§nge merken
 
                 move.w  fhandle(PC),D1
                 lea     medusa_a(PC),A1
                 moveq   #$3E,D0
                 bsr     trap_1          ;Fclose
 
-                move.l  D7,D0           ;und LÑnge zurÅckgeben
+                move.l  D7,D0           ;und L√§nge zur√ºckgeben
 
                 movem.l (SP)+,D1-A5
                 unlk    A6
                 rts
 
-;Bestimmt die LÑnge von O:\MEDUSA_A.PRG Åber's Amigatool
+;Bestimmt die L√§nge von O:\MEDUSA_A.PRG √ºber's Amigatool
 get_len:        movem.l D0-A6,-(SP)
 
                 lea     dta,A0
@@ -815,7 +815,7 @@ get_len:        movem.l D0-A6,-(SP)
                 bsr     trap_1
 
                 move.l  dta_len,D0
-                move.l  D0,medusa_len   ;LÑnge merken
+                move.l  D0,medusa_len   ;L√§nge merken
                 move.l  D0,$00060000
                 move.l  #'Till',$00060004
 
@@ -833,8 +833,8 @@ medusa_a:       DC.B 'MEDUSA_A.PRG'
 nullbyte:       DC.B 0
                 EVEN
 
-vbl:            addq.w  #1,$00000024.w  ;VBL-Counter erhîhen
-                move.w  #%0000000000100000,$00DFF09C ;Request lîschen
+vbl:            addq.w  #1,$00000024.w  ;VBL-Counter erh√∂hen
+                move.w  #%0000000000100000,$00DFF09C ;Request l√∂schen
 vbl_rte:        rte
 
 trap_handler:   lea     pointer(PC),A0
@@ -1239,7 +1239,7 @@ dta:            DS.B 26
 dta_len:        DS.L 1
                 DS.B 30
 
-medusa_len:     DS.L 1          ;LÑnge von MEDUSA.PRG
+medusa_len:     DS.L 1          ;L√§nge von MEDUSA.PRG
 first_sek:      DS.W 1          ;1. Sektor von Medusa.prg
 track:          DS.W 1          ;Aktiver Track
 bitfeld:        DS.W 2048

@@ -1,12 +1,12 @@
 
-#define Y0 17		/* Grîûe der oberen Leiste */
+#define Y0 17		/* Gr√∂√üe der oberen Leiste */
 
 
 /* Der Einfachheit halber benutzen wir Zylinderkoordinaten */
 
 typedef struct
 {
-	long R,W,Z;		/* R=Abstand, W=Winkel, H=Hîhe */
+	long R,W,Z;		/* R=Abstand, W=Winkel, H=H√∂he */
 } ZKOORD;
 
 typedef struct
@@ -15,7 +15,7 @@ typedef struct
 } KKOORD;
 
 
-/* SchÅsse */
+/* Sch√ºsse */
 
 enum State { S_IDLE,S_TURMDREH,S_FLUG,S_TREFFER,S_KEINTREFFER };
 
@@ -30,18 +30,18 @@ typedef struct
 	float		Tan;			/* tan(Winkel) */
 	float		Const;			/* g/2 * v0^2 * cos^2(Winkel) */
 	enum State	State;			/* Was macht der Schuss denn gerade */
-	int			AnimSeq;		/* AnimationszÑhler */
+	int			AnimSeq;		/* Animationsz√§hler */
 } SCHUSS;
 
-#define O_KUGEL			99	/* Kanonenkugel (groû -> klein) */
+#define O_KUGEL			99	/* Kanonenkugel (gro√ü -> klein) */
 #define NUM_KUGEL		9	/* Anzahl Zoomstufen der Kugel */
 #define O_FEUERBALL		93	/* Start der Explosionssequenz */
 #define NUM_FEUERBALL	7	/* Anzahl Bilder der Explosionssequenz */
-#define O_FONTAENE		108	/* Schuss fÑllt ins Wasser */
+#define O_FONTAENE		108	/* Schuss f√§llt ins Wasser */
 #define NUM_FONTAENE	7	/* Anzahl Bilder der Animationsssequenz */
-#define SCHUSSDELAY		40	/* Anzahl Frames zwischen den SchÅssen */
+#define SCHUSSDELAY		40	/* Anzahl Frames zwischen den Sch√ºssen */
 #define TREFFERRADIUS	30	/* Treffer innerhalb von 15 m */
-#define O_TURMDREH		27	/* Feindlicher GeschÅtzturm dreht sich */
+#define O_TURMDREH		27	/* Feindlicher Gesch√ºtzturm dreht sich */
 #define NUM_TURMDREH	8	/* Anzahl Bilder der Sequenz */
 
 /* Schiffe */
@@ -50,7 +50,7 @@ typedef struct
 {
 	ZKOORD	Pos;			/* Aktuelle Position */
 	int		Typ;			/* O_SCHIFFirgendwas */
-	int		Turmwinkel;		/* Winkel des GeschÅtzturms */
+	int		Turmwinkel;		/* Winkel des Gesch√ºtzturms */
 	FLAG		treffer;			/* Wenn, True -> dann sinken */
 	int untergang;				/* Wie tief schon gesunken? */
 	SCHUSS	Schuss;			/* Gegnerischer Schuss */
@@ -62,7 +62,7 @@ typedef struct
 #define MIN_DIST		480L		/* Gegner minimal 600 Meter entfernt */
 #define MAX_DIST		900L		/* Gegner maximal 1100 Meter entfernt */
 
-#define HORIZONT		67		/* Meereshîhe */
+#define HORIZONT		67		/* Meeresh√∂he */
 
 
 /* Flugzeuge */
@@ -73,7 +73,7 @@ typedef struct
 	int		Ansq;			/* Animationssequenz */
 	int		AnBase;			/* 1. Frame */
 	int		Schuss;			/* Schuss-Flag */
-	long 	nxt_move;			/* Wann soll nÑchste Animation kommen (vbl_ct) */
+	long 	nxt_move;			/* Wann soll n√§chste Animation kommen (vbl_ct) */
 } FLUGZEUG;
 
 #define MAX_FLUGZEUGE		8		/* Maximale Anzahl Flugzeuge */

@@ -1,10 +1,10 @@
 
-;Amiga-Bootsektor fÅr Return of Medusa (II)
+;Amiga-Bootsektor f√ºr Return of Medusa (II)
 ;by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt
-;Korrigiert fÅr Prozessoren 68010-68030 by Christian A. Weber, ZÅrich
-;Dieser Bootsektor lÑdt die Tracks 1+2 nach $65000 und startet sie ohne
+;Korrigiert f√ºr Prozessoren 68010-68030 by Christian A. Weber, Z√ºrich
+;Dieser Bootsektor l√§dt die Tracks 1+2 nach $65000 und startet sie ohne
 ;sie vorher zu relozieren!
-;LÑnge der FATs: 0+0, Directory: 1 Sektor
+;L√§nge der FATs: 0+0, Directory: 1 Sektor
 
                 OPT P+
                 DEFAULT 4
@@ -33,7 +33,7 @@ super_an:       lea     $00080000,SP         ;SSP setzen
                 move.l  #$00000100,$0000006C.w ;VBL-Vektor setzen
 
                 move.w  #%0011111111111111,$00DFF09A ;Alles aus
-                move.w  #%0011111111111111,$00DFF09C ;Request Bits lîschen
+                move.w  #%0011111111111111,$00DFF09C ;Request Bits l√∂schen
                 move.w  #%1100000000100000,$00DFF09A ;VBL an
                 move    #$2000,SR
 
@@ -41,7 +41,7 @@ super_an:       lea     $00080000,SP         ;SSP setzen
 fade_out:       move.w  D7,$00DFF180
                 beq.s   fade_ende
 
-                clr.w   $00000024.w          ;VBL-Counter rÅcksetzen
+                clr.w   $00000024.w          ;VBL-Counter r√ºcksetzen
 wait_vbl:       cmpi.w  #2,$00000024.w       ;2 VBLs warten
                 bne.s   wait_vbl
 
@@ -71,7 +71,7 @@ clr_loop:       move.l  D0,(A0)+
 
                 jmp     $00065000            ;und starten
 
-;Liest ab Startsektor Sektoren ein. Gibt in D5 512*n zurÅck.
+;Liest ab Startsektor Sektoren ein. Gibt in D5 512*n zur√ºck.
 ;-> D0: Anzahl der Sektoren
 ;   D5: Startsektor
 ;   A0: Ladeadresse
@@ -82,7 +82,7 @@ read_error:     bsr.s   read_track           ;Track lesen
                 move.w  (SP),D0              ;Anzahl holen
                 move.w  D5,D7                ;Aktueller Sektor
                 bra.s   ss_dbra
-sektor_trans:   tst.l   (A1)                 ;Wurde Åberhaupt was geladen?
+sektor_trans:   tst.l   (A1)                 ;Wurde √ºberhaupt was geladen?
                 beq.s   lesefehler
                 move.w  track(PC),D1
                 cmp.b   1(A1),D1             ;Richtiger Track?
@@ -90,10 +90,10 @@ sektor_trans:   tst.l   (A1)                 ;Wurde Åberhaupt was geladen?
                 cmp.b   2(A1),D7             ;Sektor gefunden?
                 bne.s   nxt_sektor3
                 moveq   #127,D6
-                addq.l  #4,A1                ;Miniheader Åberspringen
+                addq.l  #4,A1                ;Miniheader √ºberspringen
 ttz:            move.l  (A1)+,(A0)+          ;eintragen
                 dbra    D6,ttz
-                addq.w  #1,D7                ;nÑchster Sektor
+                addq.w  #1,D7                ;n√§chster Sektor
 ss_dbra:        lea     track_buffer,A1
                 dbra    D0,sektor_trans
 
@@ -106,9 +106,9 @@ ss_dbra:        lea     track_buffer,A1
 nxt_sektor3:    lea     512+4(A1),A1
                 bra.s   sektor_trans
 
-lesefehler:     move.w  track(PC),-(SP)      ;gewÅnschter Track
+lesefehler:     move.w  track(PC),-(SP)      ;gew√ºnschter Track
                 moveq   #0,D6
-                bsr     seek_track           ;Restore ausfÅhren
+                bsr     seek_track           ;Restore ausf√ºhren
                 move.w  (SP)+,D6
                 bsr     seek_track           ;und nochmal anfahren
                 bra.s   read_error
@@ -201,7 +201,7 @@ keine_zweite:   cmpi.b  #$55,2(A0)           ;$FF (Format-Mark)?
                 bsr.s   decode_sektor
 
 crc_error:
-no_sync:        addq.l  #2,A0                ;nÑchstes Wort
+no_sync:        addq.l  #2,A0                ;n√§chstes Wort
                 cmpa.l  A3,A0
                 blt.s   such_sektor
 
@@ -210,9 +210,9 @@ no_sync:        addq.l  #2,A0                ;nÑchstes Wort
                 movem.l (SP)+,D0-A6
                 rts
 
-;Diese Routine berechnet eine PrÅfsumme Åber den angegebenen Bereich
-;-> A2.L: Adresse des Bereichs (wird NICHT erhîht)
-;   D0.L: LÑnge in Bytes
+;Diese Routine berechnet eine Pr√ºfsumme √ºber den angegebenen Bereich
+;-> A2.L: Adresse des Bereichs (wird NICHT erh√∂ht)
+;   D0.L: L√§nge in Bytes
 calc_crc:       movem.l D1-A6,-(SP)
 
                 move.w  D0,D1
@@ -230,7 +230,7 @@ crc_loop:       move.l  (A2)+,D2
 
 ;Diese Routine dekodiert einen Sektor von A0 nach A1.
 ;-> A2.L: Quelle
-;   A1.L: Ziel (wird erhîht)
+;   A1.L: Ziel (wird erh√∂ht)
 decode_sektor:  movem.l D0-A0/A2-A6,-(SP)
 
                 moveq   #127,D7              ;256 Langworte
@@ -264,24 +264,24 @@ deselect:       move.b  #%11111111,$00BFD100 ;DF0: deselektieren
                 rts
 
 
-;Routine fÑhrt einen bestimmten Track an und selektiert entspr. Seite
-;-> D6.W: gewÅnschter Track
+;Routine f√§hrt einen bestimmten Track an und selektiert entspr. Seite
+;-> D6.W: gew√ºnschter Track
 seek_track:     move.w  track(PC),D0         ;Ist dies der 1. Aufruf?
                 bpl.s   seek                 ;Nein, direkt anfahren
 
-                move.l  D6,-(SP)             ;gewÅnschter Track merken
+                move.l  D6,-(SP)             ;gew√ºnschter Track merken
                 moveq   #0,D6
                 bsr.s   seek                 ;zuerst Restore
                 move.l  (SP)+,D6
 
 
-;FÑhrt Track an
+;F√§hrt Track an
 ;-> D6.W: Track
 seek:           movem.l D0-A6,-(SP)
 
                 move.w  track(PC),D7         ;aktueller Track
-                lsr.w   #1,D7                ;tatsÑchliche Tracknummer
-                lsr.w   #1,D6                ;gewÅnschter Track
+                lsr.w   #1,D7                ;tats√§chliche Tracknummer
+                lsr.w   #1,D6                ;gew√ºnschter Track
                 bcs.s   untere_seite
                 bset    #2,$00BFD100         ;Obere Seite
                 bra.s   seeken
@@ -333,12 +333,12 @@ aussen:         movem.l D0-A6,-(SP)
                 rts
 
 pause:          move.w  #$C000,D7
-loop2:          tst.w   $00DFF004            ;Zeit verzîgern
+loop2:          tst.w   $00DFF004            ;Zeit verz√∂gern
                 dbra    D7,loop2
                 rts
 
 minipause:      move.w  #$2000,D7
-mini2:          tst.w   $00DFF004            ;Zeit verzîgern
+mini2:          tst.w   $00DFF004            ;Zeit verz√∂gern
                 dbra    D7,mini2
                 rts
 
@@ -359,13 +359,13 @@ fertig_hiller:  move.w  #$0000,$00DFF024     ;DMA ausschalten
                 movem.l (SP)+,D1-A6
                 rts
 
-;Wartet auf die AusfÅhrung eines normalen Diskbefehls:
+;Wartet auf die Ausf√ºhrung eines normalen Diskbefehls:
 wait_ready:     btst    #5,$00BFE001
                 bne.s   wait_ready
                 rts
 
-vbl:            addq.w  #1,$00000024.w       ;VBL-Counter erhîhen
-                move.w  #%0000000000100000,$00DFF09C ;Request lîschen
+vbl:            addq.w  #1,$00000024.w       ;VBL-Counter erh√∂hen
+                move.w  #%0000000000100000,$00DFF09C ;Request l√∂schen
 vbl_rte:        rte
 
 track:          DC.W -1

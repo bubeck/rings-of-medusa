@@ -5,7 +5,7 @@
 ;
 ;Dies ist die Datei welche beschreibt welches Objekt welche 
 ;Funktion bzw. welches Aussehen in den Dungeons hat.
-;Hierbei mÅssen die normalen bzw. die GeneralschlÅssel nicht 
+;Hierbei m√ºssen die normalen bzw. die Generalschl√ºssel nicht 
 ;eingetragen werden.
 ;Achtung! Keine Kommas verwenden da Trennfunktion...
 ;
@@ -16,7 +16,7 @@
 2,FOOD,37,10,175                       ;Apfel
 3,WATER,38,60,80                       ;Flasche
 4,WATER,39,36,180                      ;Flasche
-5,FOOD,40,30,117                       ;KÑse
+5,FOOD,40,30,117                       ;K√§se
 6,FOOD,41,23,127                       ;Melone
 7,FOOD,42,25,72                        ;Schlegel
 8,FOOD,43,20,100                       ;Schlegel
@@ -25,12 +25,12 @@
 11,WAFFE,46,30,20                      ;Gewehr
 12,MUNITION,47,20,180                  ;Muni Pistole
 13,MUNITION,48,40,130                  ;Muni Gewehr
-14,SONST,49,0,30                       ;Rakete groû
+14,SONST,49,0,30                       ;Rakete gro√ü
 15,SONST,50,0,20                       ;Rakete klein
 16,SCHUHE,51,30,39                     ;Sandalen
 17,SCHUHE,52,60,31                     ;Turnschuhe
 18,SCHUHE,53,100,16                    ;Stiefel
-19,HELM,54,30,43                       ;Helm #1 (Special=StÑrke in %)
+19,HELM,54,30,43                       ;Helm #1 (Special=St√§rke in %)
 20,HELM,55,60,32                       ;Helm #2
 21,HELM,56,100,21                      ;Helm #3
 22,HOSE,57,60,31                       ;Hose
@@ -42,7 +42,7 @@
 28,HILFE,63,80,110                     ;1. Hilfe
 29,HILFE,64,40,120                     ;1. Hilfe
 30,FOOD,65,20,79                       ;Brot
-31,SCHATZTRUHE,66,0,0                  ;Schatztruhe Verteilung=0; da Åber Maps verteilt
+31,SCHATZTRUHE,66,0,0                  ;Schatztruhe Verteilung=0; da √ºber Maps verteilt
 32,SONST,67,0,25                       ;Kanister
 33,MIRROR,68,0,10                      ;Spiegel
 34,SCHATZTRUHE,69,0,0                  ;Pergament Verteilung=0

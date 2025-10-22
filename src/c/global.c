@@ -12,25 +12,25 @@ unsigned char spieler_status;					/* Magier, Mogul ... */
 
 char *ns;                       /* Zeiger auf einen Nullstring */
 
-char insert_disk[] = romstr620;		/* FÅr den Diskhandler */
+char insert_disk[] = romstr620;		/* F√ºr den Diskhandler */
 char insert_game[] = romstr621;
 char standard_disk[] = romstr622;		
 
 FLAG cheat_on;                  /* Cheatabfrage eingeschaltet? */
 FLAG treffer_cheat;						/* Kann Spieler im Bunker getroffen werden? */
 FLAG rohstoff_cheat;				  /* Werden alle Rohstoffe angezeigt? */
-FLAG door_cheat;							/* Kînnen alle TÅren des Bunkers geîffnet werden */
+FLAG door_cheat;							/* K√∂nnen alle T√ºren des Bunkers ge√∂ffnet werden */
 FLAG produce_cheat;             /* Wird in city_info produkte angezeigt? */
 FLAG unlim_money_cheat;         /* Jeder VBL 100000 */
 FLAG citycheat;                 /* Wenn TRUE, dann in Stadt 0 */
-FLAG strength_cheat;            /* TRUE bedeutet, daû beim Kampf die StÑrke gezeigt wird */
+FLAG strength_cheat;            /* TRUE bedeutet, da√ü beim Kampf die St√§rke gezeigt wird */
 FLAG pio_cheat;                 /* Zeigt alle Gegner an */
 FLAG kaserne_cheat;             /* Kann Spieler Kaserne betreten */
 FLAG treasure_cheat;            /* Bildschirm flackert Blau, wenn Spieler auf Schatz */
-FLAG staerke_cheat;             /* Armee ist ein biûchen stÑrker */
+FLAG staerke_cheat;             /* Armee ist ein bi√üchen st√§rker */
 FLAG zeit_cheat;                /* Zeigt die verbleibende Zeit an */
-FLAG schuss_cheat;					  /* Spielerschuû im Dungeon doppelt so stark */
-FLAG my_system;									/* Zeigt an, ob Medusa auf meinem Rechner lÑuft (Cheats..) */
+FLAG schuss_cheat;					  /* Spielerschu√ü im Dungeon doppelt so stark */
+FLAG my_system;									/* Zeigt an, ob Medusa auf meinem Rechner l√§uft (Cheats..) */
 
 int speed;                      /* Anzahl der Vsyncs zwischen Bildwechsel */
 
@@ -41,10 +41,10 @@ int armee_pos,armee_status;     /* button: AN_BORD oder AN_LAND */
 int vulkanx,vulkany;        /* X/Y Koordinaten des Vulkans */
 int vulkan_n,vulkan_stufe;  /* Nr des Vulkansprites, Stufe der Animation */
 FLAG vulkan_aktiv;
-int vulkan_counter;         /* ZÑhler zur Animationverzîgerung */
+int vulkan_counter;         /* Z√§hler zur Animationverz√∂gerung */
 
 char zahl_str[80];
-char dat_str[20];           /* fÅr Datumswandlung */
+char dat_str[20];           /* f√ºr Datumswandlung */
 
 void *scradr;							/* Adresse des VBL-Queue Eintrags des Scrollers */
 /* Palette of TANIS_1.IFF: Saved by NEOchrome V2.24 by Chaos, Inc. */
@@ -70,7 +70,7 @@ int copylist[]= {
 
   17,16,
   18,17,
-  20,18,                    /* untere HÑlfte der Leiste */
+  20,18,                    /* untere H√§lfte der Leiste */
   21,19,
   23,20,
   24,21,
@@ -79,7 +79,7 @@ int copylist[]= {
   29,24,
   30,25 };
 
-/* FÅllmuster zum Ausmaskieren der Icons in der Optionleiste: */
+/* F√ºllmuster zum Ausmaskieren der Icons in der Optionleiste: */
 int point_pat[16] = {
 	0x5555,0xaaaa,0x5555,0xaaaa,
 	0x5555,0xaaaa,0x5555,0xaaaa,
@@ -97,20 +97,20 @@ int leiste_y;               /* unterer Rand der Leiste */
 int wind_aktiv;           /* Flag, ob Window aktiv ist */
 
 char window_back[48*56];             /* sichert den Hintergrund eines Windows */
-char wind_form[5446];              	/* EnthÑlt die Alertboxen */
+char wind_form[5446];              	/* Enth√§lt die Alertboxen */
 FLAG alerts_da;											/* Flag, ob die Alertboxen bereits geladen sind */
 char *formular_adr;									/* Adresse des Formulars */
 
 int *maus_koord;            /* Pointer auf die Mauskoordinaten (X/Y) */
-int maus_zaehler;           /* Anzahl der AbschaltvorgÑnge fÅr Hm(),Sm() */
+int maus_zaehler;           /* Anzahl der Abschaltvorg√§nge f√ºr Hm(),Sm() */
 FLAG ms_on;                /* Flag, ob Maus dargestellt werden soll */
 volatile int save_1[134],save_2[134];       /* nimmt den Hintergrund der Maus auf */
-                                    /* 1. Wort=0: Buffer ungÅltig */
-                                    /* 1. Wort!=0: Buffer gÅltig */
+                                    /* 1. Wort=0: Buffer ung√ºltig */
+                                    /* 1. Wort!=0: Buffer g√ºltig */
 volatile char *scrn_1;                          /* Screen1 */
 volatile int mousex,mousey,mousek;     /* Werte der Maus, wird durch IRQ erneuert */
 
-jmp_buf restart;                /* fÅr longjmp um Crown erneut zu starten */
+jmp_buf restart;                /* f√ºr longjmp um Crown erneut zu starten */
 
 char a1[16];                    /* alten Strings der list_info anzeige */
 char b1[22];
@@ -123,7 +123,7 @@ int menu_koord[] = {
   4,173,19,182,             /* SAVE */
   4,183,19,194,             /* LOAD */
   19,173,32,182,            /* EDITOR */
-  73,173,90,183,            /* unbelegt (PeilgerÑt) */
+  73,173,90,183,            /* unbelegt (Peilger√§t) */
   38,172,52,182,            /* BUY */
   38,182,52,194,            /* SELL */          /* Koordinaten der Icons */
   55,173,66,182,            /* ALL */
@@ -142,24 +142,24 @@ int menu_koord[] = {
 
 long menu_nr[]= {
   SAVE,LOAD,EDITOR,PAUSE,BUY,SELL,ALL,INFO_BTN,EXIT_BTN,     /* Wertigkeit der Icons */
-  PEILUNG,YES,NO,FLEE,ATTACK,TERMS,SEARCH,DIG,PLUS,MINUS };      /* RÅckgabe in button */
+  PEILUNG,YES,NO,FLEE,ATTACK,TERMS,SEARCH,DIG,PLUS,MINUS };      /* R√ºckgabe in button */
 
 char memo[15][75];      /* Nimmt Editorscreen auf */
 int leisten[16178/2];		/* Nimmt die Objekte der Leisten auf, bitte auf gerade Adresse */
 
-SPRITE sprite_mem[SPR_ZAHL];								/* Speicher fÅr die ungeshifteten Spritedaten */
+SPRITE sprite_mem[SPR_ZAHL];								/* Speicher f√ºr die ungeshifteten Spritedaten */
 
 /* Speicher   scr1,  scr2,hlpbuf,pack_buf,bunker_objekte */
 char memory[32256L+32000L+32000L+32000L+32000L+32000L+24000L];
 
-char *hlpbuf;           /* kann ein Bild aufnehmen (32128) frei verfÅgbar */
+char *hlpbuf;           /* kann ein Bild aufnehmen (32128) frei verf√ºgbar */
 char *pack_buf;         /* Hilfsspeicher, zum Entpacken */
 char *scr1;          		/* 2 Bildschirmtechnik */
 char *scr2;
 void *oldbase;           /* alte Bildschirmbasis */
 FLAG effects;     /* Effekte und/oder Musik an/aus */
 int music;							/* Welche Hippelspielmusik ist an? */
-long save1[SPR_MAX*2],save2[SPR_MAX*2];             /* Offsets fÅr Hintergrund */
+long save1[SPR_MAX*2],save2[SPR_MAX*2];             /* Offsets f√ºr Hintergrund */
 int sx[SPR_MAX];           /* Spritekoordinaten */
 int sy[SPR_MAX];           /* 0=Sprite aus */
 int sn[SPR_MAX];       /* Spriteform */
@@ -173,16 +173,16 @@ int syalt_save[SPR_MAX];
 
 int anir[SPR_MAX];            /* -1,1 je nachdem in welche Richtung animiert wird */
 FLAG ani[SPR_MAX];            /* Wird Sprite animiert? */
-int auftrag[SPR_MAX];         /* AuftrÑge der einzelnen Einheiten */
+int auftrag[SPR_MAX];         /* Auftr√§ge der einzelnen Einheiten */
 
 int hafenx,hafeny;      /* Koordinaten des Hafens, der Stadt */
 int grundx,grundy;      /* Koordinaten des Eingangs bei such_eingang() */
 int schleife;
 
-int prevx,prevy;      /* Spritekoordinaten, wenn Spieler Stadt verlÑût */
+int prevx,prevy;      /* Spritekoordinaten, wenn Spieler Stadt verl√§√üt */
 long button;          /* angeklickter Button in bottom_leiste */
-int rez;                   /* Auflîsung, die vorher eingestellt war */
-FLAG verlassen;       /* Flag, ob Programmende gewÅnscht */
+int rez;                   /* Aufl√∂sung, die vorher eingestellt war */
+FLAG verlassen;       /* Flag, ob Programmende gew√ºnscht */
 FLAG game_loaded;			/* Im Subway wurde ein Landbunker geladen -> Stadt quick quit */
 
 int mx, my, mk;            /* Mauskoordinaten, Maustasten */
@@ -197,23 +197,23 @@ FLAG start_darlehen;        /* Hat er sein Startdarlehen schon? */
 extern int fnt_buf[];       /* Definiert in MCODE.O */
 
 char *ramdisk;
-long ram_size;              /* Basisadresse der romstr321, grîûe */
-long file_offset[FILE_ZAHL+1];       /* Platz fÅr die Fileoffsets */
-long file_len[FILE_ZAHL];           /* Grîûe der Files */
+long ram_size;              /* Basisadresse der romstr321, gr√∂√üe */
+long file_offset[FILE_ZAHL+1];       /* Platz f√ºr die Fileoffsets */
+long file_len[FILE_ZAHL];           /* Gr√∂√üe der Files */
 char file_disk[FILE_ZAHL];          /* Welches File in welcher Datei */
-int ram_max;                        /* Letztes File, daû noch in der Ramdisk steht */
-int ram_min;												/* Erstes File, daû in der Ramdisk ist */
+int ram_max;                        /* Letztes File, da√ü noch in der Ramdisk steht */
+int ram_min;												/* Erstes File, da√ü in der Ramdisk ist */
 int file_handle;                    /* File_Handle der Grafik-Disk-Datei */
 
 volatile extern int os_ver;          /* TOS-Version von MCODE.O */
 volatile extern int digi_works;     /* Flag, ob Digisound gerade arbeitet */
 
 int zeile,spalte;           /* Cursorposition */
-int dummy;                  /* Dummyparameter fÅr Funktionnsparameter */
+int dummy;                  /* Dummyparameter f√ºr Funktionnsparameter */
 
 long *eintrag;                   /* Eintragsadresse in VBL_Liste */
 
-char filename[100];             /* Filename, der bei fsel_input zurÅckgeht */
+char filename[100];             /* Filename, der bei fsel_input zur√ºckgeht */
 char savepfad[100];             /* Pfad, auf den Spiele gespeichert werden */
 
   /* ---------------------------------------------------------------------
@@ -233,23 +233,23 @@ int minenzahl;                          /* Wieviel Minen hat der Spieler? */
 MINE mine[MINE_MAX];                /* Hier sind alle Werte gespeichert */
                         /* Das array wird von vorne nach hinten belegt, und
                            wenn ein Eintrag frei wird, werden die anderen
-                           aufgerÅckt */
+                           aufger√ºckt */
 
   /* ---------------------------------------------------------------------
                                      BUNKER
      --------------------------------------------------------------------- */
 
-unsigned char tueren[TUERMAX*2/8];		/* eine TÅr hat 2 Bit, Darstellung:
-																   Bit 1=0: TÅr bereits eingetragen, dabei
+unsigned char tueren[TUERMAX*2/8];		/* eine T√ºr hat 2 Bit, Darstellung:
+																   Bit 1=0: T√ºr bereits eingetragen, dabei
 																   	Bit 0: Tuerstatus (0=Auf, 1=Zu)
 
-																   Bit 1=1: TÅr noch nicht eingetragen
+																   Bit 1=1: T√ºr noch nicht eingetragen
 																     Bit 0: Tuerstatus (0=wie in Bunkerfile eingetragen)
 																				   (1=invertiert) */
 ITEMS item[ITEMMAX];							/* Bunkerobjekte */
 ENEMY enemy[ENEMYMAX];						/* Bunkergegner */
-int enemy_max;										/* Wieviel EintrÑge sind tatsÑchlich benutzt? */
-unsigned char schatznummer;				/* Wieviel SchÑtze hat der Spieler schon gefunden? */
+int enemy_max;										/* Wieviel Eintr√§ge sind tats√§chlich benutzt? */
+unsigned char schatznummer;				/* Wieviel Sch√§tze hat der Spieler schon gefunden? */
 
 PARTY_MEMBER party[PARTY];				/* Mitglieder der Party */
  
@@ -259,8 +259,8 @@ int helligkeit;										/* Helligkeit der Lampe */
 FLAG bunker_bekannt[BUNKERZAHL];				/* Welcher Bunker ist bekannt? */
 FLAG bunker_betreten[BUNKERZAHL];				/* Welcher Bunker wurde schon betreten? */
 
-unsigned char exit_anzahl;					/* Anzahl der bisher durchgefÅhrten Exits 
-																			fÅr Passwortabfrage */
+unsigned char exit_anzahl;					/* Anzahl der bisher durchgef√ºhrten Exits 
+																			f√ºr Passwortabfrage */
 
 /* In welchem Land geht es in welchen Bunker? 
 	 Bit 7 gesetzt -> nur Ausgang */
@@ -288,35 +288,35 @@ unsigned char bunker_nr[LAENDER][2] = {
 signed char personen_bunker[CITIES] = {
 		26,43,24,43,23,43,43,19,43,43,32,43,34,43,43,43,43,33,43,30,43,43,43,35,43,43,43,42 };
 	
-unsigned int bunker[86][56];			/* Bunker mit 3 Rand Åberall */
+unsigned int bunker[86][56];			/* Bunker mit 3 Rand √ºberall */
 unsigned char automap[50*80/4];		/* Bitfeld (2 Bit pro Eintrag) welche Position ist betreten */
 unsigned char itemmap[50*80/4];		/* 2-er Bitfeld, als 1-er genutzt, zeigt an, wo Items liegen */
 
-unsigned char reagenz_stand[PARTY*3];	/* FlÅssigkeitsstÑnde der Reagenzen */
+unsigned char reagenz_stand[PARTY*3];	/* Fl√ºssigkeitsst√§nde der Reagenzen */
 
 int auto_nr;
 KOORD player[2];								/* Position des Spielers in der Automap in Automap-Koordinaten
 																	[0]=Position auf letztem Screen, [1]=Position auf akt Screen */
 int auto_x,auto_y;								/* Position des Automapping-Bildschirms */
-AUTOMAP2 automap_2[16];						/* VerÑnderungen, die noch nicht auf 2. Screen sind */
+AUTOMAP2 automap_2[16];						/* Ver√§nderungen, die noch nicht auf 2. Screen sind */
 unsigned char draw_whole;					/* Wie oft soll gesamte Karte auf 2. Screen gezeichnet werden? */
 
 /* NEOchrome Grafikbibliotheken: */
-char *walls;											/* Grafikobjekte der BunkerwÑnde */
+char *walls;											/* Grafikobjekte der Bunkerw√§nde */
 char *items;											/* Grafikobjekte der Objekte */
 char *item_rea;										/* Grafikobjekte der Objekte im Reagenzglasbereich */
-char *reagenz;										/* Grafikobjekte der ReagenzglÑser */
+char *reagenz;										/* Grafikobjekte der Reagenzgl√§ser */
 char *enemy_obj;									/* Grafikobjekt des Feindes */
 char *fire;												/* Grafikobjekte der Explosion */
 char *shoots;											/* Grafikobjekte des Spielerschusses */
 
 char *shrink_buff;								/* Speicherbereich zum Verkleinern von Objekten */
 
-BUNKERWAND *startwaende;					/* Hier beginnen die WÑnde (zum Anzahl berechnen) */
+BUNKERWAND *startwaende;					/* Hier beginnen die W√§nde (zum Anzahl berechnen) */
 int bunker_x,bunker_y;					    /* Position Spieler im Dungeon */
 int bunker_dx,bunker_dy;				    /* Blickrichtung in Delta */
 int richtung; 									    /* Blickrichtung im Bunker */
-int button_pressed=-1;						/* Welcher Knopf war im Bunker gedrÅckt? */
+int button_pressed=-1;						/* Welcher Knopf war im Bunker gedr√ºckt? */
 signed char akt_bunker=-1;				/* Bunkernummer, in der Spieler ist */
 
 unsigned int item_max;						/* welcher item[] Eintrag ist frei? */
@@ -331,17 +331,17 @@ RGB_PAL tv_pal = {
 	0x0200,0x0411,0x0621,0x0222,0x0333,0x0444,0x0555,0x0666 };
 FLAG tv_modus=FALSE;
 
-RGB_PAL bunker_raster;						/* tatsÑchliche Rasterpalette */
+RGB_PAL bunker_raster;						/* tats√§chliche Rasterpalette */
 
 unsigned long enemycounter;				/* Wann soll sich Gegner wieder bewegen? */
 unsigned long lampencounter;				/* Wann soll Lampe dunkler werden */
-unsigned long hungercounter;				/* Wann soll Hunger grîûer werden? */
-unsigned long durstcounter;				/* Wann soll Durst grîûer werden? */
+unsigned long hungercounter;				/* Wann soll Hunger gr√∂√üer werden? */
+unsigned long durstcounter;				/* Wann soll Durst gr√∂√üer werden? */
 
 int helligkeit;										/* in welcher Helligkeit [0..4] */
 
-SHOT shot;												/* Max. 1 gegnerischer SchÅsse gleichzeitig */
-int schussstaerke;								/* Wie stark ist der Spielerschuû? */
+SHOT shot;												/* Max. 1 gegnerischer Sch√ºsse gleichzeitig */
+int schussstaerke;								/* Wie stark ist der Spielerschu√ü? */
 
 /* Namen der Gefangenen vorinitialisieren: */
 PRISONER prisoner[10] = {
@@ -399,10 +399,10 @@ char armeename[EINHEITEN][13] = {
                           romstr358,
                           romstr359     };
 
-FLAG sterben_jetzt;             /* LÑuft Spieler in Sumpf, stirbt Armee nur bei
+FLAG sterben_jetzt;             /* L√§uft Spieler in Sumpf, stirbt Armee nur bei
                 jedem 2. VBL - Das ist das Flag, das hin und her springt. */
 
-long armeegesamt[ARMEEN];   /* GesamtstÑrke der Armee */
+long armeegesamt[ARMEEN];   /* Gesamtst√§rke der Armee */
 long armeeteil[ARMEEN][EINHEITEN];  /* Zahl der Soldaten je Armeeteil & Heer */
 float sold_zahl[EINHEITEN][RASSEN];   /* Wieviel % je Rasse bei jeder Einheit */
 unsigned long gehalt[EINHEITEN];       /* Gehalt je Einheit */
@@ -410,7 +410,7 @@ unsigned long gesamt_gehalt;            /* Gehalt der Soldaten+Matrosen */
 
 int wirkung[EINHEITEN][EIGENSCHAFTEN] = {
     /* legt fest, welche Wirkung die einzelnen Eigenschaften bei den Einheiten
-       haben, d.h. die Scouts mÅssen z.B. nicht stark sein, aber schlau etc. */
+       haben, d.h. die Scouts m√ºssen z.B. nicht stark sein, aber schlau etc. */
    5,5,5,1,1,               /* 5=sehr wichtig, 1=weniger wichtig */
    1,5,1,5,3,
    1,5,1,3,5,
@@ -423,7 +423,7 @@ float training[ARMEEN][EINHEITEN][EIGENSCHAFTEN];     /* Stand der Eigenschaften
 float motivation[ARMEEN];                     /* Motivation 0-100% */
 
 int kraft_boden[EINHEITEN][8] = {
-  /* Ebene, Wald, verz. Wald, HÅgel, Sumpf, Stadt, Burg, Schiff */
+  /* Ebene, Wald, verz. Wald, H√ºgel, Sumpf, Stadt, Burg, Schiff */
      10,    10,    5,          8,      8,    10,    10,    8,
      20,    5,     3,          15,     3,    15,    15,    1,
      10,    3,     1,          15,     1,    20,    20,    20,
@@ -440,14 +440,14 @@ float kampf_gesamt[2];                  /* entspricht armeegesamt */
 long last_fight;                        /* Datum des letzten Kampfes */
 
 long ausruestung[3][EINHEITEN];          /* 0=SHIELD, 1=GARMENT, 2=SWORD in % */
-int preis_aus[3] = { 30,10,40 };        /* Preise fÅr einen Mann */
-int preis_1[3];                         /* Preis fÅr ein Prozent */
-char aus_name[3][10] = {                /* Name der AusrÅstung */
+int preis_aus[3] = { 30,10,40 };        /* Preise f√ºr einen Mann */
+int preis_1[3];                         /* Preis f√ºr ein Prozent */
+char aus_name[3][10] = {                /* Name der Ausr√ºstung */
     romstr360,
     romstr361,
     romstr362 };
 
-int preis_einheiten[EINHEITEN]= {        /* Was ist der Preis fÅr die Einheiten */
+int preis_einheiten[EINHEITEN]= {        /* Was ist der Preis f√ºr die Einheiten */
   15,              /* Inf */
   20,              /* cav */
   14,              /* Art */
@@ -460,7 +460,7 @@ int preis_einheiten[EINHEITEN]= {        /* Was ist der Preis fÅr die Einheiten 
             /* ------------ ARMEESTEUERUNG ---------------*/
 
 ARMEE_STEUER steuer[GEGNER];
-FLAG army_unten;                /* Wird jetzt die erste HÑlfte bewegt? */
+FLAG army_unten;                /* Wird jetzt die erste H√§lfte bewegt? */
 
 /*-----------------------------------------------------------------------*/
 /*                                RASSEN                                 */
@@ -496,7 +496,7 @@ int  rassen_eigen[RASSEN][EIGENSCHAFTEN+2] = {  /* NORM_EIGANSCHAFTEN +  BEIDE A
 
 
 /*--------------------------------------------------------------------------*/
-/*                    DIMENSIONIERUNGEN FUER STéDTE                         */
+/*                    DIMENSIONIERUNGEN FUER ST√ÑDTE                         */
 /*--------------------------------------------------------------------------*/
 
 extern int scrollerp[];
@@ -634,7 +634,7 @@ unsigned char produkt[CITIES][5] = {         /* Wer produziert was? */
     1,2,3,5,0,              /* m0 */ */
     4,26,27,25,0 };
 
-long bevoelkerung[CITIES];              /* tatsÑchlicher Wert, simuliert */
+long bevoelkerung[CITIES];              /* tats√§chlicher Wert, simuliert */
 
 long stadt_besatzung[CITIES][RASSEN];       /* Welche Leute kann man kaufen */
 
@@ -642,13 +642,13 @@ int nachwuchs[RASSEN]= {
   5,1,3,1,3,2,3,3,2,1 };    /* wieviel Soldaten/Monat produziert Stadt */
 long stadt_armee[CITIES][EINHEITEN];  /* Wieviel Soldaten sind in der Stadt */
 int stadt_training[CITIES][EINHEITEN][EIGENSCHAFTEN];   /* Trainingsstand der Kaserne */
-long stadt_aus[CITIES][3][EINHEITEN];               /* AusrÅstung der Kaserne */
-unsigned char adelay[CITIES][EINHEITEN];   /* Zeitverzîgerung beim Angriff */
+long stadt_aus[CITIES][3][EINHEITEN];               /* Ausr√ºstung der Kaserne */
+unsigned char adelay[CITIES][EINHEITEN];   /* Zeitverz√∂gerung beim Angriff */
 
 FLAG bank_attacked[CITIES];
 long city_bank[CITIES];         /* Alle Konten einer Stadt, ATTACK */
 long bank_zuletzt;              /* Wann wurde Bank zuletzt betreten */
-long zinsen;                    /* Welche Zinsen wurden fÑllig */
+long zinsen;                    /* Welche Zinsen wurden f√§llig */
 FLAG schulden;                  /* Wenn True, kann Spieler nichts mehr kaufen */
 
 char pub_name[21];              /* Name des Pubs der Stadt */
@@ -677,7 +677,7 @@ char ship_name[SCHIFFSTYPEN][12] = {
                             romstr406,
                             romstr407 };
 
-int ship_crew[SCHIFFSTYPEN] = { 15, 30, 60, 15, 30, 60 }; 		/* wieviel Leute benîtigt */
+int ship_crew[SCHIFFSTYPEN] = { 15, 30, 60, 15, 30, 60 }; 		/* wieviel Leute ben√∂tigt */
 int ship_cannons[SCHIFFSTYPEN] = { 0, 0, 1, 4, 10, 20 }; 		/* Kannonen je Typ */
 int ship_spec[SCHIFFSTYPEN] = { 400, 1000, 2000, 100, 500, 200 };     /* Cargo/Capac */
 
@@ -723,7 +723,7 @@ char waren_name[WAREN+STALLWAREN][11] = {
     romstr429 	};
 
 int prod_port[WAREN+STALLWAREN]={         /* Produktionszahlen der Waren/Monat/3000 Leute */
-  /* MIL,KéS,SAL,éPF,FLE,FIS,WAF,CRA,ACI,ARZ,CYC,KRI,SKL,FôR,PUM,ôLT,CYB,AND,COM,CHI,KER,GLE */
+  /* MIL,K√ÑS,SAL,√ÑPF,FLE,FIS,WAF,CRA,ACI,ARZ,CYC,KRI,SKL,F√ñR,PUM,√ñLT,CYB,AND,COM,CHI,KER,GLE */
       20, 18, 25, 25, 24, 15, 10, 12, 16, 20, 25,  1, 15,  1,  3,  1, 17, 21, 12, 30, 14, 2 }; 
 
 int prod_land[WAREN+STALLWAREN] = {        /* produktionsfaktoren bei !port_cities */
@@ -750,7 +750,7 @@ long ystable_menge[STALLWAREN];
 int  year;
 int  month;     /* Januar  */
 int  day;       /* JE 30 TAGE */        /* 1. Januar 1432 */
-char date[30];      /* nimmt Datum fÅr List_Info auf */
+char date[30];      /* nimmt Datum f√ºr List_Info auf */
 long heute;         /* heutiges Datum in Summenform: Jahre*360+Mon*30+tage */
 long startdatum;    /* Datum bei Spielbeginn */
 long city_last[CITIES];                 /* Datum, des letzten Stadtbesuchs */
@@ -777,17 +777,17 @@ int startwert;								/* Bei jedem Spielstart anders [0..4] */
 
 char ground_buf[1800];  /* Nimmt den Untergrund des momentanes Bildes auf */
 
-int ground_nr;          /* Anzahl der UntergrundÑnderungen */
-BODEN_ANDERS new_ground[CHG_MAX];        /* éndert sich irgendwo der Unter-
+int ground_nr;          /* Anzahl der Untergrund√§nderungen */
+BODEN_ANDERS new_ground[CHG_MAX];        /* √Ñndert sich irgendwo der Unter-
             grund, wird z.B. ein Schatz gehoben, so wird hier die
-            énderung eingetragen und bei load_map umgesetzt */
+            √Ñnderung eingetragen und bei load_map umgesetzt */
 
 char ground_name[32+1][22] = {
 						   romstr451,							/* Schatz */
                romstr452,							/* Eisen */
                romstr453,							/* Dias */
                romstr454,							/* Nithril */
-							 romstr455,							/* ôl */
+							 romstr455,							/* √ñl */
 							 romstr456,							/* Gas */
 						   romstr457,							/* Gimmig */
                romstr458,							/* Gold */
@@ -821,7 +821,7 @@ char ground_name[32+1][22] = {
 unsigned char schild_nr[LAENDER] = {
 		0,2,4,6,7,0,9,11,13,0,14,0,0,0,15,18,0,19 };
 		
-FLAG auf_schiff;            /* FÑhrt Spieler gerade mit Schiff? */
+FLAG auf_schiff;            /* F√§hrt Spieler gerade mit Schiff? */
 FLAG auf_schild;						/* Ist Spieler gerade auf einem Schild? */
 
 short loc;                  /* CITY oder LAND, je nach Aufenthaltsort */
@@ -836,14 +836,14 @@ char pos_string[25];        /* Hier wird Position aufgebaut */
 
 unsigned char welt[15*15];          /* Gibt an welches Land, welche Nummer hat */
 
-PEILGERAET peilgeraet[2];       /* Standort der 2 PeilgerÑte */
+PEILGERAET peilgeraet[2];       /* Standort der 2 Peilger√§te */
 
 /* --------------------------------------------------------------------
                             KAMPF
    -------------------------------------------------------------------- */
 
-  /* Dieses Array beschreibt die Animationsbilder fÅr die Kampfsprites
-     z.B. Kavallry 11,12,13 und zurÅck */
+  /* Dieses Array beschreibt die Animationsbilder f√ºr die Kampfsprites
+     z.B. Kavallry 11,12,13 und zur√ºck */
 
 int animation[] = {
   /* Eigene Armee: */
@@ -913,14 +913,14 @@ int deckung_city[] = {              /* Deckung bei Angriff gegen Stadt */
   189,39,
   258,35 };
 
-int deckung[16*2];          /* Wirklicher Wert, wÑhrend der Kampfroutine */
+int deckung[16*2];          /* Wirklicher Wert, w√§hrend der Kampfroutine */
 
 int geschw[EINHEITEN] = {                   /* Wie schnell sind die Einheiten (in Pixel) */
   1,3,0,2,4,1,1 };
 
 int front_s,front_c;        /* Fronten der beiden Armeen */
 int schild_einheit;         /* Die Einheit, die gerade am Schild ist */
-FLAG ari_kaempft[2];        /* Flag, ob Ari's bereits schieûen oder nicht */
+FLAG ari_kaempft[2];        /* Flag, ob Ari's bereits schie√üen oder nicht */
 FLAG demo_angriff;          /* wird TRUE, wenn Spielerstadt angegriffen wird */
 int stadt_nr;               /* wenn demo_angriff, dann hier Stadt_nr */
 float effektivitaet;        /* Wie schnell sterben die Leute (PLUS/MINUS) */
@@ -932,7 +932,7 @@ int gewinner;               /* 0=Spieler, 1=Gegner */
 
 int oberkante;              /* Bis wohin ist die Kanone voll? */
 int fuellung[12];           /* Was ist in der Kanone drin? [0]=ganz unten */
-int fuell_poi;              /* Pointer zur nÑchsten FÅllposition */
+int fuell_poi;              /* Pointer zur n√§chsten F√ºllposition */
 int kanone;                   /* STellung der Kanone 0..3 */
 KOORD zuendpos[4] = {
   153,130,
@@ -941,4 +941,3 @@ KOORD zuendpos[4] = {
   153,119 };
 
 
-

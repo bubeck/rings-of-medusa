@@ -32,10 +32,10 @@ void city()
 
   loc = CITY;
   leiste_y=64;
-  msminy=63;                     /* hîher darf Maus nicht */
+  msminy=63;                     /* h√∂her darf Maus nicht */
 
   sx[0]=sxalt[0];
-  sy[0]=syalt[0];               /* Sprite zurÅcksetzen */
+  sy[0]=syalt[0];               /* Sprite zur√ºcksetzen */
 
   option_city();                /* Bereitet Options auf Stadt vor */
   get_city_werte(citynum);          /* Holt Stadtspezifische Werte von Disk */
@@ -94,7 +94,7 @@ void city()
 	  city_last[citynum]=heute;     /* Heut war Spieler zuletzt in dieser Stadt */
 	
 	  citynum=-1;
-	  get_ground();             /* neue UntergrÅnde holen */
+	  get_ground();             /* neue Untergr√ºnde holen */
 	
 	  option_city_ende();
 	  land_an();
@@ -103,7 +103,7 @@ void city()
 
 void calc_gehalt()
 {
-  /* Berechnet die Summe der EinzelgehÑlter nach gesamt_gehalt */
+  /* Berechnet die Summe der Einzelgeh√§lter nach gesamt_gehalt */
   int i;
 
   gesamt_gehalt=0;
@@ -117,7 +117,7 @@ void calc_gehalt()
 
 long sum_goods()
 {
-  /* Berechnet die Menge aller Dinge, die mitgefÅhrt werden */
+  /* Berechnet die Menge aller Dinge, die mitgef√ºhrt werden */
   long zahl;
 
   zahl=sum_waren()+sum_rohstoffe()+sum_stall();
@@ -126,7 +126,7 @@ long sum_goods()
 
 long sum_waren()
 {
-  /* Summiert alle Waren auf, und gibt die Anzahl zurÅck */
+  /* Summiert alle Waren auf, und gibt die Anzahl zur√ºck */
   int i;
   long zahl;
 
@@ -137,7 +137,7 @@ long sum_waren()
 
 long sum_soldaten()
 {
-  /* Summiert alle Waren auf, und gibt die Anzahl zurÅck */
+  /* Summiert alle Waren auf, und gibt die Anzahl zur√ºck */
   int i;
   long zahl;
 
@@ -246,7 +246,7 @@ int num;                /* Nummer der Stadt */
 	
   city_screen();																	/* und anzeigen */
   leiste_oben(c_name[citynum]);
-  redraw_buttons(PAUSE|EXIT_BTN|INFO_BTN|EDITOR);      /* Nur VerÑnderungen zeichnen */
+  redraw_buttons(PAUSE|EXIT_BTN|INFO_BTN|EDITOR);      /* Nur Ver√§nderungen zeichnen */
   Sm();
 }
 
@@ -372,7 +372,7 @@ void hafenkneipe()
   Hm();
   formular(scr1,63);
 	
-  len=strlen(port_pub);             /* Alle rechten Spaces weglîschen */
+  len=strlen(port_pub);             /* Alle rechten Spaces wegl√∂schen */
   while(port_pub[--len]==' ') ;
   port_pub[len+1]=0;
 
@@ -515,7 +515,7 @@ void hafenkneipe()
     } while(button != EXIT_BTN);
   button = NOTHING;
   set_mouse(0);                     /* Kreuzzeiger */
-  formular(scr1,63);                 /* Und Bildschirm lîschen */
+  formular(scr1,63);                 /* Und Bildschirm l√∂schen */
 	show_raster();
 }
 
@@ -555,8 +555,8 @@ int *index,nummer[];
   (*index)++;
   for(i=*index;i<SCHIFFMAX;i++)
     if (flotte[i].typ!=-1 && flotte[i].ort==citynum) {
-      *index=i;                     /* NÑchstes Schiff finden */
-      nummer[flotte[*index].typ]++;      /* NÑchste Nummer */
+      *index=i;                     /* N√§chstes Schiff finden */
+      nummer[flotte[*index].typ]++;      /* N√§chste Nummer */
       return;
       }
 
@@ -597,7 +597,7 @@ void reederei()
         }
       if (my>88 && my<98) {       /* neuer Schiffstyp */
         x=75+ship_nr*80;
-        drec(x,88,x+55,96);     /* Alte lîschen */
+        drec(x,88,x+55,96);     /* Alte l√∂schen */
         if (mx<155) ship_nr=0;
         if (mx>210) ship_nr=2;
         if (mx>154 && mx<211) ship_nr=1;
@@ -629,7 +629,7 @@ void reederei()
 
     } while(button != EXIT_BTN);
   button = NOTHING;
-  formular(scr1,63);             /* und Bildschirm lîschen */
+  formular(scr1,63);             /* und Bildschirm l√∂schen */
 }
 
 void show_ships(ship_type,nr)
@@ -747,7 +747,7 @@ int num;
 
   rec(15,96,67,102);                /* Human selektieren */
 
-  chosen_men=1;                     /* einer ausgewÑhlt */
+  chosen_men=1;                     /* einer ausgew√§hlt */
 
   new_salary=new_company=new_chosen=new_money=new_inter=TRUE;
   all=FALSE;
@@ -841,7 +841,7 @@ int num;
               for(i=0;i<RASSEN;i++)
                 sold_zahl[company][i]=rasse_nachher[i]*100.0/armeeteil[0][company];
 
-            gehalt[company]+=(long)preis_einheiten[company]*chosen_men;         /* Total salary erhîhen */
+            gehalt[company]+=(long)preis_einheiten[company]*chosen_men;         /* Total salary erh√∂hen */
             gesamt_gehalt+=(long)preis_einheiten[company]*chosen_men;
             new_company=new_inter=new_money=TRUE;
             }
@@ -920,7 +920,7 @@ void test_schulden()
 {
   /* testet, ob Spieler noch etwas kaufen kann */
 
-  /* Wenn er Schulden seit lÑnger als 3 Monaten hat, kann er nichts mehr kaufen */
+  /* Wenn er Schulden seit l√§nger als 3 Monaten hat, kann er nichts mehr kaufen */
   if (kontostand<0 && heute-bank_zuletzt>3*30) {
     schulden=TRUE;
     }
@@ -929,7 +929,7 @@ void test_schulden()
 
 void calc_zinsen()
 {
-  /* Berechnet die Zinsen, die fÑllig sind, seit Spieler das letzte Mal auf
+  /* Berechnet die Zinsen, die f√§llig sind, seit Spieler das letzte Mal auf
      der Bank war */
   float geld;
   long tage;
@@ -943,7 +943,7 @@ void calc_zinsen()
 
   if (kontostand<0) {                /* Kredit */
     geld*=0.049315068*tage;               /* 18% im Jahr */
-    zinsen=geld;                     /* die fÑlligen Zinsen, hier negativ! */
+    zinsen=geld;                     /* die f√§lligen Zinsen, hier negativ! */
     }
   if (kontostand>0) {
     geld*=0.010958904*tage;              /* 4% Im Jahr */
@@ -1080,7 +1080,7 @@ EINSATZ einsatz[];
 					}
 				}
 			}
-			if (einsatz_nr==10) break;								/* max. 9 EinsÑtze */
+			if (einsatz_nr==10) break;								/* max. 9 Eins√§tze */
 		} while(button!=EXIT_BTN && !maus_in(CHIPX+37,CHIPY,CHIPX+45,CHIPY+8));			/* Close */
 	
 	if (einsatz_nr<10) einsatz[einsatz_nr].feld=-1;															/* letztes Feld */
@@ -1134,7 +1134,7 @@ int move_chip(chip_nummer)
 int chip_nummer;
 {
 	/* Spieler hat auf einen Chip geklickt und kann diesen nun setzen */
-	/* Gibt angezogenes Feld zurÅck */
+	/* Gibt angezogenes Feld zur√ºck */
 	int feldx,feldy;
 	
 	move_objekt(32+chip_nummer,pack_buf,MOVE,0,hlpbuf,
@@ -1159,7 +1159,7 @@ int chip_nummer;
 		feldy=(my-101)/11;
 		return(43+feldy);
 		}
-	return(-1);																/* ungÅltiger Zug */
+	return(-1);																/* ung√ºltiger Zug */
 }
 
 void draw_roulette()
@@ -1169,9 +1169,9 @@ void draw_roulette()
 	Hm();
 	formular(scr1,63);					
 	draw_grow_obj(1,pack_buf,0,scr1,96,73);						/* Filz zeichnen */
-	draw_grow_obj(0,pack_buf,0,scr1,15,73);						/* Window fÅr SchÅssel */
+	draw_grow_obj(0,pack_buf,0,scr1,15,73);						/* Window f√ºr Sch√ºssel */
 	copy_screen(scr1,scr2);
-	feld_weiter();																		/* RouletteschÅssel zeichnen */
+	feld_weiter();																		/* Roulettesch√ºssel zeichnen */
 	switch_screens();
 	copy_screen(scr1,scr2);
 	show_raster();
@@ -1180,16 +1180,16 @@ void draw_roulette()
 
 int rotier_roulette()
 {
-	/* Dreht die SchÅssel und lost eine Nummer aus */
-	/* Gibt die ausgewÑhlte Nummer zurÅck */
-	int Nummer;																/* ausgewÑhlte Nummer */
+	/* Dreht die Sch√ºssel und lost eine Nummer aus */
+	/* Gibt die ausgew√§hlte Nummer zur√ºck */
+	int Nummer;																/* ausgew√§hlte Nummer */
 	float Bildps;															/* Bilder pro Sekunde */
 	float Plusps;															/* Beschleunigung in Bildern pro Sekunde */
 	float Endps;															/* Bilder pro Sekunde nach Beschleunigung */
-	int kugelcounter;													/* zÑhlt Kugelpositionen */
+	int kugelcounter;													/* z√§hlt Kugelpositionen */
 	int BahnDist;															/* Abstand der Kugel von oberen Rand */
-	int KugelproBild;													/* Anzahl gedrawter Kugeln pro SchÅsselbild */
-	int x,y;																	/* Koordinaten fÅr Kugelwackler */
+	int KugelproBild;													/* Anzahl gedrawter Kugeln pro Sch√ºsselbild */
+	int x,y;																	/* Koordinaten f√ºr Kugelwackler */
 	int i;
 	FLAG aus;
 	
@@ -1211,17 +1211,17 @@ int rotier_roulette()
 		Nummer=feld_weiter();
 		switch_screens();
 		wait_sync((int)get_sync()/Bildps+0.5);	/* wartet entsprechende Anzahl VBLs */
-		Bildps+=Plusps;													/* Drehzahl erhîhen */
+		Bildps+=Plusps;													/* Drehzahl erh√∂hen */
 		} 
 	Bildps-=Plusps;														/* richtiger Wert */
 	Bildps/=0.4;
-	Bildps=(int)Bildps*0.4;										/* damit SchÅssel auf vollem Feld stehenbleibt */
+	Bildps=(int)Bildps*0.4;										/* damit Sch√ºssel auf vollem Feld stehenbleibt */
 	if (Nummer&1) Bildps+=0.2;
 	
 	kugelcounter=-4;													/* = relativer Mittelpunkt der Kugel */
 	while(Bildps>1-0.2) {											/* Abbremsen */
 		Nummer=feld_weiter();
-		if (get_sync()/Bildps<=2*3)							/* SchÅssel nicht wesentlich langsamer */
+		if (get_sync()/Bildps<=2*3)							/* Sch√ºssel nicht wesentlich langsamer */
 			KugelproBild=(int)get_sync()/Bildps/2;					/* maximal 1 Kugel pro 2 VBL */
 		else KugelproBild=4;									
 		if (KugelproBild==0) {									/* keine Kugel */
@@ -1229,11 +1229,11 @@ int rotier_roulette()
 			wait_sync((int)(get_sync()/Bildps+0.5));
 			}
 		else {
-			/* um Kugellinie restaurieren zu kînnen */
+			/* um Kugellinie restaurieren zu k√∂nnen */
 			cpy_raster(scr2,hlpbuf,0,81,319,81+objekt_hoehe(9,pack_buf)-1,0,0);
 			for(i=1;i<=KugelproBild;i++)	{   /*0,32,319,32+16+11,0,81+32*/
 				if (Bildps>=4 || kugelcounter<=68+5) {				/* noch schnell oder Kugel noch sichtbar */
-					if (Bildps>=16)									/* noch Ñuûerste Kugelumlaufbahn */
+					if (Bildps>=16)									/* noch √§u√üerste Kugelumlaufbahn */
 						BahnDist=81+32;
 					else														/* Bahnen werden enger */
 						BahnDist=81+32-Bildps*2+32;
@@ -1277,11 +1277,11 @@ int rotier_roulette()
 					}
 				switch_screens();
 				wait_sync((int)(get_sync()/Bildps/KugelproBild+0.5));	/* entsprechende VBL-Anzahl warten */
-				cpy_raster(hlpbuf,scr2,0,0,319,objekt_hoehe(9,pack_buf)-1,0,81);	/* restore SchÅssel */
-				/* if (mousek) wait_key();				zu PrÅfzwecken */
+				cpy_raster(hlpbuf,scr2,0,0,319,objekt_hoehe(9,pack_buf)-1,0,81);	/* restore Sch√ºssel */
+				/* if (mousek) wait_key();				zu Pr√ºfzwecken */
 				}
 			}
-		Bildps-=0.2;														/* Verzîgerung mit 0.2 Bildern pro Sekunde */
+		Bildps-=0.2;														/* Verz√∂gerung mit 0.2 Bildern pro Sekunde */
 		}
 		
 	draw_obj(31,pack_buf,1,scr2,18+29,81+62);
@@ -1300,12 +1300,12 @@ int rotier_roulette()
 	wait_mouse(0);														/* und wieder loslassen */		
 	Sm();
 
-	return((int)roulette[Nummer/2]);								/* Feldnummer zurÅckgeben */
+	return((int)roulette[Nummer/2]);								/* Feldnummer zur√ºckgeben */
 }
 
 int feld_weiter()
 {
-	/* Geht ein Feld weiter und zeigt dieses an, gibt Feld_nr zurÅck */
+	/* Geht ein Feld weiter und zeigt dieses an, gibt Feld_nr zur√ºck */
 	static int feld=-1;						/* Index in roulette[] */
 	
 	feld++;
@@ -1337,14 +1337,14 @@ int feld_nr;									/* index in roulette[] */
 			obj2x=18+33+2+24+1;
 			}
 		switch (feld_nr) {
-			case 1:									/* GrÅn auf Rot (0..1) */
+			case 1:									/* Gr√ºn auf Rot (0..1) */
 				objekt=9;
-				objekt1=30;						/* grÅne Null */
+				objekt1=30;						/* gr√ºne Null */
 				objekt2+=10;					/* -> rot */
 				break;
 			case 36*2+1:
-				objekt=7;							/* Schwarz auf GrÅn (36..0) */
-				objekt2=30;						/* grÅne Null */
+				objekt=7;							/* Schwarz auf Gr√ºn (36..0) */
+				objekt2=30;						/* gr√ºne Null */
 				break;
 			default:
 				if (feld_nr%4==3) {				/* Rot auf Schwarz */
@@ -1366,7 +1366,7 @@ int feld_nr;									/* index in roulette[] */
 	  obj2x=18+29+1;
 	  objekt1=-11;									/* nur 1 Ziffer, -11 wegen plus 10 */
 		switch (feld_nr) {
-			case 0:											/* Null (GrÅn) */
+			case 0:											/* Null (Gr√ºn) */
 				objekt=8;
 				objekt2=30;
 				break;
@@ -1465,7 +1465,7 @@ int num;                    /* Stadtnummer */
 
 	close_window();
 	
-  mx=my=0;                              /* Damit in Stadt nichts angewÑhlt wird */
+  mx=my=0;                              /* Damit in Stadt nichts angew√§hlt wird */
   if (!verlassen) city_restore(num);
 }
 
@@ -1486,7 +1486,7 @@ void sea_soldier()
         armee_status=AN_BORD;               /* Armee ist jetzt an Bord */
         armee_pos=-1;                       /* Armeesprite ist weg */
         verlassen=TRUE;
-        auf_schiff=TRUE;                    /* Er fÑhrt jetzt Schiff! */
+        auf_schiff=TRUE;                    /* Er f√§hrt jetzt Schiff! */
         button=EXIT_BTN;
         }
       else {
@@ -1594,7 +1594,7 @@ void land()
       armee_status=AN_LAND;             /* Armee ist wieder an Land */
       armee_stadt=citynum;              /* und zwar hier */
       sx[0]=sxalt[0]=sx[1];
-      sy[0]=syalt[0]=sy[1];             /* Spritewerte Åbergeben */
+      sy[0]=syalt[0]=sy[1];             /* Spritewerte √ºbergeben */
       sn[0]=0;                          /* SPieler ist wieder da */
       sx[1]=-1;                         /* Schiff ist nicht zu sehen */
       auf_schiff=FALSE;                 /* Weiter geht's an Land */
@@ -1635,7 +1635,7 @@ FLAG try_to_sold()
 
 void such_hafen()
 {
-  /* sucht den zugehîrigen Hafen, zu der Stadt, in der Spieler ist */
+  /* sucht den zugeh√∂rigen Hafen, zu der Stadt, in der Spieler ist */
   int x,y;
   int hafen_wert;    /* Untergrundwerte */
   int wasserx,wassery;
@@ -1677,7 +1677,7 @@ void such_hafen()
 
 void such_eingang()
 {
-            /* sucht den zugehîrigen Eingang, zu der Stadt, in der Spieler ist */
+            /* sucht den zugeh√∂rigen Eingang, zu der Stadt, in der Spieler ist */
   int grund_wert;    /* Untergrundwerte */
   int stadt;
 
@@ -1738,9 +1738,9 @@ void armory(num)
 int num;
 {
   int company;
-  long costs;                   /* Kosten fÅr die selektierten Prozent */
+  long costs;                   /* Kosten f√ºr die selektierten Prozent */
   long anzahl;                   /* Anzahl an SOldaten die selektiert sind */
-  int selektion;                /* Was, Schild, RÅstung, oder Schwert */
+  int selektion;                /* Was, Schild, R√ºstung, oder Schwert */
   FLAG newmoney,newcompany,newwerte,newselect;
   FLAG all;
 
@@ -1766,7 +1766,7 @@ int num;
     writexy(0,132,120,romstr175
 											romstr176);
 
-  writexy_ausruestung(company);                /* Schreibt die Preise der AusrÅstung hin */
+  writexy_ausruestung(company);                /* Schreibt die Preise der Ausr√ºstung hin */
   Sm();
 
   newmoney=newselect=newcompany=newwerte=TRUE;
@@ -1863,7 +1863,7 @@ int num;
 void writexy_ausruestung(company)
 int company;
 {
-  /* Schreibt die Preise der AusrÅstung hin */
+  /* Schreibt die Preise der Ausr√ºstung hin */
 
   Hm();
   writexy_aus(0,112,company);
@@ -1893,7 +1893,7 @@ char txt1[],txt2[];
 
   loc = CITY;
   leiste_y=64;
-  msminy=63;                     /* hîher darf Maus nicht */
+  msminy=63;                     /* h√∂her darf Maus nicht */
 
 	clear_raster();
 	
@@ -1916,7 +1916,7 @@ char txt1[],txt2[];
   redraw_buttons(EXIT_BTN|PAUSE);
 
   strcpy(zeile,romstr178);
-  strapp(zeile,player_name);               /* String anhÑngen */
+  strapp(zeile,player_name);               /* String anh√§ngen */
 
   center(0,72,zeile);
   writexy(0,16,84,romstr179);
@@ -2015,7 +2015,7 @@ int num;
 {
   int i;
   FLAG army_changed;                    /* Wurde ein Soldat verschoben? */
-  FLAG money_changed;                   /* Wurde das Geld verÑndert */
+  FLAG money_changed;                   /* Wurde das Geld ver√§ndert */
   FLAG menge_changed;                   /* Wurde die Anzahl der Transnfersold. */
   long summe;                           /* Summe der Soldaten */
   float sum;
@@ -2084,7 +2084,7 @@ int num;
 
     if (mk==1) {
       Hm();
-      if (mx>=216) {                    /* Delay verÑndern */
+      if (mx>=216) {                    /* Delay ver√§ndern */
         company=(my-84)/6;
         if (company>=0 && company<EINHEITEN) {
           if (mx>296) mx=296;
@@ -2175,7 +2175,7 @@ int num;
               for(i=0;i<EIGENSCHAFTEN;i++) training[0][company][i]=50.0;
               }
 
-            for(i=0;i<3;i++)                 /* Alle AusrÅstungen weitergeben */
+            for(i=0;i<3;i++)                 /* Alle Ausr√ºstungen weitergeben */
               if (ausruestung[i][company]>armeeteil[0][company]) {
                 stadt_aus[num][i][company]+=(ausruestung[i][company]-armeeteil[0][company]);
                 ausruestung[i][company]=armeeteil[0][company];
@@ -2200,12 +2200,11 @@ void draw_delay(x,y,wert)
 int x,y;
 unsigned char wert;
 {
-  /* Zeitverzîgerung beim Angriff */
+  /* Zeitverz√∂gerung beim Angriff */
   int dx;
 	
   dx=((int)wert*80)/100;
   fill(1,x,y,x+dx,y+4);       			           		/* Roter Balken */
-  if (wert!=100) fill(2,x+dx,y,x+80,y+4);           	  		/* GrÅner Balken */
+  if (wert!=100) fill(2,x+dx,y,x+80,y+4);           	  		/* Gr√ºner Balken */
 }
 
-

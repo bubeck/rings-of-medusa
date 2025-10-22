@@ -1,13 +1,13 @@
  
 int armee_aktiv;
 
-/* Dieser Part beinhaltet alle Funktionen, die benîtigt werden, damit der
+/* Dieser Part beinhaltet alle Funktionen, die ben√∂tigt werden, damit der
    Spieler sein Sprite auf der Landkarte bewegen kann... */
-/* Achtung, alle Stellen, die mit !!! markiert sind, sind zu Debug-zwecken geÑndert worden! */
+/* Achtung, alle Stellen, die mit !!! markiert sind, sind zu Debug-zwecken ge√§ndert worden! */
 
 #include "includes.c"           /* Definiert alle Variablen als Extern,... */
 
-long timecounter;								/* Counter zum ZÑhlen der Tage */
+long timecounter;								/* Counter zum Z√§hlen der Tage */
 
 /* Start: */
 
@@ -51,7 +51,7 @@ int x,y;            /* X/Y des Spielers, damit nicht ins Wasser gezogen wird */
     Hm();
     load_map(welt[pos_welt]);       /* Altes Land laden */
 		sx[0]=sxalt[0];
-		sy[0]=syalt[0];							/* Spieler zurÅcksetzen */ 
+		sy[0]=syalt[0];							/* Spieler zur√ºcksetzen */ 
     get_ground();
     Sm();
     return(FALSE);
@@ -114,7 +114,7 @@ int x,y;            /* X/Y des Spielers, damit nicht ins Wasser gezogen wird */
 		logbase=oldlogbase;
 		}
 		
-  copy_screen(scr1,scr2);         /* auf 2. Screen Åbertragen */
+  copy_screen(scr1,scr2);         /* auf 2. Screen √ºbertragen */
 
   Sm();
 
@@ -125,7 +125,7 @@ int x,y;            /* X/Y des Spielers, damit nicht ins Wasser gezogen wird */
 void load_map(nr)
 int nr;             /* 0..13 */
 {
-  /* LÑdt Landschaft nr von Diskette */
+  /* L√§dt Landschaft nr von Diskette */
 	int nr_real;
 
   if (nr==SEA && map==SEA) return;                  /* von See->See */
@@ -150,13 +150,13 @@ int nr;             /* 0..13 */
 void load_ground(nr)
 int nr;
 {
-  /* LÑdt den Untergrund eines Landes */
+  /* L√§dt den Untergrund eines Landes */
   register int i,j;
 	int nr_real;
 
   if (nr==SEA) {
     for(i=0;i<1800;) {
-      ground_buf[i++]=255;		/* Ganze GMAP mit Wasser fÅllen (packed) */
+      ground_buf[i++]=255;		/* Ganze GMAP mit Wasser f√ºllen (packed) */
       }
     }
   else {
@@ -166,22 +166,22 @@ int nr;
 			default: nr_real=nr;
 			}
     load(GMAPS_DAT,ground_buf,1800L*nr_real,1800L);
-    del_rohstoffe();             /* nicht benîtigte Rohstoffe lîschen */
+    del_rohstoffe();             /* nicht ben√∂tigte Rohstoffe l√∂schen */
     put_minen(nr);                /* eventuelle Minen einzeichnen */
-    chg_ground(nr);               /* evtl. UntergrÅnde lîschen */
+    chg_ground(nr);               /* evtl. Untergr√ºnde l√∂schen */
     }
 }
 
 void del_rohstoffe()
 {
-	/* Da viel zuviele Rohstoffe vorhanden sind, werden abhÑngig vom Level einige wieder
+	/* Da viel zuviele Rohstoffe vorhanden sind, werden abh√§ngig vom Level einige wieder
 	   entfernt. */
 		 
 	int x,y;
 	int counter,skip;
 	int land;
 	
-	skip=1+(level-1.0)*9.0;						/* Anzahl der Rohstoffe, die Åbersprungen werden 
+	skip=1+(level-1.0)*9.0;						/* Anzahl der Rohstoffe, die √ºbersprungen werden 
 																		   1..10 */
 	counter=startwert;	
 	for(x=0;x<80;x++)
@@ -189,7 +189,7 @@ void del_rohstoffe()
 			land=get_raster(x,y);
     	if (land!=GIMMIG && land>SCHATZ && land<=GOLD)        /* Hier ist ein Rohstoff */
 				if (counter--<=0) counter=skip;
- 				else put_raster(EBENE,x,y);						/* weglîschen */
+ 				else put_raster(EBENE,x,y);						/* wegl√∂schen */
 			}
 }
 
@@ -213,7 +213,7 @@ int nr;
 void chg_ground(nr)
 int nr;                 /* Nummer des Landes */
 {
-  /* éndert in der aktuellen GMAP den Untergrund an bestimmten Stellen */
+  /* √Ñndert in der aktuellen GMAP den Untergrund an bestimmten Stellen */
   int i,j;
 	int untergrund;
 	
@@ -225,8 +225,8 @@ int nr;                 /* Nummer des Landes */
 			else {
 				ground_nr--;
 				for(j=i;j<ground_nr;j++) 
-					new_ground[i]=new_ground[i+1];			/* Eintrag unnîtig -> entfernen */
-				i--;													/* und zurÅck */
+					new_ground[i]=new_ground[i+1];			/* Eintrag unn√∂tig -> entfernen */
+				i--;													/* und zur√ºck */
 				}
 			}
 }
@@ -236,7 +236,7 @@ int wert;
 int land;
 int x,y;                /* X/Y In Pixelkoordinaten */
 {
-  /* éndert das Land an dieser Stelle, und trÑgt es in die new_ground[]-Liste
+  /* √Ñndert das Land an dieser Stelle, und tr√§gt es in die new_ground[]-Liste
      ein */
   register int i;
   register int xr,yr;
@@ -278,7 +278,7 @@ void land_an()
   map=-1;
   land_map(old_map,FALSE,0,sx[0],sy[0]); 			/* nicht reinscrollen */
 
-  if (auf_schiff) redraw_buttons(PAUSE|EDITOR|PEILUNG);   /* Wird hier was geÑndert, dann */
+  if (auf_schiff) redraw_buttons(PAUSE|EDITOR|PEILUNG);   /* Wird hier was ge√§ndert, dann */
   else redraw_buttons(PAUSE|EDITOR|SEARCH|DIG|PEILUNG);   /* auch in sea_move()! */
                                     /* und in re_initialize() !!! */
                                     /* und in such_rohstoffe() */
@@ -292,17 +292,17 @@ void land_an()
 
 void clear_time()
 {
-  /* Lîscht die interne Uhr, (VBL_COUNTER) */
+  /* L√∂scht die interne Uhr, (VBL_COUNTER) */
 
 	timecounter=vbl_ct;
 }
 
 void check_time()
 {
-  /* öberprÅft, ob 1 Tag um */
+  /* √úberpr√ºft, ob 1 Tag um */
 
   if (timecounter+70<vbl_ct) {               /* Alle 70/50 sec. ein Tag um */
-    clear_time();               /* Uhr wieder lîschen */
+    clear_time();               /* Uhr wieder l√∂schen */
 
     heute++;        /* ein Tag weiter */
     day += 1;
@@ -342,7 +342,7 @@ void show_ground()
 
 void test_mine()
 {
-  /* öberprÅft, ob der Spieler in eine Mine will */
+  /* √úberpr√ºft, ob der Spieler in eine Mine will */
   register int i;
   int nr;               /* Nummer dieser Mine */
   long button_old;      /* Alter Button-Status */
@@ -368,7 +368,7 @@ void test_mine()
   redraw_buttons(button_old);
   copy_buttons();
 
-  sx[0]=sxalt[0];           /* Spieler zurÅck setzen */
+  sx[0]=sxalt[0];           /* Spieler zur√ºck setzen */
   sy[0]=syalt[0];
   get_ground();
   show_ground();
@@ -387,19 +387,19 @@ void test_city()
 
     old_buttons=bleiste;
 
-    if (belong[citynum]==99) {                          /* Diese Stadt gehîrt Medusa */
+    if (belong[citynum]==99) {                          /* Diese Stadt geh√∂rt Medusa */
       if (auf_schiff && armee_status!=AN_BORD)          /* Armee an Bord? */
-        redraw_buttons(NO);                             /* Nein, kein Angriff mîglich */
+        redraw_buttons(NO);                             /* Nein, kein Angriff m√∂glich */
       else redraw_buttons(NO|ATTACK);
       show_window(romstr589);
       }
-    else {                                              /* Stadt gehîrt xxx */
-      if (belong[citynum]>=0) {                         /* Stadt gehîrt Gegner */
+    else {                                              /* Stadt geh√∂rt xxx */
+      if (belong[citynum]>=0) {                         /* Stadt geh√∂rt Gegner */
         for(i=0;i<GEGNER;i++)
           if (steuer[i].heimat==citynum)                 /* Richtige Stadt? */
             if (steuer[i].angriff_zahl>=5) {             /* Schon 5 mal angegriffen */
               if (auf_schiff && armee_status!=AN_BORD)          /* Armee an Bord? */
-                redraw_buttons(NO);                             /* Nein, kein Angriff mîglich */
+                redraw_buttons(NO);                             /* Nein, kein Angriff m√∂glich */
               else redraw_buttons(NO|ATTACK);
 
               show_window(romstr590);
@@ -407,14 +407,14 @@ void test_city()
               }
         if (i==GEGNER) {                                /* normale Stadt */
           if (auf_schiff && armee_status!=AN_BORD)          /* Armee an Bord? */
-            redraw_buttons(YES|NO);                             /* Nein, kein Angriff mîglich */
+            redraw_buttons(YES|NO);                             /* Nein, kein Angriff m√∂glich */
           else redraw_buttons(YES|NO|ATTACK);
           show_window(build(romstr591,c_name[citynum]));
           }
         }
       else {                                            /* Eigene Stadt */
         if (auf_schiff && armee_status!=AN_BORD)          /* Armee an Bord? */
-          redraw_buttons(YES|NO);                             /* Nein, kein Angriff mîglich */
+          redraw_buttons(YES|NO);                             /* Nein, kein Angriff m√∂glich */
         else redraw_buttons(YES|NO|ATTACK);
         show_window(build(romstr592,c_name[citynum]));
         }
@@ -450,7 +450,7 @@ void test_bunker()
   if (ground_num>=BUNKER_1 && ground_num<=BUNKER_2) {
     bunker_num=bunker_nr[map][ground_num-BUNKER_1];
 		if (bunker_num>=0 && bunker_num<128 && bunker_bekannt[bunker_num]) {
-			sx[0]=sxalt[0];								/* Spielfigur zurÅcksetzen */
+			sx[0]=sxalt[0];								/* Spielfigur zur√ºcksetzen */
 			sy[0]=syalt[0];
 			if (bunker_num==20) text=romstr594;
 			else text=romstr595;
@@ -467,7 +467,7 @@ void test_bunker()
 
 void such_platz()
 {
-  /* Sucht einen freien Platz fÅr den Spieler, also keine Berge, Wasser ,.. */
+  /* Sucht einen freien Platz f√ºr den Spieler, also keine Berge, Wasser ,.. */
   int start_x,start_y,end_x,end_y;
   int x,y,wert;
 
@@ -494,8 +494,8 @@ label:
 
 void test_untergrund()
 {
-  /* öberprÅft, ob der Spieler sich im Sumpf oder verhexten Wald befindet,
-     dann sterben nÑmlich die Leute */
+  /* √úberpr√ºft, ob der Spieler sich im Sumpf oder verhexten Wald befindet,
+     dann sterben n√§mlich die Leute */
   FLAG gestorben;
   int i;
   long tot;
@@ -545,7 +545,7 @@ void put_raster(wert,xr,yr)
 int wert;
 int xr,yr;
 {
-  /* éndert den Untergrund in der GMAP an Rasterstelle xr,yr */
+  /* √Ñndert den Untergrund in der GMAP an Rasterstelle xr,yr */
 
   put_untergrund(wert,xr*4,yr*4+25);
 }
@@ -564,7 +564,7 @@ int x,y;                    /* In Pixelkoordinaten */
   if (x<0 || x>319 || y<25 || y>168) {
     writexy(0,0,0,str(0,(long)x));
     writexy(0,0,6,str(0,(long)y));
-    internal(romstr596);    /* auûerhalb */
+    internal(romstr596);    /* au√üerhalb */
     return;
     }
 
@@ -577,18 +577,18 @@ int x,y;                    /* In Pixelkoordinaten */
   op1=ground_buf[zeile*50+byte];                /* erstes Byte */
   op2=ground_buf[zeile*50+byte+1];              /* nachfolgendes Byte */
   op2_int=op2;                                  /* Wird auf Wort erweitert */
-  op2_int&=0x00ff;                              /* ABer nur unterstes Byte gÅltig */
+  op2_int&=0x00ff;                              /* ABer nur unterstes Byte g√ºltig */
 
   wort=(op1<<8) | op2_int;                      /* Beide Bytes als Wort */
 
-  loesch=0xffe0;                                /* Die untersten 5 Bit gelîscht */
+  loesch=0xffe0;                                /* Die untersten 5 Bit gel√∂scht */
   for(i=0;i<bit;i++) {
     loesch<<=1;                     /* Eins nach links */
     loesch|=1;                      /* Und unterstes Bit wieder setzen */
     }
   wert<<=bit;                       /* Wert an Position schieben */
 
-  wort&=loesch;                     /* Alten Wert lîschen */
+  wort&=loesch;                     /* Alten Wert l√∂schen */
   wort|=wert;                       /* Neuen Wert einodern */
 
   op2=(char)wort;                   /* Unterstes Byte */
@@ -611,10 +611,10 @@ int x,y;
   int byte;
 
   if (x<0 || x>319 || y<21 || y>168) {
-    internal(romstr597);    /* auûerhalb */
+    internal(romstr597);    /* au√üerhalb */
     }
 
-  if (y<25) return(EBENE);                  /* Auûerhalb ist Ebene */
+  if (y<25) return(EBENE);                  /* Au√üerhalb ist Ebene */
 
   zeile=(y-25)/4;
   bit=x/4*5;
@@ -626,13 +626,13 @@ int x,y;
   anzahl=bit-4;                                 /* um soviel wird geschoben */
   if (anzahl>=0) {                              /* ist voll in op1 */
     wert=op1>>anzahl;                           /* hier verwendet TURBO_C 'ASR'! */
-    wert&=31;                                   /* nur 5 Bits gÅltig */
+    wert&=31;                                   /* nur 5 Bits g√ºltig */
     }
   else {
     wert=op1<<(-anzahl);                        /* aus op1 holen */
-    wert&=31;                                   /* nur 5 Bits gÅltig */
+    wert&=31;                                   /* nur 5 Bits g√ºltig */
     op2>>=8+anzahl;                             /* Achtung, anzahl ist negativ! */
-                /* ^^^ TURBO_C verwendet ASR, d.h. obere Bits lîschen */
+                /* ^^^ TURBO_C verwendet ASR, d.h. obere Bits l√∂schen */
     op2&=(1<<(-anzahl))-1;
     wert|=op2;
     }
@@ -644,7 +644,7 @@ int get_raster(x,y)
 int x,y;
 {
   /* holt sich aus GMAP den Untergrund, X/Y bereits in Rasterangaben */
-  /* ist X/Y auûerhalb, gibt Funktion -1 zurÅck */
+  /* ist X/Y au√üerhalb, gibt Funktion -1 zur√ºck */
 
   return(get_untergrund(x*4,y*4+25));
 }
@@ -653,7 +653,7 @@ int get_traffic(land,x,y)
 int land,x,y;
 {
   /* holt sich aus TMAP den WEG, X/Y bereits in Rasterangaben */
-  /* ist X/Y auûerhalb, gibt Funktion -1 zurÅck */
+  /* ist X/Y au√üerhalb, gibt Funktion -1 zur√ºck */
 
   return(get_trafficxy(land,x*4,y*4+25));
 }
@@ -680,7 +680,7 @@ void update_coordinates()
   if (mx <=   8) mx = 8;
   if (my <= 24) my = 24;
   if (mx>=311) mx=311;
-  if (my >= 167) my = 167;      /* Mauskoordinaten so verÑndern, daû nicht
+  if (my >= 167) my = 167;      /* Mauskoordinaten so ver√§ndern, da√ü nicht
                         aus dem Bildschirm gelaufen wird */
 
   sxalt[0]=sx[0];
@@ -775,7 +775,7 @@ void update_coordinates()
       sy[0]=newy;                /* Neue X/Y Position setzen */
       sxalt[0]=newaltx;
       syalt[0]=newalty;
-      pos_welt=newpos;                        /* Neue Position Åbernehmen */
+      pos_welt=newpos;                        /* Neue Position √ºbernehmen */
       initspr4map();            /* Sprites zeichnen */
       }
     get_ground();
@@ -785,7 +785,7 @@ void update_coordinates()
 FLAG is_water(wert)
 int wert;
 {
-  /* Testet, ob ein Untergrund Åbergeben wurde, der beschiffbar ist */
+  /* Testet, ob ein Untergrund √ºbergeben wurde, der beschiffbar ist */
 
   return(wert>=STADT_1_HAFEN && wert<=WASSER);
 }
@@ -804,7 +804,7 @@ int x,y;
 void test_fluss(x,y)
 int x,y;
 {
-  /* öberprÅft, ob an diesen Koordinaten ein Fluû liegt, und zieht ggf. hin */
+  /* √úberpr√ºft, ob an diesen Koordinaten ein Flu√ü liegt, und zieht ggf. hin */
 
   if (get_untergrund(x,y)==WASSER) {
     sx[0]=x;
@@ -814,7 +814,7 @@ int x,y;
 
 void test_ground()
 {
-        /* Ermittelt Untergrund fÅr Spielersprite */
+        /* Ermittelt Untergrund f√ºr Spielersprite */
 	register int x,y;
 	int schild;
 
@@ -840,7 +840,7 @@ void test_ground()
 				case STADT_2_HAFEN:
 				case VULKANE:
         case HOHE_BERGE:
-                 sx[0]= sxalt[0];			/* Figur zurÅcksetzen */
+                 sx[0]= sxalt[0];			/* Figur zur√ºcksetzen */
                  sy[0]= syalt[0];
                  get_ground();
                  break;
@@ -881,7 +881,7 @@ int nr;
 	poi=(char *)pack_buf;
 	for(;nr>0;nr--) {
 		while(*poi!=13 && *poi!=10) poi++;					/* Stringende suchen */
-		while(*poi==10 || *poi==13) poi++;					/* Trennzeichen Åberspringen */
+		while(*poi==10 || *poi==13) poi++;					/* Trennzeichen √ºberspringen */
 		}
 	start=poi;
 	while(*poi!=13 && *poi!=10) poi++;					/* Stringende suchen */
@@ -891,7 +891,7 @@ int nr;
 
 void schiff_test()
 {
-  /* öberprÅft, ob in einer Stadt ein Schiff fertig gebaut ist */
+  /* √úberpr√ºft, ob in einer Stadt ein Schiff fertig gebaut ist */
   register int i,j;
   int index;
 
@@ -930,7 +930,7 @@ int frei_flotte()
 void such_xy(nr)
 int nr;
 {
-  /* In steuer[nr] muû die Startstadt eingetragen sein, dann berechnet diese
+  /* In steuer[nr] mu√ü die Startstadt eingetragen sein, dann berechnet diese
      Funktion die Start-X/Y des Armeesprites.
      Weiterhin wird die Nummer des Landes bestimmt, in dem
      die Stadt liegt, wo die Armee startet.  */
@@ -965,7 +965,7 @@ raus:
 void such_weg(nr)
 int nr;
 {
-  /* Bestimmt einen neuen Wert fÅr aktweg, der aber nicht der Alte sein darf
+  /* Bestimmt einen neuen Wert f√ºr aktweg, der aber nicht der Alte sein darf
      Weiterhin wird vx,vy auf Null gesetzt, damit beim ersten Aufruf eine
      neue Richtung bestimmt wird.
      Auch wait wird auf Null gesetzt. */
@@ -984,7 +984,7 @@ int nr;
         }
       }
 
-  if (anzahl==1) steuer[nr].akt_weg=-1;     /* Wenn nur ein Weg, dann alle gÅltig */
+  if (anzahl==1) steuer[nr].akt_weg=-1;     /* Wenn nur ein Weg, dann alle g√ºltig */
   while (such_new(nr,anzahl)) ;             /* Neuen Weg suchen */
 
   steuer[nr].vx=steuer[nr].vy=0;
@@ -994,7 +994,7 @@ int nr;
 FLAG such_new(nr,anzahl)
 int nr,anzahl;
 {
-  /* Sucht nach einem neuen Weg, wobei anzahl Wege zur VerfÅgung stehen
+  /* Sucht nach einem neuen Weg, wobei anzahl Wege zur Verf√ºgung stehen
      und nicht derselbe Weg wie bisher genommen werden darf. */
   int x,y;
   int counter;
@@ -1040,9 +1040,9 @@ void set_armies()
 	  		rnd=zufall(22);						/* Stadtnummer ermitteln */
 				} while ((rnd>=13 && rnd<=15) || (rnd>=19 && rnd<=20));			/* Nicht auf Insel */
 	    steuer[i].heimat=rnd; 		         		/* Heimatstadt */
-			steuer[i].akt_weg=-1;					/* Jeder Weg ist gÅltig */
+			steuer[i].akt_weg=-1;					/* Jeder Weg ist g√ºltig */
       } while(belong[steuer[i].heimat]!=99);
-    belong[steuer[i].heimat]=i;         	  /* Stadt gehîrt dieser Armee */
+    belong[steuer[i].heimat]=i;         	  /* Stadt geh√∂rt dieser Armee */
     steuer[i].auf_wasser=FALSE;       	   	/* Nicht mit Schiff unterwegs */
     steuer[i].angriff_zahl=0;         	   	/* Wurde noch nie angegriffen */
 	  steuer[i].wait=0;												/* Es wird nicht gewartet */
@@ -1051,8 +1051,8 @@ void set_armies()
     }
 
   army_unten=TRUE;
-  move_armies();                /* Untere HÑlfte bewegen */
-  move_armies();                /* Und jetzt die obere HÑlfte */
+  move_armies();                /* Untere H√§lfte bewegen */
+  move_armies();                /* Und jetzt die obere H√§lfte */
 }
 
 void move_armies()
@@ -1066,12 +1066,12 @@ void move_armies()
   int start,ende;
 
   if (army_unten) {
-    army_unten=FALSE;           								/* Die Untere HÑlfte bewegen */
+    army_unten=FALSE;           								/* Die Untere H√§lfte bewegen */
     start=0;
     ende=GEGNER/2;
     }
   else {
-    army_unten=TRUE;            								/* Die obere HÑlfte bewegen */
+    army_unten=TRUE;            								/* Die obere H√§lfte bewegen */
     start=GEGNER/2;
     ende=GEGNER;
     }
@@ -1131,7 +1131,7 @@ register int nr;
     if (tw>=TPORT_1 && tw<=TSTADT_4)					/* Auf Stadt/Burg-Eingang */
       stadt_erreicht(nr);
 
-    neue_richtung(nr);              /* Ermittelt neue Richtung fÅr Armee */
+    neue_richtung(nr);              /* Ermittelt neue Richtung f√ºr Armee */
     }
   steuer[nr].x+=steuer[nr].vx;
   steuer[nr].y+=steuer[nr].vy;         /* Neue Position errechnen */
@@ -1162,7 +1162,7 @@ register int nr;
     steuer[nr].weltpos+=15;           /* ein Land nach links */
     steuer[nr].akt_weg=-1;          /* Alle Wege erlaubt */
     }
-  such_weg(nr);                     /* neuen Weg auswÑhlen */
+  such_weg(nr);                     /* neuen Weg ausw√§hlen */
 }
 
 void switch_sprites()
@@ -1182,7 +1182,7 @@ void switch_sprites()
       dy=steuer[i].y-sy[0];                       		/* Delta X/Y berechnen */
       abstand=(int)sqrt((double)(dx*dx+dy*dy));  			/* Abstand berechnen */
       if (abstand<armeeteil[0][3]/3 || pio_cheat) anschalten=TRUE;
-			else if (abstand<8) anschalten=TRUE;				/* ein biûchen sieht man immer */
+			else if (abstand<8) anschalten=TRUE;				/* ein bi√üchen sieht man immer */
       else anschalten=FALSE;
       if (steuer[i].auf_wasser) anschalten=TRUE;
       }
@@ -1242,7 +1242,7 @@ int nr;
     else
       stadt_nr=city_nr[land][tw-TSTADT_1];
 
-    if (belong[stadt_nr]<0 && armeegesamt[nr+1]>50) {  /* Gehîrt die Stadt Spieler? */
+    if (belong[stadt_nr]<0 && armeegesamt[nr+1]>50) {  /* Geh√∂rt die Stadt Spieler? */
       stadt_gesamt=0;
       for(i=0;i<EINHEITEN;i++) stadt_gesamt+=stadt_armee[stadt_nr][i];
 
@@ -1250,7 +1250,7 @@ int nr;
       if (zufall(100)>grenze)
         angriff_spieler_stadt(stadt_nr,nr+1);
       }
-    if (belong[stadt_nr]==nr) {         /* Gehîrt die Stadt dieser Armee? */
+    if (belong[stadt_nr]==nr) {         /* Geh√∂rt die Stadt dieser Armee? */
       stadt_gesamt=0;
       for(i=0;i<EINHEITEN;i++) stadt_gesamt+=stadt_armee[stadt_nr][i];
 
@@ -1266,7 +1266,7 @@ int nr;
         if (zufall(5)==3) {               /* Nur manchmal */
           wert=TPORT_1+(tw-TSTADT_1);     /* gesuchter Wert */
           if (such_ort(nr,wert)) {        /* Ort gefunden */
-            steuer[nr].akt_weg=-1;        /* Jeder Weg ist gÅltig */
+            steuer[nr].akt_weg=-1;        /* Jeder Weg ist g√ºltig */
             steuer[nr].auf_wasser=TRUE;   /* Sprite ist jetzt Schiff */
             }
           else {
@@ -1278,7 +1278,7 @@ int nr;
         if (zufall(4)==2) {               /* Nur manchmal */
           wert=TSTADT_1+(tw-TPORT_1);
           if (such_ort(nr,wert)) {
-            steuer[nr].akt_weg=-1;        /* Jeder Weg ist gÅltig */
+            steuer[nr].akt_weg=-1;        /* Jeder Weg ist g√ºltig */
             steuer[nr].auf_wasser=FALSE;
             }
           else {
@@ -1375,9 +1375,9 @@ int nr,wert;
 void neue_richtung(nr)
 int nr;
 {
-  /* Armee befindet sich in der Mitte eines Kastens, nun muû eine neue
+  /* Armee befindet sich in der Mitte eines Kastens, nun mu√ü eine neue
     Zugrichtung gesucht werden, wobei sie nicht die Alte sein darf,
-    da die Armee ja dann rÅckwÑrts ziehen wÅrde. Dabei wird akt_weg benÅtzt. */
+    da die Armee ja dann r√ºckw√§rts ziehen w√ºrde. Dabei wird akt_weg ben√ºtzt. */
 
   int vvx,vvy;              /* neuer Richtungsvektor */
   register int xx,yy;
@@ -1393,7 +1393,7 @@ int nr;
   ry=(steuer[nr].y-25)/4;              /* In Rasterkoordinaten wandeln */
 
   for (yy=ry-1;yy<=ry+1;yy++)
-    for (xx=rx-1;xx<=rx+1;xx++)        /* 9 KÑstchen drum'rum prÅfen */
+    for (xx=rx-1;xx<=rx+1;xx++)        /* 9 K√§stchen drum'rum pr√ºfen */
       if (get_traffic(land,xx,yy)==alter_weg && (xx!=rx || yy!=ry)) {
         vvx=xx-rx;
         vvy=yy-ry;          /* Richtungvektor zu diesem Kasten berechnen */
@@ -1404,11 +1404,11 @@ int nr;
         return;                 /* und raus aus der Routine */
         }
 
-  /* Es wurde kein entsprechender Weg gefunden, also muû nach einer */
+  /* Es wurde kein entsprechender Weg gefunden, also mu√ü nach einer */
   /* Kreuzung gesucht werden, auf der der Weg forgesetzt wird */
 
   for (yy=ry-1;yy<=ry+1;yy++)
-    for (xx=rx-1;xx<=rx+1;xx++) {       /* 9 KÑstchen drum'rum prÅfen */
+    for (xx=rx-1;xx<=rx+1;xx++) {       /* 9 K√§stchen drum'rum pr√ºfen */
       if (get_traffic(land,xx,yy)==KRZG && (xx!=rx || yy!=ry)) {     /* richtiger Weg? */
         vvx=xx-rx;
         vvy=yy-ry;          /* Richtungvektor zu diesem Kasten berechnen */
@@ -1422,7 +1422,7 @@ int nr;
 
   /* Es wurde kein Weg, keine Kreuzung gefunden, also CITY suchen */
   for (yy=ry-1;yy<=ry+1;yy++)
-    for (xx=rx-1;xx<=rx+1;xx++) {       /* 9 KÑstchen drum'rum prÅfen */
+    for (xx=rx-1;xx<=rx+1;xx++) {       /* 9 K√§stchen drum'rum pr√ºfen */
       tw=get_traffic(land,xx,yy);            /* Wert der Tmap holen */
       if ( (tw>=TPORT_1 && tw<=TSTADT_4) && (xx!=rx || yy!=ry)) {
                             /* richtiger Weg? */
@@ -1445,7 +1445,7 @@ void make_world()
   int i;
 	int pos;
 
-  for(i=0;i<225;i++) welt[i]=SEA;           /* Am Anfang war Åberall Wasser... */
+  for(i=0;i<225;i++) welt[i]=SEA;           /* Am Anfang war √ºberall Wasser... */
 
 	welt[95]=11;
   welt[96]=10;
@@ -1497,7 +1497,7 @@ int such_insel()
 short get_land(x,y)
 int x,y;
 {
-  /* Holt aus welt[] die Landschaft unter BerÅcksichtigung der Kugerlform */
+  /* Holt aus welt[] die Landschaft unter Ber√ºcksichtigung der Kugerlform */
 
   if (x<0) x+=15;
   if (x>=15) x-=15;
@@ -1508,4 +1508,3 @@ int x,y;
 }
 
 
-
