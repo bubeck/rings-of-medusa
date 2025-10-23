@@ -1,14 +1,14 @@
-      
 /* Medusa II:
 
 	 gesamte Abhandlung der Bunker
 
-	 ╜ 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt
+    1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt
 						 Tel.: 07151-66437 (Semensterferien/Wochenende)
 							oder 07071/49612 (Studium)
 																		  */
 
 #include "includes.c"           /* Definiert alle Variablen als Extern,... */
+#include <signal.h>
 
 char *prisoner_obj;									/* NEOchrome Objekt */
 
@@ -18,6 +18,16 @@ char s_status[][20] = {								/* Status des SPielers */
 	romstr487,
 	romstr488 };
 
+
+void delay(int ms)
+{
+  printf("SDL_Delay(%d)\n", ms);
+  while(ms > 0) {
+    ask_X();
+    SDL_Delay(100);
+    ms -= 100;
+  }
+}
 
 FLAG dungeon(nr)
 int nr;
@@ -34,7 +44,6 @@ int nr;
 	FLAG bewegt;								/* Wurden die Feinde bewegt? */
 	int x,y;
 	int nummer;
-	char *pw;
 	FLAG first_taste;
 		
 	/* Simulationsverzögerer initialisieren: */
@@ -61,12 +70,31 @@ int nr;
 
 	fade_out(); 							  									/* Bild ausblenden */
 	clear_screen(scr1); 												/* Bildschirm löschen */
-	show_buttons(FALSE);
 
+#if 1
+	show_buttons(FALSE);
+#endif
+
+  show_screen(scr1);
+#if 0
+  getchar();
+#endif
+
+#if 1
 	redraw_buttons((cheat_on) ? EXIT_BTN|LOAD|SAVE|PAUSE : LOAD|SAVE|PAUSE);					
+#endif
 	
 	copy_screen(scr1,scr2);
+  show_screen(scr1);
 	Sm();
+#if 0
+  getchar();
+#endif
+
+  do_taschenlampe();
+#if 0
+  getchar();
+#endif
 
 	set_raster(0,45,(tv_modus) ? tv_pal : bunker_pal);
 	draw_bunker(TRUE);						/* Spieler hat sich bewegt->Automap updaten */
@@ -74,6 +102,8 @@ int nr;
 	
 	fade_in();
 	
+  //delay(5000);
+  
 	lampencounter=0;
 	
 	button=NOTHING;
@@ -92,6 +122,7 @@ int nr;
 		
 		taste=0;													/* Nichts gedrückt */
 		hol_maus(); 											/* Mauskoordinaten holen */
+
 		bun_x1=bunker_x+bunker_dx;					/* Feld in einer Einheit Entfernung */
 		bun_y1=bunker_y+bunker_dy;
 
@@ -113,23 +144,24 @@ int nr;
 		if (option_nr==4) {														/* Steuerpanel zu sehen */
 			if (maus_in(115,173,163,194)) {								/* Im Bereich der Knöpfe? */
 				btn_nr=(my-173)/12*3+(mx-115)/16;									/* Nr des Buttons */
+	//printf("btn_nr=%d\n", btn_nr);
 				switch (btn_nr) {
-					case 0: taste=0x520000;												/* Entsprechenden Tastendruck simulieren */
+          case 0: taste=180;                       /* Entsprechenden Tastendruck simulieren */
 						 break;
-					case 1: taste=0x480000;
+	case 1: taste=ATARI_SCAN_UP << 16;
 						 break;
-					case 2: taste=0x470000;
+          case 2: taste=182;
 						 break;
-					case 3: taste=0x4b0000;
+          case 3: taste=ATARI_SCAN_LEFT << 16;
 						 break;
-					case 4: taste=0x500000;
+          case 4: taste=ATARI_SCAN_DOWN << 16;
 						 break;
-					case 5:	taste=0x4d0000;
+          case 5: taste=ATARI_SCAN_RIGHT << 16;
 						 break;
 					default: first_taste=TRUE; taste=-1; break;
 					}
 
-				if (taste!=-1L) 								/* Taste da? */
+        if (taste!=-1L) {                /* Taste da? */
 					if (first_taste) {							/* Neu gedrückt? */
 						next_key_vbl=vbl_ct+15;					/* Dann nächste Taste in 15 VBL's */
 						first_taste=FALSE;						/* Und dann normal */
@@ -138,6 +170,7 @@ int nr;
 						if (vbl_ct>next_key_vbl) next_key_vbl=vbl_ct+3;	/* Zeit für Repeat gewartet? */
 						else taste=-1;							/* Nein, weiter warten */
 						}
+	}
 					
 				}
 			else if (my>169 && mk!=0) button_leiste();		/* Im Bereich der Icons */
@@ -159,22 +192,34 @@ int nr;
 				}
 			}
 
-		taste/=65536L;							 				/* Scancode der Taste holen */
+#if 0
+    if (taste!=88)
+      printf("%x %d,%d,%d\n", taste, mx, my, mk);
+#endif
+
+    // taste/=65536L;							 				/* Scancode der Taste holen */
+
 		switch ((int)taste) {
-			case 0x62: if (cheat_on) {
+      case 'C': cheat_on=!cheat_on;
+	printf("CHEAT: %d\n", cheat_on);
+	break;
+      case 'q':
+      case 'Q': button=EXIT_BTN;
+	      break;
+      case 'H': if (cheat_on) {                 /* ^H */
 									cheat_auswert(TRUE);					/* Help */
 									 draw_whole=2;
 									 copy_screen(scr2,scr1);
 									 }
 								 break;
-			case 0x39: 
+      case ' ':
 				old_tuer=bunker[bun_x1][bun_y1];
 				mk=1;
 				mx=my=100;										/* Tür öffnen simulieren */
 				bedien_tuer(-1);							/* Nichts in der Hand */
 				if (old_tuer==START_POS) goto bunker_ende;	/* Ausgang gefunden! */
 				break;
-			case 0x1c: 
+      case 'A':                        
 				if (cheat_on) {
 					Hm();
 					for(x=3;x<80;x++)
@@ -189,21 +234,21 @@ int nr;
 					Sm();
 					}
 				break;
-			case 0x47:												/* Clr/Home */
+      case ATARI_SCAN_RIGHT << 16:                        /* Clr/Home */
 				press_button(2);
 				richtung++;
 				if (richtung==4) richtung=0;
 				berechne_richtung();		  					/* Neue Delta-Werte berechnen */
 				new_draw=TRUE;
 				break;
-			case 0x52:								  				/* Insert */
+      case ATARI_SCAN_LEFT << 16:                          /* Insert */
 				press_button(0);
 				richtung--;
 				if (richtung<0) richtung=3;
 				berechne_richtung();
 				new_draw=TRUE;
 				break;
-			case 0x50:								  				/* Pfeil runter */
+      case ATARI_SCAN_DOWN << 16:                          /* Pfeil runter */
 				if (betretbar(bunker[bunker_x-bunker_dx][bunker_y-bunker_dy])) {
 					bunker_x-=bunker_dx;			  		
 					bunker_y-=bunker_dy;
@@ -212,7 +257,7 @@ int nr;
 					}
 				else wandgelaufen();
 				break;
-			case 0x48:												/* Pfeil hoch */
+      case ATARI_SCAN_UP << 16:                        /* Pfeil hoch */
 				if (betretbar(bunker[bunker_x+bunker_dx][bunker_y+bunker_dy])) {
 					bunker_x+=bunker_dx;
 					bunker_y+=bunker_dy;
@@ -221,7 +266,7 @@ int nr;
 					}
 				else wandgelaufen();
 				break;
-			case 0x4b:												/* Pfeil links */
+      case 10 << 16:                        /* Pfeil links */
 				richtung--;											/* Nach links drehen */
 				if (richtung<0) richtung=3;
 				berechne_richtung();
@@ -241,7 +286,7 @@ int nr;
 					wandgelaufen();
 					}
 				break;
-			case 0x4d:
+      case 11 << 16:
 				richtung++;																/* Nach rechts drehen */
 				if (richtung>3) richtung=0;
 				berechne_richtung();
@@ -284,14 +329,18 @@ int nr;
 								  button=NOTHING;
 									break;
 			}
-		
+    show_last_screen();
+#if 0
+    printf("DELAY\n");
+    SDL_Delay(3000);
+#endif
 		} while(button!=EXIT_BTN);
 
 bunker_ende:
 
 	if (akt_bunker==21 || akt_bunker==22) ycargo_menge[10]=0;		/* Keine Batterien nach dem Startbunker mehr */
 
-#ifdef COPYPROT
+#if defined(COPYPROT) && !defined(unix)
 
 	exit_anzahl++;										/* Einmal Ausgang mehr */
 
@@ -302,6 +351,7 @@ bunker_ende:
 		char *password_okay;
 		FLAG okay;
 		int i;
+    void *password_mem;
 
 		exit_anzahl=0;
 		password[0]=0;
@@ -309,29 +359,30 @@ bunker_ende:
 		helligkeit=6;												/* Volle Helligkeit */
 		set_bunker_pal();
 		
+    password_mem = malloc(2000);
 #if defined(DEUTSCH)
-		laenge=load_bibliothek(PASS_D_TXT,shrink_buff);
+    laenge=load_bibliothek("pass_d.txt", password_mem);
 #elif defined(ENGLISCH)
-		laenge=load_bibliothek(PASS_GB_TXT,shrink_buff);
+    laenge=load_bibliothek("pass_gb.txt", password_mem);
 #endif
 
-		decrypt(shrink_buff,laenge);
+    decrypt(password_mem, laenge);
 	
-		anzahl=atoi(such_string(1,shrink_buff));				/* Anzahl der Passwörter */
+    anzahl=atoi(such_string(1,password_mem));        /* Anzahl der Passwörter */
 		nr=zufall(anzahl);
 
 		do {
 			Hm();
-	  	show_window(build(such_string(2,shrink_buff),							/* Text */
-										such_string(nr*4+3,shrink_buff),						/* Seite */
-										such_string(nr*4+4,shrink_buff),						/* Zeile */
-										such_string(nr*4+5,shrink_buff)));						/* Wort */
+      show_window(build(such_string(2,password_mem),             /* Text */
+                    such_string(nr*4+3,password_mem),            /* Seite */
+                    such_string(nr*4+4,password_mem),            /* Zeile */
+                    such_string(nr*4+5,password_mem)));            /* Wort */
 										
 		 	input(120,123,20,password);
   		hide_window();
 			Sm();
 
-			password_okay=such_string(nr*4+6,shrink_buff);
+      password_okay=such_string(nr*4+6,password_mem);
 		
 			okay=TRUE;
 			for(i=0;i<=strlen(password_okay);i++) 
@@ -483,7 +534,10 @@ void schliesse_tuer()
 
 		switch_screens();
 		}
-	/* bunker[bunker_x+bunker_dx][bunker_y+bunker_dy]=DOOR_START+1;		/* Zune Türe hin */  */
+#if 0
+        /* geschlossene Tuere zeichnen: */
+  bunker[bunker_x+bunker_dx][bunker_y+bunker_dy]=DOOR_START+1;
+#endif
 
 	Sm();
 
@@ -559,7 +613,7 @@ void oeffne_tuer()
 
 	draw_dungeon(hlpbuf);							/* Zeichnet den Bunker auf den hlpbuf */
 	if (tuer==START_POS) {
-		load_objekte(AUSGANG_OBJ,reagenz);					/* Ausgangsbild laden */
+    load_objekte("ausgang.obj",reagenz);          /* Ausgangsbild laden */
 		draw_obj(0,reagenz,PALETTE,hlpbuf,50,45);			/* Palette setzen */
 		show_raster();
 		draw_obj(0,reagenz,ODER,hlpbuf,50,69);				/* Landschaft zeichnen */
@@ -627,7 +681,7 @@ void oeffne_tuer()
 void press_button(nr)
 int nr;
 {
-	/* Spieler hat auf einen Richtungsknopf gedrückt, dieser muß jetzt gedrückt gezeichnet werden */
+  /* Spieler hat auf einen Richtungsknopf gedrückt, dieser muss jetzt gedrückt gezeichnet werden */
 	int zeile,spalte;
 
 	if (option_nr==4) {							/* Nur wenn Board zu sehen ist: */
@@ -639,6 +693,8 @@ int nr;
 										0,scr1,96+19+spalte*16,169+4+zeile*12);
 		Sm();
 		button_pressed=nr;
+    show_last_screen();
+    wait_sync(2);
 		}
 }
 
@@ -654,13 +710,13 @@ void release_button()
 										0,scr2,96+19+spalte*16,169+4+zeile*12);
 		Sm();
 		button_pressed=-1;
+    show_screen(scr1);         /* for X11 */
 		}
 }
 
 void berechne_richtung()
 {
 	/* Berechnet aus Richtung den entsprechenden Bunker_dx/dy wert */
-	int himmels[3];
 	
 	switch (richtung) {
 		case NORD: bunker_dx=0; bunker_dy=-1; break;
@@ -698,7 +754,6 @@ void print_richtung()
 void wandgelaufen()
 {
 	/* Der Spieler ist gegen eine Wand gelaufen */
-	int member;
 
 	change_all_reagenz(2,-1);				/* Bei Gesundheit eins abziehen */	
 }
@@ -718,7 +773,10 @@ FLAG moved;											/* Hat sich Spieler bewegt? */
 	if (automapping) draw_player();
 	logbase=oldlogbase;
 	
+  show_screen(scr2);
+#if 1
 	swap_screens();
+#endif
 	release_button();												/* Wenn Knopf gedrückt, dann loslassen */
 		
 	if (shot.ob_mem!=NULL) {						/* Schuss ist unterwegs */
@@ -732,17 +790,12 @@ void draw_dungeon(screen)
 void *screen;													/* Zeichenscreen */
 {
 	/* Bunker neu zeichnen auf speziellen screen */
-	int dx,dy;
-	int x1,y1;
-	int x2,y2;
-	int x3,y3;
 	int akt;
 	int x_links,x_rechts;
 	FLAG spiegeln;
 	int wandcounter;								/* Nummer des nächsten freien wand[]-Eintrags */
 	BUNKERWAND wand[WANDMAX];						/* Hier werden die Bunkerwände vor dem Zeichnen eingetragen
 																		 und nach der Tiefe sortiert. */
-	register BUNKERWAND *waende;							/* -> wand[] */
 	void *bibliothek;
 	int ob_nr;
 
@@ -751,7 +804,7 @@ void *screen;													/* Zeichenscreen */
 
 	wandcounter=bau_waende(spiegeln,wand);						/* Baut die Wände im Array auf */
 
-	if (FALSE && my_system) {
+  if (0) {
 		writexy_fast(0,0,romstr490);
 		writexy_fast(32,0,str(2,(long)wandcounter));
 		}
@@ -765,7 +818,7 @@ void *screen;													/* Zeichenscreen */
 			bibliothek=enemy_obj;
 			ob_nr=wand[akt].ob_nr-240;
 			}
-		else if (wand[akt].ob_nr>=220) {				/* Feindschuß? */
+    else if (wand[akt].ob_nr>=220) {        /* Feindschu\3? */
 			ob_nr=wand[akt].ob_nr-220;
 			bibliothek=fire;
 			}
@@ -777,6 +830,16 @@ void *screen;													/* Zeichenscreen */
 			bibliothek=walls;								/* Wand */
 			ob_nr=wand[akt].ob_nr;
 			}
+#if 0
+    printf("Wand %02d ob_nr=%d, dst.x=%d dst.y=%d src.x=%d-%d src.y=%d-%d\n", akt,
+	   ob_nr, 
+	   x_links,wand[akt].y,
+                wand[akt].ob_x+(x_links-wand[akt].x1),
+                wand[akt].ob_x+(x_rechts-wand[akt].x1),
+	   0,
+	   objekt_hoehe(ob_nr,bibliothek)-1
+                );
+#endif
 		draw_obj_part(ob_nr,bibliothek,
 								wand[akt].ob_x+(x_links-wand[akt].x1),0,
 								wand[akt].ob_x+(x_rechts-wand[akt].x1),objekt_hoehe(ob_nr,bibliothek)-1,
@@ -784,8 +847,10 @@ void *screen;													/* Zeichenscreen */
 		x_links=x_rechts+1;
 		}
 
+#if 1
 	if (spiegeln) 																		/* ab und zu spiegeln */
 		mirror(screen,0,46,191,167);
+#endif
 
 	/* Pass 2: Nur Transparente Objekte darauf zeichnen */
 	x_links=-1;																			/* Ganz links starten */
@@ -994,6 +1059,20 @@ int *akt,*x2;													/* Hier wird Ergebnis zurückgegeben */
 	return(TRUE);
 }
 
+void print_waende(wand,wandcounter)
+BUNKERWAND wand[];
+int wandcounter;
+{
+  int i;
+
+  for (i=0; i < wandcounter; i++) {
+    printf("Wand %02d: ob_nr=%d\n", i, wand[i].ob_nr);
+    printf("    x1=%03d x2=%03d:\n", wand[i].x1, wand[i].x2);
+    printf("     y=%03d:\n", wand[i].y);
+    printf(" tiefe=%03d:\n", wand[i].tiefe);
+  }
+}
+
 int bau_waende(spiegeln,waende)
 FLAG spiegeln;
 BUNKERWAND *waende;
@@ -1168,7 +1247,7 @@ BUNKERWAND *waende;
 				}
 			}
 	 	else
-			waende++->ob_nr=5;						/* Normale Wand */
+      waende++->ob_nr=5;            /* 5=Normale Wand */
 		}
 
 	/* Wände in 2 Einheiten Entfernung: */
@@ -1301,8 +1380,14 @@ BUNKERWAND *waende;
 			waende++->ob_nr=7;
 		}
 
+#if 1
 	set_enemies(&waende);					/* Setzt die Gegner in die Bunker */
 	set_items(&waende);						/* Und noch die Items drauflegen */
+#endif
+
+#if 0
+  print_waende(start, waende-start);
+#endif
 
 	return(waende-start);					/* Soviel Einträge wurden benutzt */
 }
@@ -1345,7 +1430,6 @@ void draw_whole_automap()
 	/* Zeichnet die gesamte Automap neu */
 	register y,x;
 	int wert;
-	int farbe;
 	
 	fill(0,194,48,319,167);						/* Weglöschen */
 	
@@ -1378,6 +1462,7 @@ int x,y;											/* Angabe in AutomapKoordinaten */
 						break;
 		case 3: farbe=6; break;					/* Item */
 		case 4: farbe=15; break;					/* Spieler */
+    case 5: farbe=14;
 		}
 	x-=auto_x;
 	y-=auto_y;
@@ -1463,6 +1548,9 @@ void draw_updates()
 		draw_whole--;
 		draw_whole_automap();
 		}
+#ifdef SHOW_ENEMY_ON_AUTOMAP
+  draw_whole_automap();
+#endif
 	
 	if (player[0].x>=0)									/* Spieler vorhanden? */
 		draw_automap(get_automap(player[0].x,player[0].y),player[0].x,player[0].y);	/* Alten Spieler löschen */
@@ -1482,6 +1570,15 @@ void draw_player()
 	player[1].x=bunker_x-3;						/* -3 wegen Bunkerrand */
 	player[1].y=bunker_y-3;
 	draw_automap(4,bunker_x-3,bunker_y-3);		/* Spieler einzeichnen */
+
+#ifdef SHOW_ENEMY_ON_AUTOMAP
+  register ENEMY *ep;
+  int i;
+  for(ep=enemy,i=0;i<enemy_max;i++,ep++) 
+      if (ep->bun_nr==(unsigned int)akt_bunker) {
+        draw_automap(5, ep->x-3, ep->y-3);
+      }
+#endif
 }
 
 void insert_automap(wert,x,y)
@@ -1515,7 +1612,6 @@ int get_automap(x,y)
 int x,y;
 {
 	/* Holt sich den Wert aus Position x,y (80x50, d.h. ohne Rand) */
-	register int index,shift;
 	
 	if (x<0 || y<0 || x>79 || y>49) return(0);					/* Clippen */
 
@@ -1612,7 +1708,7 @@ int x,y;															/* Position im Bunker */
 			
 			if (item_nr==-1) {							/* Er hat keines -> aufnehmen */
 				for(itemp=item,item_nr=0;item_nr<ITEMMAX;item_nr++,itemp++)
-					if (itemp->bun_nr==akt_bunker && 
+          if (itemp->bun_nr==(unsigned int)akt_bunker && 
 								itemp->bun_x==such_x && itemp->bun_y==such_y && itemp->pos==pos[pos_index].feld) break;
 				if (item_nr>=ITEMMAX) item_nr=-1;			/* Kein Item vorhanden */
 				else {	
@@ -1688,7 +1784,6 @@ int member_nr;
 {
 	/* der Spieler will eine Figur beladen und hat Objekt 'i' in der Hand */
 	int tasche_nr;
-	int tmp;
 	FLAG neuer_member;
 	int hand;
 	int nr;
@@ -1704,9 +1799,9 @@ int member_nr;
 	
 	if (is_tot(member_nr)) member_nr=0;		/* Wenn tot auf Spieler gehen */
 
-	laenge=load_objekte(MENSCH_OBJ,walls);				/* Über die Wände laden */
+  laenge=load_objekte("mensch.obj",walls);        /* Über die Wände laden */
 	prisoner_obj=walls+laenge;
-	load_objekte(PRISONER_OBJ,prisoner_obj);
+  load_objekte("prisoner.obj",prisoner_obj);
 	
 	Hm();
 	draw_obj(0,walls,MOVE,scr1,0,45);					/* Formular zeichnen */
@@ -1818,7 +1913,7 @@ int member_nr;
 
 		if (mk==1 && my<=42) {						/* In die Hand nehmen... */
 			nr=mx/80;												/* Welches Member? */
-			if (!is_tot(nr)) 
+      if (!is_tot(nr)) {
 				if (nr==member_nr) {						/* das mit den Taschen? */
 					tasche_nr=(mx-nr*80-3)/20+((my-9)/18)*4;		/* Nummer der Tasche berechnen */
 					swap(&party[nr].tasche[tasche_nr],&item_nr);
@@ -1830,6 +1925,7 @@ int member_nr;
 					swap(&party[nr].hand[hand],&item_nr);
 					draw_hand(nr);									/* Die Hände neu zeichnen */
 					}
+      }
 			wait_mouse(0);
 			}
 		if (mk==2 && my<46) {						/* Neuen Member wählen */
@@ -1843,14 +1939,17 @@ int member_nr;
 				}
 			mk=0;
 			}
-		} while (!(button==EXIT_BTN || mk==2 && my>46));	/* Bis zum Rechtsklick auf obere Leiste */
+    /* Bis zum Rechtsklick auf obere Leiste */
+    show_last_screen();
+
+  } while (!(button==EXIT_BTN || (mk==2 && my>46)));
 			
 	Hm();
 	draw_rea(member_nr);							/* und zurück zu den Händen */
 	copy_reagenz();
 	Sm();
 	
-	load_objekte(BUNKER_OBJ,walls);				/* Wände wieder einladen */
+  load_objekte("bunker.obj",walls);       /* Wände wieder einladen */
 	
 	auto_nr=0;												/* Alle Changes sind übertragen */
 	player[0]=player[1];							/* Und Spieler an selber Position */
@@ -2190,7 +2289,16 @@ FLAG liegt_item(x,y)
 int x,y;
 {
 	/* Überprüft, ob an dieser Stelle Items liegen */
+  int pos, pos_8;
+
+  // Ausserhalb liegt nix */
+  if (x < 3 || y < 3 || x >= 83 || y >= 53)
+    return FALSE;
 	
+  pos = (x-3)+(y-3)*80;
+  pos_8 = pos / 8;
+  assert(pos_8>=0);
+  assert(pos_8<50*80/4);
 	return(get_1bit(itemmap,(x-3)+(y-3)*80)==1);
 }
 
@@ -2422,12 +2530,11 @@ void load_dungeon(nr)
 int nr;
 {
 	unsigned int xmax,ymax;
-	unsigned int objekt;
 	register int x,y;
-	int i;
-	register unsigned int *bunker_buf;
-	unsigned int tuer_nr,tuer;
-	unsigned int tuer_ist_status,tuer_soll_status;
+  register UWORD *bunker_buf;
+  register UWORD *bunkerp;
+  char filename[100];
+  long laenge;
 	
 	xmax=ymax=0;
 
@@ -2435,22 +2542,33 @@ int nr;
 		for(y=0;y<56;y++)
 			bunker[x][y]=WALL; 							/* Bunker ist leer */
 	
-	bunker_buf=scr2;										/* Bunker hier hin laden */
-	load_bibliothek(BUNKER0_DAT+nr,bunker_buf);
+  bunker_buf=malloc(32000);    /* Bunker hier hin laden */
+  //printf("bunker_buf1 %p\n", bunker_buf);
+  sprintf(filename,"bunker%d.dat",nr);
+  laenge = load_bibliothek(filename,bunker_buf);
 
-	xmax=*bunker_buf++;
-	ymax=*bunker_buf++;									/* Größe des Bunkers holen */
+  // Convert from BE
+  for (x = 0; x < laenge/sizeof(UWORD); x++) 
+    be_2(&bunker_buf[x]);
+
+  bunkerp = bunker_buf;
+  xmax=*bunkerp++;
+  ymax=*bunkerp++;                 /* Größe des Bunkers holen */
+  //printf("Bunker %d, x=%d, y=%d\n", nr, xmax, ymax);
 
 	for(x=0;x<=xmax;x++) 
 		for(y=0;y<=ymax;y++) 
-			bunker[x+3][y+3]=*bunker_buf++; 				/* Und Bunker übertragen */
+      bunker[x+3][y+3]=*bunkerp++;         /* Und Bunker übertragen */
+
+  //printf("bunker_buf2 %p\n", bunker_buf);
+  free(bunker_buf);
 }
 
 void init_objekte()
 {
 	/* Lädt die Objekte von Disk und initialisiert die entsprechenden Strukturen */
 	int i,j,bunker;
-	int item_nr,item_pos;
+  int item_nr;
 	OBJEKT_DISK *obj;
 	long laenge;
 	STATISTIK *statistik;
@@ -2471,12 +2589,27 @@ void init_objekte()
 		item[i].flag=i+1;						/* Für Tür i */
 		}
 	
-	obj=pack_buf+32000;										/* In hlpbuf laden */
-	laenge=load_bibliothek(OBJEKT_DAT,obj);
-	if (laenge&1) laenge++;								/* Länge gerade machen */
+  obj=(OBJEKT_DISK *)malloc(100000);
+  laenge=load_bibliothek("objekt.dat",obj);
+  
+  //printf("LAENGE=%ld, ITEMTYPEN=%d sizeof(OBJEKT_DISK)=%ld\n", laenge, ITEMTYPEN, sizeof(OBJEKT_DISK));
+  
+  // Convert from BE
+  for (i=0; i < laenge / sizeof(OBJEKT_DISK);i++) {
+    be_2(&obj[i].spezial);
+    be_2(&obj[i].verteilung);
+    //printf("OBJEKT[%2d]: typ=%3d, grafik=%3d, spezial=%3d, verteilung=%3d\n", i, obj[i].typ, obj[i].grafik, obj[i].spezial, obj[i].verteilung);
+  }
+  
+  statistik=(STATISTIK *)malloc(100000);      /* Bunkerstatistik hier hin */
+  laenge=load_bibliothek("bunker.dat",statistik);
+  //printf("LAENGE=%ld, BUNKERZAHL=%d sizeof(STAT)=%ld\n", laenge, BUNKERZAHL, sizeof(STATISTIK));
 	
-	statistik=pack_buf+32000+laenge;					/* Bunkerstatistik hier hin */
-	load_bibliothek(BUNKER_DAT,statistik);
+  // Convert from BE
+  for (i=0; i < laenge / sizeof(STATISTIK);i++) {
+    be_2(&statistik[i].felder);
+    be_2(&statistik[i].frei);
+  }
 	
 	item_max=TUERMAX;											/* Ab hier kommen die Items */
 	for(item_nr=0;item_nr<ITEMTYPEN;item_nr++) {			/* Soviele verschiedene Items gibt es */
@@ -2495,6 +2628,7 @@ void init_objekte()
 				item[item_max].bun_x=255;				/* Position noch nicht genau bestimmt */
 				item[item_max].typ=obj[item_nr].typ;
 				item[item_max].grafik=obj[item_nr].grafik;
+	assert(item[item_max].grafik < 72);
 				item[item_max].flag=obj[item_nr].spezial;
 				}
 			}
@@ -2545,31 +2679,38 @@ void load_waende()
 {
 	/* Lädt alle Grafiken des Bunkers in den Speicher */
 	long laenge;
+  char filename[100];
 
-	reagenz=pack_buf;
-	laenge=load_objekte(REAGENZ_OBJ,reagenz);
+  reagenz=malloc(6000);
+  //printf("reagenz=%p\n", reagenz);
+  laenge=load_objekte("reagenz.obj",reagenz);
 	
-	items=reagenz+laenge;
-	laenge=load_objekte(ITEM_OBJ,items);
+  items=malloc(14000);
+  laenge=load_objekte("item.obj",items);
 
-	item_rea=items+laenge;
-	laenge=load_objekte(ITEM_REA_OBJ,item_rea);
+  item_rea=malloc(7000);
+  laenge=load_objekte("item_rea.obj",item_rea);
 	
-	enemy_obj=item_rea+laenge;
-	laenge=load_objekte(TERM1_OBJ+akt_bunker%2,enemy_obj);
+  enemy_obj=malloc(12000);
+  sprintf(filename,"term%d.obj",akt_bunker%2+1);
+  laenge=load_objekte(filename,enemy_obj);
 
-	fire=enemy_obj+laenge;
-	laenge=load_objekte(FIRE_OBJ,fire);
+  fire=malloc(4000);
+  laenge=load_objekte("fire.obj",fire);
 
-	shoots=fire+laenge;
-	laenge=load_objekte(SHOTS_OBJ,shoots);
+  shoots=malloc(1000);
+  laenge=load_objekte("shots.obj",shoots);
 			
-	walls=shoots+laenge;
-	laenge=load_objekte(BUNKER_OBJ,walls);		/* Walls müssen direkt vor Shrink_Buff liegen */
+  //draw_obj_all(shoots, scr1);
 
-	shrink_buff=walls+laenge;					/* Ab hier Verkleinerungsbuffer */
+  walls=malloc(62000);
+  laenge=load_objekte("bunker.obj",walls);    /* Walls müssen direkt vor Shrink_Buff liegen */
+
+  // shrink_buf is now a SDL_Surface from mcode3
+  //shrink_buff=pack_buf;         /* Ab hier Verkleinerungsbuffer */
 
 #ifndef COPYPROT 
+#if 0
 	if (my_system) { 
 		if (sizeof(memory)-(shrink_buff-memory)<16000) {
 			writexy_fast(0,0,romstr523);
@@ -2577,6 +2718,7 @@ void load_waende()
 			debug(-617,romstr524,0);
 			}
 		}
+#endif
 #endif
 }
 

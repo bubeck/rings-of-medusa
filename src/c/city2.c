@@ -32,7 +32,7 @@ int num;
   all=FALSE;
 
   leiste_oben(romstr209);
-  c_pic(BANK_OBJ);
+  c_pic("bank.obj");
   leiste_oben(romstr210);
 
   Hm();
@@ -96,7 +96,7 @@ int num;
       schulden=FALSE;
       continue;
       }
-    if (zinsen<0)
+    if (zinsen<0) {
       if (money>(-zinsen)) {
         alert(build(romstr221,str(0,-zinsen)));
         money+=zinsen;                  /* Zinsen ist negativ! */
@@ -109,6 +109,7 @@ int num;
         alert(build(romstr222,str(0,-zinsen)));
         break;
         }
+    }
 
     bank_zuletzt=heute;             /* Heute zuletzt die Bank betreten */
 
@@ -195,14 +196,14 @@ void aktienmarkt()
 
   for(i=0;i<WAREN;i++) spieler_aktie[i]=2000-aktie_da[i];
 
-  buy_sell(romstr225,WAREN,waren_name,11,aktie_preis,aktie_da,
+  buy_sell(romstr225,WAREN,(char *)waren_name,11,aktie_preis,aktie_da,
                 spieler_aktie,AKTIEN);
 }
 
 void buy_sell(name,waren_max,warenn,warenn_len,waren_preis,waren_city,waren_player,ort)
 char *name;                 /* Store, Stable, etc. */
 int waren_max;              /* Anzahl der Waren */
-char warenn[];              /* Name der Waren als Array */
+char *warenn;               /* Name der Waren als Feld */
 int warenn_len;             /* Länge in Bytes eines Namens */
 unsigned int waren_preis[];          /* Preis in der Stadt */
 long waren_city[];          /* Anzahl der Waren in der Stadt */
@@ -553,11 +554,11 @@ int num;
 	hafennum=0;
 	for(i=0;i<num;i++) if (port_city[i]) hafennum++;
 	
-  load(CITIES_WAR,waren_preis,(long)((WAREN+STALLWAREN+ROHSTOFFE)*num*2),
+  load("cities.war",waren_preis,(long)((WAREN+STALLWAREN+ROHSTOFFE)*num*2),
                     (long)(WAREN+STALLWAREN+ROHSTOFFE)*2); /* Preise holen */
-  load(CITIES_PUB,pub_name,(long)(22*num),20L);   /* 20+0 Byte */
+  load("cities.pub",pub_name,(long)(22*num),20L);   /* 20+0 Byte */
   pub_name[20]=0;
-  load(CITIES_POR,port_pub,(long)(31*hafennum),29L);   /* 29+0 Byte */
+  load("cities.por",port_pub,(long)(31*hafennum),29L);   /* 29+0 Byte */
   port_pub[29]=0;
 
   winkel=((heute+num*15L)%360L)*(2.0*PI/360.0);  /* Periode=1 Jahr */
@@ -683,7 +684,7 @@ int x0,y0;
 	Hm();
 	
 	window=pack_buf+32000;
-	load_objekte(WINDOW_OBJ,window);
+  load_objekte("window.obj",window);
 
 	window_x=x0-2;
 	window_y=y0;

@@ -1,26 +1,32 @@
 
+#include "x.h"
 
 /* Prototype-Deklarationen:
-   ╜ 1990 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, Tel: 07151/66437   */
+   » 1990 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, Tel: 07151/66437   */
 
 
+uint16_t swap_uint16(uint16_t val);
 
 /* Prototypen für: RASTER.C: */
 
-void pic_move(char *quelle,int y1,int y2,int y3);
-void cpy_raster(char *quelle,char *ziel,int x1,int y1,int x2,int y2,int x3,int y3);
-long load_objekte(int file_nr,char *adr);
-void convert_objekte(int *ob_mem);
+void pic_move(void *quelle,int y1,int y2,int y3);
+void cpy_raster(void *quelle, void *ziel,int x1,int y1,int x2,int y2,int x3,int y3);
+long load_objekte(char *filename,void *adr);
+void convert_objekte(SHARED_OBJECT *sh_obj);
 int shrink_obj_breite(int size,int ob_nr,void *ob_mem);
 int shrink_obj_hoehe(int size,int ob_nr,void *ob_mem);
-int objekt_breite(int ob_nr,int *ob_mem);
-int objekt_hoehe(int ob_nr,int *ob_mem);
-unsigned int move_objekt(int ob_nr,int *ob_mem,int modus,int ziel_y,void *ziel_mem,unsigned int clip_modus,int clipx1,int clipy1,int clipx2,int clipy2,FLAG switch_scr);
+FLAG objekt_exists(int ob_nr, void *ob_mem);
+int objekt_breite(int ob_nr,void *ob_mem);
+int objekt_hoehe(int ob_nr, void *ob_mem);
+void *objekt_surface(int ob_nr, void *ob_mem);
+raster_t *objekt_palette(int ob_nr,void *ob_mem, int raster_no);
+unsigned int move_objekt(int ob_nr,void *ob_mem,int modus,int ziel_y,void *ziel_mem,unsigned int clip_modus,int clipx1,int clipy1,int clipx2,int clipy2,FLAG switch_scr);
 void draw_shrink_obj(int size,void *shrink_buff,int ob_nr,void *ob_mem,int modus,void *scr,int x,int y);
 void draw_shrink_obj_part(int size,void *shrink_buff,int ob_nr,void *ob_mem,int x1,int y1,int x2,int y2,int modus,void *scr,int x,int y);
 void shrink1(float size,void *shrink_buff,int ob_nr,void *ob_mem,int x_start,int y_start,int x_end,int y_end,int modus,void *scr,int x_scr,int y_scr);
 void shrink2(float size,void *shrink_buff,int ob_nr,void *ob_mem,int x_start,int y_start,int x_end,int y_end,int modus,void *scr,int x_scr,int y_scr);
 void draw_grow_obj(int ob_nr,void *ob_mem,int modus,void *screen,int x,int y);
+void draw_obj_all(void *ob_mem,void *screen);
 
 
 /* Prototypen für: ATARI.C: */
@@ -36,8 +42,8 @@ void programmende(void);
 void init_archiv(void);
 void fill_ramdisk(void);
 long ram_needed(int ram_max);
-void load_digisound(int file_nr,void *adresse);
-void load_sprites(int name);
+void load_digisound(char *filename,void *adresse);
+void load_sprites(char *filename);
 void rahmen(int color,int x1,int y1,int x2,int y2);
 unsigned char wandel(unsigned char zeichen);
 void debug(int nr,char text[],int var);
@@ -56,7 +62,7 @@ long frei_war(void);
 long sum_rohstoffe(void);
 long sum_stall(void);
 void city_restore(int num);
-void c_pic(int name_nr);
+void c_pic(char *filename);
 void city_screen(void);
 void city_info(int num);
 void hafenkneipe(void);
@@ -105,7 +111,7 @@ void draw_delay(int x,int y,unsigned char wert);
 void subway(void);
 void bank(int num);
 void aktienmarkt(void);
-void buy_sell(char *name,int waren_max,char warenn[],int warenn_len,unsigned int waren_preis[],long waren_city[],long waren_player[],int ort);
+void buy_sell(char *name,int waren_max,char *warenn,int warenn_len,unsigned int waren_preis[],long waren_city[],long waren_player[],int ort);
 void show_buy_sell(char *name,int waren_max,char warenn[],int warenn_len,unsigned int waren_preis[],long waren_city[],long waren_player[],int ort,int seite,int waren_nummer);
 void store_goods(int waren_max,char warenn[],int warenn_len,unsigned int waren_preis[],long waren_city[],int seite,int ort);
 void your_goods(int waren_max,char warenn[],int warenn_len,long waren_player[],int seite);
@@ -262,7 +268,7 @@ void load_music(void);
 void init_medusa(void);
 char *such_string(int nr,char *adr);
 void re_initialize(void);
-void unterschrift(int file_nr,int x,int y);
+void unterschrift(char *filename,int x,int y);
 void anfangseinstellungen(void);
 void intro(void);
 void intro_off(void);
@@ -279,6 +285,9 @@ void zeichne_totenkopf(int y);
 
 /* Prototypen für: IO.C: */
 
+void od(void *adr);
+size_t file_size(char *filename);
+void create_data_filename(char *filename_in, char *filename_out);
 void linker(int file_nr,int fun_nr,int par1,int par2,void *par3);
 void writexy(int farbe,int x,int y,char string[]);
 void writexy_it(int farbe,int hintergrund,int x,int y,char string[]);
@@ -303,6 +312,7 @@ void delete_mobs(void);
 void wait_once(int anzahl);
 void wait_sync(int anzahl);
 void wait_sync_klick(int anzahl);
+void wait_sync_noshow(int anzahl);
 void cls(void);
 void home(void);
 void print(char str[]);
@@ -342,8 +352,8 @@ void dlstr(long datum,char string[]);
 char *dat_kurz(long datum);
 char *dstr(long datum);
 char *space(int len);
-void load(int file_nr,void *adr,long offset,long laenge);
-long load_bibliothek(int file_nr,void *buffer);
+int load(char *filename,void *adr,long offset,long laenge);
+int load_bibliothek(char *filename,void *buffer);
 void Sm(void);
 void Hm(void);
 void initspr4map(void);
@@ -412,7 +422,7 @@ short get_land(int x,int y);
 
 /* Prototypen für: MAIN.C: */
 
-void main(void);
+int main(int argc, char *argv[]);
 void draw_peilgeraete(void);
 void delete_peilgeraete(void);
 void sea_move(void);
@@ -472,3 +482,7 @@ void dehn(int option_nr);
 void zeichne(int option_nr,int bildzeile,int orgzeile);
 void stauch(void);
 void load_leisten(void);
+
+void vbl_execute();
+SDL_Surface *get_obj_surface(int ob_nr, void *ob_basis);
+

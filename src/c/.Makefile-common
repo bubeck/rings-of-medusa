@@ -1,0 +1,39 @@
+#################################################################
+#
+#         Makefile (common includes for all top level Makefiles)
+#
+#################################################################
+
+CC		= gcc
+RM		= rm -f
+
+SDL_CFLAGS = $(shell pkg-config --cflags sdl3)
+SDL_LDFLAGS = $(shell pkg-config --libs sdl3)
+
+CFLAGS		= -Wall -Wno-unused-but-set-variable -Wno-unused-variable -Wno-implicit -Wno-old-style-definition -O0 -fno-omit-frame-pointer -g $(SDL_CFLAGS) -Dunix -fexec-charset=iso-8859-1 
+
+TARGET		= medusa
+OBJS		= atari.o city.o city2.o dung2.o dungeon.o fight.o \
+		  init.o io.o land.o leisten.o \
+		  main.o raster.o seafight.o unix.o x.o ice.o
+
+$(TARGET): $(OBJS)
+	$(LINK.c) -o $@ $(OBJS) $(SDL_LDFLAGS) -lm $(WIN_LDFLAGS)
+
+install:
+	mkdir -p ../../rings-of-medusa-2
+	cp medusa* ../../rings-of-medusa-2/
+	cp -r ../../data ../../rings-of-medusa-2/
+	rm -rf ../../rings-of-medusa-2/data/src
+
+zip:
+	$(RM) ../../rings-of-medusa-2.zip
+	cd ../../ ; apack rings-of-medusa-2.zip rings-of-medusa-2
+	ls -lh ../../rings-of-medusa-2.zip
+
+clean:
+	$(RM) $(TARGET) $(TARGET).exe $(OBJS) a.out core
+
+tidy: clean
+	$(RM) *~ \#*
+	$(RM) -r ../../rings-of-medusa-2/

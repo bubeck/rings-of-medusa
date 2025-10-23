@@ -1,4 +1,9 @@
 
+// Should enemies be displayed in dungeons on the automap?
+#define SHOW_ENEMY_ON_AUTOMAP 1
+
+#define DIGI_COUNT 100
+
 #define TIMEOUT 25000                 /* Timeout für Kopierschutz */
 
 #define LADEN 0            /* verschiedene Zustände für ort in buy_sell() */
@@ -90,7 +95,7 @@ enum hippel_effekte { LASER=0, FLAK, AUFZUG_AN, AUFZUG_AUS, TUER_AN, TUER_AUS, E
 
 enum himmelsrichtung { NORD=0,OST,SUED,WEST };
 
-#define WANDMAX 40					/* max. Anzahl an Wandeinträger in BUNKERWAND[] */
+#define WANDMAX 400					/* max. Anzahl an Wandeinträger in BUNKERWAND[] */
 #define TUERMAX 140					/* Gesamtzahl der Türen in allen Bunkern */
 #define ITEMMAX (TUERMAX+570)	/* Gesamtzahl an Objekten in allen Bunkern (Schlüssel+Items) */
 #define ENEMYMAX 247				/* Gesamtzahl der Gegner */
@@ -117,3 +122,9 @@ enum himmelsrichtung { NORD=0,OST,SUED,WEST };
 
 enum statuse { KAEMPFER=0, MAGIER, MOGUL, ZAUBERMEISTER };		/* Spielerstaus */
 
+/* Scan Codes for various Atari keys on keyboard: */
+#define ATARI_SCAN_HELP 0x62
+#define ATARI_SCAN_UP 0x48
+#define ATARI_SCAN_DOWN 0x50
+#define ATARI_SCAN_LEFT 0x4b
+#define ATARI_SCAN_RIGHT 0x4d

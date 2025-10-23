@@ -82,7 +82,7 @@ int armeenr;                            /* Nummer der Armee */
 	void *oldlogbase;
 	float train[EINHEITEN][EIGENSCHAFTEN];
 		
-	load_digisound(KRIEG_SEQ,pack_buf+32000L);
+  load_digisound("krieg.seq",pack_buf+32000L);
 	
   if (effects) play_digi(pack_buf+32000L,FALSE,5,14);
 
@@ -96,7 +96,7 @@ int armeenr;                            /* Nummer der Armee */
 
 	clear_raster();
   clear_screen(hlpbuf);
-	load_objekte(EBENE_OBJ,scr2);
+  load_objekte("ebene.obj",scr2);
   formular(hlpbuf,63);
 	draw_obj(0,scr2,0,hlpbuf,0,0);								/* Hintergrund zeichnen */
 	draw_obj(1,scr2,1,hlpbuf,0,0);								/* Stadt zeichnen */
@@ -177,7 +177,7 @@ int num;
 	void *oldlogbase;
 	float train[EINHEITEN][EIGENSCHAFTEN];
 
-	load_digisound(KRIEG_SEQ,pack_buf+32000L);
+  load_digisound("krieg.seq",pack_buf+32000L);
 			
   if (effects) play_digi(pack_buf+32000L,FALSE,5,14);
 
@@ -189,7 +189,7 @@ int num;
 
 	clear_raster();
   clear_screen(hlpbuf);
-	load_objekte(EBENE_OBJ,scr2);
+  load_objekte("ebene.obj",scr2);
   formular(hlpbuf,63);
 	draw_obj(0,scr2,0,hlpbuf,0,0);								/* Hintergrund zeichnen */
 	draw_obj(1,scr2,1,hlpbuf,320-objekt_breite(1,scr2),0);								/* Stadt zeichnen */
@@ -307,7 +307,7 @@ int nr;
   float proz,proz_summe;
 	void *oldlogbase;
 
-	load_digisound(KRIEG_SEQ,pack_buf+32000L);
+  load_digisound("krieg.seq",pack_buf+32000L);
 		
   if (effects) play_digi(pack_buf+32000L,FALSE,5,14);
 
@@ -324,7 +324,7 @@ int nr;
 
 	clear_raster();
   clear_screen(hlpbuf);
-	load_objekte(EBENE_OBJ,scr2);
+  load_objekte("ebene.obj",scr2);
   formular(hlpbuf,63);
 	draw_obj(0,scr2,0,hlpbuf,0,0);								/* Hintergrund zeichnen */
 
@@ -704,7 +704,7 @@ char gegnern[];                   /* Name des Gegners */
       motiv[0]-=100-motiv[1]/3;         /* eigene Motivation sinkt */
       motiv[1]+=100-motiv[0]/4;         /* Motivation Gegner steigt */
       if (effects) {
-				load_digisound(GOT_YOU_SEQ,pack_buf+32000L);
+        load_digisound("got_you.seq",pack_buf+32000L);
 				play_digi(pack_buf+32000L,FALSE,0,0);
 				}
       }

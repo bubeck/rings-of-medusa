@@ -3,11 +3,13 @@
    diese müssen entsprechend für andere Computer ersetzt werden */
 
 #include "includes.c"
+#include "extern.c"
+#include "x.h"
 
 long ssp;               /* Supervisorstackpointer */
 
 /* Füllmuster zum kompletten Ausfüllen von Flächen: */
-int solid[16] = {
+UWORD solid[16] = {
 	-1,-1,-1,-1,-1,-1,-1,-1,
 	-1,-1,-1,-1,-1,-1,-1,-1 };
 	
@@ -57,7 +59,7 @@ void init_atari()
 	line_mode(0);												/* Replace */
 	line_pattern(solid);								/* Komplett ausgefüllt */
 	
-  srand(rnd());										/* Zufallszahlengenerator initialisieren */
+  srand((unsigned)time(NULL));                /* Zufallszahlengenerator initialisieren */
 
 	init_maus();										/* Maus initialisieren */
 	hbl_init();											/* Raster anschalten */
@@ -71,7 +73,7 @@ void init_hardware()
 {
   /* Initialisiert die Hardware */
 
-  sync=get_sync();               /* Get_Sync() */
+  sync_50_60=get_sync();               /* Get_Sync() */
   mcode3();                     /* Init_Hardware */
 }
 
@@ -108,7 +110,35 @@ int color,x,y;
 {
   /* Zeichnet einen einzigen Punkt auf den Bildschirm */
   
-  line(color,x,y,x,y);				/* Nicht gerade elegant, aber zweckmäßig... */
+  //fill(color,x,y,x,y);        /* Nicht gerade elegant, aber zweckmäßig... */
+  set_pixel_surface(logbase, x, y, color);
+}
+
+/**
+ * Read the color of a pixel from a memory stored in Atari ST LOW RES
+ * format.
+ *
+ * The memory must be exactly aligned as on Atari ST. Do not convert from
+ * big endian before using this.
+ */
+int atari_get_pixel(void *screen_base, int bytes_per_line, int x, int y)
+{
+  uint8_t *screen = (uint8_t *)screen_base;
+  const int planes = 4;
+  int word_index = x / 16;
+  int bit_index = 15 - (x % 16);
+  uint8_t *line = screen + y * bytes_per_line;
+  uint8_t color = 0;
+
+  assert(bytes_per_line % 8 == 0);
+  
+  for (int plane = 0; plane < planes; plane++) {
+    uint8_t *word_ptr = (uint8_t *)(line + plane * 2 + word_index * planes * 2);
+    uint16_t word = (uint16_t)(*(word_ptr)) << 8 | *(word_ptr+1);
+    uint8_t bit = (word >> bit_index) & 1;
+    color |= (bit << plane);
+  }
+  return color;
 }
 
 #ifndef COPYPROT
@@ -143,22 +173,7 @@ void init_archiv()
 {
 	/* Öffnet das Archiv, läßt aber noch alle Files auf der Diskette
 			d.h. es wird kein Speicher alloziert */
-	int i;
 
-	file_offset[OFFSET_DAT]=0;										/* 1. File beginnt ganz vorne */
-	file_len[OFFSET_DAT]=10000;										/* hat auf jeden Fall diese Länge */
-	file_disk[OFFSET_DAT]=0;											/* und im 1. Archiv */
-	ram_max=-10;																	/* Bisher keine Files in Ramdisk */
-
-	load(OFFSET_DAT,&ram_min,0L,2L);							/* Ab welchem File soll Ramdisk beginnen? */
-	load(OFFSET_DAT,file_offset,2L,(FILE_ZAHL+1)*4L);
-	load(OFFSET_DAT,file_len,2+(FILE_ZAHL+1)*4L,FILE_ZAHL*4L);
-
-  for (i=0;i<FILE_ZAHL;i++) {
-    file_disk[i]=file_offset[i]>>24;						/* In welchem Archiv ist File? */
-    file_offset[i]&=0x00ffffff;
-    }
-  file_offset[i]&=0x00ffffff;               /* Disk-Information raus */
 }
 
 void fill_ramdisk()
@@ -169,7 +184,6 @@ void fill_ramdisk()
 	int akt_file;
 	long akt_pos,len;
 	char *ram_pointer;
-	long laenge;
 
 #ifdef AMIGA
 	if (fast_len>0) {						/* Noch Fast-Mem vorhanden? */
@@ -232,26 +246,80 @@ int ram_max;
   return(groesse);
 }
 
-void load_digisound(file_nr,adresse)
-int file_nr;
+void load_digisound(filename,adresse)
+char *filename;
 void *adresse;
 {
 	/* Lädt einen Digisound und konvertiert diesen entsprechend */
 	long len;
+	void *p;
+	char *pc;
+	UWORD *pu;
+	int anz_zeilen,anz_seq;
+	int i;
 	
 	if (digi_works) digi_aus();
 	
-	len=load_bibliothek(file_nr,adresse);
+	for (i = 0; i < DIGI_COUNT; i++) {
+	  if (digi_mem[i].atari_mem == adresse) {
+	    digi_mem[i].atari_mem = NULL;
+	  }
+	}
+
+	for (i = 0; i < DIGI_COUNT; i++) {
+	  if (digi_mem[i].atari_mem == NULL ) {
+	    break;
+	  }
+	}
+ 
+	digi_mem[i].atari_mem = adresse;
+	p = malloc(100000);
+	digi_mem[i].local_mem = p;
+
+	len=load_bibliothek(filename,p);
+	pc = p;
+
+	digi_header_t *header = (digi_header_t *)p;
+
+	if (header->magic[0] != 'S' && header->magic[1] != 'A' && header->magic[2] != 'M' && header->magic[3] != 'P') {
+	  printf("Illegal sample file %s\n", filename);
+	  exit(1);
+	}
+
+  
+	pu = (UWORD *)(pc + 4);
+	be_2(&header->count_seq);
+	be_2(&header->count_lines);
+
+	//printf("\n\nheader->count_seq=%d header->count_lines=%d\n", header->count_seq, header->count_lines);
+
+	pc += sizeof(digi_header_t);
+  
+	digi_sequence_t *seq_tabelle = (digi_sequence_t *)pc;
+
+	assert(sizeof(digi_sequence_t) == 24);
+	for (i = 0; i < header->count_seq; i++) {
+	  be_4(&seq_tabelle[i].start);
+	  be_4(&seq_tabelle[i].end);
+	  //printf("Seq[%d]: start=%d, end=%d\n", i, seq_tabelle[i].start, seq_tabelle[i].end);
+	}
+  
+	pc += header->count_seq * 24;
+	digi_line_t *digi_lines = (digi_line_t*)pc;
+
+	for (i = 0; i < header->count_lines; i++) {
+	  //printf("Zeile[%d]: seq=%u count=%u freq=%u\n", i, digi_lines[i].seq, digi_lines[i].count, digi_lines[i].freq);
+	}
 	
 #ifdef AMIGA 
 		{
 		char *adr;
-		int *digi;
+		uint16_t *digi;
 		int anz_zeilen,anz_seq;
 		char *digi_end;
 		
-		adr=(char *)adresse;
-		digi=(int *)adr;
+		adr=(char *)p;
+		digi=(uint16_t *)adr;
 		anz_seq=digi[2];
 		anz_zeilen=digi[3];
 		digi_end=(char *)adr+len;
@@ -262,12 +330,50 @@ void *adresse;
 #endif
 }
 
-void load_sprites(name)
-int name;
+void load_sprites(char *filename)
 {
   /* Lädt die Sprites Datei */
+  int width, height;
+  
+  load_bibliothek(filename,sprite_mem);     /* Datei laden, soviel wie geht */
+  width = 16; height = 8;
+  for (int i = 0; i < SPR_ZAHL; i++) {
+    SDL_Surface *surface;
 
-  load_bibliothek(name,sprite_mem);     /* Datei laden, soviel wie geht */
+    surface = SDL_CreateSurface(width, height, SDL_PIXELFORMAT_INDEX8);
+    set_surface_PAL(surface, kartep);
+
+    uint8_t *p = surface->pixels;
+    
+    for(int y=0;y<height;y++)
+      {
+	for(int x=0;x<width;x++)
+	  {
+	    p[y * surface->pitch + x] = atari_get_pixel(sprite_mem[i].sprite, 8, x, y);
+	  }
+      }
+    sprite_surfaces[i] = surface;
+  }
+
+  void *a = malloc(30000);
+  load_objekte("sprites.obj", a);
+  for(int i = 0; i < 10000; i++) {
+    if (objekt_exists(i, a)) {
+      void *surface = objekt_surface(i, a);
+      if (surface!=0)
+	sprite_surfaces[i] = surface;
+    }
+  }
+  
+  for (int i=0; i < SPR_MAX; i++) {
+    save1[i].screen = NULL;
+    save1[i].saved_screen = SDL_CreateSurface(width, height, SDL_PIXELFORMAT_INDEX8);
+    set_surface_PAL(save1[i].saved_screen, kartep);
+    save2[i].screen = NULL;
+    save2[i].saved_screen = SDL_CreateSurface(width, height, SDL_PIXELFORMAT_INDEX8);
+    set_surface_PAL(save2[i].saved_screen, kartep);
+  }
+
 }
 
 void rahmen(color,x1,y1,x2,y2)
@@ -314,7 +420,8 @@ int var;
 	
 	Hm();
 	if (my_system) {
-		if (hbl_system[0][16]==0) {					/* Farben vorhanden? */
+    //if (hbl_system[0][16]==0) {         /* Farben vorhanden? */
+    if (0) {
 			set_raster(0,0,kartep);
 			show_raster();
 			}

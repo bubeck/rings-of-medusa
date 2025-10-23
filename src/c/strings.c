@@ -159,7 +159,7 @@ That's it. Good luck with the game!
 #define romstr033 "   STEFFI,   "
 #define romstr034 "COPYRIGHT 1992 BY STARBYTE"	
 #define romstr035 "WRITTEN BY: TILL BUBECK"
-#define romstr036 "GRAPHICS: TORSTEN ZIMMERMANN"
+#define romstr036 "GRAPHICS BY: TORSTEN ZIMMERMANN"
 #define romstr037 "MUSIC BY: JOCHEN HIPPEL"
 #define romstr038 "CREATING THE GAME WORLD."
 #define romstr039 "VERSION (USA+GB) "
@@ -746,5 +746,5 @@ That's it. Good luck with the game!
 #define romstr620 "PLEASE INSERT DISK           'X' IN DRIVE    A:"		
 #define romstr621 "PLEASE INSERT YOUR SAVE GAME DISK IN DRIVE      A:"
 #define romstr622 "I CAN ONLY USE DISKS WITH 9/10 SEKTORS PER TRACK. FORMAT WITH DESKTOP."
-#define romstr623 "DISK ERROR! TRY AGAIN OR CHANGE DISK."
+#define romstr623 "DISK ERROR! TRY AGAIN OR CHANGE DISK."
 

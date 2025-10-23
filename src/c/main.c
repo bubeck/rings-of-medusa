@@ -20,15 +20,18 @@ C-64:					Steve Kups, Föhrenstr. 13, 8800 Ansbach, Tel: 0981-13771
 
 Sonstige:
 
-Co-Programmierer: Christian Weber, Bruggerweg 2, CH-8037 Zürich, Tel: 0041-12726197
+Co-Programmierer: Christian Weber, Bruggerweg 2, CH-8037 Zürich, 
+                  Tel: 0041-12726197
 Story: Matthias Krenzel, Brüderstr. 61, 5630 Remscheid 1, Tel.: 02191-75944
 Bunkerdesign:	Peter Richter, Tel: 0201-743432
 Vertrieb: Starbyte Software, Nordring 71, 4630 Bochum 1, Tel: 0234/680460			
 Federal Express: 07150-30070, Kun-Nr.: 14301012
 
-Promotion: Tronicverlag GmbH, ASM-Redaktion, z.Hd. Eva Hoogh, Postfach, 3440 Eschwege,
+Promotion: Tronicverlag GmbH, ASM-Redaktion, z.Hd. Eva Hoogh, Postfach, 
+               3440 Eschwege,
 					 Tel.: 05651-30011							
-					 Amiga Joker, z.Hd. Herr Labiner, Untere Parkstr. 67, 8013 Haar b. München
+           Amiga Joker, z.Hd. Herr Labiner, Untere Parkstr. 67, 
+               8013 Haar b. München
 					 Markt & Technik Verlag, Red. Powerplay, z.Hd. Herrn Weitz,
 											 Hans-Pinsel-Str. 2 8013 Haar b. München
 
@@ -39,20 +42,26 @@ Promotion: Tronicverlag GmbH, ASM-Redaktion, z.Hd. Eva Hoogh, Postfach, 3440 Esc
 
 /* Je nach Sprache die entsprechenden Strings einbinden: */
 #if (SPRACHE==_DEUTSCH)
-  #include "DEUTSCH.C"
+  #include "deutsch.c"
 #elif (SPRACHE==_ENGLISCH)
-  #include "ENGLISCH.C"
+  #include "englisch.c"
 #elif (SPRACHE==_FRANZ)
-  #include "FRANZ.C"
+  #include "franz.c"
 #endif
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <tos.h>										/* Turbo C 2.0 */
 #include <setjmp.h>
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
+#include <getopt.h>
+
+#ifdef __TURBOC__
+#include <tos.h>                    /* Turbo C 2.0 */
+#else
+#define cdecl
+#endif
 
 #include "filename.c"
 #include "const.c"              /* Alle Konstanten holen */
@@ -67,19 +76,52 @@ FLAG peilsound=FALSE;
 
 /* Start: */
 
-void main()
+int main(int argc, char *argv[])
 {
-  int *daypoi;
-  long *moneypoi,*heutepoi,*gesamtpoi;
+  static struct option long_opts[] = {
+        {"no-audio", no_argument,       0, 'n'},
+        {"no-intro", no_argument,       0, 'i'},
+        {"no-tv", no_argument,       0, 't'},
+        {"demo", no_argument,       0, 'd'},
+        {0,0,0,0}
+    };
+  int demo;
+  
+  int opt;
+
+  musik_an = TRUE;
+  demo = FALSE;
+  
+  while ((opt = getopt_long(argc, argv, "1234nitd", long_opts, NULL)) != -1) {
+    switch (opt) {
+    case '1': gfx_scale_factor = 1; break;
+    case '2': gfx_scale_factor = 2; break;
+    case '3': gfx_scale_factor = 3; break;
+    case '4': gfx_scale_factor = 4; break;
+      
+    case 'd': demo = TRUE; break;       // --no-audio oder -n
+    case 'n': musik_an = FALSE; break;       // --no-audio oder -n
+    case 'i': voller_titel = 0; break;   // --no-intro  oder -i
+    case 't': crt_effect = 0; break;   // --no-tv  oder -t
+      
+    default:
+      fprintf(stderr, "Usage: %s [-1|-2|-3|-4] [-n|--no-audio] [-i|--no-intro] [-t|--no-tv]\n", argv[0]);
+      exit(EXIT_FAILURE);
+    }
+  }
 
   save_version=0x005;       						/* Version des Savefiles */
 
   init_medusa();             /* Ramdisk, Speicher, Files etc. */
   setjmp(restart);          /* Hier Einsprungpunkt für erneutes Starten */
 
+  if (demo) do_demo();
+  
   re_initialize();          /* Den Rest voll initliaisieren */
 
+#if 1
 	dungeon(21);							/* Startbunker */
+#endif
 		
   for(;;) {
     hol_maus();                  /* Mauskoordinaten holen */
@@ -98,7 +140,7 @@ void main()
       land_an();
       }
 
-    if (map==SEA) sea_move();                 /* SPieler bewegt sich auf dem Meer */
+    if (map==SEA) sea_move();                 /* Spieler bewegt sich auf dem Meer */
 
     if (mk == 1) {           /* Knopf gedrückt */
 	    if ((mx != sx[0]) || (my != sy[0])) {  		/* Maus woanders ? */
@@ -122,8 +164,9 @@ void main()
       citynum=0;
       citycheat=FALSE;
       }
+
     if(citynum>=0) {
-#ifdef COPYPROT
+#ifdef COPYPROT_NOT_ANYMORE
 			char *pw;									
 			
 			pw=password-100;
@@ -260,8 +303,8 @@ void sea_move()
   /* Spieler ist jetzt auf dem offenen Meer */
 	int old_sync;
 	
-	old_sync=sync;	
-	sync=1;													/* 1 VBL pro Bild */
+  old_sync=sync_50_60;  
+  sync_50_60=1;                         /* 1 VBL pro Bild */
 	
   redraw_buttons(EDITOR|PAUSE);
   copy_buttons();
@@ -281,7 +324,7 @@ void sea_move()
 
 		if (my>169) button_leiste();
 
-    if (my<169 && (mx != sx[0]) || (my != sy[0])) {  /* Maus woanders ? */
+    if ((my<169 && (mx != sx[0])) || (my != sy[0])) {  /* Maus woanders ? */
       update_coordinates();     /* Grenze angelaufen */
       test_ground();            /* testet den Untergrund auf Wasser etc. */
       show_pos();               /* zeigt die Position des Spielers an */
@@ -291,7 +334,7 @@ void sea_move()
 		draw_shapes();						/* Alles Sprites zeichnen */
     }
 
-	sync=old_sync;								/* Alte Geschwindigkeit einstellen */
+  sync_50_60=old_sync;                /* Alte Geschwindigkeit einstellen */
 	
   redraw_buttons(EDITOR|PEILUNG|PAUSE);
   copy_buttons();
@@ -318,7 +361,7 @@ void peilung()
   register int x,y;
   int schatz_x,schatz_y;                /* Pixelkoordinaten des Schatzes */
   double winkel,radius;
-	int bunker_zahl,bunker_anzahl;
+  int bunker_zahl;
 	int bun_nr1,bun_nr2;
 
 	if (ycargo_menge[11]<=0) alert(romstr249);
@@ -681,11 +724,10 @@ int nr;
   long verschieb,platz;
 	int oel_pos;
 	int zeile;
-	long laenge;
 	
 	peilgeraet_aus();
 
-	load_digisound(KLONG_SEQ,pack_buf);			/* Digisound laden */
+  load_digisound("klong.seq",pack_buf);     /* Digisound laden */
 	
   oel_pos=zeichne_mine(nr);                 /* Mine anzeigen */
   old_buttons=bleiste;
@@ -907,11 +949,11 @@ int nr;														/* Nummer der Mine */
 	int xmax;
 
 	Hm();
-  load_objekte(EBENE_OBJ, scr2); 		     	/* Minenbilder auf Screen2 laden */
+  load_objekte("ebene.obj", scr2);          /* Minenbilder auf Screen2 laden */
 	draw_obj(0,scr2,0,screen,0,0);				/* Hintergrund zeichnen */
 
-	if (mine[nr].vorkommen>0) load_objekte(MINE_OK_OBJ,scr2);
-	else load_objekte(MINE_PUT_OBJ,scr2);
+  if (mine[nr].vorkommen>0) load_objekte("mine_ok.obj",scr2);
+  else load_objekte("mine_put.obj",scr2);
 
 	xmax=160;													/* In der Mitte des Screens */
 	x=24;
@@ -961,7 +1003,7 @@ void check_cheat()
 	
   if (cheat_on)                /* Nur wenn Cheat-Check an ist */
     if ((taste=get_key())!=-1L)              /* Taste da? */
-      if (taste==0x00620000L) {              /* Help */
+      if (taste==(ATARI_SCAN_HELP << 16)) {              /* Help */
 				cheat_auswert(FALSE);
 				land_an();
 				}
@@ -973,13 +1015,12 @@ FLAG bunker;												/* Wurde im Bunker HELP gedrückt? */
   /* Zeigt die Helpseite an und wertet Tastendrücke aus */
   long oldleiste;
 	long taste;
-	void *oldlogbase;
-	int x,y;
 	long dif;
 	char bun_nr[10];
 	int nr;
 	int i;
 	register ITEMS *itemp;
+  void *mem;
 	
   Hm();
 
@@ -987,9 +1028,11 @@ FLAG bunker;												/* Wurde im Bunker HELP gedrückt? */
   oldleiste=bleiste;                /* Alte Buttons sichern */
   redraw_buttons(EXIT_BTN|PAUSE);
 
-	load_objekte(TILL_OBJ,window_back);
-	formular(scr1,63);
-	draw_obj(0,window_back,MOVE,scr1,270,80);
+  mem=malloc(20000);
+  load_objekte("till.obj",mem);
+  formular(logbase,63);
+  draw_obj(0,mem,MOVE,scr1,270,80);
+  free(mem);
 	show_raster();
 	
   center(0,70,romstr281);
@@ -1020,10 +1063,13 @@ FLAG bunker;												/* Wurde im Bunker HELP gedrückt? */
 		cheat(150,110,romstr300,treffer_cheat);
 		
 		Sm();
+    show_last_screen();
 
     do {
 			button=NOTHING;
 			hol_maus();
+      show_last_screen();
+      wait_sync(speed);
 			if (my>167) button_leiste();
 			} while(button==NOTHING && !is_key());
 		
@@ -1055,6 +1101,7 @@ FLAG bunker;												/* Wurde im Bunker HELP gedrückt? */
           speed=0;                /* volle Geschwindigkeit */
           break;
         case '*':
+        case 'G':
           unlim_money_cheat=!unlim_money_cheat;
           break;
 				case 'X':
@@ -1088,6 +1135,9 @@ FLAG bunker;												/* Wurde im Bunker HELP gedrückt? */
           break;
         case 'O':
           pio_cheat=!pio_cheat;
+          break;
+      case 'P':
+   	  print_rasters();
           break;
         case 'K':
           kaserne_cheat=!kaserne_cheat;
@@ -1273,6 +1323,7 @@ char *error;
 {
   /* Interner Fehler anzeigen */
 
+  fprintf(stderr,"%s\n",error);
   alert(build(romstr305,error));
 	longjmp(restart,1);										/* Medusa neu starten */
 }
@@ -1341,7 +1392,7 @@ void editor()
   loc = CITY;
   leiste_y=64;
   msminy=63;                     /* höher darf Maus nicht */
-  c_pic(STORE_OBJ);
+  c_pic("store.obj");
   leiste_oben(romstr313);
 
   cursor[0]='@';
@@ -1367,6 +1418,7 @@ void editor()
 
     do {
 			taste=get_key();
+      // #ifndef unix
 			if (taste!=-1) {
 				tast_repeat=15;											/* Startverzögerung */
 				}
@@ -1377,7 +1429,9 @@ void editor()
 						taste=keypress;
 						}
 					else wait_once(1);
-				else {												/* Taste nicht gedrückt */
+        else                         /* Taste nicht gedrückt */
+	  // #endif
+	  {
 					button=NOTHING;
   		    hol_maus();
 	    	  if (my>167 && mk!=0) button_leiste();
@@ -1395,7 +1449,7 @@ void editor()
       taste=0;
       }
     if (isprint((int)taste)) {
-      if (islower((int)taste)) toupper(taste);
+      if (islower((int)taste)) taste = toupper(taste);
       string[0]=taste;
       string[1]=0;
       writexy(farbe,spalte*4,zeile*6,string);
@@ -1507,6 +1561,8 @@ char txt1[],txt2[];                 /* 2 Zeilen Begründung für Game over */
   longjmp(restart,1);               /* Und Spiel neustarten */
 }
 
+void *save_buffer = NULL;
+
 void make_adresses()
 {
   /* Dies ist wohl die verrückteste Funktion von Medusa:
@@ -1516,8 +1572,10 @@ void make_adresses()
   register long *poi;
 
   poi=(long *)hlpbuf;               /* Nach hlpbuf schreiben */
+  if (save_buffer == NULL) save_buffer = malloc(100000);
+  poi = save_buffer;
 
-#include romstr318
+#include "save.c"
 
   *poi=-1L;                         /* Ende marker */
 }
@@ -1525,13 +1583,20 @@ void make_adresses()
 void blitz(color)
 int color;
 {
+#if defined(ATARI) || defined(AMIGA)
 	int old_color;
 
-	old_color=hbl_system[0][1];						/* Alte Farbe merken */
-	hbl_system[0][1]=color;							/* color als neue VBL-Hintergrundfarbe */
+  old_color=hbl_system[0].pal[0];           /* Alte Farbe merken */
+  hbl_system[0].pal[0]=color;             /* color als neue VBL-Hintergrundfarbe */
 	show_raster();											/* und anzeigen */
-	hbl_system[0][1]=old_color;
+  show_last_screen();
+  hbl_system[0].pal[0]=old_color;
 	show_raster();											/* Alte Farbe wieder rein */
+  show_last_screen();
+#else
+  fade_out_speed(0);
+  fade_in_speed(0);
+#endif
 }
 
 void autsch()

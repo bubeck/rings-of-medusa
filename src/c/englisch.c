@@ -4,7 +4,8 @@
 
 /* This is a list of all strings of Rings of Medusa II (The Return of Medusa)
 
-    Copyright 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, West-Germany
+    Copyright 1991 by Till Bubeck, Ziegeleistr. 28, 7056 Weinstadt, 
+                      West-Germany
                       Tel.: 07151-66437
 		
 		or contact:			Starbyte Software, Nordring 71, 4630 Bochum 1, West-Germany
@@ -42,7 +43,7 @@
 
 		******************************************************************
 		*
-		* Please do NOT kill any kind of comments (marked by /* xxx */).
+    * Please do NOT kill any kind of comments.
 		*
 		******************************************************************
 		
@@ -157,7 +158,7 @@ That's it. Good luck with the game!
 #define romstr031 "  I LOVE YOU!"
 #define romstr032 "               "
 #define romstr033 "   STEFFI,   "
-#define romstr034 "COPYRIGHT 1992 BY STARBYTE"	
+#define romstr034 "COPYRIGHT 1992 BY TILL BUBECK"  
 #define romstr035 "WRITTEN BY: TILL BUBECK"
 #define romstr036 "GRAPHICS: TORSTEN ZIMMERMANN"
 #define romstr037 "MUSIC BY: JOCHEN HIPPEL"
@@ -406,7 +407,7 @@ That's it. Good luck with the game!
 #define romstr280 "DIRT."
 #define romstr281 "RINGS OF MEDUSA 2 - CHEATS:"
 #define romstr282 "R: SHOW RAW MATERIALS"
-#define romstr283 "*: UNLIMITED MONEY"
+#define romstr283 "G: UNLIMITED MONEY"
 #define romstr284 "W: SHOW GOODS"
 #define romstr285 "S: SHOW STRENGTH"
 #define romstr286 "O: SHOW ENEMIES"
@@ -747,4 +748,5 @@ That's it. Good luck with the game!
 #define romstr621 "PLEASE INSERT YOUR SAVE GAME DISK IN DRIVE      A:"
 #define romstr622 "I CAN ONLY USE DISKS WITH 9/10 SEKTORS PER TRACK. FORMAT WITH DESKTOP."
 #define romstr623 "DISK ERROR! TRY AGAIN OR CHANGE DISK."
+
 

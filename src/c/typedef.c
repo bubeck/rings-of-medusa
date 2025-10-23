@@ -1,9 +1,46 @@
 
+#include <stdint.h>
+#include <SDL3/SDL.h>
 
 /* Hier werden die gesamten neuen Datentypen von MEDUSA II definiert */
 /* Till Bubeck,Ziegeleistr. 28,7056 Weinstadt    07151-66437 */
 
+/* some data types for easy portability: */
+typedef uint16_t UWORD;                /* 16 bit unsigned */
+typedef uint32_t ULONG;                /* 32 bit unsigned */
+
 typedef signed char FLAG;
+
+typedef struct {
+  void *atari_mem;       // This is a atari memory pointer
+  void *local_mem;       // and this is the real local memory pointer
+} mem_mapper_t;
+
+typedef struct {
+  unsigned char magic[4];    // Must be "SAMP"
+  uint16_t count_seq;        // Anzahl Sequences in this files
+  uint16_t count_lines;      // Anzahl digi_line_t in this file
+} digi_header_t;
+
+typedef struct {
+  uint32_t start;
+  uint32_t end;
+  uint32_t reserved[4];
+} digi_sequence_t;
+
+typedef struct {
+  uint8_t count;         // Anzahl Wiederholungen
+  uint8_t seq;           // Welche digi Sequenz abspielen?
+  uint8_t direction;
+  uint8_t freq;          // Freq: 1=2kHz, 2=3kHz, 3=4kHz,...
+} digi_line_t;
+
+typedef UWORD RGB_PAL[16]; /* Farbpalette */
+
+typedef struct {
+  UWORD y;	
+  RGB_PAL pal;
+} raster_t;	
 
 typedef struct {            /* Beschreibt die Steuerung der Gegner */
     int heimat;             /* Heimatstadt */
@@ -81,8 +118,15 @@ typedef struct {
   } BUNKERWAND;
 
 typedef struct {
-	int sprite[32];						/* Nimmt einen Sprite auf (ungeshiftet) */
+  /* Ein Sprite ist 16x8 Pixel groß und benötigt damit 64 Bytes */
+  int16_t sprite[32];           /* Nimmt einen Sprite auf (ungeshiftet) */
 	} SPRITE;
+
+typedef struct {
+  int x, y;                 /* an welcher Position wurde der Sprite gezeichnet */
+  SDL_Surface *screen;      /* Auf welchen screen wurde gezeichnet? */
+  SDL_Surface *saved_screen;  /* Wohin wurde der überschrieben Bereich gerettet */
+} SPRITE_SAVE;
 
 typedef struct {						/* Einsatz beim Roulettespiel */
 	int feld;									/* Feld (0..36) bzw. (Manque,Impair,Rot,Passe,Pair,Schwarz) (37..42)
@@ -127,13 +171,13 @@ typedef struct {
 typedef struct {
 	unsigned char typ;					/* Welchen Typ hat Objekt? */
 	unsigned char grafik;				/* Welche Grafikobjektnummer? */
-	unsigned int spezial;
-	unsigned int verteilung;		/* Wie oft soll Objekt vorkommen? Prozent*100 */
+  UWORD spezial;
+  UWORD verteilung;           /* Wie oft soll Objekt vorkommen? Prozent*100 */
 	} OBJEKT_DISK;
 
 typedef struct {							/* Struktur von BUNKER.DAT */
-	unsigned int felder;				/* Wieviele Felder hat dieser Dungeon */
-	unsigned int frei;					/* Wieviele Felder sind LEER */
+  UWORD felder;               /* Wieviele Felder hat dieser Dungeon */
+  UWORD frei;                 /* Wieviele Felder sind LEER */
 	} STATISTIK;
 	
 typedef struct {							/* Welche Veränderung ist noch nicht auf 2. Screen */
@@ -165,8 +209,6 @@ typedef struct {							/* Dient zur Bestimmung, welches Bodenstück im Bunker, w
 	signed char distance;				/* Entfernung zur Spielerposition */
 	} BUNKERLAGE;
 
-typedef unsigned int RGB_PAL[16];	/* Farbpalette */
-
 /* Wie soll bei move_objekt vorgegangen werden? 
 	 STOP=an der entsprechenden Kante stoppen,
 	 ENDE=bei Erreichen der Kante move_objekt abbrechen */
@@ -181,4 +223,16 @@ typedef struct {
 	unsigned char staerke;				/* Gesundheitszustand des Gefangenen */
 	FLAG befreit;
 	} PRISONER;
+
+typedef struct {
+  ULONG offset;             /* Offset in den Objektspeicher */
+  UWORD breite;             /* Breite des Objekts in Pixeln */
+  UWORD hoehe;              /* Höhe des Objekts in Pixeln */
+  unsigned char maske;      /* Hat Objekt eine Maske (unbenützt) */
+  unsigned char planes;     /* Wieviel Planes hat Objekt */
+  UWORD breite_bytes;       /* Breite des Objekts in Bytes */
+  UWORD x_neo;              /* Position innerhalb Neochrom-Bild (unwichtig) */
+  UWORD y_neo;              /* -'- */
+  ULONG reserved;           /* Reserved for future use */
+  } OBJEKT;
 

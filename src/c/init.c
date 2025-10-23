@@ -2,14 +2,15 @@
 /* Dieser Part regelt die grundsätzlichen Installationen von Crown, sowie
    das entsprechende Abmelden, z.B. des Speichers etc... */
 
+#include <assert.h>
 #include "includes.c"           /* Definiert alle Variablen als Extern,... */
 
 int file_anzahl;            /* für Show-Dir */
 int soundnr;              /* Für IRQ-Musik */
 
-int schoner_x,schoner_y;				/* Für Bildschirmschoner */
+int schoner_x=9999,schoner_y;        /* Für Bildschirmschoner */
 
-char *music_end;								/* Hier endet die Musik in den Buffern */
+//char *music_end;                /* Hier endet die Musik in den Buffern */
 
 /* Start: */
 
@@ -52,6 +53,8 @@ void vari_init()
   rohstoff_cheat=unlim_money_cheat=citycheat=FALSE;            /* Cheat Mode aus */
   produce_cheat=zeit_cheat=kaserne_cheat=treasure_cheat=FALSE;
 	schuss_cheat=strength_cheat=pio_cheat=staerke_cheat=FALSE;
+  effects = TRUE;
+  zeit_cheat = FALSE;
 
 	alerts_da=FALSE;							/* Noch sind keine Alertboxen da! */
   speed=2;                      /* 2 Vsyncs zwischen Bildwechsel */
@@ -96,17 +99,8 @@ void vari_init()
 
 void load_pics()
 {
-	long laenge,laenge_packed;
-	
   load_leisten();											/* Lädt die Leisten in leisten[] */
-
-  laenge=load_objekte(FORMULAR_OBJ,music_end);				/* Formularobjekt laden */
-  draw_obj(0,music_end,MOVE,music_end+laenge,0,0);				/* Formular zeichnen */
-  laenge_packed=pack(objekt_hoehe(0,music_end),music_end+laenge,mem_strt);		/* Formular wieder packen */
-	if (laenge_packed&1) laenge_packed++;										/* Gerade machen */
-	formular_adr=(char *)mem_strt;
-	mem_strt=(char *)mem_strt+laenge_packed;
-	mem_len-=laenge_packed;
+  load_objekte("formular.obj",formular_adr);  /* Formularobjekt laden */
 }
 
 void load_alerts()
@@ -118,18 +112,14 @@ void load_alerts()
 	set_raster(0,0,kartep);
 	show_raster();
 	
-  laenge=load_objekte(ALERT_OBJ,music_end);	/* Alerts hier hin laden, da wind_form[] zu klein
-																	zum entpacken */
-	memcpy(wind_form,music_end,laenge);			/* Dann in wind_form[] übertragen */
+  laenge=load_objekte("alert.obj",wind_form); 
 	
-#ifndef COPYPROT
-	if (laenge<sizeof(wind_form)) {
-		writexy_fast(0,0,romstr020);
-		}
+#ifndef unix
 	if (laenge>sizeof(wind_form)) {
 		internal(build(romstr021,str(0,(long)sizeof(wind_form))));
 		}
 #endif
+
   alerts_da=TRUE;														/* Jetzt sind die Alertboxen geladen */
 }
 
@@ -138,10 +128,14 @@ void hol_maus()
   /* Holt die Mauskoordinaten */
 	static long counter;
 
+  ask_X();
+
   mx=mousex;
   my=mousey;            /* Holt sich die aktuellen Mauswerte aus den IRQ */
   mk=mousek;          	/* Variablen, und übergibt sie dem Aufrufer */
 
+  //printf("maus %d %d %d\n", mx, my, mk);
+  
 	if (mx==schoner_x && my==schoner_y && !is_key()) {						/* Maus nicht bewegt? */
 		if (vbl_ct>counter) {
 			pause_game();
@@ -165,7 +159,9 @@ void hol_maus()
     writexy(15,36,6,str(3,(long)(mx-mx%4)));
     writexy(15,48,6,romstr025);
     writexy(15,88,6,str(3,(long)(my-my%6)));
-/*    mk=2;                               /* Keine Taste gedrückt */ */
+#if 0
+    mk=2;                               /* Keine Taste gedrückt */ 
+#endif
     }
   if ((my==msminy || my==0) && mk==3 && my_system) programmende();
 
@@ -266,6 +262,7 @@ void save_pic()
 	  taste=wait_key();
 		} while(!isprint((char)taste));
 		
+#if 0
   if (islower((int)taste)) toupper(taste);
   filename[12]=(char)taste;
   filename[13]=0;
@@ -279,6 +276,7 @@ void save_pic()
 		Sm();
     Fclose(fh);
     }
+#endif
 }
 
 
@@ -298,21 +296,28 @@ int *a,*b;
 void alloc_mem()
 {
   /* holt den benötigten Speicher */
-  long poi_wert;
+  char *poi_wert;
+
+  formular_adr=malloc(20000);
 
 #ifndef COPYPROT
+#if 0
 	if (tos_da)
 		oldbase=Logbase();															/* Alte Bildschirmbasis holen */
-
 #endif
+#endif
+  
+  poi_wert=memory;                              /* Zeiger auf Speicherbereich */
 
-	poi_wert=(long)memory;															/* Zeiger auf Speicherbereich */
+#ifndef unix
   scr1=logbase=(char *)((poi_wert/256L+1)*256L);           /* auf Pageanfang bringen */
 	scr2=scr1+32000;
-	hlpbuf=scr2+32000;
-	pack_buf=hlpbuf+32000;													/* Pack_Buf ist 64K groß! */
+  hlpbuf=memory+32000;
+#endif
+  pack_buf=memory+32000;                          /* Pack_Buf ist 64K groß! */
 
-	trf_buf=pack_buf+32000;						/* Hier kommt der Traffic hin */
+  // trf_buf=pack_buf+32000;           /* Hier kommt der Traffic hin */
+  trf_buf = malloc(32000);
 }
 
 void show_free()
@@ -327,33 +332,51 @@ void show_free()
 		ver3[0]=v3+'0';
 		ver1[1]=ver2[1]=ver3[1]=0;
 		writexy_fast(0,6,build(romstr028,ver1,ver2,ver3));
+#ifndef unix
 		track_display=TRUE;
+#endif
     }
 }
 
 void load_music()
 {
   /* Lädt die Lademusik und startet Sie */
-	long laenge;
+  long laenge=0;
 	
-  clear_screen(scr2);
 #ifdef ATARI
+  clear_screen(scr2);
 	laenge=load_bibliothek(LADEMUSI_IMG,scr2);
 	play_music(scr2,1);					/* Diese Funktion wird als Musik angesprungen */
-#endif
-#ifdef AMIGA
+#elsifdef AMIGA
+  clear_screen(scr2);
 	laenge=load_bibliothek(LADE_AMI_IMG,scr2);
 	play_music(scr2,1);
+#else
+  play_music("lademusi.wav", 1);
 #endif
 
-	musik_an=TRUE;									/* und spielen bitte */
-	music_end=scr2+laenge;					/* Hier endet die Musik */
+  //musik_an=TRUE;                  /* und spielen bitte */
+  //musik_an=FALSE;
+  //music_end=scr2+laenge;          /* Hier endet die Musik */
+}
+
+void print_ascii_title(void)
+{
+  char buffer[2000];
+  int len;
+
+  len=load("medasc.txt",buffer,0,sizeof(buffer));
+  assert(len!=sizeof(buffer));
+  buffer[len]=0;
+  puts(buffer);
 }
 
 void init_medusa()
 {
-  /* initialisiert alle Dateistrukturen und Speicherstrukturen von Crown */
+  /* first of all print out ascii medusa title: */
+  print_ascii_title();
 		
+  /* initialisiert alle Dateistrukturen und Speicherstrukturen von Crown */
 	alloc_mem();							/* Verteilt den verfügbaren Speicher */
   vari_init();                  /* Initialisiert die globalen Variablen */
   init_atari();                 /* Initialisiert das Atari System */
@@ -366,6 +389,7 @@ void init_medusa()
 
 	load_pics();                  /* Alle benötigten Files laden */
 	intro();										/* Diashow anzeigen */
+
 #ifdef AMIGA
 	intro_off();								/* Beim Amiga gleich abschalten! */
 #endif
@@ -379,7 +403,7 @@ void init_medusa()
 
   load_alerts();							/* Und die Alertboxen laden */
 
-	play_music(&game_music,1);			/* Musik abspielen */
+  play_music("gamemusic.wav",1);      /* Musik abspielen */
   music=MUSIK_AN;                          /* Musik spielt */
 }
 
@@ -395,6 +419,131 @@ char *adr;
 		}
 	return(adr);
 
+}
+
+void ice_deinterleave(uint16_t *A0) {
+    int D7, D6, D5;
+    uint16_t D0, D1, D2, D3, D4;
+    
+    for (D7 = 3999; D7 >= 0; D7--) {
+        for (D6 = 3; D6 >= 0; D6--) {
+            // Wert holen
+            D4 = *A0++;
+            
+            for (D5 = 3; D5 >= 0; D5--) {
+                // Schiebe D4 nach links, trage Carry in D0-D3
+                uint16_t carry;
+                
+                // Erste Verschiebung
+                carry = (D4 & 0x8000) ? 1 : 0;
+                D4 <<= 1;
+                D0 = (D0 << 1) | carry;
+                
+                // Zweite Verschiebung
+                carry = (D4 & 0x8000) ? 1 : 0;
+                D4 <<= 1;
+                D1 = (D1 << 1) | carry;
+                
+                // Dritte Verschiebung
+                carry = (D4 & 0x8000) ? 1 : 0;
+                D4 <<= 1;
+                D2 = (D2 << 1) | carry;
+                
+                // Vierte Verschiebung
+                carry = (D4 & 0x8000) ? 1 : 0;
+                D4 <<= 1;
+                D3 = (D3 << 1) | carry;
+            }
+        }
+        
+        // movem.w D0-D3,-8(A0)
+        // Schreibe die 4 Words zurück (8 Bytes vor aktuellem A0)
+        A0[-4] = D0;
+        A0[-3] = D1;
+        A0[-2] = D2;
+        A0[-1] = D3;
+    }
+}
+
+void show_demo_pic(char *filename)
+{
+  uint8_t *mem = malloc(file_size(filename));
+
+  load_bibliothek(filename, mem);
+#if 1
+  uint16_t *raster = (uint16_t *)mem;
+  for(int i = 0; i < 50 * 17; i++) {    // 50 raster, each Y+Palette
+    be_2(raster);
+    raster++;
+  }
+#endif
+
+  //  fade_in();
+  clear_raster();
+  clear_screen(scr1);
+
+  for(int i = 0; i < 50; i++) {
+    uint16_t *raster;
+    raster = (uint16_t *)(mem + i * 34);
+    //be_2(raster);
+    set_raster(0, *raster, raster + 1);
+    if (*(raster+17) == 0) break;
+  }
+
+  sort_rasters();
+  print_rasters();
+  
+  uint8_t *pixel_data = mem + 50 * 34;
+  //ice_deinterleave((uint16_t *)pixel_data);
+  
+
+
+
+  
+  int src_idx = 0;
+  for (int y = 0; y < 200; y++) {
+    for (int x = 0; x < 320; x += 2) {
+      uint8_t byte = pixel_data[src_idx++];
+            
+      // Erstes Pixel (obere 4 Bits)
+      uint8_t color_idx1 = (byte >> 4) & 0x0F;
+      set_pixel_surface(logbase, x, y, color_idx1);
+            
+      // Zweites Pixel (untere 4 Bits)
+      uint8_t color_idx2 = byte & 0x0F;
+      set_pixel_surface(logbase, x + 1, y, color_idx2);
+    }
+  }
+  show_screen(logbase);
+  show_raster();
+  fade_in();
+  
+  delay(5000);
+
+  //fade_out();
+
+  
+  free(mem);
+}
+
+void do_demo()
+{
+  fade_out();
+
+  clear_raster();
+  clear_screen(scr1);
+
+  set_raster(0,0,leistep);
+  logbase=scr1;
+  clear_screen(logbase);
+
+  for (char pic = 'a'; pic <= 'j'; pic++) {
+    char filename[100];
+
+    sprintf(filename, "demo/medusa.pi%c", pic);
+    if (file_exists(filename))
+      show_demo_pic(filename);
+  }
 }
 
 void re_initialize()
@@ -419,10 +568,28 @@ void re_initialize()
 	clear_screen(scr1);
 
 	set_raster(0,0,leistep);
-	center(15,100,romstr030);
+  //logbase=&x_window;
+  logbase=scr1;
+  clear_screen(logbase);
+  center(15,100,romstr030);           // FOR STEFFI
+  show_screen(scr1);
 	fade_in();
 
-	load_objekte(BUBECK_OBJ,pack_buf);
+#if 0
+  load_digisound("lachen.seq", pack_buf);
+  load_digisound("medusa.seq", pack_buf);
+  load_digisound("krieg.seq", pack_buf);
+  load_digisound("klong.seq", pack_buf);
+  load_digisound("got_you.seq", pack_buf);
+  
+  load_digisound("krieg.seq",pack_buf+32000L);
+  play_digi(pack_buf+32000L,FALSE,5,14);
+#endif
+  
+  // totenkopf();
+  //blitz(0x777);
+  
+  load_objekte("bubeck.obj",pack_buf);
 
 	wait_sync(0);
 	if (voller_titel) {
@@ -434,7 +601,7 @@ void re_initialize()
 						x=zufall(319-7);
 						y=zufall(199-6);
 					} while (x>=121-6 && x<=133+15*4 && y>92-6 && y<125);
-					draw_obj_part(1,pack_buf,0,0,6,5,MOVE,scr1,x,y);
+          draw_obj_part(1,pack_buf,0,0,6,5,MOVE,logbase,x,y);
 					if (i%100==20) writexy_fast(128,112,romstr031);
 					else if (i%100==50) writexy_fast(128,112,romstr032);
 					}
@@ -442,20 +609,24 @@ void re_initialize()
 			wait_sync(1);
 			if (i==0 && steffi_cheat) wait_sync(150);
 			if (is_key()) {
-				if ((int)wait_key()!=*cheat_p++) cheat_p=cheat;		/* Falscheingabe */
+        if (toupper((int)wait_key())!=*cheat_p++) cheat_p=cheat; /* Falscheingabe */
 				else if (*cheat_p==0) {
 					steffi_cheat=TRUE;
 					center(15,100,romstr033);
 					i=1000;
-					draw_obj(1,pack_buf,MOVE,scr1,0,0);		/* Einmal für Palette zeichnen */
+          draw_obj(1,pack_buf,MOVE,logbase,0,0); /* Einmal für Palette zeichnen */
 					show_raster();
 					}
 				}
 			}
 		}
 	fade_out();
+
+  logbase=scr1;
 	clear_screen(scr1);
 
+  //  show_screen(scr1);
+  
 	draw_obj(2,pack_buf,MOVE,scr1,80,15);					/* RoM II Logo 80,15 */ 
 	
 	/* 
@@ -489,13 +660,16 @@ void re_initialize()
 
 	center(15,194,version);
 
+  show_screen(scr1);
+  //SDL_Delay(6000);
+  
   fade_in(); 
-  unterschrift(BUBECK_OFF,136,75);
-	unterschrift(ZIMMER_OFF,125,90);
+  unterschrift("bubeck.off",136,75);
+  unterschrift("zimmer.off",125,90);
 
   Sm();
 
-  load_sprites(SPRITES_IMG);    /* lädt die Sprites */
+  load_sprites("sprites.img");    /* lädt die Sprites */
 
   anfangseinstellungen();       /* Crown Variablen rücksetzen */
 	set_armies();									/* Armeen setzen */
@@ -510,6 +684,9 @@ void re_initialize()
 		show_raster();
 
 		Hm();
+    //logbase=&x_window;
+    logbase=scr1;
+    clear_raster();
 	  show_window(ns);
 		center(0,97,romstr044);
 		center(0,105,romstr045);
@@ -518,6 +695,7 @@ void re_initialize()
     hide_window();
 		Sm();
     }
+
   if (player_name[0]==0)                            /* Spieler hat nicht eingegeben */
     strcpy(player_name,romstr047);
 
@@ -527,27 +705,41 @@ void re_initialize()
 	schoner_x=mx+1;							/* Um Bildschirmschoner kaltzustellen */
 }
 
-void unterschrift(file_nr,x,y)
-int file_nr;
-int x,y;
+void unterschrift(char *filename, int x, int y)
 {
   /* Zeichnet Unterschrift T.Bubeck auf Bildschirm an x/y */
   unsigned char *koord;
   int xneu,yneu;
 	FLAG first_paint;
+  unsigned char *mem;
 
 	if (voller_titel) {
 		Hm();
 
 		first_paint=TRUE;
 
-	  clear_screen(hlpbuf);
-	  load_bibliothek(file_nr,hlpbuf);        /* Koordinaten holen */
-	  koord=(unsigned char *)hlpbuf;
-		load_objekte(BUBECK_OBJ,pack_buf);
+    mem=calloc(1000,1);
+    load_bibliothek(filename,mem);        /* Koordinaten holen */
+    koord=(unsigned char *)mem;
+    load_objekte("bubeck.obj",pack_buf);
 		copy_screen(scr1,scr2);
+
+#if 0
+    printf("scr1\n");
+    show_screen(scr1);
+    //SDL_Delay(3000);
+    printf("scr2\n");
+    show_screen(scr2);
+    //SDL_Delay(3000);
+    printf("fueller: %d %d\n", objekt_breite(0, pack_buf), objekt_hoehe(0, pack_buf));
+#endif
+    
 		cpy_raster(scr2,hlpbuf,0,y,319,y+40,0,y);				/* Copyrights retten */
 
+    //printf("hlpbuf\n");
+    //show_screen(hlpbuf);
+    //SDL_Delay(3000);
+    
 	  while(*koord!=255) {
 			cpy_raster(hlpbuf,scr2,0,y,319,y+40,0,y);			/* Füller weglöschen */
 	    xneu=x+*koord++;
@@ -563,9 +755,13 @@ int x,y;
 				first_paint=FALSE;
 				}
 			swap_screens();
+      //SDL_Delay(3000);
 	    }
 		cpy_raster(hlpbuf,scr1,0,y,319,y+40,0,y);			/* Füller weglöschen */
+    show_screen(scr1);
 		Sm();
+    
+    free(mem);
 		}
 }
 
@@ -574,6 +770,8 @@ void anfangseinstellungen()
   register int j,i;
   register int k;
   long proz_10;
+  UWORD *waren_mem;
+  long laenge;
 
   strength_cheat=FALSE;
   produce_cheat=FALSE;
@@ -654,11 +852,12 @@ void anfangseinstellungen()
     gesamt_gehalt+=gehalt[i];
     armeegesamt[0]+=armeeteil[0][i];
     }
-/*
+#if 0
 	if (my_system) {
 		armeeteil[0][3]=1000;				/* 1000 Aufklärer rein */
 		armeegesamt[0]=1000;
-		} */
+    } 
+#endif
 		
   for(i=0;i<3;i++)
     for(j=0;j<EINHEITEN;j++)
@@ -696,13 +895,30 @@ void anfangseinstellungen()
   /* Durchschnittspreise der Waren=Aktienpreis ermitteln: */
   for(i=0;i<WAREN;i++) aktie_preis[i]=0;         /* Durchschnitt löschen */
 
-  load_bibliothek(CITIES_WAR,hlpbuf);
+  waren_mem=malloc(2000);
+  laenge = load_bibliothek("cities.war",waren_mem);
+  for(i = 0; i < laenge/2;i++) {
+    be_2(&waren_mem[i]);
+  }
 
+  /* cities.war beinhaltet die Waren-Preise der verschiedenen Städte */
   for(i=0;i<CITIES;i++) {
+#if 0
     memcpy((char *)waren_preis,hlpbuf+(long)((WAREN+STALLWAREN+ROHSTOFFE)*i*2),WAREN*2L);
+#else
+    for(j=0;j<WAREN+STALLWAREN+ROHSTOFFE;j++) {
+      int index;
+      index=i*(WAREN+STALLWAREN+ROHSTOFFE)+j;
+      waren_preis[j] = waren_mem[index];
+    }
+#endif
+    
     for(j=0;j<WAREN;j++)
-      if ((long)aktie_preis[j]+waren_preis[j]<65534L)
+      {
+	if ((long)aktie_preis[j]+waren_preis[j]<65534L) {
         aktie_preis[j]+=waren_preis[j];       /* aufsummieren, nicht teilen */
+    }
+      }
     }
 
   for(i=0;i<WAREN;i++) {
@@ -779,9 +995,13 @@ void intro()
 			 
 	int steuer_neu;
 	long laenge;
-	long scroller_laenge;
+  ULONG scroller_laenge;
 	char *metal_obj,*bild_buf;
 	int y;
+  char *mem;
+  char *intropic;
+  char filename[100];
+  unsigned char *scrtext;
 	
 	clear_raster();
 	show_raster();
@@ -792,6 +1012,7 @@ void intro()
 		if (mousex==mx && mousey==my) {		/* Maus nicht bewegt */
 			set_raster(0,0,formularp);
 			voller_titel=FALSE;
+      printf("my_system -> voller_titel = FALSE\n");
 			center(15,100,romstr048);		
 			set_raster(0,0,formularp);
 			show_raster();
@@ -801,37 +1022,81 @@ void intro()
 #endif
 		
   Hm();
+  //clear_screen(scr2);
 	clear_screen(scr1);
+  blending = 0;
 	show_screen(scr1);														/* scr1 anzeigen */
-	load_objekte(ROM_II_OBJ,music_end);
-	draw_obj(0,music_end,MOVE,scr1,0,0);
+
+  mem=malloc(40000);
+
+  load_objekte("bubeck.obj",mem);
+  draw_obj(2,mem,MOVE,scr1,(320-objekt_breite(2,mem))/2,0);      // RoM II Logo
+      
+  formular_big(logbase,63,199);
+  center(0,74,
+	 "WELCOME TO RINGS OF MEDUSA 2\nTHE RETURN OF MEDUSA!\n\n"
+	 "THIS PROGRAM IS BASED ON THE ORIGINAL SOURCE CODE AND GRAPHICS.\n"
+	 "THIS MEANS, THAT THE GAMEPLAY IS IDENTICAL.\n"
+	 "THEY HAVE BEEN PORTED BY TILL BUBECK, THE ORIGINAL AUTOHOR\n"
+	 "FROM ATARI/AMIGA TO MODERN SYSTEMS BY USING SDL3.\n\n"
+	 "TO HELP YOU PLAYING, VARIOUS CHEATS ARE AVAILABLE:\n"
+	 "IN THE DUNGEONS PRESS \"C\" OR \"PRTSCR\" TO ENABLE THEM.\n"
+	 "THEN PRESS \"H\" FOR HELP. IN CHEAT MODE, THE EXIT BUTTON\n"
+	 "IN A DUNGEON ALLOWS YOU TO EXIT THE DUNGEON IMMEDIATELY.\n\n"
+	 "HAVE FUN PLAYING THE OLD GAME!\n"
+	 "TILL BUBECK"
+	 );
+  
+  show_last_screen();
 	fade_in();
-	wait_sync(0);										/* Beim nächsten auch wirklich 300 warten */
-	wait_sync_klick(300);
-	while (is_key()) wait_key();			/* Tastaturbuffer löschen */
+  wait_sync(0); 
+  wait_sync_klick_release(3000);
 	fade_out();
+  
 	clear_screen(scr1);
+  //load_objekte("bubeck.obj",mem);
+  free(mem);
+  
+  while (is_key()) wait_key();      /* Tastaturbuffer löschen */
+  //fade_out();
+  clear_screen(scr1);
+
+#if 0
+  printf("WAIT X\n");
+  while(1) {
+    ask_X();
+    int32_t taste=get_key();
+    if (taste != -1) 
+      printf("%lx\n", taste);
+  }
+#endif
+  
+  scrtext=malloc(10000);
 		
 #ifdef FRANZ
-  scroller_laenge=load_bibliothek(INIT_FRC_TXT,music_end);
+  scroller_laenge=load_bibliothek("init_frc.txt",scrtext);
 #endif
 #ifdef ENGLISCH
-  scroller_laenge=load_bibliothek(INIT_GB_TXT,music_end);
+  scroller_laenge=load_bibliothek("init_gb.txt",scrtext);
 #endif
 #ifdef DEUTSCH
-  scroller_laenge=load_bibliothek(INIT_D_TXT,music_end);
+  scroller_laenge=load_bibliothek("init_d.txt",scrtext);
 #endif
 
-	decrypt((unsigned char *)music_end,scroller_laenge);		/* Scroller entschlüsseln */
-	scroller_laenge++;										/* Sicherheitsabstand */
-	if (scroller_laenge&1) scroller_laenge++;				/* Gerade machen */
+#if 0
+  decrypt(scrtext,scroller_laenge);    /* Scroller entschlüsseln */
+#endif
 	
-	metal_obj=music_end+scroller_laenge;					/* Hier kommen die Objekte hin */
-  laenge=load_objekte(METALL_OBJ,metal_obj);				/* Scroller laden */
-	if (laenge&1) laenge++;								/* Länge gerade machen */
+  metal_obj=malloc(45000);
+  laenge=load_objekte("metall.obj",metal_obj);        /* Scroller laden */
 	
-  init_scroller(scr1,157,music_end,metal_obj,metal_obj+laenge,FALSE);
+  init_scroller(scr1,157,scrtext,metal_obj,metal_obj+laenge,FALSE);
+#if 0
+  // Not necessary to do in VBL as done in loop (2025-08-17)
   scradr=init_vbl(mcode33);     			            /* Laufschrift an */
+#else
+  scradr = NULL;
+#endif
 	set_raster(0,157,scroller_pal);
 	fade_in();
 	
@@ -846,37 +1111,49 @@ void intro()
 		}
 #endif
 
-	while (mousek==0 && !is_key()) {
+  intropic=malloc(40000);
+
+  // voller_titel = 1;
+  
+  while (voller_titel && mousek==0 && !is_key()) {
+    do_scroller();
 		steuer_neu=steuerzeichen;
 		if (steuer_neu>=16 && steuer_neu<=22) {
 			clear_raster();
 			set_raster(0,157,scroller_pal);
-			if (steuer_neu<=20) load_objekte(BUBECK2_OBJ,bild_buf);
-			clear_screen(scr1);
+      if (steuer_neu<=20) load_objekte("bubeck.obj",intropic);
+      //clear_screen(scr1);
+      fill(0,0,0,319,156);
 			if (steuer_neu<=20)
-#ifdef AMIGA
+#if defined(AMIGA)
 				draw_obj(2,bild_buf,ODER,scr1,80,0);		/* Rings of Medusa II Logo */
-#else
-				draw_obj(2,bild_buf,MOVE,scr1,80,0);		/* Rings of Medusa II Logo */
+#elif defined(ATARI) || defined(unix)
+        draw_obj(2,intropic,MOVE,scr1,80,0);    /* Rings of Medusa II Logo */
 #endif
 			show_raster();
 
-			load_objekte(INTRO_A_OBJ+(steuer_neu-16),bild_buf);
-			y=(steuer_neu>=21) ? 0 : 107-objekt_hoehe(0,bild_buf)/2;
+      strcpy(filename,"intro_a.obj");
+      filename[6]+=steuer_neu-16;
+      load_objekte(filename,intropic);
+      y=(steuer_neu>=21) ? 0 : 107-objekt_hoehe(0,intropic)/2;
 			set_raster(0,y,black);					/* Damit Aufbau nicht zu sehen ist */
 			show_raster();
 
 #ifdef AMIGA
 			draw_obj(0,bild_buf,ODER,scr1,160-objekt_breite(0,bild_buf)/2,y); 
 #else
-			draw_obj(0,bild_buf,MOVE,scr1,160-objekt_breite(0,bild_buf)/2,y); 
+      draw_obj(0,intropic,MOVE,scr1,160-objekt_breite(0,intropic)/2,y); 
 #endif
+      //set_raster(0,157,scroller_pal);
 			show_raster();	
 			steuerzeichen=steuer_neu=0;							/* Bearbeitet */
 			}
 		}
 
 	while (is_key()) wait_key();			/* Tastendruck ggf. abholen */
+
+  free(scrtext);
+  free(metal_obj);
 }
 
 void intro_off()
@@ -925,7 +1202,6 @@ void load_game()
   /* Lädt ein Spiel und initialisiert CROWN entsprechend */
   int nr;
 	char dir[11][70];
-	int i;
 	long old_buttons;
 	
 	copy_screen(scr1,scr2);
@@ -939,6 +1215,7 @@ void load_game()
 	center(0,73,romstr051);
 	
   while (button!=EXIT_BTN) {
+    show_last_screen();
     wait_klick();
     if (mk==1) {                        /* Knopf wurde gedrückt */
       nr=(my-97)/8;
@@ -948,6 +1225,8 @@ void load_game()
 	        formular(scr1,63);
 	        center(0,100,romstr053);
 					center(0,110,dir[nr]);
+  delay(5000);
+  
 	        load_it(nr);                      /* Game laden */
 					load_waende();
 	        Sm();
@@ -992,6 +1271,7 @@ char dir[11][70];
 			show_window(romstr055);						/* Spielstanddiskette machen? */
 			
 		  do {
+	show_last_screen();
 		    wait_klick();
 		    } while (button!=YES && button!=NO && button!=EXIT_BTN);
 
@@ -1039,7 +1319,6 @@ int nr;
 		}		
 	else {
 		copyvar(FALSE);                   /* und übernehmen */
-	  money^='ATRI';                    /* entschlüsseln */
   	vbl_ct_save=vbl_ct;					 /* Heute wurde zuletzt gespeichert. */
 		}
 	draw_whole=2;									/* Automap neu zeichnen */
@@ -1054,6 +1333,7 @@ FLAG saveflag;                  /* True=Speicher, FAlse,=LAden */
   char *scrpoi,*adresse;
 
   poi=(long *)hlpbuf;
+  poi = save_buffer;
   scrpoi=pack_buf;                          /* Hier hin */
   while(*poi!=-1L) {
     adresse=(char *)*poi++;
@@ -1072,7 +1352,6 @@ int nr;
   /* Speichert das File */
 
   Hm();
-  money^='ATRI';                    /* Verschlüsseln */
 
   make_adresses();                  /* Adressen nach hlpbuf speichern */
   copyvar(TRUE);                       /* Kopiert Werte in scr2 */
@@ -1081,7 +1360,6 @@ int nr;
 		alert(romstr060);
 	else vbl_ct_save=vbl_ct;		/* Heute wurde zuletzt gespeichert */
 
-  money^='ATRI';                    /* entschlüsseln */
   Sm();
 }
 
@@ -1090,10 +1368,9 @@ void save_game()
   /* Speichert ein Spiel */
 	char dir[11][70];
 	int nr;
-	int i;
 	long old_buttons;
 	
-  if (vbl_ct<vbl_ct_save+5*50*60) {
+  if (0 && vbl_ct<vbl_ct_save+5*50*60) {
     dungeon_alert(romstr061);
 		}
   else {
@@ -1148,10 +1425,10 @@ void totenkopf()
 	int anzahl;
 	long laenge;
 	
-	laenge=load_objekte(TOTENKOPF_OBJ,pack_buf);
+  laenge=load_objekte("totenkop.obj",pack_buf);
 	if (laenge&1) laenge++;
 	
-	load_digisound(LACHEN_SEQ,pack_buf+laenge);
+  load_digisound("lachen.seq",pack_buf+laenge);
 	
 	Hm();
 

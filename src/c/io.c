@@ -6,19 +6,28 @@
                                   Tel.: 07151-66437                 */
 
 #include "includes.c"           /* Definiert alle Variablen als Extern,... */
+
+#include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+#ifndef O_BINARY
+#define O_BINARY 0
+#endif
 
 int windx,windy;                /* Koordinaten des Fensters */
 
-int kartep[]={     0x000,0x300,0x520,0x642,0x753,0x030,0x242,0x353,
+RGB_PAL kartep = {     0x000,0x300,0x520,0x642,0x753,0x030,0x242,0x353,
                    0x464,0x057,0x077,0x333,0x444,0x555,0x666,0x777};
-int formularp[]={  0x000,0x700,0x050,0x007,0x431,0x542,0x653,0x764,
+RGB_PAL formularp = {  0x000,0x700,0x050,0x007,0x431,0x542,0x653,0x764,
                    0x707,0x321,0x077,0x222,0x400,0x444,0x555,0x777 };
-int leistep[]={    0x000,0x603,0x740,0x760,0x770,0x577,0x066,0x050,
+RGB_PAL leistep = {    0x000,0x603,0x740,0x760,0x770,0x577,0x066,0x050,
                    0x044,0x004,0x325,0x436,0x536,0x647,0x757,0x777};
 
 /* Palette of METALL_1.IFF: Saved by NEOchrome V2.22 by Chaos, Inc. */
-int scroller_pal[16] = { 
+RGB_PAL scroller_pal2 = { 
 	0x0000,0x0002,0x0013,0x0024,0x0035,0x0046,0x0057,0x0067,
 	0x0377,0x0577,0x0677,0x0777,0x0000,0x0000,0x0000,0x0700 };
 
@@ -107,7 +116,22 @@ void center(farbe,y,str)
 int farbe,y;
 char str[];
 {
-  writexy(farbe,(320-strlen(str)*4)/2,y,str);
+  const char *start = str;
+  const char *p;
+  char zeile[100];
+  
+  while ((p = strchr(start, '\n')) != NULL) {
+    sprintf(zeile, "%.*s", (int)(p - start), start);
+    writexy(farbe,(320-strlen(zeile)*4)/2,y,zeile);
+    y += 7;
+    start = p + 1; // nach dem '\n' weitermachen
+  }
+
+  // falls letzte Zeile nicht mit \n endet
+  if (*start != '\0') {
+    sprintf(zeile, "%s", start);
+    writexy(farbe,(320-strlen(zeile)*4)/2,y,zeile);
+  }
 }
 
 void writexy_money(x,y)
@@ -160,6 +184,7 @@ char string[];
 	int ob_nr;
 	char string_neu[150];
 	char string_format[150];
+  void *oldlogbase;
 	
 	char *zeilen[5];					/* Pointer auf die 5 Zeilen */
 	int laenge;
@@ -205,17 +230,21 @@ char string[];
 	/* Da bei der Amigaversion dieser raster_transp mit einer Zielbreite von !=320 nicht funktioniert,
 		 mußte ich mir so behelfen: */
 		 
+  oldlogbase=logbase;
+  //logbase=&x_window;
+  logbase=scr1;
+
 #ifdef AMIGA
 	memset(window_back,0,sizeof(window_back));
 	raster_transp(x,y,x+105,y+47,scr1,320,0,0,window_back,112);	/* Hintergrund retten */
 #else
-	raster_replace(x,y,x+105,y+47,scr1,320,0,0,window_back,112);	/* Hintergrund retten */
+  raster_replace(x,y,x+105,y+47,logbase,320,0,0,window_back,112);  /* Hintergrund retten */
 #endif
 
 	grow_box(windx,windy,106,48);
 
 	if (alerts_da) {
-		draw_obj(ob_nr,wind_form,ODER,scr1,x,y);
+    draw_obj(ob_nr,wind_form,ODER,logbase,x,y);
 		color=0;
 		}
 	else {
@@ -224,7 +253,11 @@ char string[];
 		}
 		
   for(i=0;i<anzahl;i++)
-    writexy_trans(color,x+6+(24-len[i])/2*4, y+1+delta_y/2+delta_y*i,zeilen[i]);
+    writexy_trans(color,
+		  x+6+(24-len[i])/2*4, y+1+delta_y/2+delta_y*i,zeilen[i]);
+  show_screen(logbase);
+  logbase=oldlogbase;
+
   Sm();
 }
 
@@ -378,6 +411,7 @@ int breite,hoehe;
 		y2=y0+hoehe/2+y;
 		rahmen(7,x1,y1,x2,y2);							/* Shrinkbox zeichnen */
 		wait_once(2);
+    //show_screen(logbase);
 		rahmen(7,x1,y1,x2,y2);							/* und wieder weg */
 		}
 	line_mode(old_line);
@@ -390,7 +424,6 @@ int box_x,box_y,box_breite,box_hoehe;
 {
 	int old_line;
 	int x1,y1,x2,y2;
-	int x0,y0;
 	float x,y;
 	
 	Hm();
@@ -425,13 +458,13 @@ void draw_mobs()
 {
   /* zeichnet sämtliche Sprites auf Screen2 */
   register int i;
-  long *save;
+  SPRITE_SAVE *save;
 
   /* copy_zeilen(scr1+(leiste_y-13)*160L,scr2+(leiste_y-13)*160L,5); */    /* Leiste übertragen */
   cpy_raster(scr1,scr2,0,leiste_y-13,319,leiste_y-9,0,leiste_y-13);
 
-  if (scr2==scrn_1) save=(long *)save1;
-  else save=(long *)save2;
+  if (scr2==scrn_1) save=save1;
+  else save=save2;
 
   for(i=0;i<SPR_MAX;i++)
     if (sx[i]>=8 && sn[i]>=0) {       /* Sprites zeichnen+Bild retten */
@@ -442,14 +475,14 @@ void draw_mobs()
 void delete_mobs()
 {
   /* Löscht alle alten Mobs auf altem Screen */
-  long *save;
+  SPRITE_SAVE *save;
   register int i;
 
-  if (scr2==scrn_1) save=(long *)save1;       /* Savebuf für Screen 1 */
-  else save=(long *)save2;
+  if (scr2==scrn_1) save=save1;       /* Savebuf für Screen 1 */
+  else save=save2;
 
   for(i=SPR_MAX-1;i>=0;i--) {          /* von hinten löschen (wegen Überschneidungen) */
-    if (save[i*2]!=0) undraw_shape(save,i);
+    undraw_shape(save,i);
     }
 }
 
@@ -462,13 +495,63 @@ int anzahl;
   wait_sync(anzahl);								/* und solange warten */
 }
 
+long get_ms_since_progstart()
+{
+  struct timeval now;
+  long ms;
+  static time_t prog_start_time = 0;
+  
+  if (prog_start_time == 0) {
+    prog_start_time = time(NULL);
+  }
+
+  gettimeofday(&now, NULL);
+  now.tv_sec -= prog_start_time;
+
+  ms = now.tv_sec * 1000 + now.tv_usec / 1000;
+  return ms;
+}
+
+long get_vbl_ct()
+{
+  long ms = get_ms_since_progstart();
+  return ms / 20;                          // 50 Hz
+}
+
 void wait_sync(anzahl)
 int anzahl;
 {
 	/* Wartet bis 'anzahl' VBLs seit letztem wait_sync() vergangen sind. */
+  bool shown = false;
+  
+#if 0
+  while (sync_ct+anzahl>get_vbl_ct()) {
+    show_last_screen();
+    vbl_ct = get_vbl_ct();
+  }
+  sync_ct=vbl_ct=get_vbl_ct();									/* VBL-Counter rücksetzen */
+#endif
 
-  while (sync_ct+anzahl>vbl_ct) ;
-	sync_ct=vbl_ct;									/* VBL-Counter rücksetzen */
+  if (anzahl==speed) {
+    Uint64 duration = SDL_GetTicks() - vbl_last_tick;
+    //printf("duration: %ld\n", duration);
+    performance_percent = 100*duration/20;
+  }
+  
+  while (sync_ct+anzahl>vbl_ct) {
+    if (!shown) {
+      show_last_screen();
+      shown = true;
+    }
+  }
+  sync_ct=vbl_ct;
+}
+
+void wait_sync_noshow(int anzahl)
+{
+  while (sync_ct+anzahl>vbl_ct) {
+  }
+  sync_ct=vbl_ct;
 }
 
 void wait_sync_klick(anzahl)
@@ -476,7 +559,6 @@ int anzahl;
 {
 	/* Wartet bis 'anzahl' VBLs seit letztem wait_sync vergangen sind. Kann mit Maustaste
 	   und Tastatur unterbrochen werden. */
-	int i;
 	
   button=NOTHING;
   do {
@@ -487,6 +569,15 @@ int anzahl;
       }
 		wait_sync(1);
     } while (--anzahl>0 && button==NOTHING && mk==0 && !is_key());
+}
+
+void wait_sync_klick_release(anzahl)
+int anzahl;
+{
+  wait_sync_klick(anzahl);
+  do {
+    hol_maus();
+  } while(mk!=0);
 }
 
 void cls()
@@ -681,9 +772,9 @@ void klick()
 {
 	/* Wartet auf Tastendruck oder Mausklick */
 	
-	while (!is_key() && mousek!=0) ;
-	while (!is_key() && mousek==0) ;
-	while (!is_key() && mousek!=0) ;
+  while (!is_key() && mousek!=0) show_last_screen();
+  while (!is_key() && mousek==0) show_last_screen();
+  while (!is_key() && mousek!=0) show_last_screen();
 	if (is_key()) get_key();				/* Taste wegwerfen */
 }
 
@@ -702,10 +793,13 @@ void wait_klick()
   button=NOTHING;
   do {
     hol_maus();            /* Koordinaten holen */
+    //printf("wait_klick: %d %d %d\n", mx, my, mk);
     if (my>169 && mk!=0) {
       button_leiste();
       mk=0;               /* Mausklick als Kriterium aus */
       }
+    //printf("wait_klick: %ld %d\n", button, mk);
+    show_last_screen();
     } while (button==NOTHING && mk==0);
 }
 
@@ -715,6 +809,8 @@ void button_leiste()
   long nr;
 
   button = NOTHING;         /* Nichts wurde angewählt */
+
+  //puts("button_leiste");
 
   do {
     hol_maus();
@@ -825,8 +921,13 @@ int x,y,len;
 char eingabe[];
 {
   int pos=0;
-  unsigned char zeichen[3];
+  char zeichen[3];
   long taste;
+  void *oldlogbase;
+
+  oldlogbase=logbase;
+  //logbase=&x_window;
+  logbase=scr1;
 
   Hm();
 
@@ -837,10 +938,11 @@ char eingabe[];
   writexy(0,x,y,&zeichen[1]);         /* Cursor zeigen */
 
   do {
+    show_last_screen();
     taste=wait_key();
-    zeichen[0]=taste;
+    zeichen[0]=(unsigned char)taste;
 
-    if (zeichen[0]==8) {
+    if (taste==8 || taste==127) {
       if (pos>0) {
         writexy(0,x+pos*4,y,romstr009);        /* Cursor weg */
         pos--;
@@ -849,13 +951,15 @@ char eingabe[];
       }
     else
       if (pos<len && zeichen[0]!=13) {
-        if (islower((int)taste)) toupper(taste);
+        if (islower((int)taste)) taste=toupper(taste);
+#if 0
 				switch ((int)taste) {
 					case 'ü': taste='Ü'; break;
 					case 'ö': taste='Ö'; break;
 					case 'ä': taste='Ä'; break;
 					}
-        if (isalnum((int)taste) || (char)taste==' ' || (char)taste=='Ü' || (char)taste=='Ö' || (char)taste=='Ä') {
+#endif
+        if (isalnum((int)taste) || (char)taste==' ' /* || (char)taste=='Ü' || (char)taste=='Ö' || (char)taste=='Ä' */) {
           zeichen[0]=(char)taste;
           writexy(0,x+pos*4,y,zeichen);
           eingabe[pos++]=zeichen[0];
@@ -866,6 +970,9 @@ char eingabe[];
 
   writexy(0,x+pos*4,y,romstr010);          /* Cursor weg */
   Sm();
+
+  logbase=oldlogbase;
+
   return(pos);
 }
 
@@ -905,7 +1012,7 @@ int x1,y1,x2,y2;
 void wait_mouse(a)
 int a;
 {
-  while(mousek != a);
+  while(mousek != a) ask_X();
 }
 
 char *fstr(char *a,float b)
@@ -1058,59 +1165,131 @@ int len;
   return(zahl_str);
 }
 
-void load(file_nr,adr,offset,laenge)
-int file_nr;                                /* Nummer des Files */
+int file_exists(char *filename) {
+  char file[200];
+  int fd;
+  
+  create_data_filename(filename, file);
+  if ((fd=open(file,O_RDONLY))<0)
+    return FALSE;
+  close(fd);
+  return TRUE;
+}
+
+int file_exists_internal(char *file) {
+  int fd;
+  if ((fd=open(file,O_RDONLY))<0)
+    return FALSE;
+  close(fd);
+  return TRUE;
+}
+
+void create_data_filename(char *filename_in, char *filename_out)
+{
+  strcpy(filename_out,"../../data/");
+  strcat(filename_out,filename_in);
+  if (file_exists_internal(filename_out)) 
+    return;
+  strcpy(filename_out,"data/");
+  strcat(filename_out,filename_in);
+  if (file_exists_internal(filename_out)) 
+    return;
+  strcpy(filename_out,"");
+  strcat(filename_out,filename_in);
+}
+
+size_t file_size(char *filename) {
+  char file[200];
+  int fd;
+  
+  create_data_filename(filename, file);
+  if ((fd=open(file,O_RDONLY|O_BINARY))<0)
+    { perror(file); abort(); }
+  off_t pos = lseek(fd, (off_t)0, SEEK_END);
+  close(fd);
+  return pos;
+}
+
+int load(filename,adr,offset,laenge)
+char *filename;
 void *adr;
 long offset;
 long laenge;
 {
-  /* Lädte File, entweder von der Diskette/Festplatte oder aus der
-  	 Ramdisk. */
+  /* Lädt File, entweder von der Diskette/Festplatte oder aus der
+     Ramdisk und gibt die Anzahl der gelesenen Bytes zur"uck. */
+  int fd;
+  char file[200];
+  int len;
+  off_t off = (off_t)offset;
+  size_t size;
 
-  if (laenge>file_len[file_nr]-offset)
-    laenge=file_len[file_nr]-offset;
+  size = file_size(filename);
 
-  if (file_nr>ram_max || file_nr<ram_min) {        /* Ist File noch in Ramdisk? */
-		loaddisk(file_disk[file_nr],file_offset[file_nr]+offset,laenge,adr);
-    }
-  else {                    /* File ist in Ramdisk */
-    memcpy(adr,ramdisk+file_offset[file_nr]+offset,laenge);
-    }
+  if (offset + laenge > size) {
+    laenge = size - offset;
+  }
+  
+#if 0
+  printf("loading: \"%s\", size=%zu, offset=%ld, len=%ld\n",filename, size, offset, laenge);
+#endif
+  create_data_filename(filename, file);
+  if ((fd=open(file,O_RDONLY|O_BINARY))<0)
+    { perror(file); abort(); }
+  if (offset!=0) {
+    off_t pos = lseek(fd, off, SEEK_SET);
+    if (pos<0) 
+      { printf("pos=%ld\n", pos);
+	perror(file); abort(); }
+  }
+  
+  len=read(fd,adr,(size_t)laenge);
+  if (len<0) 
+    {printf("len=%d\n", len);
+      perror(file); abort(); }
+#if 0
+  printf("loading: \"%s\", read=%d\n", filename, len);
+  od(adr);
+#endif
+  close(fd);
+
+  return len;
 }
 
-long load_bibliothek(file_nr,buffer)
-int file_nr;															/* Nummer des Files aus der Bibliothek */
+void od(void *adr)
+{
+  unsigned char *p = adr;
+  for (int i = 0; i < 16; i++) {
+	  printf("%02x ", (int)(*(p+i)));
+    }
+  for (int i = 0; i < 16; i++) {
+    char c = *(p+i);
+    if (!isprint(c)) c = '?';
+    printf("%c ", c);
+    }
+  printf("\n");
+}
+
+
+int load_bibliothek(filename,buffer)
+char *filename;                
 void *buffer;
 {
   /* Lädt eine Datei aus der Bibliothek und entpackt sie mit dem ICE!-Packer, falls sie
      gepackt ist. Gibt die Länge der ungepackten Datei zurück */
-	long offset;
+  int laenge;
 	char *ziel;
-	long laenge;
 	
-	if (file_nr>=ram_min && file_nr<=ram_max) {					/* File in Ramdisk? */
-		offset=file_offset[file_nr];
-		if (ramdisk[offset]=='I' && ramdisk[offset+1]=='C' && 				/* File Ice-gepackt? */
-						ramdisk[offset+2]=='E' && ramdisk[offset+3]=='!')
-			laenge=ice_unpack(ramdisk+file_offset[file_nr],buffer);		/* Direkt aus Ramdisk entpacken */
-		else if	(ramdisk[offset]=='C' && ramdisk[offset+1]=='r' && 				/* File Crw-gepackt? */
-						ramdisk[offset+2]=='w' && ramdisk[offset+3]=='!')
-			laenge=entpack(ramdisk+file_offset[file_nr]+4,buffer);
-		else	{
-			load(file_nr,buffer,0L,0xdfdfdfL);								/* Sonst nur laden */
-			laenge=file_len[file_nr];
-			}
-		}
-	else {
-	  load(file_nr,buffer,0L,0xdfdfdfL);									/* File von Disk laden */
-		laenge=file_len[file_nr];
+  laenge=load(filename,buffer,0L,0xdfdfdfL);       /* File von Disk laden */
   	ziel=buffer;
 		if (ziel[0]=='I' && ziel[1]=='C' && ziel[2]=='E' && ziel[3]=='!') {
-			laenge=ice_unpack(buffer,buffer);
+    void *tmp = malloc(100000);
+    laenge=ice_unpack(buffer, tmp);
+    memcpy(buffer, tmp, laenge);
+    free(tmp);
 			}
 		if (*ziel++=='C' && *ziel++=='r' && *ziel++=='w' && *ziel=='!')
 			internal(romstr015);
-  	}
 
 	return(laenge);
 }
@@ -1154,11 +1333,11 @@ void sprite_init()
      verwaltung */
 
   int i;
-  long *save;
+  SPRITE_SAVE *save;
 
-  for(i=0;i<SPR_MAX*2;i++) {
-    save1[i]=0L;                   /* Alle Spritehintergrundpointer ungültig */
-    save2[i]=0L;
+  for(i=0;i<SPR_MAX;i++) {
+    save1[i].screen=0L;                   /* Alle Spritehintergrundpointer ungültig */
+    save2[i].screen=0L;
     }
 
   if (scr1==scrn_1) save=save1;
@@ -1183,15 +1362,22 @@ void *screen;               /* Screen auf den das Formular kommt */
 int y;											/* Startzeile y */
 {
   /* Stellt ein leeres Formular dar */
-	char *ladeadresse;
-	
-	ladeadresse=screen;
-	ladeadresse+=y*160;												/* Adresse der 'y'-ten Bildschirmzeile */
 
   Hm();
-	entpack(formular_adr,ladeadresse);
 	set_raster(0,y,formularp);
+  draw_obj(0,formular_adr,ODER,screen,0,y);
   Sm();
+}
+
+void formular_big(screen, y1, y2)
+void *screen;
+int y1,y2;
+{
+  formular(screen, y1);
+  draw_obj_part(0,formular_adr,
+		0, 30,
+		objekt_breite(0, formular_adr)-1, objekt_hoehe(0, formular_adr)-1,
+		MOVE, logbase, 0, y2 - objekt_hoehe(0, formular_adr) + 30);
 }
 
 char *strapp(str1,str2)
@@ -1206,9 +1392,20 @@ char str1[],str2[];
 void clear_screen(adr)
 void *adr;
 {
-  /* löscht einen Bildschirm, der beim ST 32000 Bytes groß ist */
+  SDL_Surface *surface;
+  int x, y;
 	
-	memset(adr,0,32000L);
+  surface = adr;
+
+  Uint8* pixels = (Uint8*)surface->pixels;
+  for (y = 0; y < surface->h; y++)
+    for (x = 0; x < surface->w; x++)
+      pixels[y * surface->pitch + x] = 0;
+
+#if 0
+  XSetForeground(x_display,x_gc,BlackPixel(x_display,x_screen_num));
+  XFillRectangle(x_display,*(Pixmap *)adr,x_gc,0,0,640,400);
+#endif
 }
 
 void copy_screen(quelle,ziel)
@@ -1216,12 +1413,13 @@ void *quelle,*ziel;
 {
   /* Kopiert aktuellen Screen auf Zielscreen */
 
-  /* Hier ist ein kompatibler Ersatz:
-  		cpy_raster(quelle,ziel,0,0,319,199,0,0);			*/
-  
+#ifdef unix
+  cpy_raster(quelle,ziel,0,0,319,199,0,0);      
+#else
 	Hm();
 	memcpy(ziel,quelle,32000L);										/* Ein Bildschirm ist 32000 Bytes groß */
 	Sm();
+#endif
 }
 
 void vbl_routine()
@@ -1245,20 +1443,30 @@ void swap_screens()
 
 	old_ms_on=ms_on;
 
-  ms_on=FALSE;                    /* Jetzt keine VBL Maus */
-  tmp=scr2;
-  scr2=scr1;                  /* und Screens vertauschen */
-  scr1=tmp;
+#if 0
+  copy_screen(scr1,&x_swapscreen);
+  copy_screen(scr2,scr1);
+  copy_screen(&x_swapscreen,scr2);
+#endif
 	
-	ms_on=old_ms_on;						/* VBL-Maus ggf. wieder an */
+  //copy_screen(scr1,&x_window);
+  tmp=scr1; scr1=scr2; scr2=tmp; 
+  //XFlush(x_display);
 			
-  show_screen(scr1);               /* Screen1 darstellen */
+  show_screen(scr1);               /* Screen1 darstellen (war vorher scr2)  */
 
+  ms_on=FALSE;                    /* Jetzt keine VBL Maus */
+  ms_on=old_ms_on;            /* VBL-Maus ggf. wieder an */
+
+#if 1
   if (speed!=0) wait_sync(speed);                      /* Wartet auf 2. VBL */
+#endif
 
   if (ms_on) undraw_mouse(scr2);             /* Alte Maus auf Screen1 löschen */
 
+#if 1
 	logbase=scr1;
+#endif
 }
 
 void switch_screens()

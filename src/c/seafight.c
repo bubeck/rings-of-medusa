@@ -3,7 +3,9 @@
 	 erheblich erweitert und fehlerbereinigt von Till Bubeck, Weinstadt	*/
 	 
 #include "includes.c"           /* Definiert alle Variablen als Extern,... */
+#ifdef __TURBOC__
 #include	<portab.h>
+#endif
 
 #include "seafight.h"
 
@@ -461,6 +463,9 @@ static void gegner_schiff_schuss(void)
 					schiffschuesse--;
 				}
 				break;
+      case S_IDLE:
+	fprintf(stderr,"enumeration value `S_IDLE' not handled in switch\n");
+	abort();
 		}
 	}	/* for(alle schiffe) */
 }
@@ -667,6 +672,10 @@ static void do_schuss(void)
 					s->State = S_IDLE;
 				}
 				break;
+    default:
+      fprintf(stderr,"enumeration value `S_IDLE' not handled in switch\n"
+	      "enumeration value `S_TURMDREH' not handled in switch");
+      abort();
 		}
 	}	/* for(alle schuesse) */
 
@@ -754,7 +763,7 @@ void Seeschlacht(int nummer)
 		
 	/* Spielbeginn: */	
 	objects= pack_buf;
-	load_objekte(SEAWAR_OBJ,objects);		/* Seeschlacht-Objekte laden */
+  load_objekte("seawar.obj",objects);   /* Seeschlacht-Objekte laden */
 
 	init_seekampf();						/* Variablen vorbereiten, Schiffe plazieren */
 	

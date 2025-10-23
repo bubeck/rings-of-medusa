@@ -15,7 +15,7 @@ unsigned char roulette_farbe[37] = {
 unsigned int chip_wert[9] = {
 	5,10,50,100,500,1000,5000,10000,50000	};
 	
-unsigned long seed;                     /* Startwert der Zufallszahlen */
+//unsigned long seed;                     /* Startwert der Zufallszahlen */
 
 /* Start: */
 
@@ -165,17 +165,21 @@ long frei_cargo()
   long zahl;
 
   zahl=0;
-  for(i=0;i<SCHIFFMAX;i++)
-    if (flotte[i].typ>=0 && flotte[i].typ<3)        /* Handelsschiff? */
+  for(i=0;i<SCHIFFMAX;i++) {
+    if (flotte[i].typ>=0 && flotte[i].typ<3) {       /* Handelsschiff? */
       if (citynum<0) {                               /* Sind wir in Stadt? */
-        if (flotte[i].ort==-1)
+        if (flotte[i].ort==-1) {
           if (flotte[i].aboard==ship_crew[flotte[i].typ])   /* Genug Besatzung? */
             zahl+=ship_spec[flotte[i].typ];
         }
-      else
-        if (flotte[i].ort==citynum)
+      } else {
+        if (flotte[i].ort==citynum) {
           if (flotte[i].aboard==ship_crew[flotte[i].typ])   /* Genug Besatzung? */
             zahl+=ship_spec[flotte[i].typ];
+	}
+      }
+    }
+  }
 
   return(zahl);
 }
@@ -187,17 +191,21 @@ long frei_war()
   long zahl;
 
   zahl=0;
-  for(i=0;i<SCHIFFMAX;i++)
-    if (flotte[i].typ>=3 && flotte[i].typ<6)        /* Kreigsschiff? */
+  for(i=0;i<SCHIFFMAX;i++) {
+    if (flotte[i].typ>=3 && flotte[i].typ<6) {        /* Kreigsschiff? */
       if (citynum<0) {                                /* Sind wir in Stadt? */
-        if (flotte[i].ort==-1)
+        if (flotte[i].ort==-1) {
           if (flotte[i].aboard==ship_crew[flotte[i].typ])   /* Genug Besatzung? */
             zahl+=ship_spec[flotte[i].typ];
         }
-      else
-        if (flotte[i].ort==citynum)
+      } else {
+        if (flotte[i].ort==citynum) {
           if (flotte[i].aboard==ship_crew[flotte[i].typ])   /* Genug Besatzung? */
             zahl+=ship_spec[flotte[i].typ];
+	}
+      }
+    }
+  }
 
   return(zahl);
 }
@@ -234,10 +242,10 @@ int num;                /* Nummer der Stadt */
   
   Hm();
   clear_screen(hlpbuf);
-  load_objekte(STADT_OBJ,scr2);
+  load_objekte("stadt.obj",scr2);
   draw_obj(0,scr2,0,hlpbuf,0,0);							/* Bild darstellen */
   
-  load_objekte(CITYBILD_OBJ,scr2);
+  load_objekte("citybild.obj",scr2);
   draw_obj(0,scr2,0,hlpbuf,0,63);
 
   if (port_city[num]) {
@@ -250,12 +258,11 @@ int num;                /* Nummer der Stadt */
   Sm();
 }
 
-void c_pic(name_nr)
-int name_nr;							/* Nummer des Files */
+void c_pic(char *filename)
 {
 	clear_raster();
   clear_screen(hlpbuf);
-  load_objekte(name_nr, scr2);
+  load_objekte(filename, scr2);
   draw_obj(0,scr2,MOVE,hlpbuf,0,0);
   formular(hlpbuf,63);
   init_oben();
@@ -278,6 +285,7 @@ void city_screen()
   pic_move(hlpbuf,62,169,62);           			/* Hauptbildschirm */
   show_buttons(FALSE);                        /* Buttons neu anzeigen */
 
+  show_last_screen();
   fade_in();                    /* Bild einblenden */
 }
 
@@ -287,7 +295,7 @@ int num;
   int i;
 
 	leiste_oben(romstr067);
-	c_pic(STADT_OBJ);
+  c_pic("stadt.obj");
 	leiste_oben(romstr068);
 	
   Hm();
@@ -695,10 +703,10 @@ void store(num)
 int num;
 {
   leiste_oben(romstr103);
-  c_pic(STORE_OBJ);
+  c_pic("store.obj");
   leiste_oben(romstr104);
 
-  buy_sell(romstr105,WAREN,waren_name,11,waren_preis,waren_menge[num],ycargo_menge,LADEN); 
+  buy_sell(romstr105,WAREN,(char *)waren_name,11,waren_preis,waren_menge[num],ycargo_menge,LADEN); 
 
   city_restore(num);
 }
@@ -717,7 +725,7 @@ int num;
   float rasse_vorher[RASSEN],rasse_nachher[RASSEN];
 
   leiste_oben(romstr106);
-  c_pic(PARK_OBJ);
+  c_pic("park.obj");
   leiste_oben(romstr107);
 
 	open_window(7,69);
@@ -805,7 +813,7 @@ int num;
       else set_mouse(0);                /* normales Kreuz */
       }
 
-    if (button==BUY)
+    if (button==BUY) {
       if (armee_status==AN_BORD ||
           (armee_status==AN_LAND && auf_schiff && armee_city==citynum) ||
           (armee_status==AN_LAND && !auf_schiff)) {
@@ -849,6 +857,7 @@ int num;
       else {
         alert(romstr118);
         }
+    }
 
     if (my>=75 && my<=87) {							/* Neue Einheit */
       Krec(75,79,127,87);
@@ -894,7 +903,7 @@ void garage(num)
 int num;
 {
   leiste_oben(romstr119);
-  c_pic(STABLE_OBJ);
+  c_pic("stable.obj");
   leiste_oben(romstr120);
 
   buy_sell(romstr121,STALLWAREN,waren_name[WAREN],
@@ -908,10 +917,10 @@ void rohstoffhandel(num)
 int num;
 {
   leiste_oben(romstr122);
-  c_pic(JEWELLER_OBJ);
+  c_pic("jeweller.obj");
   leiste_oben(romstr123);
 
-  buy_sell(ns,ROHSTOFFE,metal_name,11,&waren_preis[WAREN+STALLWAREN],0L,ymetal,JUWELLIER);
+  buy_sell(ns,ROHSTOFFE,(char *)metal_name,11,&waren_preis[WAREN+STALLWAREN],0L,ymetal,JUWELLIER);
  
   city_restore(num);
 }
@@ -958,8 +967,8 @@ int num;
 	int feld;
 	
 	leiste_oben(romstr124);
-	load_objekte(ROULETTE_OBJ,pack_buf);
-	c_pic(PUB_OBJ);
+  load_objekte("roulette.obj",pack_buf);
+  c_pic("pub.obj");
 	leiste_oben(romstr125);
 
 	redraw_buttons(EXIT_BTN|PAUSE);
@@ -1064,6 +1073,7 @@ EINSATZ einsatz[];
 	Sm();
 	
 	do {
+    show_last_screen();
 		wait_klick();
 		if (maus_in(CHIPX+27,CHIPY+11,CHIPX+37,CHIPY+11+9*6-1)) {
 			chip_nummer=(my-(CHIPY+11))/6;
@@ -1395,8 +1405,8 @@ void port(num)
 int num;                    /* Stadtnummer */
 {
   leiste_oben(romstr138);
-  load_objekte(SHIPS_OBJ,pack_buf);            /* Schiffsicons -> screen2 */
-  c_pic(PORT_OBJ);
+  load_objekte("ships.obj",pack_buf);            /* Schiffsicons -> screen2 */
+  c_pic("port.obj");
   leiste_oben(romstr139);
 
 	open_window(7,69);
@@ -1428,6 +1438,7 @@ int num;                    /* Stadtnummer */
     balken(220,144,frei_waggon(),sum_waren()+sum_rohstoffe());
     Sm();
 
+    show_last_screen();
     wait_klick();
 
   	if (maus_in(303,69,311,77)) {						/* Closer */
@@ -1452,7 +1463,7 @@ int num;                    /* Stadtnummer */
       if (my<102) {
         Krec(158,88,286,102);
         hafenkneipe();
-				c_pic(PORT_OBJ);
+        c_pic("port.obj");
 				open_window(7,69);
         }
       if (my>102 && my<130) {
@@ -1745,7 +1756,7 @@ int num;
   FLAG all;
 
   leiste_oben(romstr168);
-  c_pic(ARMORY_OBJ);
+  c_pic("armory.obj");
   leiste_oben(romstr169);
 
 	open_window(7,69);
@@ -1848,7 +1859,7 @@ int num;
       else {
         ausruestung[selektion][company]+=anzahl;
         money-=costs;
-        newwerte=newwerte=newmoney=TRUE;
+        newwerte=newmoney=TRUE;
         }
       }
     } while (button!=EXIT_BTN);
@@ -1889,7 +1900,6 @@ char txt1[],txt2[];
   int i;
   int stadt_zahl;
   long warenzahl;
-  int ring_zahl;
 
   loc = CITY;
   leiste_y=64;
@@ -1901,14 +1911,14 @@ char txt1[],txt2[];
 
   Hm();
   clear_screen(hlpbuf);
-  load_objekte(BUBECK_OBJ,scr2);
+  load_objekte("bubeck.obj",scr2);
 	draw_obj(2,scr2,0,hlpbuf,160-objekt_breite(2,scr2)/2,0);
   formular(hlpbuf,63);
 
   city_screen();													/* und anzeigen */
 
   if (txt1[0]!=0 && effects) {
-		load_digisound(LACHEN_SEQ,pack_buf+64000L);
+    load_digisound("lachen.seq",pack_buf+64000L);
 		play_digi(pack_buf+64000L,FALSE,0,0); 					/* Lachen */
 		}
 		
@@ -1969,6 +1979,8 @@ char txt1[],txt2[];
     writexy(1,204,150,txt2);
     }
 
+  show_last_screen();
+  
   Sm();
 
   do {
@@ -2024,7 +2036,7 @@ int num;
   long anzahl_vorher;
 
   leiste_oben(romstr197);
-  c_pic(BARRACKS_OBJ);
+  c_pic("barracks.obj");
   leiste_oben(romstr198);
 
   if (belong[num]>=0 && !kaserne_cheat) {

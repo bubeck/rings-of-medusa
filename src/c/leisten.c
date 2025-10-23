@@ -4,12 +4,12 @@
 #include "includes.c"           /* Definiert alle Variablen als Extern,... */
 
 int aufklapp[6][15]= {
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 3,  /* Parameter, zum Drehen */
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 3, 7,  /* der Optionsleiste */
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1, 3, 7,10,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1, 1, 3, 6, 7,10,12,
-  -1,-1,-1,-1,-1, 0, 1, 3, 4, 6, 7, 9,10,12,13,
-   0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14
+  { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 3 }, /* Parameter, zum Drehen */
+  { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 3, 7 }, /* der Optionsleiste */
+  { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1, 3, 7,10 },
+  { -1,-1,-1,-1,-1,-1,-1,-1,-1, 1, 3, 6, 7,10,12 },
+  { -1,-1,-1,-1,-1, 0, 1, 3, 4, 6, 7, 9,10,12,13 },
+  { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14  }
    };
 
 FLAG option_changed;
@@ -57,6 +57,7 @@ void check_scroller()
 	void *oldlogbase;
 	char zeichen[2];
 	long laenge;
+  unsigned char *text;
 	
 	do {
 		hol_maus();
@@ -65,15 +66,22 @@ void check_scroller()
       break;
       }
     if (maus_in(128,194,140,199)) {         		/* Scrollbutton */
+
+#if defined(ATARI) || defined(AMIGA)
 			memset(window_back,0,sizeof(window_back));
-#if defined(DEUTSCH)
-			laenge=load_bibliothek(GAME_TXT,&window_back[5*160]);
-#elif defined(ENGLISCH)
-			laenge=load_bibliothek(GAME_GB_TXT,&window_back[5*160]);
-#elif defined(FRANZ)
-			laenge=load_bibliothek(GAME_TXT,&window_back[5*160]);
+      text = &window_back[5*160];
+#else
+      text = malloc(2000);
 #endif
-			decrypt(&window_back[5*160],laenge);
+      
+#if defined(DEUTSCH)
+      laenge=load_bibliothek("game.txt", text);
+#elif defined(ENGLISCH)
+      laenge=load_bibliothek("game_gb.txt", text);
+#elif defined(FRANZ)
+      laenge=load_bibliothek("game.txt", text);
+#endif
+      decrypt(text,laenge);
 			wait_mouse(0);
 			Hm();
 			scrollpos=0;
@@ -86,7 +94,7 @@ void check_scroller()
 				if (++scrolldelta>3) {
 					scrolldelta=0;
 					do {
-						zeichen[0]=window_back[5*160+scrollpos++];
+            zeichen[0]=text[scrollpos++];
 						if (zeichen[0]==0 || zeichen[0]==13 || zeichen[0]==10) scrollpos=0;
 						else break;
 						} while(TRUE);
@@ -105,6 +113,10 @@ void check_scroller()
 		  }
     } while(mk!=0 && mx>=96 && mx<=223 && my>=169);
 
+#if defined(ATARI) || defined(AMIGA)
+#else
+  free(text);
+#endif
 }		
 
 void wait_close()
@@ -193,6 +205,7 @@ void draw_options()
 	/* Zeichnet das momentan aktive Board auf den Screen und trägt ggf. Werte ein: */
 	
 	draw_obj(4+option_nr,leisten,0,scr1,96,169);
+  //printf("option_nr=%d\n", option_nr);
 	writexy_anzeige();
 }
 
@@ -216,7 +229,7 @@ void writexy_anzeige()
 			break;
 		case 2:
 			fill(13,124,172,132,197);					/* Alte Haken wegmachen */
-			if (sync==60) draw_obj(3,leisten,0,scr1,127,173);
+      if (sync_50_60==60) draw_obj(3,leisten,0,scr1,127,173);
 			if (music==MUSIK_AN) draw_obj(3,leisten,0,scr1,127,179);
 			if (effects) draw_obj(3,leisten,0,scr1,127,185);
 			if (tv_modus) draw_obj(3,leisten,MOVE,scr1,127,191);
@@ -268,7 +281,8 @@ FLAG redraw;                        /* s.o. */
   int pxy[4];
   long element;
 	int ob_nr,ob_x;
-	int *old_pattern,old_mode;
+  int old_mode;
+  UWORD *old_pattern;
 	
   Hm();
   if (!redraw) {
@@ -314,19 +328,9 @@ FLAG redraw;                        /* s.o. */
 void copy_buttons()
 {
   /* Kopiert die Buttonleiste auf den 2. Bildschirm */
-	void *oldlogbase;
 	char *pw;
 
   Hm();
-	
-	pw=password-881;
-	if (*(pw+881)==0) {
-		oldlogbase=logbase;
-		logbase=scr1;
-		line(15,319,170,319,170);
-		logbase=oldlogbase;
-		}
-
   cpy_raster(scr1,scr2,0,169,319,199,0,169);
   Sm();
 }
@@ -348,6 +352,8 @@ void options()
   x=192;
 #endif
 
+  //puts("inside options");
+
   do {
     hol_maus();
     if (mk==1) {
@@ -368,9 +374,9 @@ void options()
       if (mx>=118 && mx<=125) {             /* 1. Spalte */
         if (my>=174 && my<=177) {           /* Sync */
           wait_mouse(0);
-          if (sync==50) sync=60;
-          else sync=50;
-          set_sync(sync);
+          if (sync_50_60==50) sync_50_60=60;
+          else sync_50_60=50;
+          set_sync(sync_50_60);
           draw_options();
           }
         if (my>=180 && my<=191) {            /* Music/Effects */
@@ -383,7 +389,11 @@ void options()
 					else {
 						effects=TRUE;					/* Effekte an */
 						}
-					play_music(&game_music,music);
+	  if (music==MUSIK_AN) {
+	    play_music("gamemusic.wav",music);
+	  } else {
+	    stop_audio();
+	  }
           draw_options();
           }
      		if (my>=192 && my<=195) {			/* TV-Modus */
@@ -412,6 +422,7 @@ void options()
               flash_on=!flash_on;
               }
 
+	    show_last_screen();
             hol_maus();
             if (mk==1) {
               for(i=0;i<68;i+=4) {
@@ -427,7 +438,11 @@ void options()
           writexy(13,x,175,romstr613);
           if (button==YES) {
             Sm();
+#if 0
             longjmp(restart,1);                 /* Crown neu starten */
+#else
+	    exit(0);
+#endif
             }
           redraw_buttons(old_leiste);
           }
@@ -476,8 +491,10 @@ int option_nr;
       if (aufklapp[i][14-j]!=-1)
         zeichne(option_nr,16+j,30-aufklapp[i][14-j]);      /* untere Hälfte */
       }
+    show_screen(scr1);
     wait_sync(3);
     }
+
 }
 
 void zeichne(option_nr,bildzeile,orgzeile)
@@ -508,6 +525,8 @@ void stauch()
 	fill(0,96,169,223,173);
 	fill(0,96,195,223,199);
 	logbase=oldscreen;
+
+  show_screen(scr1);
 }
 
 void load_leisten()
@@ -516,14 +535,29 @@ void load_leisten()
 	long laenge;
 		
 	option_nr=0;									/* 1. Board ist aktiv */
-  laenge=load_objekte(LEISTEN_OBJ,leisten);        
-#ifndef COPYPROT
-	if (laenge<sizeof(leisten)) writexy(15,0,0,romstr617);
+  laenge=load_objekte("leisten.obj",leisten);
+#if 0
+  for(int i=0; i< 60; i++) {
+    printf("%d\n", i);
+    show_obj(i, leisten);
+  SDL_Delay(6000);
+  }
+#endif
+  SDL_Surface *surface = get_obj_surface(7, leisten);
+  int width = objekt_breite(7, leisten);
+  int height = objekt_hoehe(7, leisten);
+  for(int x = width - 54; x < width-5; x++) {
+    for(int y = height - 12; y < height-3; y++) {
+      set_pixel_surface(surface, x, y, 13);
+    }
+  }
+  //show_obj(7, leisten);
+  //SDL_Delay(6000);
+
 	if (laenge>sizeof(leisten)) {
 		char fehler[100];
 		strcpy(fehler,build(romstr618,str(0,(long)sizeof(leisten))));
 		internal(fehler);
 		}
-#endif
 }
 

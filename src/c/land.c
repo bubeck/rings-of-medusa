@@ -127,23 +127,39 @@ int nr;             /* 0..13 */
 {
   /* Lädt Landschaft nr von Diskette */
 	int nr_real;
+	char filename[100];
 
   if (nr==SEA && map==SEA) return;                  /* von See->See */
 
-  if (nr==SEA) load_objekte(SEA_OBJ,pack_buf);
+  if (nr==SEA) load_objekte("sea.obj",pack_buf);
   else {
 		switch (nr) {
 			case 16: nr_real=13; break;
 			case 17: nr_real=6; break;
 			default: nr_real=nr;
 			}
-		load_objekte(MAPA_OBJ+nr_real,pack_buf);
+    strcpy(filename,"mapa.obj");
+    filename[3]='a'+nr_real;
+    //printf("Loading MAP %s,%d\n", filename, nr_real);
+    load_objekte(filename,pack_buf);
 		}
 	clear_screen(hlpbuf);
 	draw_obj(0,pack_buf,0,hlpbuf,0,17);
-	clear_screen(trf_buf);
-	load_bibliothek(TMAPS_DAT,trf_buf);				/* Trafficbuffer laden */
+  //clear_screen(trf_buf);
+  memset(trf_buf,0,32000);
+  load_bibliothek("tmaps.dat",trf_buf);       /* Trafficbuffer laden */
   load_ground(nr);
+
+#if 0
+  logbase = hlpbuf;
+  for (int y=25; y < 168; y+=4) {
+    for(int x=0; x < 320; x+=4) {
+      int color = get_untergrund(x,y);
+      rahmen(color, x, y, x+1, y+1);
+    }
+  }
+#endif
+  
   map=nr;
 }
 
@@ -151,7 +167,7 @@ void load_ground(nr)
 int nr;
 {
   /* Lädt den Untergrund eines Landes */
-  register int i,j;
+  register int i;
 	int nr_real;
 
   if (nr==SEA) {
@@ -165,7 +181,8 @@ int nr;
 			case 17: nr_real=6; break;
 			default: nr_real=nr;
 			}
-    load(GMAPS_DAT,ground_buf,1800L*nr_real,1800L);
+    //printf("Loading gmaps %d\n", nr_real);
+    load("gmaps.dat",ground_buf,1800L*nr_real,1800L);
     del_rohstoffe();             /* nicht benötigte Rohstoffe löschen */
     put_minen(nr);                /* eventuelle Minen einzeichnen */
     chg_ground(nr);               /* evtl. Untergründe löschen */
@@ -184,13 +201,15 @@ void del_rohstoffe()
 	skip=1+(level-1.0)*9.0;						/* Anzahl der Rohstoffe, die übersprungen werden 
 																		   1..10 */
 	counter=startwert;	
-	for(x=0;x<80;x++)
-  	for(y=0;y<36;y++) {
+	for(x=0;x<80;x++) {
+	  for(y=0;y<36;y++) {
 			land=get_raster(x,y);
-    	if (land!=GIMMIG && land>SCHATZ && land<=GOLD)        /* Hier ist ein Rohstoff */
+			if (land!=GIMMIG && land>SCHATZ && land<=GOLD) {        /* Hier ist ein Rohstoff */
 				if (counter--<=0) counter=skip;
  				else put_raster(EBENE,x,y);						/* weglöschen */
 			}
+	  }
+	}
 }
 
 void put_minen(nr)
@@ -601,7 +620,11 @@ int get_untergrund(x,y)
 int x,y;
 {
   /* Holt den Untergrund an der Stelle X/Y, Dabei sind die Werte 5Bit breit
-     und gepackt */
+     und gepackt
+
+     Ein Untergrund ist 4x4 Pixel groß und 5 Bit breit.
+     Bei Breite 320 Pixel = 80 Untergründe = 400 Bit = 50 Byte.
+  */
 
   register int anzahl;
   register int wert;
@@ -622,13 +645,13 @@ int x,y;
   bit%=8;
   bit=7-bit;                                    /* von oben herunter */
   op1=ground_buf[zeile*50+byte];                /* erstes Byte */
-  op2=ground_buf[zeile*50+byte+1];              /* nachfolgendes Byte */
   anzahl=bit-4;                                 /* um soviel wird geschoben */
   if (anzahl>=0) {                              /* ist voll in op1 */
     wert=op1>>anzahl;                           /* hier verwendet TURBO_C 'ASR'! */
     wert&=31;                                   /* nur 5 Bits gültig */
     }
   else {
+    op2=ground_buf[zeile*50+byte+1];              /* nachfolgendes Byte */
     wert=op1<<(-anzahl);                        /* aus op1 holen */
     wert&=31;                                   /* nur 5 Bits gültig */
     op2>>=8+anzahl;                             /* Achtung, anzahl ist negativ! */
@@ -637,6 +660,7 @@ int x,y;
     wert|=op2;
     }
 
+  //printf("get_untergrund(x=%d y=%d)=%d zeile=%d byte=%d\n", x, y, wert, zeile, byte);
   return((int)wert);
 }
 
@@ -770,7 +794,8 @@ void update_coordinates()
     rich=0;
     }
   if (newpos!=-1) {                 /* Grenze erreicht */
-    if (land_map(welt[newpos],TRUE,rich,newx,newy)) {   /* Laden und anzeigen */
+    //if (land_map(welt[newpos],TRUE,rich,newx,newy)) {   /* Laden und anzeigen */
+    if (land_map(welt[newpos],FALSE,rich,newx,newy)) {   /* Laden und anzeigen */
       sx[0]=newx;
       sy[0]=newy;                /* Neue X/Y Position setzen */
       sxalt[0]=newaltx;
@@ -871,11 +896,11 @@ int nr;
 	register char *poi,*start;
 
 #if defined(DEUTSCH)
-	load_bibliothek(SCHILD_TXT,pack_buf);
+  load_bibliothek("schild.txt",pack_buf);
 #elif defined(ENGLISCH)
-	load_bibliothek(SCHILD_G_TXT,pack_buf);
+  load_bibliothek("schild_g.txt",pack_buf);
 #elif defined(FRANZ)
-	load_bibliothek(SCHILD_TXT,pack_buf);
+  load_bibliothek("schild_f.txt",pack_buf);
 #endif
 
 	poi=(char *)pack_buf;
@@ -1031,8 +1056,8 @@ void set_armies()
 
   army_unten=TRUE;                    /* ALs erstes die unteren Armeen bewegen */
 
-	clear_screen(trf_buf);
-	load_bibliothek(TMAPS_DAT,trf_buf);		/* Trafficmaps laden */
+  memset(trf_buf,0,32000);
+  load_bibliothek("tmaps.dat",trf_buf);   /* Trafficmaps laden */
 
   for(i=0;i<GEGNER;i++) {
     do {
@@ -1261,7 +1286,7 @@ int nr;
           armeeteil[nr+1][i]/=2;
           }
       }
-    if (port_city[stadt_nr])              /* Hat Stadt einen Hafen? */
+    if (port_city[stadt_nr]) {            /* Hat Stadt einen Hafen? */
       if (!steuer[nr].auf_wasser) {       /* Armee war an Land */
         if (zufall(5)==3) {               /* Nur manchmal */
           wert=TPORT_1+(tw-TSTADT_1);     /* gesuchter Wert */
@@ -1287,6 +1312,7 @@ int nr;
           }
         }
     }
+  }
 
   such_weg(nr);								/* und marschieren */
 }
@@ -1480,17 +1506,20 @@ int such_insel()
   register int x2,y2;
 
   do {
-    belegt=FALSE;
     x=zufall(15);
     y=zufall(15);
-    for(x2=x-3;x2<=x+3;x2++)
-      for(y2=y-3;y2<=y+3;y2++)
+    // Insel will be +1 in x and +1 in y, so 14 is not allowed for x and y
+    if (x>13 || y>13) { belegt=TRUE; continue; }
+    belegt=FALSE;
+    for(x2=MAX(x-3,0);x2<=MIN(x+3,14);x2++)
+      for(y2=MAX(y-3,0);y2<=MIN(y+3,14);y2++)
         if (get_land(x2,y2)!=SEA) {
           belegt=TRUE;
           break;
           }
     } while(belegt);
 
+  //printf("x=%d, y=%d\n", x, y);
 	return(x+y*15);
 }
 

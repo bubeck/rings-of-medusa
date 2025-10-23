@@ -42,7 +42,7 @@
 
 		******************************************************************
 		*
-		* Please do NOT kill any kind of comments (marked by /* xxx */).
+		* Please do NOT kill any kind of comments
 		*
 		******************************************************************
 		
@@ -123,7 +123,7 @@
 #define romstr031 "ICH LIEBE DICH!"
 #define romstr032 "               "
 #define romstr033 "   STEFFI,   "
-#define romstr034 "COPYRIGHT 1991 BY STARBYTE"	
+#define romstr034 "COPYRIGHT 1991 BY TILL BUBECK"	
 #define romstr035 "GESCHRIEBEN VON: TILL BUBECK"
 #define romstr036 "GRAFIK VON: TORSTEN ZIMMERMANN"
 #define romstr037 "MUSIK VON: JOCHEN HIPPEL"
@@ -372,7 +372,7 @@
 #define romstr280 "DRECK."
 #define romstr281 "RINGS OF MEDUSA 2 - CHEATS:"
 #define romstr282 "R: ROHSTOFFE ZEIGEN"
-#define romstr283 "*: UNENDLICH GELD"
+#define romstr283 "G: UNENDLICH GELD"
 #define romstr284 "W: WAREN ANZEIGEN"
 #define romstr285 "S: KAMPFSTÄRKE ANZEIGEN"
 #define romstr286 "O: GEGNER ZEIGEN"
@@ -715,5 +715,4 @@
 #define romstr623 "DISKFEHLER... DISK AUSTAUSCHEN ODER ERNEUT VERSUCHEN."
 #define romstr624 "LADE, BITTE WARTEN..."
 #define romstr625 "ICH GREIFE MEDUSA'S ARMEE AN."
-
 

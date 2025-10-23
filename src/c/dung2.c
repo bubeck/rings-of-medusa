@@ -193,7 +193,7 @@ void copy_reagenz()
 void draw_glaeser(member)
 int member;
 {
-	/* Zeichnet die Reagenzgläser einer bestimmten Person und beschriftet diese */
+  /* Zeichnet die Reagenzgläser einer bestimmten Person und beschriftet sie */
 	void *oldlogbase;
 		
 	Hm();
@@ -281,7 +281,9 @@ int verkleinerung;
 	if (betretbar(bunker[x][y])) {	
 		ep=enemy;
 		for(i=0;i<enemy_max;i++,ep++) 
-			if (ep->bun_nr==akt_bunker && ep->x==x && ep->y==y) {					/* Auf diesem Feld? */
+      if (ep->bun_nr==(unsigned int)akt_bunker && 
+	  ep->x==(unsigned int)x && ep->y==(unsigned int)y) 
+	{         /* Auf diesem Feld? */
 				if ((*waende)-startwaende>=WANDMAX) break;						/* Array ist voll */
 				ob_nr=ep->grafik+4*ep->next_move/ep->speed;
 				if (ep->next_move>(3*ep->speed)/4) ob_nr=ep->grafik+1; 
@@ -303,7 +305,6 @@ void feuer_enemy(nummer)
 int nummer;
 {
 	/* Dieser Gegner hat in dem Bunker einen Schuß abgegeben: */
-	int i;
 
 	enemy[nummer].fight=TRUE;					/* Jetzt kämpft er */
 	shot.ob_mem=shoots;
@@ -537,7 +538,7 @@ LAGE pos[];
 	int pos_item;
 
 	for(itemp=item,i=0;i<ITEMMAX;i++,itemp++)
-		if (itemp->bun_nr==akt_bunker) 				/* Objekt in diesem Bunker? */
+    if (itemp->bun_nr==(unsigned int)akt_bunker) /* Objekt in diesem Bunker? */
 			if (itemp->bun_x==x && itemp->bun_y==y) 		/* an dieser Position? */
 				if (pos[itemp->pos].x!=-1) {				/* Ist es zu sehen? */
 					ob_nr=itemp->grafik;
@@ -545,6 +546,7 @@ LAGE pos[];
 					if ((*waende)-startwaende>=WANDMAX) break;	/* Array ist voll */
 					(*waende)->x1=pos[pos_item].x-objekt_breite(ob_nr,items)/2;
 					(*waende)->x2=(*waende)->x1+objekt_breite(ob_nr,items)-1;
+	  assert((*waende)->x1<(*waende)->x2);
 					(*waende)->y=pos[pos_item].y-(objekt_hoehe(ob_nr,items)-1);
 					(*waende)->tiefe=pos[pos_item].tiefe;
 					(*waende)->ob_nr=100+ob_nr;
@@ -573,7 +575,7 @@ FLAG move_enemies()
 
 	if (shot.ob_mem==NULL)					/* Nur bewegen, wenn kein Schuss da */
 		for(ep=enemy,i=0;i<enemy_max;i++,ep++) 
-			if (ep->bun_nr==akt_bunker) {
+      if (ep->bun_nr==(unsigned int)akt_bunker) {
 				if ((bunker_x==ep->x && abs(bunker_y-ep->y)<5) ||		/* Auf einer Linie mit Spieler */
 						(bunker_y==ep->y && abs(bunker_x-ep->x)<5)) 
 					if (zufall(10)==0) {						
@@ -764,8 +766,8 @@ int item_nr;											/* Welches Item will der Spieler werfen -1=Keines */
 			copy_bunker_screen();							/* auf 2. Screen übertragen */
 			copy_screen(scr1,hlpbuf);
 			
-			oldsync=sync;
-			sync=1;
+      oldsync=sync_50_60;
+      sync_50_60=1;
 		
 			oldhelligkeit=helligkeit;
 			if (item_nr<0) {								/* Richtiger Schuss */
@@ -813,7 +815,7 @@ int item_nr;											/* Welches Item will der Spieler werfen -1=Keines */
 		
 			if (i>=255) drop_itemxy(&item_nr,bunker_x+3*bunker_dx,bunker_y+3*bunker_dy);	/* Ganz weit geflogen */
 			
-			sync=oldsync;
+      sync_50_60=oldsync;
 		
 			while(helligkeit!=oldhelligkeit) {
 				if (helligkeit<oldhelligkeit) helligkeit++;			/* Zurück auf alte Helligkeit */
@@ -851,7 +853,8 @@ int *item_nr;										/* Was hat der Spieler in der Hand -1=Nichts */
 	if (betretbar(bunker[x][y])) {	
 		ep=enemy;
 		for(i=0;i<enemy_max;i++,ep++) 
-			if (ep->bun_nr==akt_bunker && ep->x==x && ep->y==y) {		/* Auf diesem Feld? */
+      if (ep->bun_nr==(unsigned int)akt_bunker &&
+	  ep->x==x && ep->y==y) {   /* Auf diesem Feld? */
 				switch (entfernung) {
 					case 0: size=0; y=110; break;
 					case 1: size=50; y=96; break;
@@ -928,7 +931,7 @@ void medusa()
 	
 	Sm();
 	
-	load_objekte(MEDUSA_OBJ,walls);
+  load_objekte("medusa.obj",walls);
 
 	for(i=0;i<PARTY;i++) 
 		if (!is_tot(i)) 
@@ -993,31 +996,38 @@ int med_nr,kug_nr;
 void finale()
 {
 	long laenge;
+  unsigned char *scrolltext;
 	
 	Hm();
 	
 	fade_out();
 	clear_raster();
 
-	load_objekte(MED_TOT_OBJ,scr2);
+  load_objekte("med_tot.obj",scr2);
 	clear_screen(scr1);
 	draw_obj(0,scr2,MOVE,scr1,0,0);
 	
+#if defined(ATARI) || defined(AMIGA)
+  scrolltext = scr2 + 20000;
+#else
+  scrolltext = malloc(10000);
+#endif
+  
 #ifdef FRANZ
-  laenge=load_bibliothek(OVER_FRC_TXT,scr2+20000);
+  laenge=load_bibliothek("over_frc.txt",scrolltext);
 #endif
 #ifdef ENGLISCH
-  laenge=load_bibliothek(OVER_GB_TXT,scr2+20000);
+  laenge=load_bibliothek("over_gb.txt",scrolltext);
 #endif
 #ifdef DEUTSCH
-  laenge=load_bibliothek(OVER_D_TXT,scr2+20000);
+  laenge=load_bibliothek("over_d.txt",scrolltext);
 #endif
 
-	decrypt((unsigned char *)scr2+20000,laenge);				/* Scroller entschlüsseln */
+  decrypt((unsigned char *)scrolltext,laenge);        /* Scroller entschlüsseln */
 
-  load_objekte(METALL_OBJ,pack_buf);					/* Scroller laden */
+  load_objekte("metall.obj",pack_buf);          /* Scroller laden */
 
-  init_scroller(scr1,157,scr2+20000,pack_buf,pack_buf+42240L,FALSE);
+  init_scroller(scr1,157,scrolltext,pack_buf,pack_buf+42240L,FALSE);
   scradr=init_vbl(mcode33);     			            /* Laufschrift an */
 	set_raster(0,157,scroller_pal);
 	fade_in();
@@ -1029,6 +1039,12 @@ void finale()
   clear_raster();
   exit_vbl(scradr);
 	
+#if defined(ATARI) || defined(AMIGA)
+  
+#else
+  free(scrolltext);
+#endif
+  
 	Sm();
 	longjmp(restart,1);
 }

@@ -73,7 +73,7 @@
 					Amiga, Atari Master -> Starbyte (19.8.1991)
 		1.06: Passwortabfrage jetzt im Hellen, "Faites vos jeux".
 					Amiga, Atari Master -> Starbyte (20.8.1991)
-		1.07: Handshake für Tastatur auf 75 µs angepaßt (Amiga 2000-A)
+		1.07: Handshake für Tastatur auf 75 s angepaßt (Amiga 2000-A)
 					Amiga Master -> Starbyte (28.8.1991)
 		1.08: Suchrahmenbug, Schildbug entfernt
 					Atari, Amiga Master -> Starbyte (9.9.1991)

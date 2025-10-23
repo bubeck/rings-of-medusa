@@ -1,5 +1,6 @@
                    
     /* Global File Version 2.0 - by Till Bubeck */
+#include <SDL3/SDL.h>
 
 int save_version;        /* Version des Savefiles */
 
@@ -9,6 +10,8 @@ unsigned char spieler_status;					/* Magier, Mogul ... */
  /* ------------------------------------------------------------------------
                             INTERNE VARIABLEN
     ------------------------------------------------------------------------ */
+
+mem_mapper_t digi_mem[DIGI_COUNT];
 
 char *ns;                       /* Zeiger auf einen Nullstring */
 
@@ -48,12 +51,12 @@ char dat_str[20];           /* für Datumswandlung */
 
 void *scradr;							/* Adresse des VBL-Queue Eintrags des Scrollers */
 /* Palette of TANIS_1.IFF: Saved by NEOchrome V2.24 by Chaos, Inc. */
-int scroller_pal[16] = { 
+RGB_PAL scroller_pal = { 
 	0x0000,0x0300,0x0400,0x0510,0x0520,0x0630,0x0740,0x0750,
 	0x0760,0x0770,0x0774,0x0776,0x0777,0x0620,0x0200,0x0730 };
 RGB_PAL black = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 
-int sync;                   /* Syncronisationsfrequenz 50,60 Hz */
+int sync_50_60;                   /* Syncronisationsfrequenz 50,60 Hz */
 unsigned long vbl_ct_save;	/* Wann wurde das letzte Mal gespeichert? */
 
 int copylist[]= {
@@ -80,7 +83,7 @@ int copylist[]= {
   30,25 };
 
 /* Füllmuster zum Ausmaskieren der Icons in der Optionleiste: */
-int point_pat[16] = {
+UWORD point_pat[16] = {
 	0x5555,0xaaaa,0x5555,0xaaaa,
 	0x5555,0xaaaa,0x5555,0xaaaa,
 	0x5555,0xaaaa,0x5555,0xaaaa,
@@ -91,15 +94,17 @@ int disk_buf[256];                  /* 512 Bytes Diskbuffer */
 char password[30] = { romstr320 };						
 
 FLAG voller_titel=TRUE;				/* Soll volle Titelsequenz kommen? */
-
+/* How much bigger is the window for the screen, than 320x200: */
+int gfx_scale_factor = 1;     /* Faktor zur Vergroesserung des Fensters */
+int crt_effect = 1;     /* Should we do tube tv like graphics */
 volatile int msminy;              /* kleinster Wert der Mouse y */
 int leiste_y;               /* unterer Rand der Leiste */
 int wind_aktiv;           /* Flag, ob Window aktiv ist */
 
-char window_back[48*56];             /* sichert den Hintergrund eines Windows */
-char wind_form[5446];              	/* Enthält die Alertboxen */
+SDL_Surface *window_back;             /* sichert den Hintergrund eines Windows */
+char wind_form[10000];              /* Enthält die Alertboxen */
 FLAG alerts_da;											/* Flag, ob die Alertboxen bereits geladen sind */
-char *formular_adr;									/* Adresse des Formulars */
+ULONG *formular_adr;           /* Adresse des Formulars */
 
 int *maus_koord;            /* Pointer auf die Mauskoordinaten (X/Y) */
 int maus_zaehler;           /* Anzahl der Abschaltvorgänge für Hm(),Sm() */
@@ -107,7 +112,7 @@ FLAG ms_on;                /* Flag, ob Maus dargestellt werden soll */
 volatile int save_1[134],save_2[134];       /* nimmt den Hintergrund der Maus auf */
                                     /* 1. Wort=0: Buffer ungültig */
                                     /* 1. Wort!=0: Buffer gültig */
-volatile char *scrn_1;                          /* Screen1 */
+volatile void *scrn_1;                          /* Screen1 */
 volatile int mousex,mousey,mousek;     /* Werte der Maus, wird durch IRQ erneuert */
 
 jmp_buf restart;                /* für longjmp um Crown erneut zu starten */
@@ -145,21 +150,22 @@ long menu_nr[]= {
   PEILUNG,YES,NO,FLEE,ATTACK,TERMS,SEARCH,DIG,PLUS,MINUS };      /* Rückgabe in button */
 
 char memo[15][75];      /* Nimmt Editorscreen auf */
-int leisten[16178/2];		/* Nimmt die Objekte der Leisten auf, bitte auf gerade Adresse */
+int leisten[20000/sizeof(int)];     /* Nimmt die Objekte der Leisten auf, bitte auf gerade Adresse */
 
 SPRITE sprite_mem[SPR_ZAHL];								/* Speicher für die ungeshifteten Spritedaten */
+SDL_Surface *sprite_surfaces[SPR_ZAHL];
 
 /* Speicher   scr1,  scr2,hlpbuf,pack_buf,bunker_objekte */
 char memory[32256L+32000L+32000L+32000L+32000L+32000L+24000L];
 
-char *hlpbuf;           /* kann ein Bild aufnehmen (32128) frei verfügbar */
+SDL_Surface *hlpbuf;           /* kann ein Bild aufnehmen (32128) frei verfügbar */
 char *pack_buf;         /* Hilfsspeicher, zum Entpacken */
-char *scr1;          		/* 2 Bildschirmtechnik */
-char *scr2;
+SDL_Surface *scr1;             /* 2 Bildschirmtechnik */
+SDL_Surface *scr2;
 void *oldbase;           /* alte Bildschirmbasis */
 FLAG effects;     /* Effekte und/oder Musik an/aus */
 int music;							/* Welche Hippelspielmusik ist an? */
-long save1[SPR_MAX*2],save2[SPR_MAX*2];             /* Offsets für Hintergrund */
+SPRITE_SAVE save1[SPR_MAX],save2[SPR_MAX];             /* Offsets für Hintergrund */
 int sx[SPR_MAX];           /* Spritekoordinaten */
 int sy[SPR_MAX];           /* 0=Sprite aus */
 int sn[SPR_MAX];       /* Spriteform */
@@ -205,8 +211,8 @@ int ram_max;                        /* Letztes File, daß noch in der Ramdisk st
 int ram_min;												/* Erstes File, daß in der Ramdisk ist */
 int file_handle;                    /* File_Handle der Grafik-Disk-Datei */
 
-volatile extern int os_ver;          /* TOS-Version von MCODE.O */
-volatile extern int digi_works;     /* Flag, ob Digisound gerade arbeitet */
+extern volatile int os_ver;          /* TOS-Version von MCODE.O */
+extern volatile int digi_works;     /* Flag, ob Digisound gerade arbeitet */
 
 int zeile,spalte;           /* Cursorposition */
 int dummy;                  /* Dummyparameter für Funktionnsparameter */
@@ -220,8 +226,11 @@ char savepfad[100];             /* Pfad, auf den Spiele gespeichert werden */
                         FUNKTIONSPROTOTYPEN
     --------------------------------------------------------------------- */
 
-/* Achtung! Die Funktion build hat eine variable Anzahl an Parametern! (siehe IO.C -> build */
-char *cdecl build(char *format,...);
+/* 
+ * Achtung! Die Funktion build hat eine variable Anzahl an Parametern!
+ * (siehe IO.C -> build)
+ */
+cdecl char *build(char *format,...);
 void Seeschlacht(int nummer);
 
   /* ---------------------------------------------------------------------
@@ -265,24 +274,24 @@ unsigned char exit_anzahl;					/* Anzahl der bisher durchgeführten Exits
 /* In welchem Land geht es in welchen Bunker? 
 	 Bit 7 gesetzt -> nur Ausgang */
 unsigned char bunker_nr[LAENDER][2] = {
-	20,39,								/* A Endbunker, Tunnelbunker->C */
-	21+128,-1,						/* B Entwicklerausgang Startbunker */
-	36,38,								/* C Tunnelbunker->E, Tunnelbunker->A*/
-	8,-1,									/* D */
-	37,-1,								/* E Tunnelbunker->C */
-	5,6,									/* F */
-	1,-1,									/* G */
-	2,22+128,							/* H */
-	4,-1,									/* I */
-	-1,-1,								/* J */
-	11,-1,								/* K */
-	41,40,								/* L Tunnel */
-	13,-1,								/* M */
-	-1,15,								/* N */
-	14,-1,								/* O */
-	17,-1,								/* P */
-	-1,18,								/* Q */
-	27,-1 };
+  { 20,39 },                /* A Endbunker, Tunnelbunker->C */
+  { 21+128,-1 },            /* B Entwicklerausgang Startbunker */
+  { 36,38 },                /* C Tunnelbunker->E, Tunnelbunker->A*/
+  { 8,-1 },                 /* D */
+  { 37,-1 },                /* E Tunnelbunker->C */
+  { 5,6 },                  /* F */
+  { 1,-1 },                 /* G */
+  { 2,22+128 },             /* H */
+  { 4,-1 },                 /* I */
+  { -1,-1 },                /* J */
+  { 11,-1 },                /* K */
+  { 41,40 },                /* L Tunnel */
+  { 13,-1 },                /* M */
+  { -1,15 },                /* N */
+  { 14,-1 },                /* O */
+  { 17,-1 },                /* P */
+  { -1,18 },                /* Q */
+  { 27,-1 } };
 	
 /* In welcher Stadt ist welcher Eingang zum Personenbunker 43=Leerpersonendungeon*/
 signed char personen_bunker[CITIES] = {
@@ -310,7 +319,7 @@ char *enemy_obj;									/* Grafikobjekt des Feindes */
 char *fire;												/* Grafikobjekte der Explosion */
 char *shoots;											/* Grafikobjekte des Spielerschusses */
 
-char *shrink_buff;								/* Speicherbereich zum Verkleinern von Objekten */
+void *shrink_buff;                /* Speicherbereich zum Verkleinern von Objekten (SDL_Surface) */
 
 BUNKERWAND *startwaende;					/* Hier beginnen die Wände (zum Anzahl berechnen) */
 int bunker_x,bunker_y;					    /* Position Spieler im Dungeon */
@@ -411,26 +420,26 @@ unsigned long gesamt_gehalt;            /* Gehalt der Soldaten+Matrosen */
 int wirkung[EINHEITEN][EIGENSCHAFTEN] = {
     /* legt fest, welche Wirkung die einzelnen Eigenschaften bei den Einheiten
        haben, d.h. die Scouts müssen z.B. nicht stark sein, aber schlau etc. */
-   5,5,5,1,1,               /* 5=sehr wichtig, 1=weniger wichtig */
-   1,5,1,5,3,
-   1,5,1,3,5,
-   1,1,5,5,5,
-   3,5,3,3,3,
-   1,1,1,5,5,
-   1,5,3,5,3 };
+   { 5,5,5,1,1 },               /* 5=sehr wichtig, 1=weniger wichtig */
+   { 1,5,1,5,3 },
+   { 1,5,1,3,5 },
+   { 1,1,5,5,5 },
+   { 3,5,3,3,3 },
+   { 1,1,1,5,5 },
+   { 1,5,3,5,3 } };
 
 float training[ARMEEN][EINHEITEN][EIGENSCHAFTEN];     /* Stand der Eigenschaften 0-100% */
 float motivation[ARMEEN];                     /* Motivation 0-100% */
 
 int kraft_boden[EINHEITEN][8] = {
   /* Ebene, Wald, verz. Wald, Hügel, Sumpf, Stadt, Burg, Schiff */
-     10,    10,    5,          8,      8,    10,    10,    8,
-     20,    5,     3,          15,     3,    15,    15,    1,
-     10,    3,     1,          15,     1,    20,    20,    20,
-     8,     20,    8,          15,     15,   10,    10,    8,
-     20,    3,     1,          20,     20,   15,    15,    15,
-     8,     10,    20,         15,     20,   20,    20,    20,
-     20,    3,     1,          10,     8,    15,    15,    15 };
+     { 10,    10,    5,          8,      8,    10,    10,    8 },
+     { 20,    5,     3,          15,     3,    15,    15,    1 },
+     { 10,    3,     1,          15,     1,    20,    20,    20 },
+     { 8,     20,    8,          15,     15,   10,    10,    8 },
+     { 20,    3,     1,          20,     20,   15,    15,    15 },
+     { 8,     10,    20,         15,     20,   20,    20,    20 },
+     { 20,    3,     1,          10,     8,    15,    15,    15 } };
 
 float kampfkraft[2][EINHEITEN];          /* 0=Spieler, 1=Gegner */
 FLAG im_kampf[2][EINHEITEN];            /* Ist die Einheit im Kampf ? */
@@ -478,53 +487,54 @@ char  rassename[RASSEN+1][9] = { romstr363,
                                  romstr372,
                                  romstr373 };
 
-int  rassen_eigen[RASSEN][EIGENSCHAFTEN+2] = {  /* NORM_EIGANSCHAFTEN +  BEIDE ALTER
+int  rassen_eigen[RASSEN][EIGENSCHAFTEN+2] = {  
+	/* NORM_EIGANSCHAFTEN +  BEIDE ALTER
                                      WERTE WERDEN SPAETER IN HF_RASTER
                                      KOPIERT */
 
 /*   (% !!)     STR FIG END QUI IQ  AGE1 AGE2      */
-                 50, 50, 50, 50, 50, 16, 75,            /* Human */
-                 40, 37, 28, 75, 70, 16, 66,            /* Elf */
-                 64, 67, 81, 22, 17, 12, 87,            /* Dwarf */
-                 34, 24, 42, 92, 58, 8, 105,            /* Halfling */
-                 79, 33, 75, 44, 19, 25, 63,            /* Orc */
-                 16, 33, 26, 89, 86, 5, 134,            /* Gnome */
-                 99, 27, 91, 19, 14, 12, 78,            /* Giant */
-                 92, 32, 87, 21, 18, 20, 55,            /* Troll */
-                 85, 39, 79, 31, 16, 16, 98,            /* Ocre */
-                 18, 40, 32, 81, 79, 12, 111    };      /* Zwark */
+               { 50, 50, 50, 50, 50, 16, 75 },            /* Human */
+               { 40, 37, 28, 75, 70, 16, 66 },            /* Elf */
+               { 64, 67, 81, 22, 17, 12, 87 },            /* Dwarf */
+               { 34, 24, 42, 92, 58, 8, 105 },            /* Halfling */
+               { 79, 33, 75, 44, 19, 25, 63 },            /* Orc */
+               { 16, 33, 26, 89, 86, 5, 134 },            /* Gnome */
+               { 99, 27, 91, 19, 14, 12, 78 },            /* Giant */
+               { 92, 32, 87, 21, 18, 20, 55 },            /* Troll */
+               { 85, 39, 79, 31, 16, 16, 98 },            /* Ocre */
+               { 18, 40, 32, 81, 79, 12, 111} };          /* Zwark */
 
 
 /*--------------------------------------------------------------------------*/
 /*                    DIMENSIONIERUNGEN FUER STÄDTE                         */
 /*--------------------------------------------------------------------------*/
 
-extern int scrollerp[];
-extern int kartep[];            /* definiert in IO.C */
-extern int leistep[];
-extern int formularp[];
+extern RGB_PAL scrollerp;
+extern RGB_PAL kartep;            /* definiert in IO.C */
+extern RGB_PAL leistep;
+extern RGB_PAL formularp;
 
 int citynum;                    /* Nummer der Stadt, in der Spieler gerade ist */
 
 int city_nr[LAENDER][4] = {     /* welche Nummer hat CITY_1,.. absolut ? */
-	0,-1,-1,-1,								  /* Land 1 */
-	1,2,3,-1,										/* B */
-	4,-1,-1,-1,
-	-1,-1,-1,-1,
-	5,-1,-1,-1,
-	6,7,8,9,										/* F */
-	10,-1,-1,-1,
-	11,12,-1,-1,
-	13,14,15,-1,								/* Insel I */
-	16,-1,-1,-1,
-	17,-1,-1,-1,
-	18,-1,-1,-1,								/* L */
-	19,20,-1,-1,								/* Insel M */
-	21,-1,-1,-1,
-	22,-1,-1,-1,								/* O */
-	23,24,25,-1,
-	26,-1,-1,-1,
-	27,-1,-1,-1 };
+  { 0,-1,-1,-1 },                 /* Land 1 */
+  { 1,2,3,-1 },                   /* B */
+  { 4,-1,-1,-1 },
+  { -1,-1,-1,-1 },
+  { 5,-1,-1,-1 },
+  { 6,7,8,9 },                    /* F */
+  { 10,-1,-1,-1 },
+  { 11,12,-1,-1 },
+  { 13,14,15,-1 },                /* Insel I */
+  { 16,-1,-1,-1 },
+  { 17,-1,-1,-1 },
+  { 18,-1,-1,-1 },                /* L */
+  { 19,20,-1,-1 },                /* Insel M */
+  { 21,-1,-1,-1 },
+  { 22,-1,-1,-1 },                /* O */
+  { 23,24,25,-1 },
+  { 26,-1,-1,-1 },
+  { 27,-1,-1,-1 } };
 
 FLAG port_city[CITIES] = {     /* Ist Stadt eine Hafenstadt ? */
 	TRUE,
@@ -600,39 +610,41 @@ int people[CITIES] = {
 	7900 };
 	
 unsigned char produkt[CITIES][5] = {         /* Wer produziert was? */
-    12,0,0,0,0,             /* A0 */
-    11,0,0,0,0,
-    10,0,0,0,0,             /* B0 */
-    15,0,0,0,0,
-    14,0,0,0,0,
-    10,0,0,0,0,
-    10,8,0,0,0,             /* C0 */
-    1,2,0,0,0,              /* E0 */
-    4,0,0,0,0,
-    5,0,0,0,0,
-    3,0,0,0,0,
-    9,0,0,0,0,              /* F0 */
-    23,0,0,0,0,
-    17,0,0,0,0,
-    16,0,0,0,0,
-    24,23,27,13,0,           /* G0 */
-    23,27,0,0,0,
-    10,0,0,0,0,             /* H0 */
-    23,0,0,0,0,
-    23,24,19,0,0,
-    23,0,0,0,0,
-    23,0,0,0,0,             /* i0 */
-    23,0,0,0,0,
-    6,25,0,0,0,
-    23,27,0,0,0,            /* j0 */
-    7,23,0,0,0,
-    27,1,2,3,0,             /* k0 */
-/*    26,24,27,4,5,
-    25,18,0,0,0,
-    1,2,3,27,0,             /* l0 */
-    25,4,5,20,0,
-    1,2,3,5,0,              /* m0 */ */
-    4,26,27,25,0 };
+    { 12,0,0,0,0 },             /* A0 */
+    { 11,0,0,0,0 },
+    { 10,0,0,0,0 },             /* B0 */
+    { 15,0,0,0,0 },
+    { 14,0,0,0,0 },
+    { 10,0,0,0,0 },
+    { 10,8,0,0,0 },             /* C0 */
+    { 1,2,0,0,0 },              /* E0 */
+    { 4,0,0,0,0 },
+    { 5,0,0,0,0 },
+    { 3,0,0,0,0 },
+    { 9,0,0,0,0 },              /* F0 */
+    { 23,0,0,0,0 },
+    { 17,0,0,0,0 },
+    { 16,0,0,0,0 },
+    { 24,23,27,13,0 },           /* G0 */
+    { 23,27,0,0,0 },
+    { 10,0,0,0,0 },             /* H0 */
+    { 23,0,0,0,0 },
+    { 23,24,19,0,0 },
+    { 23,0,0,0,0 },
+    { 23,0,0,0,0 },             /* i0 */
+    { 23,0,0,0,0 },
+    { 6,25,0,0,0 },
+    { 23,27,0,0,0 },            /* j0 */
+    { 7,23,0,0,0 },
+    { 27,1,2,3,0 },             /* k0 */
+#if 0
+    { 26,24,27,4,5 },
+    { 25,18,0,0,0 },
+    { 1,2,3,27,0 },             /* l0 */
+    { 25,4,5,20,0 },
+    { 1,2,3,5,0 },              /* m0 */ 
+#endif
+    { 4,26,27,25,0 } };
 
 long bevoelkerung[CITIES];              /* tatsächlicher Wert, simuliert */
 
@@ -775,7 +787,7 @@ char month_name[13][11]={ romstr438, /* Monate beginnen bei 1 !! */
 
 int startwert;								/* Bei jedem Spielstart anders [0..4] */
 
-char ground_buf[1800];  /* Nimmt den Untergrund des momentanes Bildes auf */
+uint8_t ground_buf[1800];  /* Nimmt den Untergrund des momentanes Bildes auf */
 
 int ground_nr;          /* Anzahl der Untergrundänderungen */
 BODEN_ANDERS new_ground[CHG_MAX];        /* Ändert sich irgendwo der Unter-
@@ -865,7 +877,7 @@ int animation[] = {
  39 };
 
 /* Startshape jedes Sprites */
-ani_start[] = {
+int ani_start[] = {
   7,11,14,7,18,9,7,37,
   21,25,29,21,32,23,21,37 };
 
@@ -935,9 +947,9 @@ int fuellung[12];           /* Was ist in der Kanone drin? [0]=ganz unten */
 int fuell_poi;              /* Pointer zur nächsten Füllposition */
 int kanone;                   /* STellung der Kanone 0..3 */
 KOORD zuendpos[4] = {
-  153,130,
-  153,125,
-  153,121,
-  153,119 };
+  { 153,130 },
+  { 153,125 },
+  { 153,121 },
+  { 153,119 } };
 
 

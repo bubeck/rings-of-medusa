@@ -123,7 +123,7 @@
 #define romstr031 "JE T'AIME!"
 #define romstr032 "          "
 #define romstr033 "   STEFFI,   "
-#define romstr034 "COPYRIGHT 1992 BY STARBYTE"	
+#define romstr034 "COPYRIGHT 1992 BY TILL BUBECK"	
 #define romstr035 "ECRIT PAR: TILL BUBECK"
 #define romstr036 "GRAPHIQUES DE: TORSTEN ZIMMERMANN"
 #define romstr037 "MUSIQUE DE: JOCHEN HIPPEL"
@@ -372,7 +372,7 @@
 #define romstr280 "ORDURE."
 #define romstr281 "RINGS OF MEDUSA 2 - CHEATS:"
 #define romstr282 "R: MONTRER LES MATIERES PREMIERES"
-#define romstr283 "*: BEAUCOUP D ARGENT"
+#define romstr283 "G: BEAUCOUP D ARGENT"
 #define romstr284 "W: ANNONCER LES MARCHANDISES"
 #define romstr285 "S: ANNONCER LA FORCE DE COMBAT"
 #define romstr286 "O: PRESENTER LES TIREURS"
@@ -712,4 +712,3 @@
 #define romstr620 "INSERES S,T.P LA DISQUETTE           'X' DANS LE LECTEUR A:"		
 #define romstr621 "INSERES S.T.P TA DISQUEETE SAVE DANS LE LECTEUR A:"
            
-

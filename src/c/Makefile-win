@@ -1,0 +1,20 @@
+#################################################################
+#
+#         Makefile
+#
+#         Makefile for "Return of Medusa" (Windows version).
+#
+# Author: Till Bubeck
+#         Eberhard-Karls Universit"at T"ubingen
+#         Wilhelm-Schickard-Institut f"ur Informatik
+#         Sand 13, 72076 T"ubingen, Fed. Rep. of Germany
+#         EMail: bubeck@peanuts.informatik.uni-tuebingen.de
+#
+#################################################################
+
+include .Makefile-common
+
+CC = x86_64-w64-mingw32-gcc
+WIN_LDFLAGS += -lwinmm -lgdi32 -limm32 -lole32 -luuid -lcomctl32 -lopengl32 -lsetupapi -lversion -loleaut32 -static
+
+
