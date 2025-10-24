@@ -3,12 +3,12 @@ also known as Return of Medusa
 
 ![Logo](images/rom-logo.png)
 
-Source code written by Tilmann "Till" Bubeck and all artwork done by Thorsten Zimmermann.
+Source code written by Tilmann "Till" Bubeck and all artwork done by Torsten Zimmermann.
 
 This is the source code of the original Atari ST/Amiga game from 1991 together with all needed graphics and sound data. It has been published for historical reasons, if someone wants to get insights into former game development.
 The game is mostly written in C with some assembler routines to speed up the code. Everything was developed and done on an Atari ST, even the Amiga version. I used TurboC and TurboAss for compiling and mostly NEOchrome Master for the images.
 
-In addition to the original (unmodified) source code, I ported the game to modern systems by using SDL3. You can compile and run the game on modern Windows and Linux systems. This port is "quick and dirty" meaning, that there are memory leaks and probably untested and even malfunctional code. However, it is completely playable and I have not found any issues.
+In addition to the original (unmodified) source code, I ported the game to modern systems by using SDL3. You can compile and run the game on modern Windows and Linux systems. This port is "quick and dirty" meaning, that there are memory leaks and probably untested and even malfunctional code. However, it is completely playable and I have not found any issues. Use the assets under [Releases](../../releases) to download binaries.
 
 The repository has various tags for various stages.
 
