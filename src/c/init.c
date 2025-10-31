@@ -1033,11 +1033,11 @@ void intro()
   draw_obj(2,mem,MOVE,scr1,(320-objekt_breite(2,mem))/2,0);      // RoM II Logo
       
   formular_big(logbase,63,199);
-  center(0,74,
+  center(0,80,
 	 "WELCOME TO RINGS OF MEDUSA 2\nTHE RETURN OF MEDUSA!\n\n"
 	 "THIS PROGRAM IS BASED ON THE ORIGINAL SOURCE CODE AND GRAPHICS.\n"
 	 "THIS MEANS, THAT THE GAMEPLAY IS IDENTICAL.\n"
-	 "THEY HAVE BEEN PORTED BY TILL BUBECK, THE ORIGINAL AUTOHOR\n"
+	 "THEY HAVE BEEN PORTED BY TILL BUBECK, THE ORIGINAL AUTHOR\n"
 	 "FROM ATARI/AMIGA TO MODERN SYSTEMS BY USING SDL3.\n\n"
 	 "TO HELP YOU PLAYING, VARIOUS CHEATS ARE AVAILABLE:\n"
 	 "IN THE DUNGEONS PRESS \"C\" OR \"PRTSCR\" TO ENABLE THEM.\n"
@@ -1328,22 +1328,31 @@ long copyvar(saveflag)
 FLAG saveflag;                  /* True=Speicher, FAlse,=LAden */
 {
   /* Kopiert sämtliche Variablenwerte in pack_buf-pack_buff+40000 */
-  long *poi;
+  intptr_t *poi;
   long laenge;
+  long total = 0;
   char *scrpoi,*adresse;
 
-  poi=(long *)hlpbuf;
+  //poi=(long *)hlpbuf;
   poi = save_buffer;
   scrpoi=pack_buf;                          /* Hier hin */
   while(*poi!=-1L) {
-    adresse=(char *)*poi++;
+    adresse=(void *)*poi++;
     laenge=*poi++;
     if (saveflag) memcpy(scrpoi,adresse,laenge);
     else memcpy(adresse,scrpoi,laenge);
-    scrpoi+=laenge;
+#if 0
+    if (saveflag) {
+      printf("Saving %ld from %p to %p\n", laenge, scrpoi, adresse);
+    } else {
+      printf("Loading %ld from %p to %p\n", laenge, adresse, scrpoi);
     }
-  laenge=(long)scrpoi-(long)(pack_buf+32000);
-  return(laenge);                  /* Länge zurück */
+#endif
+    scrpoi+=laenge;
+    total += laenge;
+    }
+
+  return(total);                  /* Länge zurück */
 }
 
 void save_it(nr)

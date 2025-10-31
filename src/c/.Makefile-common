@@ -21,6 +21,7 @@ $(TARGET): $(OBJS)
 	$(LINK.c) -o $@ $(OBJS) $(SDL_LDFLAGS) -lm $(WIN_LDFLAGS)
 
 install:
+	rm -rf ../../rings-of-medusa-2
 	mkdir -p ../../rings-of-medusa-2
 	cp medusa* ../../rings-of-medusa-2/
 	cp -r ../../data ../../rings-of-medusa-2/

@@ -517,7 +517,7 @@ void ask_X(void)
       default:
 	keysym = SDL_GetKeyName(event.key.key);
 	key = keysym[0];
-	printf("KEY_DOWN %c\n", key);
+	//printf("KEY_DOWN %c\n", key);
 	keypress = key;
 	break;
       }
@@ -2870,7 +2870,7 @@ void mcode68(void *adr,int laufwerk,int strack,int ssektor,int soffset,
   
   compute_disk_filename(filename);
 
-  if ((fd=open(filename,O_RDONLY))<0)
+  if ((fd=open(filename,O_RDONLY, O_BINARY))<0)
     {
       memset(adr, 0, len);
       return;
@@ -2898,7 +2898,7 @@ int mcode70(void *adr,int laufwerk,int strack,int ssektor,int soffset,
   
   compute_disk_filename(filename);
 
-  if ((fd=open(filename,O_WRONLY|O_CREAT, 0644))<0)
+  if ((fd=open(filename,O_WRONLY|O_CREAT|O_BINARY, 0644))<0)
     {
       perror("mcode70");
       exit(1);

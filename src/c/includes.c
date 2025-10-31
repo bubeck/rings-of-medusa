@@ -27,6 +27,9 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_audio.h>
 
+#ifndef O_BINARY
+#define O_BINARY 0
+#endif
 
 #define IS_LITTLE_ENDIAN (*(unsigned char*)&(unsigned int){1} == 1)
 

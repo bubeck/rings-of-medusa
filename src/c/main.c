@@ -1569,9 +1569,9 @@ void make_adresses()
      Sie schreibt die Adresse und Größe der Variablen ab poi, die gesavt oder
      geladen werden beim Spielstand */
 
-  register long *poi;
+  intptr_t *poi;
 
-  poi=(long *)hlpbuf;               /* Nach hlpbuf schreiben */
+  poi=(intptr_t *)hlpbuf;               /* Nach hlpbuf schreiben */
   if (save_buffer == NULL) save_buffer = malloc(100000);
   poi = save_buffer;
 
