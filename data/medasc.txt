@@ -18,6 +18,7 @@ __________  ___________	___________  ____ ___  __________   _______
         \/          \/ 	        \/ 	              \/          \/
 
 
-      (C) Copyright 1994 by Till Bubeck. All rights reserved.
+      (C) Copyright 1994 by Till Bubeck and Torsten Zimmermann. 
+                         All rights reserved.
 
                           Please stand by....
