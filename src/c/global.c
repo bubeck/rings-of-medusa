@@ -95,7 +95,7 @@ char password[30] = { romstr320 };
 
 FLAG voller_titel=TRUE;				/* Soll volle Titelsequenz kommen? */
 /* How much bigger is the window for the screen, than 320x200: */
-int gfx_scale_factor = 1;     /* Faktor zur Vergroesserung des Fensters */
+int gfx_scale_factor = 3;     /* Faktor zur Vergroesserung des Fensters */
 int crt_effect = 1;     /* Should we do tube tv like graphics */
 volatile int msminy;              /* kleinster Wert der Mouse y */
 int leiste_y;               /* unterer Rand der Leiste */
