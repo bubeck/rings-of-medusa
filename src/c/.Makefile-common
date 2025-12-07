@@ -20,14 +20,14 @@ OBJS		= atari.o city.o city2.o dung2.o dungeon.o fight.o \
 $(TARGET): $(OBJS)
 	$(LINK.c) -o $@ $(OBJS) $(SDL_LDFLAGS) -lm $(WIN_LDFLAGS)
 
-install:
+install: $(TARGET)
 	rm -rf ../../rings-of-medusa-2
 	mkdir -p ../../rings-of-medusa-2
 	cp medusa* ../../rings-of-medusa-2/
 	cp -r ../../data ../../rings-of-medusa-2/
 	rm -rf ../../rings-of-medusa-2/data/src
 
-zip:
+zip: install
 	$(RM) ../../rings-of-medusa-2.zip
 	cd ../../ ; apack rings-of-medusa-2.zip rings-of-medusa-2
 	ls -lh ../../rings-of-medusa-2.zip

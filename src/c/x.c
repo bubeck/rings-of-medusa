@@ -813,6 +813,8 @@ void mcode3(void)
     SDL_Thread *thread = SDL_CreateThread(vbl_thread_function, "VBLThread", NULL);
 	
     window = SDL_CreateWindow(window_name, width*gfx_scale_factor, height*gfx_scale_factor, 0);
+    SDL_SetWindowResizable(window, true);
+
     SDL_CaptureMouse(false);
     //SDL_SetRelativeMouseMode(false);
     SDL_ShowCursor();
