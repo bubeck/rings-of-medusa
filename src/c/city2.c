@@ -205,7 +205,7 @@ char *name;                 /* Store, Stable, etc. */
 int waren_max;              /* Anzahl der Waren */
 char *warenn;               /* Name der Waren als Feld */
 int warenn_len;             /* Länge in Bytes eines Namens */
-unsigned int waren_preis[];          /* Preis in der Stadt */
+uint16_t waren_preis[];          /* Preis in der Stadt */
 long waren_city[];          /* Anzahl der Waren in der Stadt */
 long waren_player[];        /* Anazhl der Waren bei Player */
 int ort;                    /* siehe const.c */
@@ -401,7 +401,7 @@ char *name;                 /* Store, Stable, etc. */
 int waren_max;              /* Anzahl der Waren */
 char warenn[];              /* Name der Waren als Array */
 int warenn_len;             /* Länge in Bytes eines Namens */
-unsigned int waren_preis[];          /* Preis in der Stadt */
+uint16_t waren_preis[];     /* Preis in der Stadt */
 long waren_city[];          /* Anzahl der Waren in der Stadt */
 long waren_player[];        /* Anazhl der Waren bei Player */
 int ort;                    /* siehe const.c */
@@ -448,7 +448,7 @@ void store_goods(waren_max,warenn,warenn_len,waren_preis,waren_city,seite,ort)
 int waren_max;              /* Maximalzahl der Waren */
 char warenn[];              /* Name der Waren als Array */
 int warenn_len;             /* Länge eines Warennamens in Byte */
-unsigned int waren_preis[];          /* Preise der Waren in der Stadt */
+uint16_t waren_preis[];     /* Preise der Waren in der Stadt */
 long waren_city[];          /* Anzahl der Waren in der Stadt */
 int seite;                  /* darzustellende Seite */
 int ort;                    /* siehe const.c */
@@ -543,7 +543,7 @@ void get_city_werte(num)
 int num;
 {
   /* Holt sich alle Stadtspezifischen Werte von Disk */
-
+  long laenge;
   double winkel,zuwachs;
   int i,j;
   long monate;
@@ -554,8 +554,11 @@ int num;
 	hafennum=0;
 	for(i=0;i<num;i++) if (port_city[i]) hafennum++;
 	
-  load("cities.war",waren_preis,(long)((WAREN+STALLWAREN+ROHSTOFFE)*num*2),
+  laenge = load("cities.war",waren_preis,(long)((WAREN+STALLWAREN+ROHSTOFFE)*num*2),
                     (long)(WAREN+STALLWAREN+ROHSTOFFE)*2); /* Preise holen */
+  for(i = 0; i < laenge/2;i++) {
+    be_2(&waren_preis[i]);
+  }
   load("cities.pub",pub_name,(long)(22*num),20L);   /* 20+0 Byte */
   pub_name[20]=0;
   load("cities.por",port_pub,(long)(31*hafennum),29L);   /* 29+0 Byte */

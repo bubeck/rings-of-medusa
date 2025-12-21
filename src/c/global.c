@@ -669,7 +669,7 @@ int armee_city;                /* Stadt, in der Armee steht */
 char port_pub[30];                  /* Name der Hafenkneipe der Stadt */
 
 long waren_menge[CITIES][WAREN+STALLWAREN];     /* Wieviel Waren+Stall sind in der Stadt ? */
-unsigned int waren_preis[WAREN+STALLWAREN+ROHSTOFFE];   /* Preis der Waren+Stall in DAr Stadt */
+uint16_t waren_preis[WAREN+STALLWAREN+ROHSTOFFE];   /* Preis der Waren+Stall in DAr Stadt */
 
 int crew_grenze[CITIES];            /* Ab diesem Preis sind Schiffsbesatz. interessiert */
 
@@ -705,7 +705,7 @@ int schiffbau;                          /* Wieviel sind jetzt im Bau? */
 
 long  money;              /* 1000 Taler Startkapital */
 
-unsigned int aktie_preis[WAREN];       	/* Was kostet die Aktie durchschnittlich */
+uint16_t aktie_preis[WAREN];       	/* Was kostet die Aktie durchschnittlich */
 long aktie_x[WAREN];           		/* Wo steht die Aktie im Grafen */
 long aktie_da[WAREN];          		/* Wieviel gibt's noch? */
 
